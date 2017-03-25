@@ -1,0 +1,103 @@
+﻿@using SocialApps.Controllers
+@using SocialApps.Models
+@using System.Web.Security.AntiXss
+
+@{
+	ViewBag.Title = Resources.Resources.SelectExpenseTitle;
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+@*Ширина и высота устанавливаются по контейнеру.*@
+@* ReSharper disable UnknownCssClass *@
+<div class="panel panel-primary" @*style="border: none; /*height: 100%; width: 100%;"*@>
+	<div class="panel-heading" id="caption">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 110px;">
+						<div style="white-space: nowrap;">
+							<div class="btn-group">
+								@Html.Partial("TopLockIcon")
+								@Html.Partial("TopHomeButton")
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									<span class="caret"></span>
+									<span class="sr-only"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateExpenses", "Mobile")?expenseList=' + s); });">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
+								</ul>
+							</div>
+							<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.NewExpenseTitle)" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</button>
+						</div>
+					</td>
+					<td>
+						<div id="ellipsisOwner">
+							<div class="ellipsisInner" id="ellipsisInner">
+								<span class="ellipsis">
+									@Html.Raw(ViewBag.Title)
+								</span>
+							</div>
+						</div>
+					</td>
+					<td style="width: 1%;">
+						<span class="badge pull-right" style="margin-left: 5px;">@Html.Raw(MobileController.TotalsToStringSession(ViewContext.Controller))</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-body" id="framecontainer" @*style="border: none; height: 100%; width: 100%;"*@ style="position: relative;">
+		<div class="page-content">
+			@* https://www.evernote.com/shard/s132/nl/14501366/748e493d-9338-41b0-adfb-a9b40cbdb4dd *@
+			<table class="sorted table">
+				<tbody>
+					<tr>
+						<th></th>
+						<th>@Html.Raw(Resources.Resources.Expense)</th>
+					</tr>
+
+					@for (var i = 0; i < ((ExpenseNameWithCategory[])ViewBag.ExpenseIds).Count(); i++)
+					{
+						var exp = ((ExpenseNameWithCategory[])ViewBag.ExpenseIds)[i];
+						var expenseId = exp.Id.ToString();
+						var classId = (exp.EncryptedName != null && exp.EncryptedName != string.Empty) ? "encrypted" : "unencrypted";
+						@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+						<tr class="trlist" onclick="window.location.href = '@Url.Action("SelectExpenseF", "Mobile", new { expenseId = exp.Id })';" id="@Html.Raw("tr" + expenseId)">
+							<td style="vertical-align: middle;">
+								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
+									<span class="glyphicon glyphicon-edit"></span>
+								</button>
+							</td>
+							<td style="width: 100%; vertical-align: middle;">
+								<div style="@Html.Raw((ViewBag.ExpenseId != null && (int)ViewBag.ExpenseId == exp.Id) ? "font-size: large;" : "")" id="@Html.Raw(expenseId)" class="@Html.Raw(classId)">
+									@Html.Raw(AntiXssEncoder.HtmlEncode(exp.Name.Trim(), false))
+								</div>
+								@if (exp.EncryptedName != null && exp.EncryptedName != string.Empty)
+								{
+									<script>
+										@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+										(function () { decryptListData('@Html.Raw(expenseId)', '@Html.Raw(exp.EncryptedName)') })();
+									</script>
+								}
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			@Html.Partial("FullListButton")
+		</div>
+		@Html.Partial("Jumbotron")
+		@Html.Partial("ProgressBar")
+	</div>
+	@Html.Partial("Tags")
+	<div class="panel-footer">
+		@Html.Partial("BottomHomeButton")
+		<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.NewExpenseTitle)" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		</button>
+		@Html.Partial("BottomAddInfo")
+	</div>
+</div>
+@* ReSharper restore UnknownCssClass *@

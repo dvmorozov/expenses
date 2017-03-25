@@ -1,0 +1,138 @@
+﻿@using System.Globalization
+@using SocialApps.Controllers
+@using SocialApps.Models
+@using System.Web.Security.AntiXss
+
+@{
+	ViewBag.Title = Resources.Resources.ExpensesByCategoryTitle;
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+@*Ширина и высота устанавливаются по контейнеру.*@
+@* ReSharper disable UnknownCssClass *@
+<div class="panel panel-primary">
+	<div class="panel-heading" id ="caption">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 1%;">
+						<div style="white-space: nowrap;">
+							@Html.Partial("TopLockIcon")
+							@Html.Partial("TopHomeButton")
+						</div>
+					</td>
+					<td>
+						<div id="ellipsisOwner">
+							<div class="ellipsisInner" id="ellipsisInner">
+								<span class="ellipsis">
+									@Html.Raw(ViewBag.Title)
+								</span>
+							</div>
+						</div>
+					</td>
+					<td style="width: 1%;">
+						<span class="badge pull-right" style="margin-left: 5px;">
+							@* https://www.evernote.com/shard/s132/nl/14501366/626c4826-6474-433a-aa7e-1f626f2f29d0 *@
+							<span>@Html.Raw((ViewBag.ExpenseTotal != null ? Math.Floor((double)ViewBag.ExpenseTotal).ToString() + " | " : ""))</span>
+							@Html.Raw(ViewBag.Month != null && ViewBag.Year != null ? MobileController.MonthYearToString((int)ViewBag.Month, (int)ViewBag.Year) : "")
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-body">
+		@{
+			var list = (TodayExpense[])ViewBag.ExpenseIds;
+			if (list.Count() != 0)
+			{
+				<table class="encrypted table">
+					<tbody>
+						<tr>
+							<th>@Html.Raw(Resources.Resources.Date)</th>
+							<th>@Html.Raw(Resources.Resources.Expense)</th>
+							<th>@Html.Raw(Resources.Resources.Spent)</th>
+							<th>@Html.Raw(Resources.Resources.Importance)</th>
+							<th>@Html.Raw(Resources.Resources.Rating)</th>
+						</tr>
+						@for (var index = 0; index < list.Count(); index++)
+						{
+							var item = list[index];
+							var expenseId = "ExpenseName" + index.ToString();
+							var classId = (item.ExpenseEncryptedName != null && item.ExpenseEncryptedName != string.Empty) ? "encrypted disjoined" : "unencrypted disjoined";
+
+							if (item.Name.Trim().IsEmpty())
+							{
+								continue;
+							}
+							//	https://www.evernote.com/shard/s132/nl/14501366/c03c9b9e-5375-4177-bac3-f7e9e50c3d12
+							//	By default the color is unchanged.
+
+							var rowClass = string.Empty;
+							if (item.Importance != null)
+							{
+								switch ((short)item.Importance)
+								{
+									case 5:
+										rowClass = string.Empty;
+										break;
+
+									case 4:
+										rowClass = "class=\"success\"";
+										break;
+
+									case 3:
+										rowClass = "class=\"info\"";
+										break;
+
+									case 2:
+										rowClass = "class=\"warning\"";
+										break;
+
+									case 1:
+										rowClass = "class=\"danger\"";
+										break;
+								}
+							}
+
+							@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+							<tr @Html.Raw(rowClass) id="@Html.Raw("tr" + expenseId)">
+								<td>
+									@Html.Raw(item.Date.ToString("dd MMM yyyy"))
+								</td>
+								<td id="@Html.Raw(expenseId)" class="@Html.Raw(classId)">
+									@Html.Raw(AntiXssEncoder.HtmlEncode(item.Name.Trim(), false))
+								</td>
+								@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+								<td id="@Html.Raw("ttl" + expenseId)">
+									@Html.Raw(item.Cost != null ?
+										((float)item.Cost).ToString("F2", CultureInfo.InvariantCulture) :
+										(0.0).ToString(CultureInfo.InvariantCulture))
+									@if (item.ExpenseEncryptedName != null && item.ExpenseEncryptedName != string.Empty)
+									{
+										<script>
+											@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+											(function () { decryptListData('@Html.Raw(expenseId)', '@Html.Raw(item.ExpenseEncryptedName)') })();
+										</script>
+									}
+								</td>
+								<td>
+									@if (item.Importance != null)
+									{
+										@Html.Raw(((ExpenseImportance)item.Importance).ToString("G"));
+									}
+								</td>
+								<td>@Html.Partial("ExpenseRatingStars", item)</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			}
+		}
+	</div>
+	@Html.Partial("Tags")
+	<div class="panel-footer">
+		@Html.Partial("BottomHomeButton")
+	</div>
+</div>
+@* ReSharper restore UnknownCssClass *@

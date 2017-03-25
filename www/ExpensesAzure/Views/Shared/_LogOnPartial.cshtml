@@ -1,0 +1,2 @@
+﻿
+@(Request.IsAuthenticated ? Html.ActionLink(Resources.Resources.Logout, "LogOff", "Account") : Html.ActionLink(Resources.Resources.Login, "Login", "Account"))

@@ -1,0 +1,19 @@
+﻿
+@if (Session["Year"] != null && Session["Month"] != null)
+{
+<div style="margin-bottom: 16px;">
+	<span class="label label-info">
+		@{
+			var date = new DateTime((int)Session["Year"], (int)Session["Month"], (Session["Day"] != null ? (int)Session["Day"] : 1));
+		}
+		@if (ViewBag.ShowOnlyMonth != null && (bool)ViewBag.ShowOnlyMonth)
+		{
+			@Html.Raw("Nothing found for " + date.ToString("MMM yyyy"))
+		}
+		else
+		{
+			@Html.Raw("Nothing found for " + date.ToString("dd MMM yyyy"))
+		}
+	</span>
+</div>
+}

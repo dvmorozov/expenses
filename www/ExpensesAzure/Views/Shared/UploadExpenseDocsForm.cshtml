@@ -1,0 +1,40 @@
+﻿@using SocialApps.Controllers
+@using System.Web.Security.AntiXss
+@using SocialApps.Models
+@using System.Web.Configuration
+@using System.Configuration
+
+@model SocialApps.Models.NewExpense
+
+@using (Html.BeginForm("UploadDoc", "Mobile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>
+					@Html.Raw(Resources.Resources.UploadedDocuments)
+				</th>
+			</tr>
+			@if (ViewBag.Links != null)
+			{
+				foreach (var link in ((List<LinkModel>)ViewBag.Links))
+				{
+					<tr>
+						<td><a href="#" onclick="window.location.href='@Url.Action("Document", "Mobile", new { linkId = link.Id })';">@Html.Raw(AntiXssEncoder.HtmlEncode(link.Name, false))</a></td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	<hr />
+	<div>
+		<input type="file" name="file" style="display: inline-block;"/>
+
+		<button type="submit" class="btn btn-default" aria-label="@Resources.Resources.Upload" style="float: right; position: relative; ">
+			<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+		</button>
+	</div>
+	<div style="margin-top: 20px;">
+		<em>@Html.Raw(string.Format(Resources.Resources.MaxFileSize, (ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection).MaxRequestLength / 1024))</em>
+	</div>
+}

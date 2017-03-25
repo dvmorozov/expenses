@@ -1,0 +1,133 @@
+﻿@using SocialApps.Controllers
+
+@{
+	ViewBag.Title = Resources.Resources.Encryption;
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+@* ReSharper disable UnknownCssClass *@
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 1%;">
+						<div style="white-space: nowrap;">
+							@Html.Partial("TopLockIcon")
+							@Html.Partial("TopHomeButton")
+						</div>
+					</td>
+					<td>
+						<div id="ellipsisOwner">
+							<div class="ellipsisInner" id="ellipsisInner">
+								<span class="ellipsis">
+									@Html.Raw(ViewBag.Title)
+								</span>
+							</div>
+						</div>
+					</td>
+					<td style="width: 1%;">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-body" style="position: relative;">
+		<div class="page-content">
+			<div style="text-align: left;">
+				<table>
+					<tbody>
+						<tr>
+							<td colspan="2">
+								<div class="editor-label" style="padding: 8px;">
+									@Html.Label(Resources.Resources.DiscardPassword)
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div style="float: right; padding: 8px;">
+									<input class="btn btn-default" type="button" value="@Html.Raw(Resources.Resources.DiscardPassword)" onclick="dropPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
+								</div>
+								<div style="padding: 8px;" class="hintText">
+									@Html.Raw(Resources.Resources.EncryptionNewData)
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="editor-label" style="padding: 8px;">
+									@Html.Label(Resources.Resources.Decrypting)
+								</div>
+							</td>
+							<td>
+								<div class="editor-field" style="padding: 8px; text-align: right;">
+									@Html.Password("Password")
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div style="float: right; padding: 8px;">
+									<input class="btn btn-default" type="button" value="@Html.Raw(Resources.Resources.EncryptionSetAndDecrypt)" onclick="setPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
+								</div>
+								<div style="padding: 8px;" class="hintText">
+									<p>
+										@Html.Raw(Resources.Resources.EncryptionSetUpPassword)
+									</p>
+									<p>
+										@Html.Raw(Resources.Resources.EncryptionOnlyData)
+									</p>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="editor-label" style="padding: 8px;">
+									@Html.Label(Resources.Resources.Encrypting)
+								</div>
+							</td>
+							<td>
+								<div class="editor-field" style="padding: 8px; text-align: right;">
+									@Html.Password("Password2")
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div style="float: right; padding: 8px;">
+									<input class="btn btn-default" type="button" value="@Html.Raw(Resources.Resources.EncryptionSetNewPassword)" onclick="checkAndSetPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
+								</div>
+								<div style="padding: 8px;" class="hintText">
+									<p>
+										@Html.Raw(Resources.Resources.EncryptionRepeatInput)
+									</p>
+									<p>
+										@Html.Raw(Resources.Resources.EncryptionResponsibility)
+									</p>
+									<p>
+										@Html.Raw(Resources.Resources.EncryptionWeDontStore)
+									</p>
+									<p>
+										@Html.Raw(Resources.Resources.EncryptionProtect)
+									</p>
+									<p>
+										@Html.Raw(Resources.Resources.EncryptionIfYouChange)
+									</p>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		@Html.Partial("JumbotronConfirmationFailed")
+	</div>
+	@Html.Partial("Tags")
+	<div class="panel-footer">
+		@Html.Partial("BottomHomeButton")
+	</div>
+</div>
+
+@* ReSharper restore UnknownCssClass *@

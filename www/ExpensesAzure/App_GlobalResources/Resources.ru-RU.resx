@@ -1,0 +1,633 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutForMoreInfo" xml:space="preserve">
+    <value>Узнайте больше о приложении на &lt;strong&gt;&lt;a href="http://townbreath.com" target="_blank"&gt;townbreath.com&lt;/a&gt;&lt;/strong&gt; или посетите	&lt;strong&gt;&lt;a href="https://www.facebook.com/expensestracking/" target="_blank"&gt;страницу приложения&lt;/a&gt;&lt;/strong&gt; на Facebook.</value>
+  </data>
+  <data name="AboutFromFacebook" xml:space="preserve">
+    <value>со своей страницы Facebook по ссылке</value>
+  </data>
+  <data name="AboutFromGoogleChrome" xml:space="preserve">
+    <value>из Google Chrome с помощью приложения из</value>
+  </data>
+  <data name="AboutFromMobileDevice" xml:space="preserve">
+    <value>с телефона или планшета по ссылке</value>
+  </data>
+  <data name="AboutThanks" xml:space="preserve">
+    <value>Благодарим Вас за интерес к нашему приложению!</value>
+  </data>
+  <data name="AboutTitle" xml:space="preserve">
+    <value>О нас</value>
+  </data>
+  <data name="AboutYouCanUseTheApp" xml:space="preserve">
+    <value>Вы можете получить наиболее удобный доступ к приложению</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="AddExpenseTitle" xml:space="preserve">
+    <value>Добавить трату</value>
+  </data>
+  <data name="AddIncomeTitle" xml:space="preserve">
+    <value>Добавить поступление</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Сумма</value>
+  </data>
+  <data name="AnotherMonth" xml:space="preserve">
+    <value>Другой месяц</value>
+  </data>
+  <data name="Asset" xml:space="preserve">
+    <value>Ценность</value>
+  </data>
+  <data name="BalanceByMonth" xml:space="preserve">
+    <value>Баланс по месяцам за последние {0} лет</value>
+  </data>
+  <data name="BalanceTitle" xml:space="preserve">
+    <value>Баланс</value>
+  </data>
+  <data name="Bar" xml:space="preserve">
+    <value>Столбцы</value>
+  </data>
+  <data name="Budget" xml:space="preserve">
+    <value>Бюджет</value>
+  </data>
+  <data name="Contribute" xml:space="preserve">
+    <value>Помочь</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Валюта</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="DayExpensesTitle" xml:space="preserve">
+    <value>Дневные расходы</value>
+  </data>
+  <data name="Decrypting" xml:space="preserve">
+    <value>Расшифровка</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Подробно</value>
+  </data>
+  <data name="DiscardPassword" xml:space="preserve">
+    <value>Сбросить пароль</value>
+  </data>
+  <data name="DocListTitle" xml:space="preserve">
+    <value>Документы</value>
+  </data>
+  <data name="EditCategoryTitle" xml:space="preserve">
+    <value>Править категорию</value>
+  </data>
+  <data name="EditExpenseTitle" xml:space="preserve">
+    <value>Редактировать покупку</value>
+  </data>
+  <data name="EditIncomeTitle" xml:space="preserve">
+    <value>Редактировать поступление</value>
+  </data>
+  <data name="EncryptAll" xml:space="preserve">
+    <value>Зашифровать все</value>
+  </data>
+  <data name="Encrypting" xml:space="preserve">
+    <value>Шифрование</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Шифрование</value>
+  </data>
+  <data name="EncryptionIfYouChange" xml:space="preserve">
+    <value>Если вы измените пароль ТОЛЬКО НОВЫЕ ДАННЫЕ будут зашифрованы с помощью него. Старые данные останутся зашифрованы ПРЕДЫДУЩИМ ПАРОЛЕМ. Вы должны хранить все используемые пароли, чтобы обеспечить доступ ко всем Вашим данным.</value>
+  </data>
+  <data name="EncryptionNewData" xml:space="preserve">
+    <value>Новые данные шифроваться не будут, но зашифрованные такими и останутся.</value>
+  </data>
+  <data name="EncryptionOnlyData" xml:space="preserve">
+    <value>Только данные, которые ранее были зашифрованы с этим паролем, станут читаемыми.</value>
+  </data>
+  <data name="EncryptionProtect" xml:space="preserve">
+    <value>Защита пароля от кражи - ваша ответственность. Мы НИКОГДА НЕ ПОПРОСИМ Вас сообщить пароль.</value>
+  </data>
+  <data name="EncryptionRepeatInput" xml:space="preserve">
+    <value>Повторите ввод, чтобы установить новый пароль. Любые новые данные будут зашифрованы с использованием этого пароля. Незашифрованные останутся без изменений.</value>
+  </data>
+  <data name="EncryptionResponsibility" xml:space="preserve">
+    <value>Сохраните пароль в надежном месте. Если вы его потеряете, зашифрованные им данные станут недоступными.</value>
+  </data>
+  <data name="EncryptionSetAndDecrypt" xml:space="preserve">
+    <value>Расшифровать</value>
+  </data>
+  <data name="EncryptionSetNewPassword" xml:space="preserve">
+    <value>Новый пароль</value>
+  </data>
+  <data name="EncryptionSetUpPassword" xml:space="preserve">
+    <value>Установить пароль и расшифровать данные.</value>
+  </data>
+  <data name="EncryptionWeDontStore" xml:space="preserve">
+    <value>Мы НЕ ХРАНИМ ПАРОЛЬ на сервере. Он активен только до тех пор, пока вы не завершите сеанс.</value>
+  </data>
+  <data name="Expense" xml:space="preserve">
+    <value>Покупка</value>
+  </data>
+  <data name="ExpensesByCategoryTitle" xml:space="preserve">
+    <value>Список расходов</value>
+  </data>
+  <data name="FirstMonth" xml:space="preserve">
+    <value>Первый месяц</value>
+  </data>
+  <data name="Forever" xml:space="preserve">
+    <value>Без конца</value>
+  </data>
+  <data name="Importance" xml:space="preserve">
+    <value>Важность</value>
+  </data>
+  <data name="ImportanceReportTitle" xml:space="preserve">
+    <value>Отчет по важности за</value>
+  </data>
+  <data name="Income" xml:space="preserve">
+    <value>Поступление</value>
+  </data>
+  <data name="LastMonth" xml:space="preserve">
+    <value>Последний месяц</value>
+  </data>
+  <data name="LastYears" xml:space="preserve">
+    <value>Последних {0} лет</value>
+  </data>
+  <data name="Liability" xml:space="preserve">
+    <value>Обязательство</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Выход</value>
+  </data>
+  <data name="MainMenuDayExpenses" xml:space="preserve">
+    <value>За день</value>
+  </data>
+  <data name="MainMenuNewExpense" xml:space="preserve">
+    <value>Новая покупка</value>
+  </data>
+  <data name="MainMenuReports" xml:space="preserve">
+    <value>Отчеты</value>
+  </data>
+  <data name="MainMenuTitle" xml:space="preserve">
+    <value>Главное</value>
+  </data>
+  <data name="MaxFileSize" xml:space="preserve">
+    <value>Максимальный размер файла - {0} Мб</value>
+  </data>
+  <data name="MonthBudgetTitle" xml:space="preserve">
+    <value>Бюджет месяца</value>
+  </data>
+  <data name="MonthIncomeTitle" xml:space="preserve">
+    <value>Поступления за месяц</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Ежемесячно</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Necessary" xml:space="preserve">
+    <value>Необходимость</value>
+  </data>
+  <data name="NewCategoryTitle" xml:space="preserve">
+    <value>Новая категория</value>
+  </data>
+  <data name="NewExpenseTitle" xml:space="preserve">
+    <value>Новая покупка</value>
+  </data>
+  <data name="NewIncomeTitle" xml:space="preserve">
+    <value>Новое поступление</value>
+  </data>
+  <data name="NoExpenseFound" xml:space="preserve">
+    <value>Не найдено расходов за</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Не задано</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Заметка</value>
+  </data>
+  <data name="Overdraft" xml:space="preserve">
+    <value>Перерасход</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="Pie" xml:space="preserve">
+    <value>Сектора</value>
+  </data>
+  <data name="Pleasure" xml:space="preserve">
+    <value>Удовольствие</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Проект</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Качество</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="Repeat" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="ReportBalance" xml:space="preserve">
+    <value>Отчет по балансу</value>
+  </data>
+  <data name="ReportImportance" xml:space="preserve">
+    <value>Отчет по важности</value>
+  </data>
+  <data name="ReportsTitle" xml:space="preserve">
+    <value>Отчеты</value>
+  </data>
+  <data name="ReportTop10Categories" xml:space="preserve">
+    <value>10 главных категорий</value>
+  </data>
+  <data name="ReportTrendByCategory" xml:space="preserve">
+    <value>Тренд по категории</value>
+  </data>
+  <data name="ReportTrendOverall" xml:space="preserve">
+    <value>Тренд общий</value>
+  </data>
+  <data name="Rest" xml:space="preserve">
+    <value>Остаток</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="SelectCategoryTitle" xml:space="preserve">
+    <value>Категории</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Выбрать валюту</value>
+  </data>
+  <data name="SelectExpenseTitle" xml:space="preserve">
+    <value>Покупки</value>
+  </data>
+  <data name="Setup" xml:space="preserve">
+    <value>Задать</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="Spent" xml:space="preserve">
+    <value>Потрачено</value>
+  </data>
+  <data name="Unnecessary" xml:space="preserve">
+    <value>Ненужное</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="UploadedDocuments" xml:space="preserve">
+    <value>Загруженные документы</value>
+  </data>
+  <data name="Year1" xml:space="preserve">
+    <value>1 год</value>
+  </data>
+  <data name="Year10" xml:space="preserve">
+    <value>10 лет</value>
+  </data>
+  <data name="Year10Short" xml:space="preserve">
+    <value>10 лет</value>
+  </data>
+  <data name="Year1Short" xml:space="preserve">
+    <value>1 год</value>
+  </data>
+  <data name="Year2" xml:space="preserve">
+    <value>2 года</value>
+  </data>
+  <data name="Year2Short" xml:space="preserve">
+    <value>2 года</value>
+  </data>
+  <data name="Year5" xml:space="preserve">
+    <value>5 лет</value>
+  </data>
+  <data name="Year5Short" xml:space="preserve">
+    <value>5 лет</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Категория</value>
+  </data>
+  <data name="ShowMore" xml:space="preserve">
+    <value>Показать больше</value>
+  </data>
+  <data name="NewIncome" xml:space="preserve">
+    <value>Новое поступление</value>
+  </data>
+  <data name="ReportTop10Of" xml:space="preserve">
+    <value>10 главных категорий за</value>
+  </data>
+  <data name="SelectCurrencyChars" xml:space="preserve">
+    <value>Символы</value>
+  </data>
+  <data name="SelectCurrencyCodes" xml:space="preserve">
+    <value>Коды</value>
+  </data>
+  <data name="SelectIncomeTitle" xml:space="preserve">
+    <value>Поступления</value>
+  </data>
+  <data name="TotalsByMonth" xml:space="preserve">
+    <value>Итог помесячный за последние {0} лет</value>
+  </data>
+  <data name="AccountCantLogin" xml:space="preserve">
+    <value>Невозможно войти с данным сервисом.</value>
+  </data>
+  <data name="AccountCheckEmail" xml:space="preserve">
+    <value>Проверьте почту для сброса пароля.</value>
+  </data>
+  <data name="AccountClickToLogin" xml:space="preserve">
+    <value>Нажмите для входа</value>
+  </data>
+  <data name="AccountClickToLogout" xml:space="preserve">
+    <value>Нажмите для выхода</value>
+  </data>
+  <data name="AccountConfirmPassword" xml:space="preserve">
+    <value>Подтвердите пароль</value>
+  </data>
+  <data name="AccountConnectionForm" xml:space="preserve">
+    <value>Данные связи</value>
+  </data>
+  <data name="AccountConnectWithYour" xml:space="preserve">
+    <value>Добавьте свой {0} аккаунт.</value>
+  </data>
+  <data name="AccountEmailConfirmation" xml:space="preserve">
+    <value>Подтверждение email</value>
+  </data>
+  <data name="AccountForgotPassword" xml:space="preserve">
+    <value>Забыли пароль?</value>
+  </data>
+  <data name="AccountInputCode" xml:space="preserve">
+    <value>Введите код</value>
+  </data>
+  <data name="AccountInputEmail" xml:space="preserve">
+    <value>Введите email</value>
+  </data>
+  <data name="AccountLoginFailure" xml:space="preserve">
+    <value>Ошибка входа</value>
+  </data>
+  <data name="AccountPasswordConfirmation" xml:space="preserve">
+    <value>Подтверждение пароля</value>
+  </data>
+  <data name="AccountPasswordHasBeenReset" xml:space="preserve">
+    <value>Ваш пароль был сброшен.</value>
+  </data>
+  <data name="AccountRemember" xml:space="preserve">
+    <value>Запомнить в браузере</value>
+  </data>
+  <data name="AccountRememberMe" xml:space="preserve">
+    <value>Запомнить меня</value>
+  </data>
+  <data name="AccountResetPassword" xml:space="preserve">
+    <value>Сбросить пароль</value>
+  </data>
+  <data name="AccountResetPasswordConfirmation" xml:space="preserve">
+    <value>Подтверждение сброса пароля</value>
+  </data>
+  <data name="AccountSelectProvider" xml:space="preserve">
+    <value>Выберите провайдера аутентификации:</value>
+  </data>
+  <data name="AccountSendCodeTitle" xml:space="preserve">
+    <value>Отправить код</value>
+  </data>
+  <data name="AccountSendLinkByEmail" xml:space="preserve">
+    <value>Отправить по email</value>
+  </data>
+  <data name="AccountSignUp" xml:space="preserve">
+    <value>Зарегистрироваться</value>
+  </data>
+  <data name="AccountThankYouForEmail" xml:space="preserve">
+    <value>Спасибо за подтверждение email.</value>
+  </data>
+  <data name="AccountVerifyCode" xml:space="preserve">
+    <value>Верификация кода</value>
+  </data>
+  <data name="AccountYouSuccessfullyPassed" xml:space="preserve">
+    <value>Вы успешно прошли аутентификацию в {0}. Введите имя пользователя и нажмите кнопку "Регистрация" для завершения операции.</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Код</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Зарегистрироваться</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="AccountLoginWith" xml:space="preserve">
+    <value>Зайти с учетной записью</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="ManageAddPhoneNumber" xml:space="preserve">
+    <value>Добавить номер телефона</value>
+  </data>
+  <data name="ManageChangePassword" xml:space="preserve">
+    <value>Изменить пароль</value>
+  </data>
+  <data name="ManageConfirmPassword" xml:space="preserve">
+    <value>Подтвердите пароль</value>
+  </data>
+  <data name="ManageDeleteLogin" xml:space="preserve">
+    <value>Удалить логин {0} из Вашего аккаунта</value>
+  </data>
+  <data name="ManageExternalLogins" xml:space="preserve">
+    <value>Другие аккаунты</value>
+  </data>
+  <data name="ManageLoginWith" xml:space="preserve">
+    <value>Вход с {0}</value>
+  </data>
+  <data name="ManageNewPassword" xml:space="preserve">
+    <value>Новый пароль</value>
+  </data>
+  <data name="ManageOldPassword" xml:space="preserve">
+    <value>Старый пароль</value>
+  </data>
+  <data name="ManagePhoneNumber" xml:space="preserve">
+    <value>Номер телефона</value>
+  </data>
+  <data name="ManageRegisteredLogins" xml:space="preserve">
+    <value>Зарегистрированные аккаунты</value>
+  </data>
+  <data name="SetPassword" xml:space="preserve">
+    <value>Задать пароль</value>
+  </data>
+  <data name="ManageTwoFactorAuth" xml:space="preserve">
+    <value>Двухфакторная аутентификация</value>
+  </data>
+  <data name="ManageVerifyPhone" xml:space="preserve">
+    <value>Подтвердить номер телефона</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Номер</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Подтвердить</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="Attention" xml:space="preserve">
+    <value>Внимание</value>
+  </data>
+  <data name="EncryptionPassFailed" xml:space="preserve">
+    <value>Ошибка при установке пароля. Попробуйте установить пароль снова.</value>
+  </data>
+  <data name="EncryptionYouNeedToSetUpOrConfirm" xml:space="preserve">
+    <value>Вы должны установить и подтвердить пароль перед этой операцией.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="ErrorSorry" xml:space="preserve">
+    <value>Очень жаль, произошла ошибка при выполнении Вашего запроса.</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+  <data name="LockoutDisabled" xml:space="preserve">
+    <value>Аккаунт закрыт.</value>
+  </data>
+  <data name="LockoutTitle" xml:space="preserve">
+    <value>Аккаунт закрыт</value>
+  </data>
+  <data name="LockoutTryAgain" xml:space="preserve">
+    <value>Попробуйте еще раз позже.</value>
+  </data>
+  <data name="ProgressBarWait" xml:space="preserve">
+    <value>Пожалуйста подождите...</value>
+  </data>
+</root>

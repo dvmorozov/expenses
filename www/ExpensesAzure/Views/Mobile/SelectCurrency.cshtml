@@ -1,0 +1,79 @@
+﻿@using SocialApps.Controllers
+@using SocialApps.Models
+@using System.Web.Security.AntiXss
+
+@{
+	ViewBag.Title = Resources.Resources.SelectCurrency;
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+@*Ширина и высота устанавливаются по контейнеру.*@
+@* ReSharper disable UnknownCssClass *@
+<div class="panel panel-primary" @*style="border: none; /*height: 100%; width: 100%;"*@>
+	<div class="panel-heading" id="caption">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 1%;">
+						<div style="white-space: nowrap;">
+							@Html.Partial("TopHomeButton")
+						</div>
+					</td>
+					<td>
+						<div id="ellipsisOwner">
+							<div class="ellipsisInner" id="ellipsisInner">
+								<span class="ellipsis">
+									@Html.Raw(ViewBag.Title)
+								</span>
+							</div>
+						</div>
+					</td>
+					<td style="width: 1%;"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-body" id="framecontainer" @*style="border: none; height: 100%; width: 100%;"*@ style="position: relative;">
+		<div class="page-content">
+			<ul class="nav nav-tabs">
+				@*<li class="active"><a href="#last" data-toggle="tab">Last</a></li>*@
+				<li class="active"><a href="#chars" data-toggle="tab">@Html.Raw(Resources.Resources.SelectCurrencyChars)</a></li>
+				<li><a href="#codes" data-toggle="tab">@Html.Raw(Resources.Resources.SelectCurrencyCodes)</a></li>
+			</ul>
+
+			<div class="tab-content">
+				@*
+				<div class="tab-pane fade in active" id="last" style="margin-top: 8px;">
+					<div style="text-align: left;">
+						<ul class="nav nav-pills nav-stacked"></ul>
+					</div>
+				</div>
+				*@
+
+				<div class="tab-pane fade in active" id="chars">
+					<div style="text-align: left;">
+						<table class="table" id="currencyChars">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="tab-pane fade" id="codes">
+					<div style="text-align: left;">
+						<table class="table" id="currencyCodes">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	@Html.Partial("Tags")
+	<div class="panel-footer">
+		@Html.Partial("BottomHomeButton")
+		<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		</button>
+	</div>
+</div>
+@* ReSharper restore UnknownCssClass *@

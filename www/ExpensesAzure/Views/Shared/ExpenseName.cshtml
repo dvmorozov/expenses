@@ -1,0 +1,29 @@
+﻿
+@using SocialApps.Controllers
+@using System.Web.Security.AntiXss
+@using SocialApps.Models
+@using System.Web.Configuration
+@using System.Configuration
+
+@model SocialApps.Models.NewExpense
+
+<tr>
+	<td>
+		<div class="editor-label" style="padding: 8px;">
+			@Html.LabelFor(model => model.Name, Resources.Resources.Name)
+		</div>
+	</td>
+	<td>
+		<div class="editor-field btnEditorField" style="padding: 8px;">
+			@Html.TextBoxFor(model => model.Name, new { style = "vertical-align: middle; width: 150px;" } )
+			@Html.ValidationMessageFor(model => model.Name)
+		</div>
+
+		@if (Model.EncryptedName != null && Model.EncryptedName != string.Empty)
+		{
+			<script>
+				(function () { decryptData('Name', '@Html.Raw(Model.EncryptedName)') })();
+			</script>
+		}
+	</td>
+</tr>

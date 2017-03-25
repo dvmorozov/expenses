@@ -1,0 +1,96 @@
+﻿@*https://www.evernote.com/shard/s132/nl/14501366/89c5640f-d270-462e-a494-4db32a6c8c01*@
+@using System.Globalization
+@using SocialApps.Controllers
+@using SocialApps.Models
+@using System.Web.Security.AntiXss
+
+@{
+	ViewBag.Title = Resources.Resources.DayExpensesTitle;
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+@using (Html.BeginForm("DayExpenses", "Mobile"))
+{
+	@Html.Hidden("Day", (int)Session["Day"])
+	@Html.Hidden("Month", (int)Session["Month"])
+	@Html.Hidden("Year", (int)Session["Year"])
+
+	@* ReSharper disable UnknownCssClass *@
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<table style="width: 100%;">
+				<tbody>
+					<tr>
+						<td style="width: 1%;">
+							<div style="white-space: nowrap;">
+								@Html.Partial("TopLockIcon")
+								@Html.Partial("TopHomeButton")
+								<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
+									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								</button>
+							</div>
+						</td>
+						<td>
+							<div id="ellipsisOwner">
+								<div class="ellipsisInner" id="ellipsisInner">
+									<span class="ellipsis">
+										@Html.Raw((string)(ViewBag.Title).Trim())
+									</span>
+								</div>
+							</div>
+						</td>
+						<td style="width: 1%;">
+							<span class="badge pull-right">@Html.Raw(MobileController.TotalsToStringSession(ViewContext.Controller))</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-9">
+					@if (ViewBag.TodayExpenses != null)
+					{
+						@Html.Partial("ExpenseAccordion")
+					}
+				</div>
+				<div class="col-md-3">
+					<div>
+						<div style="display: inline-block;">
+							<div class="panel panel-default">
+								<div class="panel-heading">@Html.Raw(Resources.Resources.Date)</div>
+								<div class="panel-body">
+									<div class="single"></div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<table>
+								<tbody>
+									<tr>
+										<td>
+											<button type="submit" class="btn btn-default tooltipButton" aria-label="@Html.Raw(Resources.Resources.Refresh)" data-toggle="tooltip" data-placement="top" title="@Html.Raw(Resources.Resources.Refresh)">
+												<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+											</button>
+										</td>
+										<td style="text-align: left;">
+											<span class="label label-info" style="margin-left: 8px; visibility: hidden" id="warning"></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		@Html.Partial("Tags")
+		<div class="panel-footer">
+			@Html.Partial("BottomHomeButton")
+			<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			</button>
+		</div>
+	</div>
+	@* ReSharper restore UnknownCssClass *@
+}

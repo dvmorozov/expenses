@@ -1,0 +1,85 @@
+﻿@using System.Globalization
+@using System.Web.Security.AntiXss
+@using SocialApps.Models
+
+@*https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7*@
+@{
+	ViewBag.Title = Resources.Resources.ReportTrendByCategory;
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+<script type="text/javascript">
+	var imageURL = '@Url.Action("GetTrendByCategoryChartContentWh", "Mobile")';
+</script>
+
+@* ReSharper disable UnknownCssClass *@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 1%;">
+						<div style="white-space: nowrap;">
+							@Html.Partial("TopHomeButton")
+						</div>
+					</td>
+					<td>
+						<div id="ellipsisOwner">
+							<div class="ellipsisInner" id="ellipsisInner">
+								<span class="ellipsis" id="CategoryName">
+									@{
+										//	https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
+										var categoryName = (Session["SelectedCategory"] != null) ? ((EstimatedCategoriesByUser3_Result)Session["SelectedCategory"]).NAME.Trim() : (string)ViewBag.Title;
+										var encryptedCategoryName = (Session["SelectedCategory"] != null) ? ((EstimatedCategoriesByUser3_Result)Session["SelectedCategory"]).EncryptedName : string.Empty;
+										@Html.Raw(AntiXssEncoder.HtmlEncode(categoryName, false))
+										<script>
+											(function () { decryptData('CategoryName', '@Html.Raw(encryptedCategoryName)') })();
+										</script>
+									}
+								</span>
+							</div>
+						</div>
+					</td>
+					<td style="width: 1%;">
+						@{
+							<span class="badge pull-right" style="margin: 8px 0;">@Html.Raw(string.Format(Resources.Resources.LastYears, Session["LastMonthNumber"] != null ? ((int)Session["LastMonthNumber"] / 12).ToString(CultureInfo.InvariantCulture) : "?"))</span>
+						 }
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="panel-body">
+		<div class="btn-group">
+			@* These methods use the previously selected category. To select another category user must return to the menu page.*@
+			<button type="button" class="@Html.Raw((int)(Session["LastMonthNumber"] ?? 0) == 12 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year1)" onclick="window.location.href='@Url.Action("TrendByCategoryF", "Mobile", new {lastMonthNumber = 12})';">@Html.Raw(Resources.Resources.Year1Short)</button>
+			<button type="button" class="@Html.Raw((int)(Session["LastMonthNumber"] ?? 0) == 24 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year2)" onclick="window.location.href='@Url.Action("TrendByCategoryF", "Mobile", new {lastMonthNumber = 24})';">@Html.Raw(Resources.Resources.Year2Short)</button>
+			<button type="button" class="@Html.Raw((int)(Session["LastMonthNumber"] ?? 0) == 60 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year5)" onclick="window.location.href='@Url.Action("TrendByCategoryF", "Mobile", new {lastMonthNumber = 60})';">@Html.Raw(Resources.Resources.Year5Short)</button>
+			<button type="button" class="@Html.Raw((int)(Session["LastMonthNumber"] ?? 0) == 120 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year10)" onclick="window.location.href='@Url.Action("TrendByCategoryF", "Mobile", new {lastMonthNumber = 120})';">@Html.Raw(Resources.Resources.Year10Short)</button>
+		</div>
+		<div style="text-align: center;">
+			<div class="panel panel-default" style="display: inline;">
+				<div class="panel-heading">
+					<span id="CategoryName2">
+						@{
+							//	https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
+							@Html.Raw(AntiXssEncoder.HtmlEncode(categoryName, false))
+							<script>
+								(function () { decryptData('CategoryName2', '@Html.Raw(encryptedCategoryName)') })();
+							</script>
+						}
+					</span>
+					@Html.Raw(string.Format(Resources.Resources.TotalsByMonth, (int)Session["LastMonthNumber"] / 12))
+				</div>
+				<div class="panel-body" id="diagram_container">
+					<img id="diagram" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
+				</div>
+			</div>
+		</div>
+	</div>
+	@Html.Partial("Tags")
+	<div class="panel-footer">
+		@Html.Partial("BottomHomeButton")
+	</div>
+</div>
+@* ReSharper restore UnknownCssClass *@

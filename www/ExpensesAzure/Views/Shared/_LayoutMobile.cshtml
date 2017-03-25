@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+@*Все вложенные элементы должны растягиваться на полную высоту.*@
+<html @*style="height: 100%;"*@>
+<head>
+	<title>@ViewBag.Title</title>
+	<meta charset="UTF-8">
+	<!-- Latest compiled and minified CSS -->
+	@Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+
+	<!-- Optional theme -->
+	@Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css")
+	@Styles.Render("https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css")
+	@Styles.Render("~/Content/pickmeup.min.css")
+
+	<!-- Special styles -->
+	@Styles.Render("~/Content/Site.css")
+
+	@Scripts.Render("https://code.jquery.com/jquery-2.1.3.js")
+	@Scripts.Render("https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js")
+	@Scripts.Render("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+	@Scripts.Render("https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js")
+
+	@Scripts.Render("~/Scripts/jquery.highlight-4.closure.js")
+	@Scripts.Render("~/Scripts/jquery.highlight-4.js")
+	@Scripts.Render("~/Scripts/jquery.validate.min.js")
+	@Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+	@Scripts.Render("~/Scripts/Common.js")
+	@Scripts.Render("~/Scripts/jquery.pickmeup.js")
+	@Scripts.Render("~/Scripts/jquery.pickmeup.twitter-bootstrap.min.js")
+	@Scripts.Render("~/Scripts/sjcl.js")
+	@* Scripts.Render("~/Scripts/jquery.linq.min.js") *@
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+@* ReSharper disable UnusedParameter *@
+@* ReSharper disable StatementIsNotTerminated *@
+<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-59184456-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+@* ReSharper restore StatementIsNotTerminated *@
+@* ReSharper restore UnusedParameter *@
+</head>
+<body @*style="height: 100%;"*@>
+	<div class="page" @*style="height: 100%;"*@>
+		<div id="main" @*style="height: auto;"*@>
+			@RenderBody()
+		</div>
+	</div>
+    @RenderSection("scripts", false)
+</body>
+</html>

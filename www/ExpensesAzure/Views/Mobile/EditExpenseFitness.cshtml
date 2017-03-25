@@ -1,0 +1,144 @@
+﻿@using SocialApps.Controllers
+@model SocialApps.Models.NewExpense
+
+@{
+	ViewBag.Title = "Edit expense";
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+<script type="text/javascript">
+	var selectCurrencyUrl = '@Url.Action("SelectCurrency", "Mobile")';
+</script>
+
+@* ReSharper disable UnknownCssClass *@
+@Html.ValidationSummary(true)
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 1%;">
+						<div style="white-space: nowrap;">
+							@Html.Partial("TopLockIcon")
+							@Html.Partial("TopHomeButton")
+						</div>
+					</td>
+					<td>
+						<div id="ellipsisOwner">
+							<div class="ellipsisInner" id="ellipsisInner">
+								<span class="ellipsis" id="@Html.Raw(Model.ExpenseId)">@Html.Raw(ViewBag.Title)</span>
+							</div>
+						</div>
+					</td>
+					<td style="width: 1%;">
+						<span class="badge pull-right" style="margin-left: 5px;">@Html.Raw(MobileController.TotalsToString((int?)Session["Day"], (int?)Session["Month"], (int?)Session["Year"], (double?)Session["TodayTotal"], (double?)Session["MonthTotal"]))</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="panel-body">
+		<div class="row">
+			@using (Html.BeginForm("EditExpense", "Mobile", FormMethod.Post, new { id = "EditExpense" }))
+			{
+				@Html.Hidden("Day", Model.Day)
+				@Html.Hidden("Month", Model.Month)
+				@Html.Hidden("Year", Model.Year)
+				@Html.Hidden("Hour", Model.Hour)
+				@Html.Hidden("Min", Model.Min)
+				@Html.Hidden("Sec", Model.Sec)
+				@Html.Hidden("StartYear", Model.StartYear)
+				@Html.Hidden("StartMonth", Model.StartMonth)
+				@Html.Hidden("EndYear", Model.EndYear)
+				@Html.Hidden("EndMonth", Model.EndMonth)
+				@* https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785 *@
+				@Html.Hidden("EncryptedName", Model.EncryptedName)
+
+
+				<div class="col-md-12" style="margin-bottom: 8px;">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#expense" data-toggle="tab">Expense</a></li>
+						<li><a href="#note" data-toggle="tab">Note</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="expense" style="margin-top: 8px;">
+							<div style="text-align: left;">
+								<div style="display: inline-block; margin-top: 8px;">
+									<table>
+										<tbody>
+											<tr>
+												<td>
+													<div class="editor-label" style="padding: 8px;">
+														@Html.LabelFor(model => model.Name)
+													</div>
+												</td>
+												<td>
+													<div class="editor-field btnEditorField" style="padding: 8px;">
+														@Html.TextBoxFor(model => model.Name, new { style = "vertical-align: middle; width: 150px;" })
+														@Html.ValidationMessageFor(model => model.Name)
+													</div>
+
+													@if (Model.EncryptedName != null && Model.EncryptedName != string.Empty)
+												{
+														<script>
+														(function () { decryptData('Name', '@Html.Raw(Model.EncryptedName)') })();
+														</script>
+												}
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<div class="editor-label" style="padding: 8px;">
+														@Html.LabelFor(model => model.Cost, "Amount")
+													</div>
+												</td>
+												<td>
+													<div class="editor-field btnEditorField" style="padding: 8px;">
+														@Html.TextBoxFor(model => model.Cost, new { style = "vertical-align: middle; width: 150px;" })
+														@*Html.ValidationMessageFor(model => model.Cost)*@
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+								<div style="display: inline-block; margin-top: 8px; vertical-align: top;">
+									<div style="display: inline-block;">
+										<div class="panel panel-default" style="white-space: normal;">
+											<div class="panel-heading">Date<span class="label label-warning" style="visibility: hidden; margin-left: 8px;" id="warning"></span></div>
+											<div class="panel-body">
+												<div class="single"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="tab-pane fade" id="note">
+							<div style="text-align: left;">
+								@Html.Partial("ExpenseNote")
+							</div>
+						</div>
+					</div>
+
+					<hr />
+					<div>
+						<input class="btn btn-default" type="button" onclick="encryptData('Name', 'EncryptedName'); document.forms['EditExpense'].submit(); return true;" value="Update" />
+					</div>
+				</div>
+			}
+		</div>
+
+		@Html.Partial("Tags")
+
+		<div class="panel-footer">
+			@Html.Partial("BottomHomeButton")
+		</div>
+	</div>
+</div>
+@* ReSharper restore UnknownCssClass *@

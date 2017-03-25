@@ -1,0 +1,180 @@
+﻿@*https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7*@
+@using System.Globalization
+@using SocialApps.Models
+@using System.Web.Security.AntiXss
+
+@{
+	var dt = new DateTime((int) Session["Top10Year"], (int) Session["Top10Month"], 1);
+	ViewBag.Title = Resources.Resources.ReportTop10Of + " " + dt.ToString("MMM yyyy");
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+<script type="text/javascript">
+	//	For every page chart of each type is rendered only once until page reloading.
+	var imageURL = '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })';
+</script>
+
+@* ReSharper disable UnknownCssClass *@
+@using (Html.BeginForm("Top10", "Mobile"))
+{
+	@Html.Hidden("Month", Session["Top10Month"] != null ? ((int)Session["Top10Month"]).ToString() : "")
+	@Html.Hidden("Year", Session["Top10Year"] != null ? ((int)Session["Top10Year"]).ToString() : "")
+	@Html.Hidden("Day", "1")
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<table style="width: 100%;">
+				<tbody>
+					<tr>
+						<td style="width: 1%;">
+							<div style="white-space: nowrap;">
+								@Html.Partial("TopLockIcon")
+								@Html.Partial("TopHomeButton")
+							</div>
+						</td>
+						<td>
+							<div id="ellipsisOwner">
+								<div class="ellipsisInner" id="ellipsisInner">
+									<span class="ellipsis">
+										@Html.Raw(ViewBag.Title)
+									</span>
+								</div>
+							</div>
+						</td>
+						<td style="width: 1%;">
+							@{
+								<span class="badge pull-right" style="margin: 8px 0;">
+									<span>@Html.Raw(ViewBag.MonthTotal != null ? (int)ViewBag.MonthTotal + " | " : "")</span>
+									@Html.Raw(dt != null ? dt.ToString("MMM yyyy") : "")
+								</span>
+							 }
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-9">
+					@{
+						var list = (List<EstimatedTop10CategoriesForMonthByUser2_Result>)Session["Top10CategoriesResult"];
+						if (list.Count() != 0)
+						{
+							<table class="encrypted table">
+								<tbody>
+									<tr>
+										<th>#</th>
+										<th style="width: 100%;">@Html.Raw(Resources.Resources.Category)</th>
+										<th>@Html.Raw(Resources.Resources.Spent)</th>
+									</tr>
+
+									@for (var index = 0; index < list.Count(); index++)
+									{
+										var cat = list[index];
+										//	https://www.evernote.com/shard/s132/nl/14501366/4bc52f46-5b79-4788-824d-f3a4b0e9fad3
+										//	By default the color is unchanged.
+										//	https://www.evernote.com/shard/s132/nl/14501366/f5b79ea0-10c5-4b6d-ae26-f00858ffa936
+										var itemClass = "progress-bar";
+										if (cat.LIMIT != null)
+										{
+											switch (cat.ESTIMATION.ToLower())
+											{
+												case ("mayexceed"):
+													itemClass = "progress-bar progress-bar-warning";
+													break;
+
+												case ("exceed"):
+													itemClass = "progress-bar progress-bar-danger";
+													break;
+
+												case ("notexceed"):
+													itemClass = "progress-bar progress-bar-success";
+													break;
+											}
+										}
+										var percent = cat.LIMIT != null && cat.TOTAL != null && Math.Floor((double)cat.LIMIT) != 0 ? Math.Floor((double)cat.TOTAL * 100.0 / (double)cat.LIMIT) : 0;
+										var categoryId = "CategoryName" + index.ToString();
+
+										@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+										<tr class="trlist" onclick="window.location.href = '@Url.Action("ExpensesByCategory", "Mobile", new { categoryId = cat.ID })';" id="@Html.Raw("tr" + categoryId)">
+											<td>
+												@Html.Raw((index + 1).ToString(CultureInfo.InvariantCulture))
+											</td>
+											<td>
+												<div id="@Html.Raw(categoryId)">
+													@Html.Raw(AntiXssEncoder.HtmlEncode(cat.NAME.Trim(), false))
+												</div>
+
+												@if (cat.EncryptedName != null && cat.EncryptedName != string.Empty)
+												{
+													<script>
+														@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+														(function () { decryptListData('@Html.Raw(categoryId)', '@Html.Raw(cat.EncryptedName)') })();
+													</script>
+												}
+
+												<div class="progress" style="margin-bottom: 0;">
+													<div class="@Html.Raw(itemClass)" role="progressbar" aria-valuenow="@Html.Raw(percent)" aria-valuemin="0" aria-valuemax="100" style="width: @Html.Raw(percent < 100 ? percent : 100)%;">
+														@Html.Raw(percent)%
+													</div>
+												</div>
+											</td>
+											<td>
+												<div id="@Html.Raw("ttl" + categoryId)">
+													@Html.Raw(cat.TOTAL != null ? ((float)cat.TOTAL).ToString("F2", CultureInfo.InvariantCulture) : (0.0).ToString("F2", CultureInfo.InvariantCulture))
+												</div>
+												<div style="font-size: xx-small; text-align: right; font-style: italic;">
+													@Html.Raw(cat.LIMIT != null ? Math.Floor((float)cat.LIMIT).ToString(CultureInfo.InvariantCulture) : "NA")
+												</div>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						}
+						else
+						{
+							<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
+							<br />
+						}
+					}
+				</div>
+				<div class="col-md-3">
+					<div class="panel panel-default">
+						<div class="panel-heading">@Html.Raw(ViewBag.Title)</div>
+						<div class="panel-body" id="diagram_container">
+							<img id="diagram" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
+
+							<div class="month_calendar"></div>
+						</div>
+					</div>
+					<div>
+						<table>
+							<tbody>
+								<tr>
+									<td>
+										<div class="btn-group">
+											<button type="button" class="btn btn-default" onclick="updateDiagram(false);">@Html.Raw(Resources.Resources.Bar)</button>
+											<button type="button" class="btn btn-default" onclick="updateDiagram(true);">@Html.Raw(Resources.Resources.Pie)</button>
+										</div>
+										<button type="submit" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Refresh)">
+											<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+										</button>
+									</td>
+									<td>
+										<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="warning"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		@Html.Partial("Tags")
+		<div class="panel-footer">
+			@Html.Partial("BottomHomeButton")
+		</div>
+	</div>
+@* ReSharper restore UnknownCssClass *@
+}

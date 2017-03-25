@@ -1,0 +1,119 @@
+﻿@* https://vision.mindjet.com/action/task/14485587 *@
+@using System.Globalization
+@using SocialApps.Controllers
+@using System.Web.Security.AntiXss
+@using SocialApps.Models
+@using System.Web.Configuration
+@using System.Configuration
+
+@{
+	var expenseList = (List<TodayExpense>)ViewBag.TodayExpenses;
+}
+@if (expenseList.Any())
+{
+	<div class="panel-group" id="accordion">
+		@for (var i = 0; i < expenseList.Count(); i++)
+		{
+			var expense = expenseList[i];
+			var expenseId = "ExpenseName" + i.ToString();
+			var categoryId = "CategoryName" + i.ToString();
+
+			var panelStyle = "panel-info";
+			if (expense.Importance != null)
+			{
+				switch ((short)expense.Importance)
+				{
+					case 5:
+						panelStyle = "panel-primary";
+						break;
+
+					case 4:
+						panelStyle = "panel-success";
+						break;
+
+					case 3:
+						panelStyle = "panel-info";
+						break;
+
+					case 2:
+						panelStyle = "panel-warning";
+						break;
+
+					case 1:
+						panelStyle = "panel-danger";
+						break;
+				}
+			}
+
+			<div class="panel @Html.Raw(panelStyle)" id="@Html.Raw("tr" + expenseId)">
+				<div class="panel-heading" style="cursor: pointer;">
+					<h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" data-target="#@Html.Raw(expense.ID)">
+						<a href="#@Html.Raw(expense.ID)">
+							<text id="@Html.Raw(expenseId)">
+								@Html.Raw(AntiXssEncoder.HtmlEncode(expense.Name, false))
+							</text>
+						</a>
+						<span class="badge pull-right">
+							@Html.Raw((expense.Cost != null ? ((float)expense.Cost).ToString("F2", CultureInfo.InvariantCulture) : (0.0).ToString("F2", CultureInfo.InvariantCulture)) + (expense.Currency != null ? " " + expense.Currency : ""))
+						</span>
+						<span style="position: absolute; right: 120px;">
+							<sub>
+								<em id="@Html.Raw(categoryId)">
+									@Html.Raw(expense.CategoryName != null ? AntiXssEncoder.HtmlEncode(expense.CategoryName, false) : "")
+								</em>
+							</sub>
+						</span>
+						@if (expense.ExpenseEncryptedName != null && expense.ExpenseEncryptedName != string.Empty)
+						{
+							<script>
+								@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+								(function () { decryptListData('@Html.Raw(expenseId)', '@Html.Raw(expense.ExpenseEncryptedName)') })();
+							</script>
+						}
+						@if (expense.CategoryEncryptedName != null && expense.CategoryEncryptedName != string.Empty)
+						{
+							<script>
+								(function () { decryptData('@Html.Raw(categoryId)', '@Html.Raw(expense.CategoryEncryptedName)') })();
+							</script>
+						}
+					</h4>
+				</div>
+				<div id="@Html.Raw(expense.ID)" class="panel-collapse collapse @Html.Raw(i == 0 ? "in" : "")">
+					<div class="panel-body">
+						@Html.Raw(expense.Note != null ? AntiXssEncoder.HtmlEncode(expense.Note, false) : "")
+						<br />
+						@Html.Partial("ExpenseRatingStars", expense)
+
+						<div style="text-align: right;">
+							@* https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3 *@
+
+							@if (expense.Project != null && !expense.Project.IsEmpty())
+							{
+								<button type="button" class="btn btn-default" onclick="window.open('@Html.Raw(AntiXssEncoder.HtmlEncode(expense.Project, false))', '_blank');">
+									<span class="glyphicon glyphicon-globe"></span>
+								</button>
+							}
+
+							@if (expense.HasLinkedDocs)
+							{
+								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("DocListByExpense", "Mobile", new { expenseId = expense.ID })';">
+									<span class="glyphicon glyphicon-link"></span>
+								</button>
+							}
+							<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("EditExpense", "Mobile", new { expenseId = expense.ID })';">
+								<span class="glyphicon glyphicon-edit"></span>
+							</button>
+							<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("DeleteExpense", "Mobile", new {expenseId = expense.ID })';">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}
+else
+{
+	@Html.Partial("ExpenseLabel")
+}

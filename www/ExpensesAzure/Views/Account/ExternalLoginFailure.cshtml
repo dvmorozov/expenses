@@ -1,0 +1,34 @@
+﻿@{
+	ViewBag.Title = Resources.Resources.LoginFailure;
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+@* ReSharper disable UnknownCssClass *@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>
+						@Html.Partial("TopHomeButton")
+                    </td>
+                    <td style="width: 100%; text-align: center;">
+                        @Html.Raw(ViewBag.Title)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body">
+        <hgroup>
+            <h2>@ViewBag.Title.</h2>
+            <h3 class="text-danger">@Html.Raw(Resources.Resources.AccountCantLogin)</h3>
+        </hgroup>
+    </div>
+    <div class="panel-footer">
+        <div class="btn-group" role="group">
+			@Html.Partial("BottomHomeButton")
+        </div>
+    </div>
+</div>
+@* ReSharper restore UnknownCssClass *@

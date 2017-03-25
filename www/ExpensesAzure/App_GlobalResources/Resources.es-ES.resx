@@ -1,0 +1,634 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutForMoreInfo" xml:space="preserve">
+    <value>Para obtener más información, visite la página principal aplicación en &lt;strong&gt;&lt;a href="http://townbreath.com" target="_blank"&gt;townbreath.com&lt;/a&gt;&lt;/strong&gt; o &lt;strong&gt;&lt;a href="https://www.facebook.com/expensestracking/" target="_blank"&gt;página de la aplicación&lt;/a&gt;&lt;/strong&gt; de Facebook.</value>
+  </data>
+  <data name="AboutFromFacebook" xml:space="preserve">
+    <value>desde Facebook cuenta</value>
+  </data>
+  <data name="AboutFromGoogleChrome" xml:space="preserve">
+    <value>desde Google Chrome</value>
+  </data>
+  <data name="AboutFromMobileDevice" xml:space="preserve">
+    <value>desde dispositivos móviles por</value>
+  </data>
+  <data name="AboutThanks" xml:space="preserve">
+    <value>Gracias por su interés esta aplicación!</value>
+  </data>
+  <data name="AboutTitle" xml:space="preserve">
+    <value>Acerca de la aplicación</value>
+  </data>
+  <data name="AboutYouCanUseTheApp" xml:space="preserve">
+    <value>Puede utilizar la aplicación</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Cuenta</value>
+  </data>
+  <data name="AccountCantLogin" xml:space="preserve">
+    <value>No se puede iniciar sesión en el servicio.</value>
+  </data>
+  <data name="AccountCheckEmail" xml:space="preserve">
+    <value>Consultar el correo electrónico para restablecer la contraseña.</value>
+  </data>
+  <data name="AccountClickToLogin" xml:space="preserve">
+    <value>Haga clic aquí para iniciar sesión</value>
+  </data>
+  <data name="AccountClickToLogout" xml:space="preserve">
+    <value>Haga clic para cerrar la sesión</value>
+  </data>
+  <data name="AccountConfirmPassword" xml:space="preserve">
+    <value>Confirmar contraseña</value>
+  </data>
+  <data name="AccountConnectionForm" xml:space="preserve">
+    <value>Forma de conexión</value>
+  </data>
+  <data name="AccountConnectWithYour" xml:space="preserve">
+    <value>Conéctate con tu cuenta {0}.</value>
+  </data>
+  <data name="AccountEmailConfirmation" xml:space="preserve">
+    <value>Confirmación de correo electrónico</value>
+  </data>
+  <data name="AccountForgotPassword" xml:space="preserve">
+    <value>Se te olvidó tu contraseña?</value>
+  </data>
+  <data name="AccountInputCode" xml:space="preserve">
+    <value>Código de entrada</value>
+  </data>
+  <data name="AccountInputEmail" xml:space="preserve">
+    <value>Correo electrónico de entrada</value>
+  </data>
+  <data name="AccountLoginFailure" xml:space="preserve">
+    <value>Fallo de inicio de sesión</value>
+  </data>
+  <data name="AccountLoginWith" xml:space="preserve">
+    <value>Iniciar sesión con</value>
+  </data>
+  <data name="AccountPasswordConfirmation" xml:space="preserve">
+    <value>Confirmación de contraseña</value>
+  </data>
+  <data name="AccountPasswordHasBeenReset" xml:space="preserve">
+    <value>Tu contraseña ha sido restablecida.</value>
+  </data>
+  <data name="AccountRemember" xml:space="preserve">
+    <value>Recuerde que en el navegador</value>
+  </data>
+  <data name="AccountRememberMe" xml:space="preserve">
+    <value>Recuérdame</value>
+  </data>
+  <data name="AccountResetPassword" xml:space="preserve">
+    <value>Restablecer la contraseña</value>
+  </data>
+  <data name="AccountResetPasswordConfirmation" xml:space="preserve">
+    <value>La confirmación de restablecimiento de contraseña</value>
+  </data>
+  <data name="AccountSelectProvider" xml:space="preserve">
+    <value>Elija un proveedor de autenticación:</value>
+  </data>
+  <data name="AccountSendCodeTitle" xml:space="preserve">
+    <value>Enviar código</value>
+  </data>
+  <data name="AccountSendLinkByEmail" xml:space="preserve">
+    <value>Enviar enlace por correo electrónico</value>
+  </data>
+  <data name="AccountSignUp" xml:space="preserve">
+    <value>Regístrate</value>
+  </data>
+  <data name="AccountThankYouForEmail" xml:space="preserve">
+    <value>Gracias por la confirmación de correo electrónico usted.</value>
+  </data>
+  <data name="AccountVerifyCode" xml:space="preserve">
+    <value>Código de verificación</value>
+  </data>
+  <data name="AccountYouSuccessfullyPassed" xml:space="preserve">
+    <value>Usted ha pasado con éxito &lt;strong&gt; {0} &lt;/ strong&gt; autenticación. Introduzca su nombre de usuario y pulse el botón "Registrar" para completar la operación.</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="AddExpenseTitle" xml:space="preserve">
+    <value>Nuevo gasto</value>
+  </data>
+  <data name="AddIncomeTitle" xml:space="preserve">
+    <value>Nuevo ingreso</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Cantidad</value>
+  </data>
+  <data name="AnotherMonth" xml:space="preserve">
+    <value>Otro mes</value>
+  </data>
+  <data name="Asset" xml:space="preserve">
+    <value>Activo</value>
+  </data>
+  <data name="Attention" xml:space="preserve">
+    <value>Atención</value>
+  </data>
+  <data name="BalanceByMonth" xml:space="preserve">
+    <value>Saldo por mes para los últimos {0} años</value>
+  </data>
+  <data name="BalanceTitle" xml:space="preserve">
+    <value>Equilibrar</value>
+  </data>
+  <data name="Bar" xml:space="preserve">
+    <value>Bar</value>
+  </data>
+  <data name="Budget" xml:space="preserve">
+    <value>Presupuesto</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Contribute" xml:space="preserve">
+    <value>Contribuir</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Moneda</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="DayExpensesTitle" xml:space="preserve">
+    <value>Los gastos diarios</value>
+  </data>
+  <data name="Decrypting" xml:space="preserve">
+    <value>Descifrado</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Borrar</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalles</value>
+  </data>
+  <data name="DiscardPassword" xml:space="preserve">
+    <value>Descartar contraseña</value>
+  </data>
+  <data name="DocListTitle" xml:space="preserve">
+    <value>Documentos</value>
+  </data>
+  <data name="EditCategoryTitle" xml:space="preserve">
+    <value>Editar categoría</value>
+  </data>
+  <data name="EditExpenseTitle" xml:space="preserve">
+    <value>Expensas de edición</value>
+  </data>
+  <data name="EditIncomeTitle" xml:space="preserve">
+    <value>El ingreso de edición</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EncryptAll" xml:space="preserve">
+    <value>Todo cifrar</value>
+  </data>
+  <data name="Encrypting" xml:space="preserve">
+    <value>Cifrar</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Cifrado</value>
+  </data>
+  <data name="EncryptionIfYouChange" xml:space="preserve">
+    <value>Si cambia la contraseña sólo la información nueva se cifrará con él. Los datos antiguos se mantendrán cifrado por contraseñas anteriores.
+Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</value>
+  </data>
+  <data name="EncryptionNewData" xml:space="preserve">
+    <value>Los nuevos datos no serán cifrados, pero los datos encriptados permanecerán.</value>
+  </data>
+  <data name="EncryptionOnlyData" xml:space="preserve">
+    <value>Sólo los datos que fueron cifrados con esta contraseña se convertirán legible.</value>
+  </data>
+  <data name="EncryptionPassFailed" xml:space="preserve">
+    <value>La instalación o la confirmación fracasaron. Tratar de establecer la contraseña de nuevo.</value>
+  </data>
+  <data name="EncryptionProtect" xml:space="preserve">
+    <value>Es su responsabilidad de proteger la contraseña de ser robados. Nosotros nunca le pedirá a revelar esta contraseña.</value>
+  </data>
+  <data name="EncryptionRepeatInput" xml:space="preserve">
+    <value>Repetir la introducción de establecer una nueva contraseña. Cualquier dato subsiguientes serán cifrados con esta contraseña.</value>
+  </data>
+  <data name="EncryptionResponsibility" xml:space="preserve">
+    <value>Es su responsabilidad de recordar la contraseña. Si olvida la contraseña se perderán los datos cifrados por ella.</value>
+  </data>
+  <data name="EncryptionSetAndDecrypt" xml:space="preserve">
+    <value>Conjunto y descifrar</value>
+  </data>
+  <data name="EncryptionSetNewPassword" xml:space="preserve">
+    <value>Crear una contraseña nueva</value>
+  </data>
+  <data name="EncryptionSetUpPassword" xml:space="preserve">
+    <value>Configurar la contraseña para descifrar los datos.</value>
+  </data>
+  <data name="EncryptionWeDontStore" xml:space="preserve">
+    <value>No almacenamos esta contraseña en el servidor. Sólo está activo hasta que se cierre este sitio en su navegador.</value>
+  </data>
+  <data name="EncryptionYouNeedToSetUpOrConfirm" xml:space="preserve">
+    <value>Es necesario para establecer y confirmar la contraseña antes de la operación.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorSorry" xml:space="preserve">
+    <value>Disculpa, ocurrió un error al procesar su solicitud.</value>
+  </data>
+  <data name="Expense" xml:space="preserve">
+    <value>Gastos</value>
+  </data>
+  <data name="ExpensesByCategoryTitle" xml:space="preserve">
+    <value>Seleccione expensas</value>
+  </data>
+  <data name="FirstMonth" xml:space="preserve">
+    <value>Mes coquetea</value>
+  </data>
+  <data name="Forever" xml:space="preserve">
+    <value>Por sienpre</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Hogar</value>
+  </data>
+  <data name="Importance" xml:space="preserve">
+    <value>Importancia</value>
+  </data>
+  <data name="ImportanceReportTitle" xml:space="preserve">
+    <value>Informe de importancia en</value>
+  </data>
+  <data name="Income" xml:space="preserve">
+    <value>Ingresos</value>
+  </data>
+  <data name="LastMonth" xml:space="preserve">
+    <value>El mes pasado</value>
+  </data>
+  <data name="LastYears" xml:space="preserve">
+    <value>Última {0} años</value>
+  </data>
+  <data name="Liability" xml:space="preserve">
+    <value>Responsabilidad</value>
+  </data>
+  <data name="LockoutDisabled" xml:space="preserve">
+    <value>Cuenta deshabilitada.</value>
+  </data>
+  <data name="LockoutTitle" xml:space="preserve">
+    <value>Cuenta deshabilitada</value>
+  </data>
+  <data name="LockoutTryAgain" xml:space="preserve">
+    <value>Inténtelo de nuevo más tarde.</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="MainMenuDayExpenses" xml:space="preserve">
+    <value>Los gastos diarios</value>
+  </data>
+  <data name="MainMenuNewExpense" xml:space="preserve">
+    <value>Nuevo gasto</value>
+  </data>
+  <data name="MainMenuReports" xml:space="preserve">
+    <value>Informes</value>
+  </data>
+  <data name="MainMenuTitle" xml:space="preserve">
+    <value>Menú principal</value>
+  </data>
+  <data name="ManageAddPhoneNumber" xml:space="preserve">
+    <value>Agregar el número de teléfono</value>
+  </data>
+  <data name="ManageChangePassword" xml:space="preserve">
+    <value>Cambia la contraseña</value>
+  </data>
+  <data name="ManageConfirmPassword" xml:space="preserve">
+    <value>Confirmar contraseña</value>
+  </data>
+  <data name="ManageDeleteLogin" xml:space="preserve">
+    <value>Eliminar entrada {0} de su cuenta</value>
+  </data>
+  <data name="ManageExternalLogins" xml:space="preserve">
+    <value>Inicios de sesión externos</value>
+  </data>
+  <data name="ManageLoginWith" xml:space="preserve">
+    <value>Ingresar con {0}</value>
+  </data>
+  <data name="ManageNewPassword" xml:space="preserve">
+    <value>Nueva contraseña</value>
+  </data>
+  <data name="ManageOldPassword" xml:space="preserve">
+    <value>Contraseña anterior</value>
+  </data>
+  <data name="ManagePhoneNumber" xml:space="preserve">
+    <value>Número de teléfono</value>
+  </data>
+  <data name="ManageRegisteredLogins" xml:space="preserve">
+    <value>Inicios de sesión registrados</value>
+  </data>
+  <data name="ManageTwoFactorAuth" xml:space="preserve">
+    <value>Autenticación de dos factores</value>
+  </data>
+  <data name="ManageVerifyPhone" xml:space="preserve">
+    <value>Verificar el número de teléfono</value>
+  </data>
+  <data name="MaxFileSize" xml:space="preserve">
+    <value>El tamaño máximo del archivo es {0} megabytes</value>
+  </data>
+  <data name="MonthBudgetTitle" xml:space="preserve">
+    <value>Presupuesto mes</value>
+  </data>
+  <data name="MonthIncomeTitle" xml:space="preserve">
+    <value>Ingresos del mes</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Mensual</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Necessary" xml:space="preserve">
+    <value>Necesario</value>
+  </data>
+  <data name="NewCategoryTitle" xml:space="preserve">
+    <value>Nueva categoría</value>
+  </data>
+  <data name="NewExpenseTitle" xml:space="preserve">
+    <value>Nuevo gasto</value>
+  </data>
+  <data name="NewIncome" xml:space="preserve">
+    <value>Nuevo ingreso</value>
+  </data>
+  <data name="NewIncomeTitle" xml:space="preserve">
+    <value>Nuevo ingreso</value>
+  </data>
+  <data name="NoExpenseFound" xml:space="preserve">
+    <value>No se han encontrado para gastos</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Ninguna</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Número</value>
+  </data>
+  <data name="Overdraft" xml:space="preserve">
+    <value>Sobregiro</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Clave</value>
+  </data>
+  <data name="Pie" xml:space="preserve">
+    <value>Tarta</value>
+  </data>
+  <data name="Pleasure" xml:space="preserve">
+    <value>Placer</value>
+  </data>
+  <data name="ProgressBarWait" xml:space="preserve">
+    <value>Por favor espera...</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Proyecto</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Clasificación</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refrescar</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registro</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Registro</value>
+  </data>
+  <data name="Repeat" xml:space="preserve">
+    <value>Repetir</value>
+  </data>
+  <data name="ReportBalance" xml:space="preserve">
+    <value>Equilibrar</value>
+  </data>
+  <data name="ReportImportance" xml:space="preserve">
+    <value>Importancia</value>
+  </data>
+  <data name="ReportsTitle" xml:space="preserve">
+    <value>Informes</value>
+  </data>
+  <data name="ReportTop10Categories" xml:space="preserve">
+    <value>10 categorías principales</value>
+  </data>
+  <data name="ReportTop10Of" xml:space="preserve">
+    <value>10 categorías principales de</value>
+  </data>
+  <data name="ReportTrendByCategory" xml:space="preserve">
+    <value>Tendencia por categoría</value>
+  </data>
+  <data name="ReportTrendOverall" xml:space="preserve">
+    <value>Tendencia general</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Restablecer</value>
+  </data>
+  <data name="Rest" xml:space="preserve">
+    <value>Descanso</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="SelectCategoryTitle" xml:space="preserve">
+    <value>Categorías</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Seleccione una moneda</value>
+  </data>
+  <data name="SelectCurrencyChars" xml:space="preserve">
+    <value>Caracteres</value>
+  </data>
+  <data name="SelectCurrencyCodes" xml:space="preserve">
+    <value>Códigos</value>
+  </data>
+  <data name="SelectExpenseTitle" xml:space="preserve">
+    <value>Gastos</value>
+  </data>
+  <data name="SelectIncomeTitle" xml:space="preserve">
+    <value>Ingresos</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="SetPassword" xml:space="preserve">
+    <value>Establecer contraseña</value>
+  </data>
+  <data name="Setup" xml:space="preserve">
+    <value>Preparar</value>
+  </data>
+  <data name="ShowMore" xml:space="preserve">
+    <value>Mostrar más</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Regístrate</value>
+  </data>
+  <data name="Spent" xml:space="preserve">
+    <value>Gastado</value>
+  </data>
+  <data name="TotalsByMonth" xml:space="preserve">
+    <value>Totales por mes para la última {0} años</value>
+  </data>
+  <data name="Unnecessary" xml:space="preserve">
+    <value>Innecesario</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Subir</value>
+  </data>
+  <data name="UploadedDocuments" xml:space="preserve">
+    <value>los documentos cargados</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verificar</value>
+  </data>
+  <data name="Year1" xml:space="preserve">
+    <value>1 año</value>
+  </data>
+  <data name="Year10" xml:space="preserve">
+    <value>10 años</value>
+  </data>
+  <data name="Year10Short" xml:space="preserve">
+    <value>10 años</value>
+  </data>
+  <data name="Year1Short" xml:space="preserve">
+    <value>1 año</value>
+  </data>
+  <data name="Year2" xml:space="preserve">
+    <value>2 años</value>
+  </data>
+  <data name="Year2Short" xml:space="preserve">
+    <value>2 años</value>
+  </data>
+  <data name="Year5" xml:space="preserve">
+    <value>5 años</value>
+  </data>
+  <data name="Year5Short" xml:space="preserve">
+    <value>5 años</value>
+  </data>
+</root>

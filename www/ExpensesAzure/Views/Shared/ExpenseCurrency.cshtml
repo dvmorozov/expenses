@@ -1,0 +1,30 @@
+﻿
+@using SocialApps.Controllers
+@using System.Web.Security.AntiXss
+@using SocialApps.Models
+@using System.Web.Configuration
+@using System.Configuration
+
+@model SocialApps.Models.NewExpense
+
+<tr>
+	<td>
+		<div class="editor-label" style="padding: 8px;">
+			@Html.LabelFor(model => model.Currency, Resources.Resources.Currency)
+		</div>
+	</td>
+	<td>
+		<div style="white-space: nowrap;">
+			<div class="editor-field btnEditorField" style="padding: 8px; display: inline-block;">
+				@Html.TextBoxFor(model => model.Currency, new { style = "vertical-align: middle; width: 100px;" })
+				@*Html.ValidationMessageFor(model => model.Currency)*@
+			</div>
+			<div style="display: inline-block;">
+				<button type="button" class="btn btn-default tooltipButton" aria-label="@Html.Raw(Resources.Resources.SelectCurrency)"
+						onclick="onSelectCurrencyClick();" data-toggle="tooltip" data-placement="top" title="@Html.Raw(Resources.Resources.SelectCurrency)">
+					<span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
+	</td>
+</tr>

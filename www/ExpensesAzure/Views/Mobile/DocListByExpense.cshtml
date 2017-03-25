@@ -1,0 +1,89 @@
+﻿@* https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df *@
+
+@using SocialApps.Controllers
+@using System.Web.Security.AntiXss
+@using SocialApps.Models
+
+@model SocialApps.Models.NewExpense
+
+@{
+	ViewBag.Title = Resources.Resources.DocListTitle;
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+@* ReSharper disable UnknownCssClass *@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<table style="width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 1%;">
+						<div style="white-space: nowrap;">
+							@Html.Partial("TopLockIcon")
+							@Html.Partial("TopHomeButton")
+						</div>
+					</td>
+					<td>
+						<div id="ellipsisOwner">
+							<div class="ellipsisInner" id="ellipsisInner">
+								<span class="ellipsis" id="@Html.Raw(Model.ExpenseId)">
+									@* Don't use AntiXssEncoder here! *@
+									@* https://www.evernote.com/shard/s132/nl/14501366/c7b43d56-6d4c-40fe-a0eb-9b24275986e0 *@
+									@Html.Raw(Model.Name)
+									<script>
+										(function () { decryptData('@Html.Raw(Model.ExpenseId)', '@Html.Raw(Model.EncryptedName)') })()
+									</script>
+								</span>
+							</div>
+						</div>
+					</td>
+					<td style="width: 1%;">
+						<span class="badge pull-right" style="margin-left: 5px;">@Html.Raw(MobileController.TotalsToStringSession(ViewContext.Controller))</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="panel-body">
+		<table class="table">
+			<tbody>
+				<tr>
+					<th></th>
+					<th>
+						@Html.Raw(Resources.Resources.UploadedDocuments)
+					</th>
+					<th></th>
+				</tr>
+				@if (ViewBag.Links != null)
+				{
+					foreach (var link in ((List<LinkModel>)ViewBag.Links))
+					{
+						<tr>
+							<td style="vertical-align: middle;">
+								<button type="button" class="btn btn-default" onclick="window.location.href = '@Url.Action("Document", "Mobile", new { linkId = link.Id })'; if (event.stopPropagation) event.stopPropagation(); else event.cancelBubble = true;">
+									<span class="glyphicon glyphicon-eye-open"></span>
+								</button>
+							</td>
+
+							<td style="width: 100%; vertical-align: middle;">
+								<a href="#" onclick="window.location.href='@Url.Action("Document", "Mobile", new { linkId = link.Id })';">@Html.Raw(AntiXssEncoder.HtmlEncode(link.Name, false))</a>
+							</td>
+
+							<td style="vertical-align: middle;">
+								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("UnlinkDoc", "Mobile", new { linkId = link.Id })'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+							</td>
+						</tr>
+					}
+				}
+			</tbody>
+		</table>
+		@Html.Partial("Tags")
+	</div>
+	<div class="panel-footer">
+		@Html.Partial("BottomHomeButton")
+	</div>
+</div>
+@* ReSharper restore UnknownCssClass *@

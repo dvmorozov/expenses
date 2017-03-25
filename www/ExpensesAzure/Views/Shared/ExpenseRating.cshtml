@@ -1,0 +1,24 @@
+﻿
+@using SocialApps.Controllers
+@using System.Web.Security.AntiXss
+@using SocialApps.Models
+@using System.Web.Configuration
+@using System.Configuration
+
+@model SocialApps.Models.NewExpense
+
+<tr>
+	<td>
+		<div class="editor-label" style="padding: 8px;">
+			@Html.LabelFor(model => model.Rating, Resources.Resources.Rating)
+		</div>
+	</td>
+	<td>
+		<div class="editor-field btnEditorField" style="padding: 8px;">
+			@{
+				var l = new SelectList(new[] { "5", "4", "3", "2", "1" });
+				@Html.DropDownList("Rating", l, "None", new { style = "height: 26px; width: 150px;" });
+			}
+		</div>
+	</td>
+</tr>

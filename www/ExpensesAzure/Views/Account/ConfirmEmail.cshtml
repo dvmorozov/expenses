@@ -1,0 +1,35 @@
+﻿@{
+	ViewBag.Title = Resources.Resources.AccountEmailConfirmation;
+    Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+
+@* ReSharper disable UnknownCssClass *@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>
+						@Html.Partial("TopHomeButton")
+                    </td>
+                    <td style="width: 100%; text-align: center;">
+                        @Html.Raw(ViewBag.Title)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body">
+        <div>
+            <p>
+                @Html.Raw(Resources.Resources.AccountThankYouForEmail)&nbsp;@Html.ActionLink(Resources.Resources.AccountClickToLogin, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </p>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="btn-group" role="group">
+			@Html.Partial("BottomHomeButton")
+        </div>
+    </div>
+</div>
+@* ReSharper restore UnknownCssClass *@

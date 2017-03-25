@@ -1,0 +1,69 @@
+﻿/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.trlist {
+  border-radius: 4px;
+  color: #2A6496;
+}
+
+.trlist:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  display: block;
+  width: inherit;  /* Must be !*/
+}
+
+.ellipsisInner {
+  width: 50px;
+  /*
+      Must be equal to the constant in Common.js.
+      https://www.evernote.com/shard/s132/nl/14501366/aed21414-9496-417a-9336-a4f1b35585bf
+  */
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.hintText {
+  font-style: italic; 
+  font-size: small;
+}
+
+.btnCurrency {
+  min-width: 42px; 
+  min-height: 42px;
+}
+
+.btnCode {
+  min-width: 58px; 
+  min-height: 42px;
+}
+
+.btnEditorField {
+  min-height: 50px;
+}
+
+/* https://www.evernote.com/shard/s132/nl/14501366/748e493d-9338-41b0-adfb-a9b40cbdb4dd */
+/* https://www.evernote.com/shard/s132/nl/14501366/38cbc348-7f74-4536-ba4a-9653e751b59e */
+.sorted, .encrypted {
+    visibility: hidden;
+}
