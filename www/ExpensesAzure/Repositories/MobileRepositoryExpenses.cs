@@ -178,7 +178,11 @@ namespace SocialApps.Repositories
             DateTime? firstMonth, DateTime? lastMonth, string encryptedName, string currency, short? rating, short? importance, string project)
         {
             //  Removes all possibly existing old files.
-            DeleteCachedExpenses(userId, _db.ExpensesCategories.First(t => t.ExpenseID == expenseId).CategoryID);
+            //  Category may be absent (for example, for incoms).
+            //  https://action.mindjet.com/task/14665340
+            var categories = _db.ExpensesCategories.Where(t => t.ExpenseID == expenseId);
+            if (categories.Count() != 0)
+                DeleteCachedExpenses(userId, categories.First().CategoryID);
 
             var expense = _db.Operations.First(t => t.ID == expenseId && t.DataOwner == userId);
             expense.Date = clientExpenseDate;
