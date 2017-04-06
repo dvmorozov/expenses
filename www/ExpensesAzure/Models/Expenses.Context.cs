@@ -367,23 +367,6 @@ namespace SocialApps.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetIncomeNamesByUser_Result>("GetIncomeNamesByUser", dataOwnerParameter, yearParameter, monthParameter, dayParameter, shortListParameter);
         }
     
-        public virtual int IncomsForMonthByUser(Nullable<int> year, Nullable<int> month, Nullable<System.Guid> dataOwner)
-        {
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var dataOwnerParameter = dataOwner.HasValue ?
-                new ObjectParameter("DataOwner", dataOwner) :
-                new ObjectParameter("DataOwner", typeof(System.Guid));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("IncomsForMonthByUser", yearParameter, monthParameter, dataOwnerParameter);
-        }
-    
         public virtual int DeleteOperationByUser(Nullable<int> expenseId, Nullable<System.Guid> dataOwner)
         {
             var expenseIdParameter = expenseId.HasValue ?
@@ -397,7 +380,20 @@ namespace SocialApps.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteOperationByUser", expenseIdParameter, dataOwnerParameter);
         }
     
-        public virtual ObjectResult<IncomsForMonthByUser2_Result> IncomsForMonthByUser2(Nullable<int> year, Nullable<int> month, Nullable<System.Guid> dataOwner)
+        public virtual ObjectResult<TodayAndMonthTotalByUser2_Result> TodayAndMonthTotalByUser2(Nullable<System.DateTime> today, Nullable<System.Guid> dataOwner)
+        {
+            var todayParameter = today.HasValue ?
+                new ObjectParameter("Today", today) :
+                new ObjectParameter("Today", typeof(System.DateTime));
+    
+            var dataOwnerParameter = dataOwner.HasValue ?
+                new ObjectParameter("DataOwner", dataOwner) :
+                new ObjectParameter("DataOwner", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TodayAndMonthTotalByUser2_Result>("TodayAndMonthTotalByUser2", todayParameter, dataOwnerParameter);
+        }
+    
+        public virtual ObjectResult<IncomsForMonthByUser3_Result> IncomsForMonthByUser3(Nullable<int> year, Nullable<int> month, Nullable<System.Guid> dataOwner)
         {
             var yearParameter = year.HasValue ?
                 new ObjectParameter("Year", year) :
@@ -411,20 +407,7 @@ namespace SocialApps.Models
                 new ObjectParameter("DataOwner", dataOwner) :
                 new ObjectParameter("DataOwner", typeof(System.Guid));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<IncomsForMonthByUser2_Result>("IncomsForMonthByUser2", yearParameter, monthParameter, dataOwnerParameter);
-        }
-    
-        public virtual ObjectResult<TodayAndMonthTotalByUser2_Result> TodayAndMonthTotalByUser2(Nullable<System.DateTime> today, Nullable<System.Guid> dataOwner)
-        {
-            var todayParameter = today.HasValue ?
-                new ObjectParameter("Today", today) :
-                new ObjectParameter("Today", typeof(System.DateTime));
-    
-            var dataOwnerParameter = dataOwner.HasValue ?
-                new ObjectParameter("DataOwner", dataOwner) :
-                new ObjectParameter("DataOwner", typeof(System.Guid));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TodayAndMonthTotalByUser2_Result>("TodayAndMonthTotalByUser2", todayParameter, dataOwnerParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<IncomsForMonthByUser3_Result>("IncomsForMonthByUser3", yearParameter, monthParameter, dataOwnerParameter);
         }
     }
 }

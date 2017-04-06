@@ -11,7 +11,7 @@ namespace SocialApps.Models
 {
     using System;
     
-    public partial class IncomsForMonthByUser2_Result
+    public partial class IncomsForMonthByUser3_Result
     {
         public int ID { get; set; }
         public System.DateTime Date { get; set; }
@@ -19,5 +19,6 @@ namespace SocialApps.Models
         public string Name { get; set; }
         public string EncryptedName { get; set; }
         public string Currency { get; set; }
+        public string Note { get; set; }
     }
 }

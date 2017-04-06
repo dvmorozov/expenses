@@ -407,7 +407,7 @@ namespace SocialApps.Controllers
                 //  https://action.mindjet.com/task/14834466
                 //  https://vision.mindjet.com/action/task/14485587
                 var expensesList = 
-                   (from exp in _db.IncomsForMonthByUser2(date.Year, date.Month, user)
+                   (from exp in _db.IncomsForMonthByUser3(date.Year, date.Month, user)
                     select new TodayExpense
                     {
                         Name = exp.Name,
@@ -416,7 +416,8 @@ namespace SocialApps.Controllers
                         ID = exp.ID,
                         Date = exp.Date,
                         HasLinkedDocs = false,
-                        Currency = exp.Currency
+                        Currency = exp.Currency,
+                        Note = exp.Note
                     }).ToList();
 
                 //  The day is not relevant.
