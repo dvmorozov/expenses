@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "E:\04 - morozov\my\appsoft\expenses\www\azure\ExpensesAzure\ExpensesAzure\Models\Expenses.edmx" включено. 
+﻿// Создание кода T4 для модели "E:\04 - github repos\expenses\www\ExpensesAzure\Models\Expenses.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.
