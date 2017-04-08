@@ -4,7 +4,9 @@ using System.IO;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.Azure;
 using System.Web;
+using System.Configuration;
 
 namespace SocialApps.Repositories
 {
@@ -23,8 +25,17 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         private CloudBlobContainer GetContainerReference(Guid userId)
         {
-            var credentials = new StorageCredentials("xpnss", "XRMqVo+dBp04uliDBx0npEgxLmWxaShFMz7/KtkkC3vkZf2emrtEZtf0oW3Ov4uHM+cusN2AygtCU+HJyAEkZw==");
+            //  https://action.mindjet.com/task/14886358
+#if DEBUG
+            var credentials = new StorageCredentials();
+            var configuration = ConfigurationManager.AppSettings["StorageConnectionString"];
+            var _storageAccount = CloudStorageAccount.Parse(configuration);
+#else
+            var account = CloudConfigurationManager.GetSetting("StorageAccount");
+            var key = CloudConfigurationManager.GetSetting("StorageKey");
+            var credentials = new StorageCredentials(account, key);
             var _storageAccount = new CloudStorageAccount(credentials, true);
+#endif
             // Create the blob client.
             var blobClient = _storageAccount.CreateCloudBlobClient();
 

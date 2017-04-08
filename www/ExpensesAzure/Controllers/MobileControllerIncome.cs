@@ -406,6 +406,7 @@ namespace SocialApps.Controllers
 
                 //  https://action.mindjet.com/task/14834466
                 //  https://vision.mindjet.com/action/task/14485587
+                //  https://action.mindjet.com/task/14665340
                 var expensesList = 
                    (from exp in _db.IncomsForMonthByUser3(date.Year, date.Month, user)
                     select new TodayExpense
