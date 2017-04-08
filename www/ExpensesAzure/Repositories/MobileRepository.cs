@@ -6,7 +6,9 @@ using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.Azure;
 using System.Web;
+#if DEBUG
 using System.Configuration;
+#endif
 
 namespace SocialApps.Repositories
 {
