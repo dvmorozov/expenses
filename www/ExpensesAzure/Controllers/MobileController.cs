@@ -99,7 +99,11 @@ namespace SocialApps.Controllers
 
                 var userId = GetUserId();
                 //  For this application it's more convenient to order the list in reverse cost order.
-                var expenseList = _db.TodayExpensesSumsByUser(date, userId).OrderBy(t => t.Cost).Reverse().ToArray();
+                var expenseList = _db.TodayExpensesSumsByUser(date, userId).
+                    OrderBy(t => t.CategoryEncryptedName).
+                    ThenBy(t => t.CategoryName).
+                    ThenBy(t => t.Currency).
+                    ThenBy(t => t.Cost).Reverse().ToArray();
                 ViewBag.TodayExpenses = expenseList;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
