@@ -19,15 +19,7 @@ namespace SocialApps.Controllers
             var sessionLinks = (List<int>)(Session["SessionLinks"]);
 
             if (sessionLinks != null)
-            {
-                var userId = GetUserId();
-                var links =
-                    (from link in _db.Links
-                        where sessionLinks.Contains(link.ID) && (link.DataOwner == userId)
-                        select new LinkModel { Id = link.ID, URL = link.URL, Name = link.Name }).ToList();
-
-                ViewBag.Links = links;
-            }
+                ViewBag.Links = _repository.GetLinks(GetUserId(), sessionLinks);
 
             Session["InitialPageWithLinks"] = returnToMethod;
             Session["InitialPageWithLinksData"] = returnToParams;
@@ -80,17 +72,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
                 var expenseId = (int)Session["ExpenseId"];
-
-                var userId = GetUserId();
-                var links =
-                    (from link in _db.ExpensesLinks
-                     where (link.LinkID == linkId) && (link.ExpenseID == expenseId)
-                     select link);
-
-                foreach(var link in links)
-                    _db.ExpensesLinks.Remove(link);
-
-                _db.SaveChanges();
+                _repository.RemoveLinks(linkId, expenseId);
 
                 return RedirectToAction("DocListByExpense", new { expenseId = expenseId });
             }
@@ -102,55 +84,37 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
-        private List<LinkModel> GetLinkedDocs(int expenseId)
-        {
-            var userId = GetUserId();
-
-            return
-                (from link in _db.Links
-                 join linkExp in _db.ExpensesLinks on link.ID equals linkExp.LinkID
-                 where (linkExp.ExpenseID == expenseId) && (link.DataOwner == userId)
-                 select new LinkModel { Id = link.ID, URL = link.URL, Name = link.Name }).ToList();
-        }
-
-        //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
-        private bool HasLinkedDocs(int expenseId)
-        {
-            return GetLinkedDocs(expenseId).Count() != 0;
-        }
-
-        //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
         public ActionResult DocListByExpense(int expenseId)
         {
             try
             {
-                var links = GetLinkedDocs(expenseId);
+                var userId = GetUserId();
+                var links = _repository.GetLinkedDocs(expenseId, userId);
                 ViewBag.Links = links;
 
-                var expense = _db.Expenses.Single(t => t.ID == expenseId);
+                var expense = _repository.GetExpense(userId, expenseId);
                 Session["ExpenseId"] = expenseId;
 
-                return View("DocListByExpense",
-                    new NewExpense
-                    {
-                        ExpenseId = expenseId,
-                        Name = expense.Name.Trim(),
-                        Cost = (expense.Cost != null ? ((double)expense.Cost).ToString() : string.Empty),
-                        Currency = expense.Currency,
-                        Day = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Day : -1),
-                        EncryptedName = expense.EncryptedName,
-                        EndMonth = (expense.LastMonth != null ? ((DateTime)expense.LastMonth).Month : -1),
-                        EndYear = (expense.LastMonth != null ? ((DateTime)expense.LastMonth).Year : -1),
-                        Forever = expense.LastMonth == null,
-                        Hour = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Hour : -1),
-                        Min = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Minute : -1),
-                        Month = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Month : -1),
-                        Monthly = expense.Monthly != null ? (bool)expense.Monthly : false,
-                        Sec = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Second : -1),
-                        StartMonth = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Month : -1),
-                        StartYear = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Year : -1),
-                        Year = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Year : -1)
-                    });
+                return View("DocListByExpense", new NewExpense
+                {
+                    ExpenseId = expenseId,
+                    Name = expense.Name.Trim(),
+                    Cost = (expense.Cost != null ? ((double)expense.Cost).ToString() : string.Empty),
+                    Currency = expense.Currency,
+                    Day = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Day : -1),
+                    EncryptedName = expense.EncryptedName,
+                    EndMonth = (expense.LastMonth != null ? ((DateTime)expense.LastMonth).Month : -1),
+                    EndYear = (expense.LastMonth != null ? ((DateTime)expense.LastMonth).Year : -1),
+                    Forever = expense.LastMonth == null,
+                    Hour = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Hour : -1),
+                    Min = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Minute : -1),
+                    Month = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Month : -1),
+                    Monthly = expense.Monthly != null ? (bool)expense.Monthly : false,
+                    Sec = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Second : -1),
+                    StartMonth = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Month : -1),
+                    StartYear = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Year : -1),
+                    Year = (expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Year : -1)
+                });
             }
             catch (Exception e)
             {
@@ -167,9 +131,7 @@ namespace SocialApps.Controllers
                 var userId = GetUserId();
 
                 //  https://action.mindjet.com/task/14509395
-                string fileName;
-                MemoryStream stream;
-                _repository.GetDocument(GetUserId(), linkId, out stream, out fileName);
+                _repository.GetDocument(GetUserId(), linkId, out MemoryStream stream, out string fileName);
 
                 var contentType = System.Net.Mime.MediaTypeNames.Application.Octet;
                 switch (Path.GetExtension(fileName).ToLower())

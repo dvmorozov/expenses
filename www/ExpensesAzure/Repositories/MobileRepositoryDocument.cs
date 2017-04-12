@@ -2,6 +2,7 @@
 using SocialApps.Models;
 using System.Linq;
 using System.IO;
+using System.Collections.Generic;
 
 namespace SocialApps.Repositories
 {
@@ -27,6 +28,34 @@ namespace SocialApps.Repositories
             _db.SaveChanges();
 
             linkId = link.ID;
+        }
+
+        public List<LinkModel> GetLinks(Guid userId, List<int> sessionLinks)
+        {
+            var links =
+                (from link in _db.Links
+                 where sessionLinks.Contains(link.ID) && (link.DataOwner == userId)
+                 select new LinkModel { Id = link.ID, URL = link.URL, Name = link.Name }).ToList();
+
+            return links;
+        }
+
+        public void RemoveLinks(int linkId, int expenseId)
+        {
+            var links =
+                (from link in _db.ExpensesLinks
+                 where (link.LinkID == linkId) && (link.ExpenseID == expenseId)
+                 select link);
+
+            foreach (var link in links)
+                _db.ExpensesLinks.Remove(link);
+
+            _db.SaveChanges();
+        }
+
+        public Expenses GetExpense(Guid userId, int expenseId)
+        {
+            return _db.Expenses.Single(t => t.DataOwner == userId && t.ID == expenseId);
         }
     }
 }

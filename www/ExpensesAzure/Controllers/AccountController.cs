@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,7 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SocialApps.Models;
-using SocialApps.Migrations;
+using SocialApps.Repositories;
+using System.Web.Routing;
 
 namespace SocialApps.Controllers
 {
@@ -19,25 +18,14 @@ namespace SocialApps.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        //  https://www.evernote.com/shard/s132/nl/14501366/003838f7-d618-449e-836b-11b8a26669c2
-        private readonly ExpensesEntities _db = new ExpensesEntities();
+        //  https://action.mindjet.com/task/14509395
+        private MobileRepository _repository;
 
-        //  https://www.evernote.com/shard/s132/nl/14501366/003838f7-d618-449e-836b-11b8a26669c2
-        private void FillInitialCategories(Guid userId)
-        { 
-            string[] catNames = {"Pets", "Food", "Fuel", "Home", "Car", "Loans", "Mobile", "Internet", "Clothing", "Medicine", 
-                                 "Gifts", "Amusements", "Taxes", "Interior", "Household", "Transport", "Education", "Sport"};
-
-            foreach (var cat in catNames.OrderBy(t => t)) {
-                _db.Categories.Add(
-                    new Categories
-                    {
-                        Name = cat,
-                        DataOwner = userId
-                    }
-                    );
-                _db.SaveChanges();
-            }
+        //  Session object isn't initialized at the time of controller construction.
+        protected override void Initialize(RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+            _repository = new MobileRepository(requestContext.HttpContext.Session);
         }
 
         public AccountController()
@@ -241,7 +229,7 @@ namespace SocialApps.Controllers
                         {
                             await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                             //  https://www.evernote.com/shard/s132/nl/14501366/003838f7-d618-449e-836b-11b8a26669c2
-                            FillInitialCategories(Guid.Parse(user.Id));
+                            _repository.FillInitialCategories(Guid.Parse(user.Id));
                         }
                     
                         // Дополнительные сведения о том, как включить подтверждение учетной записи и сброс пароля, см. по адресу: http://go.microsoft.com/fwlink/?LinkID=320771
@@ -567,7 +555,7 @@ namespace SocialApps.Controllers
                                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                                 //  https://www.evernote.com/shard/s132/nl/14501366/253a0829-fd5d-48f8-b013-5ff376cb8fe8
                                 //  https://www.evernote.com/shard/s132/nl/14501366/003838f7-d618-449e-836b-11b8a26669c2
-                                FillInitialCategories(Guid.Parse(user.Id));
+                                _repository.FillInitialCategories(Guid.Parse(user.Id));
 
                                 return RedirectToLocal(returnUrl);
                             }
@@ -623,7 +611,7 @@ namespace SocialApps.Controllers
         {
             if (disposing)
             {
-                if (_db != null) _db.Dispose();
+                _repository.Dispose();
 
                 if (_userManager != null)
                 {

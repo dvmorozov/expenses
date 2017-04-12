@@ -24,7 +24,7 @@ namespace SocialApps.Repositories
             return (_session[SelectEstimatedCategoriesPrefix] != null);
         }
 
-        //  Returns cached categories.
+        //  Return cached categories.
         public EstimatedCategoriesByUser3_Result[] GetCategories()
         {
             return ((SelectedEstimatedCategories)_session[SelectEstimatedCategoriesPrefix]).List;
@@ -51,7 +51,7 @@ namespace SocialApps.Repositories
             string json;
             if (!DownloadText(userId, out json, fileName))
             {
-                //  Removes all possibly existing old files.
+                //  Remove all possibly existing old files.
                 DeleteCachedCategories(userId);
 
                 //  https://action.mindjet.com/task/144796941
