@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using SocialApps.Models;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace SocialApps.Repositories
 {
@@ -55,11 +56,7 @@ namespace SocialApps.Repositories
                 DeleteCachedCategories(userId);
 
                 //  https://action.mindjet.com/task/144796941
-                var categoryList =
-                    ((shortList != null && (bool)shortList) ?
-                    _db.EstimatedCategoriesByUser3(date.Year, date.Month, date.Day, userId, true)
-                    :
-                    _db.EstimatedCategoriesByUser3(date.Year, date.Month, date.Day, userId, false)).ToArray();
+                var categoryList = _db.EstimatedCategoriesByUser3(date.Year, date.Month, date.Day, userId, shortList != null && (bool)shortList).ToArray();
 
                 //  https://action.mindjet.com/task/14509395
                 //  Converting to JSON.
@@ -91,6 +88,46 @@ namespace SocialApps.Repositories
             var manager = ((IObjectContextAdapter)_db).ObjectContext.ObjectStateManager;
             manager.ChangeObjectState(cat, EntityState.Modified);
             _db.SaveChanges();
+        }
+
+        public CategoryModel GetCategory(int categoryId)
+        {
+            var category = _db.Categories.Single(t => t.ID == categoryId);
+            var model = new CategoryModel
+            {
+                Name = category.Name.Trim(),
+                Limit = category.Limit != null ? ((float)category.Limit).ToString(CultureInfo.InvariantCulture) : "",
+                Id = categoryId,
+                EncryptedName = category.EncryptedName
+            };
+            return model;
+        }
+
+        public void UpdateCategories(Guid userId, EncryptedList list)
+        {
+            foreach (var cat in list.List)
+            {
+                _db.UpdateCategoryByUser(cat.Id, cat.OpenText, cat.EncryptedText, userId);
+            }
+        }
+
+        //  https://www.evernote.com/shard/s132/nl/14501366/003838f7-d618-449e-836b-11b8a26669c2
+        public void FillInitialCategories(Guid userId)
+        {
+            string[] catNames = {"Pets", "Food", "Fuel", "Home", "Car", "Loans", "Mobile", "Internet", "Clothing", "Medicine",
+                                 "Gifts", "Amusements", "Taxes", "Interior", "Household", "Transport", "Education", "Sport"};
+
+            foreach (var cat in catNames.OrderBy(t => t))
+            {
+                _db.Categories.Add(
+                    new Categories
+                    {
+                        Name = cat,
+                        DataOwner = userId
+                    }
+                );
+                _db.SaveChanges();
+            }
         }
     }
 }

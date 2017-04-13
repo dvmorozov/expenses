@@ -578,7 +578,7 @@ namespace SocialApps.Controllers
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                 if (expensesList.Count(t => t.Id == expenseId) != 0)
                 {
-                    expense = _repository.GetExpense(expenseId);
+                    expense = _repository.GetExpense(GetUserId(), expenseId);
 
                     //  https://www.evernote.com/shard/s132/nl/14501366/4d030991-c8d8-401a-a1a1-34ebe4b01a05 
                     if (expense.Monthly ?? false)
