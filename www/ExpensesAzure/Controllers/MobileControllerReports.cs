@@ -239,8 +239,7 @@ namespace SocialApps.Controllers
             {
                 var res = (List<MonthImportance>)Session["ImportanceResult"];
                 //  Gets chart object.
-                var myChart = RenderImportanceChart(res, width, height, (int)Session["Top10Year"],
-                                               (int)Session["Top10Month"], pie);
+                var myChart = RenderImportanceChart(res, width, height, (int)Session["Top10Year"], (int)Session["Top10Month"], pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
             catch

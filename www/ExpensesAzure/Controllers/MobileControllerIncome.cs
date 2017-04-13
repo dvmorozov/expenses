@@ -277,14 +277,13 @@ namespace SocialApps.Controllers
                 if (string.IsNullOrEmpty(cost) || string.IsNullOrEmpty(name))
                     return RedirectToAction("NewIncome");
 
-                double amount;
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                 //  Allows both comma and point as decimal separator.
                 cost = cost.Replace(',', '.');
                 //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                 cost = cost.Replace(" ", string.Empty);
 
-                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount))
+                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
                     return RedirectToAction("NewIncome");
 
                 var expenseName = HttpUtility.HtmlDecode(name);

@@ -639,14 +639,13 @@ namespace SocialApps.Controllers
                     //  https://action.mindjet.com/task/14479694
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
-                double amount;
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                 //  Allows both comma and point as decimal separator.
                 cost = cost.Replace(',', '.');
                 //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                 cost = cost.Replace(" ", string.Empty);
 
-                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount))
+                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
                     //  https://action.mindjet.com/task/14479694
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
@@ -738,9 +737,8 @@ namespace SocialApps.Controllers
                         //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                         model.Limit = model.Limit.Replace(" ", string.Empty);
 
-                        double l;
 
-                        if (!double.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out l))
+                        if (!double.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double l))
                             return RedirectToAction("NewCategory");
                         limit = l;
                     }
@@ -793,9 +791,8 @@ namespace SocialApps.Controllers
                         //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                         model.Limit = model.Limit.Replace(" ", string.Empty);
 
-                        float l;
 
-                        if (!float.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out l))
+                        if (!float.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float l))
                             return RedirectToAction("EditCategory", model);
 
                         limit = l;
@@ -858,14 +855,13 @@ namespace SocialApps.Controllers
                 if (string.IsNullOrEmpty(cost) || string.IsNullOrEmpty(name))
                     return RedirectToAction("NewExpense");
 
-                double amount;
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                 //  Allows both comma and point as decimal separator.
                 cost = cost.Replace(',', '.');
                 //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                 cost = cost.Replace(" ", string.Empty);
 
-                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount))
+                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
                     return RedirectToAction("NewExpense");
 
                 if (Session["CategoryId"] == null)
