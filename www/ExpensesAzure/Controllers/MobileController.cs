@@ -611,7 +611,7 @@ namespace SocialApps.Controllers
                         Name = expense != null && expense.Name != null ? expense.Name.Trim() : null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
                         //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
-                        Importance = expense != null && expense.Importance != null ? expense.Importance : (short)MobileRepository.ExpenseImportance.Necessary,
+                        Importance = expense != null && expense.Importance != null ? expense.Importance : (short)ExpenseImportance.Necessary,
                         Rating = expense != null && expense.Rating != null ? expense.Rating : null,
                         Note = expense != null && expense.Note != null ? expense.Note.Trim() : null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3

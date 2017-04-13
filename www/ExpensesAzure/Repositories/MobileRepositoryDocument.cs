@@ -8,6 +8,8 @@ using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage;
 #if DEBUG
 using System.Configuration;
+#else
+using Microsoft.Azure;
 #endif
 
 namespace SocialApps.Repositories

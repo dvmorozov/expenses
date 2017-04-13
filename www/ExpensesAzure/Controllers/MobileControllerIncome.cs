@@ -56,7 +56,7 @@ namespace SocialApps.Controllers
                         Name = income != null && income.Name != null ? income.Name.Trim() : null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
                         //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
-                        Importance = income != null && income.Importance != null ? income.Importance : (short)MobileRepository.ExpenseImportance.Necessary,
+                        Importance = income != null && income.Importance != null ? income.Importance : (short)ExpenseImportance.Necessary,
                         Rating = income != null && income.Rating != null ? income.Rating : null,
                         Note = income != null && income.Note != null ? income.Note.Trim() : null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
