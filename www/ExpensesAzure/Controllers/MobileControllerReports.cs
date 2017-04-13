@@ -5,6 +5,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Diagnostics;
 using SocialApps.Models;
+using SocialApps.Repositories;
 
 namespace SocialApps.Controllers
 {
@@ -42,7 +43,7 @@ namespace SocialApps.Controllers
             var yValues = items.Select(t => t.TOTAL).ToList();
 
             //  Attempt to create different colors. It works but looks poorly.
-            //  Save for subsequent reuse.
+            //  Saved for possible subsequent improvement.
             /*
             var positions = new int[items.Count()];
 
@@ -208,12 +209,13 @@ namespace SocialApps.Controllers
         {
             try
             {
+                var userId = GetUserId();
                 var now = (month != null && year != null) ? new DateTime((int)year, (int)month, 1) : DateTime.Now;
                 Session["Top10Month"] = now.Month;
                 Session["Top10Year"] = now.Year;
-                Session["Top10CategoriesResult"] = _db.EstimatedTop10CategoriesForMonthByUser2(now.Year, now.Month, now.Day, GetUserId()).ToList();
+                Session["Top10CategoriesResult"] = _repository.GetTop10Categories(userId, now);
 
-                var totals = _db.TodayAndMonthTotalByUser2(now, GetUserId()).FirstOrDefault();
+                var totals = _repository.GetTodayAndMonthTotals(userId, now);
                 //  https://action.mindjet.com/task/14672437
                 PutTotalsIntoSession(totals);
 
@@ -237,8 +239,7 @@ namespace SocialApps.Controllers
             {
                 var res = (List<MonthImportance>)Session["ImportanceResult"];
                 //  Gets chart object.
-                var myChart = RenderImportanceChart(res, width, height, (int)Session["Top10Year"],
-                                               (int)Session["Top10Month"], pie);
+                var myChart = RenderImportanceChart(res, width, height, (int)Session["Top10Year"], (int)Session["Top10Month"], pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
             catch
@@ -294,42 +295,9 @@ namespace SocialApps.Controllers
 
                 Session["Top10Month"] = now.Month;
                 Session["Top10Year"] = now.Year;
-                Session["ImportanceResult"] = 
-                    (
-                    from groups in
-                        (
-                            from exp in 
-                            (
-                                from exp in _db.Expenses
-                                where (exp.DataOwner == userId) &&
-                                    (
-                                        ((exp.Monthly == null || !(bool)exp.Monthly) &&
-                                        exp.Date.Month == now.Month && exp.Date.Year == now.Year) ||
-                                        ((exp.Monthly != null && (bool)exp.Monthly) &&
-                                        now >= exp.FirstMonth && (exp.LastMonth == null || now <= exp.LastMonth))
-                                    )
-                                select new MonthImportance
-                                {
-                                    Sum = exp.Cost != null ? (double)exp.Cost : 0.0,
-                                    Importance = exp.Importance != null ? (short)exp.Importance : (short)ExpenseImportance.Necessary
-                                }
-                            )
-                            group exp by exp.Importance into g
-                            select new MonthImportance
-                            {
-                                Sum = g.Sum(t => t.Sum),
-                                Importance = g.FirstOrDefault().Importance
-                            }
-                        )
-                        orderby groups.Importance descending
-                        select new MonthImportance
-                        {
-                            Sum = groups.Sum,
-                            Importance = groups.Importance
-                        }
-                    ).ToList();
+                Session["ImportanceResult"] = _repository.GetMonthImportances(userId, now);
 
-                var totals = _db.TodayAndMonthTotalByUser2(now, GetUserId()).FirstOrDefault();
+                var totals = _repository.GetTodayAndMonthTotals(userId, now); 
                 //  https://action.mindjet.com/task/14672437
                 PutTotalsIntoSession(totals);
 
@@ -350,7 +318,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                Session["LastYearTotalExpensesResult"] = _db.LastYearTotalExpensesByMonthByUser(lastMonthNumber, GetUserId()).ToList();
+                Session["LastYearTotalExpensesResult"] = _repository.GetLastYearTotalExpensesByMonth(GetUserId(), lastMonthNumber);
                 Session["LastMonthNumber"] = lastMonthNumber;
                 return View("Trend");
             }
@@ -398,7 +366,7 @@ namespace SocialApps.Controllers
                 if (categoryId == null)
                     return RedirectToAction("TrendByCategory", new {lastMonthNumber = lmn});
 
-                Session["LastYearByCategoryExpensesResult"] = _db.LastYearCategoryExpensesByMonthByUser((int)categoryId, (int)lmn, GetUserId()).ToList();
+                Session["LastYearByCategoryExpensesResult"] = _repository.GetLastYearCategoryExpensesByMonth(GetUserId(), (int)categoryId, (int)lmn);
                 
                 return View("TrendByCategory");
             }
@@ -451,7 +419,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                Session["LastYearBalanceResult"] = _db.LastYearBalanceByMonthByUser(lastMonthNumber, GetUserId()).ToList();
+                Session["LastYearBalanceResult"] = _repository.GetLastYearBalanceByMonth(GetUserId(), lastMonthNumber);
                 Session["LastMonthNumber"] = lastMonthNumber;
                 return View("Balance");
             }

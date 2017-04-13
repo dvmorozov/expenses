@@ -12,20 +12,9 @@ using System.Web.Routing;
 
 namespace SocialApps.Controllers
 {
-    //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
-    public enum ExpenseImportance
-    {
-        Liability = 5,
-        Asset = 4,
-        Necessary = 3,
-        Pleasure = 2,
-        Unnecessary = 1
-    }
-
     [Authorize]
     public partial class MobileController : PersonalizedController
     {
-        private readonly ExpensesEntities _db = new ExpensesEntities();
         //  https://action.mindjet.com/task/14509395
         private MobileRepository _repository;
 
@@ -33,12 +22,12 @@ namespace SocialApps.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            _repository = new MobileRepository(_db, requestContext.HttpContext.Session);
+            _repository = new MobileRepository(requestContext.HttpContext.Session);
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (_db != null) _db.Dispose();
+            if (disposing) _repository.Dispose();
             base.Dispose(disposing);
         }
 
@@ -56,7 +45,7 @@ namespace SocialApps.Controllers
                 //  https://www.evernote.com/shard/s132/nl/14501366/c707248c-3cab-47d7-838a-ec2b791e4ea7
                 if (User.IsInRole("User") || User.IsInRole("Administrator"))
                 {
-                    var totals = _db.MonthBudgetByUser(date, GetUserId()).FirstOrDefault();
+                    var totals = _repository.GetMonthBudget(GetUserId(), date);
                     if (totals != null)
                     {
                         ViewBag.MonthBudget = totals.MonthBudget;
@@ -99,11 +88,7 @@ namespace SocialApps.Controllers
 
                 var userId = GetUserId();
                 //  For this application it's more convenient to order the list in reverse cost order.
-                var expenseList = _db.TodayExpensesSumsByUser(date, userId).
-                    OrderBy(t => t.CategoryEncryptedName).
-                    ThenBy(t => t.CategoryName).
-                    ThenBy(t => t.Currency).
-                    ThenBy(t => t.Cost).Reverse().ToArray();
+                var expenseList = _repository.GetDayExpenseTotals(userId, date);
                 ViewBag.TodayExpenses = expenseList;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
@@ -115,7 +100,7 @@ namespace SocialApps.Controllers
                 Session["Year"] = date.Year;
 
                 //  https://action.mindjet.com/task/14672437
-                PutTotalsIntoSession(_db.TodayAndMonthTotalByUser2(date, GetUserId()).FirstOrDefault());
+                PutTotalsIntoSession(_repository.GetTodayAndMonthTotals(userId, date));
 
                 var pairs = new List<EncryptedPair>();
 
@@ -156,39 +141,7 @@ namespace SocialApps.Controllers
 
                 var userId = GetUserId();
 
-                //  For this application it's more convenient to order the list in reverse cost order.
-                //  https://www.evernote.com/shard/s132/nl/14501366/49348fc0-3dc6-45cb-8425-6fe72042eac2
-                var todayExpenses = (from exp in _db.Expenses
-                            join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
-                            join cat in _db.Categories on expCat.CategoryID equals cat.ID
-                            where (exp.DataOwner == userId) && 
-                                (
-                                    ((exp.Monthly == null || !(bool)exp.Monthly) &&
-                                    exp.Date.Day == date.Day && exp.Date.Month == date.Month && exp.Date.Year == date.Year) || 
-                                    ((exp.Monthly != null && (bool)exp.Monthly) &&
-                                    exp.Date.Day == date.Day && date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
-                                )
-                            orderby exp.ID descending
-                            select new TodayExpense { 
-                                CategoryEncryptedName = cat.EncryptedName, 
-                                CategoryName = cat.Name,
-                                Cost = exp.Cost,
-                                Currency = exp.Currency,
-                                Date = exp.Date,
-                                ExpenseEncryptedName = exp.EncryptedName,
-                                ID = exp.ID,
-                                Name = exp.Name,
-                                Note = exp.Note,
-                                Rating = exp.Rating,
-                                Importance = exp.Importance,
-                                //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
-                                Project = exp.Project
-                                }).ToList();
-
-                //  Must be outside LINQ expression.
-                foreach (var e in todayExpenses)
-                    e.HasLinkedDocs = HasLinkedDocs(e.ID);
-
+                var todayExpenses = _repository.GetDayExpenses(userId, date);
                 ViewBag.TodayExpenses = todayExpenses;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
@@ -200,7 +153,7 @@ namespace SocialApps.Controllers
                 Session["Year"] = date.Year;
 
                 //  https://action.mindjet.com/task/14672437
-                PutTotalsIntoSession(_db.TodayAndMonthTotalByUser2(date, GetUserId()).FirstOrDefault());
+                PutTotalsIntoSession(_repository.GetTodayAndMonthTotals(userId, date));
 
                 return View();
             }
@@ -218,7 +171,7 @@ namespace SocialApps.Controllers
             {
                 var date = (month != null && year != null) ? new DateTime((int)year, (int)month, 1) : DateTime.Now;
 
-                var budget = _db.MonthBudgetByUser(date, GetUserId()).FirstOrDefault();
+                var budget = _repository.GetMonthBudget(GetUserId(), date);
                 if (budget != null)
                 {
                     var t = budget.MonthTotal ?? 0;
@@ -270,7 +223,7 @@ namespace SocialApps.Controllers
                 if (!decimal.TryParse(b, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out dBudget))
                     return RedirectToAction("MonthBudget");
 
-                _db.AddMonthBudgetByUser2((int)year, (int)month, dBudget, GetUserId(), currency);
+                _repository.AddMonthBudget((int)year, (int)month, dBudget, GetUserId(), currency);
 
                 return RedirectToAction("Index");
             }
@@ -426,7 +379,7 @@ namespace SocialApps.Controllers
                 ViewBag.ItemCount = categoryList.Count();
 
                 //  https://action.mindjet.com/task/14672437
-                PutTotalsIntoSession(_db.TodayAndMonthTotalByUser2(date, userId).FirstOrDefault());
+                PutTotalsIntoSession(_repository.GetTodayAndMonthTotals(userId, date));
             
                 //  Category name is used to form the quick link.
                 if (Session["CategoryId"] != null)
@@ -512,27 +465,12 @@ namespace SocialApps.Controllers
                     throw new Exception("Category hasn't selected.");
 
                 var cat = (int)Session["CategoryId"];
-                var user = GetUserId();
 
                 //  https://action.mindjet.com/task/14479694
                 var date = (Session["ClientExpenseDate"] != null ? (DateTime)Session["ClientExpenseDate"] : DateTime.Now);
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
-                var expensesList =
-                    (
-                    from exp in
-                        //  https://action.mindjet.com/task/14479694
-                        _db.GetExpenseNamesWithCategoryByUser5(cat, user, date.Year, date.Month, date.Day, false)
-                    select new ExpenseNameWithCategory
-                        {
-                            Count = 1, //exp.Count,
-                            EncryptedName = exp.EncryptedName,
-                            Name = exp.Name,
-                            Id = exp.Id
-                        }
-                    ).ToArray();
-
-                result.ExpenseList = expensesList;
+                result.ExpenseList = _repository.GetExpenseNamesWithCategory(GetUserId(), date, cat);
                 result.Success = true;
                 result.Message = "Ok.";
             }
@@ -634,13 +572,13 @@ namespace SocialApps.Controllers
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
                 var expensesList = (ExpenseNameWithCategory[])Session["GetExpenseNamesResult"];
-                var expensesId = (int)Session["ExpenseId"];
+                var expenseId = (int)Session["ExpenseId"];
 
                 Expenses expense = null;
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
-                if (expensesList.Count(t => t.Id == expensesId) != 0)
+                if (expensesList.Count(t => t.Id == expenseId) != 0)
                 {
-                    expense = _db.Expenses.First(t => t.ID == expensesId);
+                    expense = _repository.GetExpense(GetUserId(), expenseId);
 
                     //  https://www.evernote.com/shard/s132/nl/14501366/4d030991-c8d8-401a-a1a1-34ebe4b01a05 
                     if (expense.Monthly ?? false)
@@ -668,7 +606,7 @@ namespace SocialApps.Controllers
                         Min = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Minute : -1),
                         Sec = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Second : -1),
                         //  https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
-                        ExpenseId = expensesId,
+                        ExpenseId = expenseId,
                         EncryptedName = expense != null ? expense.EncryptedName : null,
                         Name = expense != null && expense.Name != null ? expense.Name.Trim() : null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
@@ -701,14 +639,13 @@ namespace SocialApps.Controllers
                     //  https://action.mindjet.com/task/14479694
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
-                double amount;
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                 //  Allows both comma and point as decimal separator.
                 cost = cost.Replace(',', '.');
                 //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                 cost = cost.Replace(" ", string.Empty);
 
-                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount))
+                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
                     //  https://action.mindjet.com/task/14479694
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
@@ -744,7 +681,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var income = _db.Operations.First(t => t.ID == expenseId).Income;
+                var income = _repository.IsIncome(expenseId);
 
                 //  https://action.mindjet.com/task/14509395
                 _repository.DeleteExpense(expenseId, GetUserId());
@@ -800,9 +737,8 @@ namespace SocialApps.Controllers
                         //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                         model.Limit = model.Limit.Replace(" ", string.Empty);
 
-                        double l;
 
-                        if (!double.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out l))
+                        if (!double.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double l))
                             return RedirectToAction("NewCategory");
                         limit = l;
                     }
@@ -830,15 +766,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var category = _db.Categories.Single(t => t.ID == categoryId);
-                var model = new CategoryModel
-                {
-                    Name = category.Name.Trim(),
-                    Limit = category.Limit != null ? ((float)category.Limit).ToString(CultureInfo.InvariantCulture) : "",
-                    Id = categoryId,
-                    EncryptedName = category.EncryptedName
-                };
-                return View(model);
+                return View(_repository.GetCategory(categoryId));
             }
             catch (Exception e)
             {
@@ -863,9 +791,8 @@ namespace SocialApps.Controllers
                         //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                         model.Limit = model.Limit.Replace(" ", string.Empty);
 
-                        float l;
 
-                        if (!float.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out l))
+                        if (!float.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float l))
                             return RedirectToAction("EditCategory", model);
 
                         limit = l;
@@ -928,14 +855,13 @@ namespace SocialApps.Controllers
                 if (string.IsNullOrEmpty(cost) || string.IsNullOrEmpty(name))
                     return RedirectToAction("NewExpense");
 
-                double amount;
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                 //  Allows both comma and point as decimal separator.
                 cost = cost.Replace(',', '.');
                 //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                 cost = cost.Replace(" ", string.Empty);
 
-                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount))
+                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
                     return RedirectToAction("NewExpense");
 
                 if (Session["CategoryId"] == null)
@@ -978,7 +904,7 @@ namespace SocialApps.Controllers
             {
                 Session["ExpenseId"] = expenseId;
                 
-                var expense = _db.Operations.Single(t => t.ID == expenseId);
+                var expense = _repository.GetIncome(expenseId);
                 //  https://vision.mindjet.com/action/task/14485574
                 if (expense.Income != null && (bool)expense.Income)
                     return RedirectToAction("EditIncome", new { expenseId = expenseId });
@@ -989,7 +915,7 @@ namespace SocialApps.Controllers
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/d264af15-c0bf-4945-a331-86fcb467b020
                 //  Documents added earlier.
-                var expenseLinks = GetLinkedDocs(expenseId);
+                var expenseLinks = _repository.GetLinkedDocs(expenseId, GetUserId());
                 if (expenseLinks != null)
                 {
                     //  Documents added in this session.
@@ -1105,34 +1031,10 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var user = GetUserId();
                 //  https://www.evernote.com/shard/s132/nl/14501366/990cdfaa-11f8-4d6c-b83a-c139f78bdc53
                 var date = (Session["Top10Month"] != null && Session["Top10Year"] != null) ? new DateTime((int)Session["Top10Year"],  (int)Session["Top10Month"], 1) : DateTime.Now;
 
-                //  https://www.evernote.com/shard/s132/nl/14501366/efb1faa9-2d68-4d40-b7e3-3eb9a0b2c1fe
-                //  https://www.evernote.com/shard/s132/nl/14501366/d2c71f03-0b70-441f-bd16-9587f82850ae
-                //  https://www.evernote.com/shard/s132/nl/14501366/c03c9b9e-5375-4177-bac3-f7e9e50c3d12
-                var expensesList = 
-                   (from exp in _db.Expenses
-                    join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
-                    join cat in _db.Categories on expCat.CategoryID equals cat.ID
-                    where (exp.DataOwner == user) && (cat.ID == categoryId) &&
-                    (
-                        ((exp.Monthly == null || !(bool)exp.Monthly) &&
-                        exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||
-                        ((exp.Monthly != null && (bool)exp.Monthly) &&
-                        date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
-                    )
-                    orderby exp.Date
-                    select new TodayExpense
-                    {
-                        Name = exp.Name,
-                        Cost = exp.Cost,
-                        ExpenseEncryptedName = exp.EncryptedName,
-                        Date = exp.Date,
-                        Importance = exp.Importance,
-                        Rating = exp.Rating
-                    }).ToArray();
+                var expensesList = _repository.GetExpensesByCategory(GetUserId(), date, categoryId);
                 ViewBag.Year = date.Year;
                 ViewBag.Month = date.Month;
                 ViewBag.ExpenseIds = expensesList;
@@ -1152,32 +1054,10 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var user = GetUserId();
                 //  https://www.evernote.com/shard/s132/nl/14501366/990cdfaa-11f8-4d6c-b83a-c139f78bdc53
                 var date = (Session["Top10Month"] != null && Session["Top10Year"] != null) ? new DateTime((int)Session["Top10Year"], (int)Session["Top10Month"], 1) : DateTime.Now;
 
-                //  https://www.evernote.com/shard/s132/nl/14501366/efb1faa9-2d68-4d40-b7e3-3eb9a0b2c1fe
-                //  https://www.evernote.com/shard/s132/nl/14501366/d2c71f03-0b70-441f-bd16-9587f82850ae
-                //  https://www.evernote.com/shard/s132/nl/14501366/c03c9b9e-5375-4177-bac3-f7e9e50c3d12
-                var expensesList =
-                   (from exp in _db.Expenses
-                    where (exp.DataOwner == user) && (exp.Importance == importance) &&
-                    (
-                        ((exp.Monthly == null || !(bool)exp.Monthly) &&
-                        exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||
-                        ((exp.Monthly != null && (bool)exp.Monthly) &&
-                        date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
-                    )
-                    orderby exp.Date
-                    select new TodayExpense
-                    {
-                        Name = exp.Name,
-                        Cost = exp.Cost,
-                        ExpenseEncryptedName = exp.EncryptedName,
-                        Date = exp.Date,
-                        Importance = exp.Importance,
-                        Rating = exp.Rating
-                    }).ToArray();
+                var expensesList = _repository.GetExpensesByImportance(GetUserId(), date, importance);
                 ViewBag.Year = date.Year;
                 ViewBag.Month = date.Month;
                 ViewBag.ExpenseIds = expensesList;
@@ -1219,18 +1099,6 @@ namespace SocialApps.Controllers
             }
         }
 
-        private class EncryptedListItem 
-        {
-            public int Id = -1;
-            public string OpenText = null;
-            public string EncryptedText = null;
-        }
-
-        private class EncryptedList
-        {
-            public EncryptedListItem[] List = null;
-        }
-
         //  https://www.evernote.com/shard/s132/nl/14501366/eac2dc0a-f87d-4a6d-9fd6-3329b2f11a71
         [HttpPost]
         //  https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
@@ -1238,12 +1106,9 @@ namespace SocialApps.Controllers
         {
             try
             {
-                string json = Encoding.UTF8.GetString(Convert.FromBase64String(expenseList));
-                EncryptedList expenses = JsonConvert.DeserializeObject<EncryptedList>(json);
-                foreach (var exp in expenses.List)
-                {
-                    _db.UpdateExpenseByUser(exp.Id, exp.OpenText, exp.EncryptedText, GetUserId());
-                }
+                var json = Encoding.UTF8.GetString(Convert.FromBase64String(expenseList));
+                var expenses = JsonConvert.DeserializeObject<MobileRepository.EncryptedList>(json);
+                _repository.UpdateExpenses(GetUserId(), expenses);
                 return null;
             }
             catch (Exception e)
@@ -1260,12 +1125,9 @@ namespace SocialApps.Controllers
         {
             try
             {
-                string json = Encoding.UTF8.GetString(Convert.FromBase64String(categoryList));
-                EncryptedList categories = JsonConvert.DeserializeObject<EncryptedList>(json);
-                foreach (var cat in categories.List)
-                {
-                    _db.UpdateCategoryByUser(cat.Id, cat.OpenText, cat.EncryptedText, GetUserId());
-                }
+                var json = Encoding.UTF8.GetString(Convert.FromBase64String(categoryList));
+                var categories = JsonConvert.DeserializeObject<MobileRepository.EncryptedList>(json);
+                _repository.UpdateCategories(GetUserId(), categories);
                 //  https://www.evernote.com/shard/s132/nl/14501366/eac2dc0a-f87d-4a6d-9fd6-3329b2f11a71
                 return null;    //  This will be converted to EmptyResult.
             }

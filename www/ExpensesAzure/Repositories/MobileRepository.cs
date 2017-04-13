@@ -1,109 +1,176 @@
 ﻿using SocialApps.Models;
 using System;
-using System.IO;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.Azure;
+using System.Linq;
 using System.Web;
-#if DEBUG
-using System.Configuration;
-#endif
+using System.Collections.Generic;
 
 namespace SocialApps.Repositories
 {
+    //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
+    //  Is used in representations. Must be defined here.
+    public enum ExpenseImportance
+    {
+        Liability = 5,
+        Asset = 4,
+        Necessary = 3,
+        Pleasure = 2,
+        Unnecessary = 1
+    }
+
     //  https://action.mindjet.com/task/14509395
-    public partial class MobileRepository
+    public partial class MobileRepository: IDisposable
     {
         private ExpensesEntities _db;
         private HttpSessionStateBase _session;
 
-        public MobileRepository(ExpensesEntities db, HttpSessionStateBase session)
+        public MobileRepository(HttpSessionStateBase session)
         {
-            _db = db;
+            //  https://action.mindjet.com/task/14889062
+            _db = new ExpensesEntities();
             _session = session;
         }
 
-        //  https://action.mindjet.com/task/14509395
-        private CloudBlobContainer GetContainerReference(Guid userId)
+        public TodayAndMonthTotalByUser2_Result GetTodayAndMonthTotals(Guid userId, DateTime date)
         {
-            //  https://action.mindjet.com/task/14886358
-#if DEBUG
-            var credentials = new StorageCredentials();
-            var configuration = ConfigurationManager.AppSettings["StorageConnectionString"];
-            var _storageAccount = CloudStorageAccount.Parse(configuration);
-#else
-            var account = CloudConfigurationManager.GetSetting("StorageAccount");
-            var key = CloudConfigurationManager.GetSetting("StorageKey");
-            var credentials = new StorageCredentials(account, key);
-            var _storageAccount = new CloudStorageAccount(credentials, true);
-#endif
-            // Create the blob client.
-            var blobClient = _storageAccount.CreateCloudBlobClient();
-
-            var container = blobClient.GetContainerReference(userId.ToString());
-            if (!container.Exists())
-                container.Create(BlobContainerPublicAccessType.Off);
-
-            return container;
+            return _db.TodayAndMonthTotalByUser2(date, userId).FirstOrDefault();
         }
 
-        //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
-        //  https://action.mindjet.com/task/14509395
-        private CloudBlockBlob GetBlob(string fileName, Guid userId)
+        public List<EstimatedTop10CategoriesForMonthByUser2_Result> GetTop10Categories(Guid userId, DateTime now)
         {
-            var container = GetContainerReference(userId);
-            return container.GetBlockBlobReference(fileName);
+            return _db.EstimatedTop10CategoriesForMonthByUser2(now.Year, now.Month, now.Day, userId).ToList();
         }
 
-        //  https://action.mindjet.com/task/14509395
-        private string UploadBlob(Guid userId, Stream stream, string fileName)
+        public List<LastYearTotalExpensesByMonthByUser_Result> GetLastYearTotalExpensesByMonth(Guid userId, int lastMonthNumber)
         {
-            var blockBlob = GetBlob(fileName, userId);
-            blockBlob.UploadFromStream(stream);
-            return blockBlob.Uri.ToString();
+            return _db.LastYearTotalExpensesByMonthByUser(lastMonthNumber, userId).ToList();
         }
 
-        //  https://action.mindjet.com/task/14509395
-        private string UploadText(Guid userId, string text, string fileName)
+        public List<LastYearBalanceByMonthByUser_Result> GetLastYearBalanceByMonth(Guid userId, int lastMonthNumber)
         {
-            var blockBlob = GetBlob(fileName, userId);
-            blockBlob.UploadText(text);
-            return blockBlob.Uri.ToString();
+            return _db.LastYearBalanceByMonthByUser(lastMonthNumber, userId).ToList();
         }
 
-        //  https://action.mindjet.com/task/14509395
-        private bool DownloadBlob(Guid userId, out MemoryStream stream, string fileName)
+        public List<LastYearCategoryExpensesByMonthByUser_Result> GetLastYearCategoryExpensesByMonth(Guid userId, int categoryId, int lmn)
         {
-            var blob = GetBlob(fileName, userId);
-            stream = new MemoryStream();
-            if (!blob.Exists()) return false;
-
-            blob.DownloadToStream(stream);
-            stream.Seek(0, SeekOrigin.Begin);
-            return true;
+            return _db.LastYearCategoryExpensesByMonthByUser(categoryId, lmn, userId).ToList();
         }
 
-        //  https://action.mindjet.com/task/14509395
-        private bool DownloadText(Guid userId, out string text, string fileName)
+        public void AddMonthBudget(int year, int month, decimal budget, Guid userId, string currency)
         {
-            var blob = GetBlob(fileName, userId);
-            text = "";
-            if (!blob.Exists()) return false;
-
-            text = blob.DownloadText();
-            return true;
+            _db.AddMonthBudgetByUser2(year, month, budget, userId, currency);
         }
 
-        //  https://action.mindjet.com/task/14509395
-        private void DeleteBlobs(Guid userId, string prefix)
+        public class EncryptedListItem
         {
-            var container = GetContainerReference(userId);
+            public int Id = -1;
+            public string OpenText = null;
+            public string EncryptedText = null;
+        }
 
-            foreach (var blob in container.ListBlobs(prefix))
+        public class EncryptedList
+        {
+            public EncryptedListItem[] List = null;
+        }
+
+        public MonthBudgetByUser_Result GetMonthBudget(Guid userId, DateTime date)
+        {
+            return _db.MonthBudgetByUser(date, userId).FirstOrDefault();
+        }
+
+        public decimal? GetMonthIncome(Guid userId, DateTime date)
+        {
+            return _db.MonthIncomeByUser(date, userId).FirstOrDefault();
+        }
+
+        public List<TodayExpense> GetIncomesForMonth(Guid userId, DateTime date)
+        {
+            //  https://action.mindjet.com/task/14834466
+            //  https://vision.mindjet.com/action/task/14485587
+            //  https://action.mindjet.com/task/14665340
+            var expenses =
+               (from exp in _db.IncomsForMonthByUser3(date.Year, date.Month, userId)
+                select new TodayExpense
+                {
+                    Name = exp.Name,
+                    Cost = exp.Amount,
+                    ExpenseEncryptedName = exp.EncryptedName,
+                    ID = exp.ID,
+                    Date = exp.Date,
+                    HasLinkedDocs = false,
+                    Currency = exp.Currency,
+                    Note = exp.Note
+                }).ToList();
+
+            return expenses;
+        }
+
+        public ExpenseNameWithCategory[] GetIncomeNames(Guid userId, DateTime date, bool? shortList)
+        {
+            //  https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
+            var expenses = (
+                    from exp in
+                        //  https://action.mindjet.com/task/14479694
+                        _db.GetIncomeNamesByUser(userId, date.Year, date.Month, date.Day, shortList)
+                    select new ExpenseNameWithCategory
+                    {
+                        Count = 1, //exp.Count,
+                        EncryptedName = exp.EncryptedName,
+                        Name = exp.Name,
+                        Id = exp.Id
+                    }
+                ).ToArray();
+
+            return expenses;
+        }
+
+        public void AddMonthIncome(Guid userId, int year, int month, decimal income, int? reset)
+        {
+            if (reset == null || reset == 0)
+                _db.AddMonthIncomeByUser((int)year, (int)month, income, userId);
+            else
+                _db.ResetMonthIncomeByUser((int)year, (int)month, income, userId);
+        }
+
+        public List<MonthImportance> GetMonthImportances(Guid userId, DateTime now)
+        {
+            return (
+            from groups in
+                (
+                    from exp in
+                    (
+                        from exp in _db.Expenses
+                        where (exp.DataOwner == userId) &&
+                            (
+                                ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                                exp.Date.Month == now.Month && exp.Date.Year == now.Year) ||
+                                ((exp.Monthly != null && (bool)exp.Monthly) &&
+                                now >= exp.FirstMonth && (exp.LastMonth == null || now <= exp.LastMonth))
+                            )
+                        select new MonthImportance
+                        {
+                            Sum = exp.Cost != null ? (double)exp.Cost : 0.0,
+                            Importance = exp.Importance != null ? (short)exp.Importance : (short)ExpenseImportance.Necessary
+                        }
+                    )
+                    group exp by exp.Importance into g
+                    select new MonthImportance
+                    {
+                        Sum = g.Sum(t => t.Sum),
+                        Importance = g.FirstOrDefault().Importance
+                    }
+                )
+            orderby groups.Importance descending
+            select new MonthImportance
             {
-                container.GetBlockBlobReference(((CloudBlockBlob)blob).Name).DeleteIfExists();
+                Sum = groups.Sum,
+                Importance = groups.Importance
             }
+            ).ToList();
+        }
+
+        public void Dispose()
+        {
+            _db.Dispose();
         }
     }
 }

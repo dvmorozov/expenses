@@ -3,7 +3,6 @@ using SocialApps.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SocialApps.Repositories
 {
@@ -174,10 +173,25 @@ namespace SocialApps.Repositories
             _db.DeleteOperationByUser(expenseId, userId);
         }
 
-        public void EditExpense(int expenseId, Guid userId, DateTime clientExpenseDate, string expenseName, double amount, string note, bool? monthly, 
+        public Expenses GetExpense(Guid userId, int expenseId)
+        {
+            return _db.Expenses.Single(t => t.DataOwner == userId && t.ID == expenseId);
+        }
+
+        public bool? IsIncome(int expenseId)
+        {
+            return _db.Operations.First(t => t.ID == expenseId).Income;
+        }
+
+        public Operations GetIncome(int incomeId)
+        {
+            return _db.Operations.First(t => t.ID == incomeId);
+        }
+
+        public void EditExpense(int expenseId, Guid userId, DateTime clientExpenseDate, string expenseName, double amount, string note, bool? monthly,
             DateTime? firstMonth, DateTime? lastMonth, string encryptedName, string currency, short? rating, short? importance, string project)
         {
-            //  Removes all possibly existing old files.
+            //  Remove all possibly existing old files.
             //  Category may be absent (for example, for incoms).
             //  https://action.mindjet.com/task/14665340
             var categories = _db.ExpensesCategories.Where(t => t.ExpenseID == expenseId);
@@ -202,6 +216,140 @@ namespace SocialApps.Repositories
 
             //  https://www.evernote.com/shard/s132/nl/14501366/eb75b683-fead-4822-9d38-17e50ab7de2f
             SaveExpenseLinks(expenseId);
+        }
+
+        public List<TodayExpense> GetDayExpenses(Guid userId, DateTime date)
+        {
+            //  For this application it's more convenient to order the list in reverse cost order.
+            //  https://www.evernote.com/shard/s132/nl/14501366/49348fc0-3dc6-45cb-8425-6fe72042eac2
+            List<TodayExpense> expenses =
+                (from exp in _db.Expenses
+                 join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
+                 join cat in _db.Categories on expCat.CategoryID equals cat.ID
+                 where (exp.DataOwner == userId) &&
+                 (
+                     ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                     exp.Date.Day == date.Day && exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||
+                     ((exp.Monthly != null && (bool)exp.Monthly) &&
+                     exp.Date.Day == date.Day && date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
+                 )
+                 orderby exp.ID descending
+                 select new TodayExpense
+                 {
+                     CategoryEncryptedName = cat.EncryptedName,
+                     CategoryName = cat.Name,
+                     Cost = exp.Cost,
+                     Currency = exp.Currency,
+                     Date = exp.Date,
+                     ExpenseEncryptedName = exp.EncryptedName,
+                     ID = exp.ID,
+                     Name = exp.Name,
+                     Note = exp.Note,
+                     Rating = exp.Rating,
+                     Importance = exp.Importance,
+                     //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
+                     Project = exp.Project
+                 }).ToList();
+
+            //  Must be outside LINQ expression.
+            foreach (var e in expenses)
+                e.HasLinkedDocs = HasLinkedDocs(e.ID, userId);
+
+            return expenses;
+        }
+
+        public TodayExpensesSumsByUser_Result[] GetDayExpenseTotals(Guid userId, DateTime date)
+        {
+            return _db.TodayExpensesSumsByUser(date, userId).
+                OrderBy(t => t.CategoryEncryptedName).
+                ThenBy(t => t.CategoryName).
+                ThenBy(t => t.Currency).
+                ThenBy(t => t.Cost).Reverse().ToArray();
+        }
+
+        public ExpenseNameWithCategory[] GetExpenseNamesWithCategory(Guid userId, DateTime date, int cat)
+        {
+            var expenses =
+            (
+                from exp in
+                    //  https://action.mindjet.com/task/14479694
+                    _db.GetExpenseNamesWithCategoryByUser5(cat, userId, date.Year, date.Month, date.Day, false)
+                select new ExpenseNameWithCategory
+                {
+                    Count = 1, //exp.Count,
+                    EncryptedName = exp.EncryptedName,
+                    Name = exp.Name,
+                    Id = exp.Id
+                }
+            ).ToArray();
+
+            return expenses;
+        }
+
+        public TodayExpense[] GetExpensesByCategory(Guid userId, DateTime date, int categoryId)
+        {
+            //  https://www.evernote.com/shard/s132/nl/14501366/efb1faa9-2d68-4d40-b7e3-3eb9a0b2c1fe
+            //  https://www.evernote.com/shard/s132/nl/14501366/d2c71f03-0b70-441f-bd16-9587f82850ae
+            //  https://www.evernote.com/shard/s132/nl/14501366/c03c9b9e-5375-4177-bac3-f7e9e50c3d12
+            var expenses =
+               (from exp in _db.Expenses
+                join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
+                join cat in _db.Categories on expCat.CategoryID equals cat.ID
+                where (exp.DataOwner == userId) && (cat.ID == categoryId) &&
+                (
+                    ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                    exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||
+                    ((exp.Monthly != null && (bool)exp.Monthly) &&
+                    date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
+                )
+                orderby exp.Date
+                select new TodayExpense
+                {
+                    Name = exp.Name,
+                    Cost = exp.Cost,
+                    ExpenseEncryptedName = exp.EncryptedName,
+                    Date = exp.Date,
+                    Importance = exp.Importance,
+                    Rating = exp.Rating
+                }).ToArray();
+
+            return expenses;
+        }
+
+        public TodayExpense[] GetExpensesByImportance(Guid userId, DateTime date, int importance)
+        {
+            //  https://www.evernote.com/shard/s132/nl/14501366/efb1faa9-2d68-4d40-b7e3-3eb9a0b2c1fe
+            //  https://www.evernote.com/shard/s132/nl/14501366/d2c71f03-0b70-441f-bd16-9587f82850ae
+            //  https://www.evernote.com/shard/s132/nl/14501366/c03c9b9e-5375-4177-bac3-f7e9e50c3d12
+            var expenses =
+               (from exp in _db.Expenses
+                where (exp.DataOwner == userId) && (exp.Importance == importance) &&
+                (
+                    ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                    exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||
+                    ((exp.Monthly != null && (bool)exp.Monthly) &&
+                    date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
+                )
+                orderby exp.Date
+                select new TodayExpense
+                {
+                    Name = exp.Name,
+                    Cost = exp.Cost,
+                    ExpenseEncryptedName = exp.EncryptedName,
+                    Date = exp.Date,
+                    Importance = exp.Importance,
+                    Rating = exp.Rating
+                }).ToArray();
+
+            return expenses;
+        }
+
+        public void UpdateExpenses(Guid userId, EncryptedList list)
+        {
+            foreach (var exp in list.List)
+            {
+                _db.UpdateExpenseByUser(exp.Id, exp.OpenText, exp.EncryptedText, userId);
+            }
         }
     }
 }
