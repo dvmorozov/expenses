@@ -6,21 +6,22 @@ using System.Collections.Generic;
 
 namespace SocialApps.Repositories
 {
+    //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
+    //  Is used in representations. Must be defined here.
+    public enum ExpenseImportance
+    {
+        Liability = 5,
+        Asset = 4,
+        Necessary = 3,
+        Pleasure = 2,
+        Unnecessary = 1
+    }
+
     //  https://action.mindjet.com/task/14509395
     public partial class MobileRepository: IDisposable
     {
         private ExpensesEntities _db;
         private HttpSessionStateBase _session;
-
-        //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
-        public enum ExpenseImportance
-        {
-            Liability = 5,
-            Asset = 4,
-            Necessary = 3,
-            Pleasure = 2,
-            Unnecessary = 1
-        }
 
         public MobileRepository(HttpSessionStateBase session)
         {
