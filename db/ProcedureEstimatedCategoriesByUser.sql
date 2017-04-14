@@ -30,23 +30,26 @@ AS
 	--	Selects for last half a year.
 	SET @DateFrom = DATEADD(month, -6, GETDATE());
 
-
 	WITH CE AS
 	(
 		SELECT 
 			e.ID AS ExpID, c.ID AS CatID, e.Date AS Date, e.Cost AS Cost, c.Name AS CatName, 
 			e.Name AS ExpName, c.EncryptedName AS CatEncryptedName, e.EncryptedName AS ExpEncryptedName,
 			e.Monthly AS Monthly, e.FirstMonth AS FirstMonth, e.LastMonth AS LastMonth, e.Currency AS Currency
-		FROM Expenses e
-		JOIN ExpensesCategories ec
-		ON ec.ExpenseID = e.ID 
-		JOIN Categories c
-		ON ec.CategoryID = c.ID
-		WHERE e.DataOwner = @DataOwner AND
-			(
-				@ShortList = 0 OR 
-				(Date > @DateFrom OR (Monthly IS NOT NULL AND Monthly = 1 AND (LastMonth IS NULL OR LastMonth > @DateFrom)))
-			)
+		--	Categories without expenses must be present always 
+		--	regardless of value of the ShortList parameter.
+		--	https://action.mindjet.com/task/14816150
+		FROM Categories c
+		LEFT JOIN ExpensesCategories ec
+		ON ec.CategoryID = c.ID 
+		LEFT JOIN Expenses e
+		ON ec.ExpenseID = e.ID
+		WHERE c.DataOwner = @DataOwner AND
+		(
+			(e.ID IS NULL) OR (@ShortList = 0) OR 
+			((e.Date > @DateFrom OR (e.Monthly IS NOT NULL AND e.Monthly = 1 AND 
+			(e.LastMonth IS NULL OR e.LastMonth > @DateFrom))) AND e.DataOwner = @DataOwner)
+		)
 	)
 	SELECT LTRIM(RTRIM(CC.NAME)) AS NAME, CC.Limit, CC.ID, TT.Total,
 		CASE
