@@ -5,6 +5,7 @@ using SocialApps.Models;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using System.Globalization;
+using System.Resources;
 
 namespace SocialApps.Repositories
 {
@@ -114,8 +115,7 @@ namespace SocialApps.Repositories
         //  https://www.evernote.com/shard/s132/nl/14501366/003838f7-d618-449e-836b-11b8a26669c2
         public void FillInitialCategories(Guid userId)
         {
-            string[] catNames = {"Pets", "Food", "Fuel", "Home", "Car", "Loans", "Mobile", "Internet", "Clothing", "Medicine",
-                                 "Gifts", "Amusements", "Taxes", "Interior", "Household", "Transport", "Education", "Sport"};
+            var catNames = Resources.Resources.AccountCategories.Split(',');
 
             foreach (var cat in catNames.OrderBy(t => t))
             {

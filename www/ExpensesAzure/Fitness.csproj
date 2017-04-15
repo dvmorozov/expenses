@@ -214,6 +214,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_GlobalResources\Resources.cs" />
+    <Compile Include="App_GlobalResources\Resources.designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resources.pt-BR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.pt-BR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resources.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.ru-RU.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -469,14 +484,17 @@
     <Content Include="App_GlobalResources\Resources.resx">
       <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\Resources.ru-RU.resx">
       <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.ru-RU.designer.cs</LastGenOutput>
     </Content>
     <Content Include="App_GlobalResources\Resources.pt-BR.resx">
       <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.pt-BR.designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Migrations\201504040602036_Initial.resx">
       <DependentUpon>201504040602036_Initial.cs</DependentUpon>

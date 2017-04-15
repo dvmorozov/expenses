@@ -630,4 +630,7 @@
   <data name="Year5Short" xml:space="preserve">
     <value>5 anos</value>
   </data>
+  <data name="AccountCategories" xml:space="preserve">
+    <value>Animais de Estimação, Comida, Combustível, Casa, Carro, Empréstimos, Mobile, Internet, Vestuário, Medicina, Presentes, Divertimentos, Impostos, Interior, Doméstico, Transporte, Educação, Desportohing,Medicine,Gifts,Amusements,Taxes,Interior,Household,Transport,Education,Sport</value>
+  </data>
 </root>
