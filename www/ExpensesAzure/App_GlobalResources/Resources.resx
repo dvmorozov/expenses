@@ -632,4 +632,7 @@
   <data name="ProgressBarWait" xml:space="preserve">
     <value>Please wait...</value>
   </data>
+  <data name="AccountCategories" xml:space="preserve">
+    <value>Pets,Food,Fuel,Home,Car,Loans,Mobile,Internet,Clothing,Medicine,Gifts,Amusements,Taxes,Interior,Household,Transport,Education,Sport</value>
+  </data>
 </root>

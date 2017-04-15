@@ -631,4 +631,7 @@ Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</v
   <data name="Year5Short" xml:space="preserve">
     <value>5 años</value>
   </data>
+  <data name="AccountCategories" xml:space="preserve">
+    <value>Animales domésticos, Alimentación, Combustible, Casa, Coche, Préstamos, Móvil, Internet, Ropa, Medicina, Regalos, Divertidos, Impuestos, Interior, Hogar, Transporte, Educación, Deporte</value>
+  </data>
 </root>

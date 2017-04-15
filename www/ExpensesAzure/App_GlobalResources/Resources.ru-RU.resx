@@ -630,4 +630,7 @@
   <data name="ProgressBarWait" xml:space="preserve">
     <value>Пожалуйста подождите...</value>
   </data>
+  <data name="AccountCategories" xml:space="preserve">
+    <value>Животные,Продукты,Топливо,Дом,Авто,Кредиты,Телефон,Интернет,Одежда,Медицина,Подарки,Развлечения,Налоги,Интерьер,Домашнее Хозяйство,Транспорт,Образование,Спорт</value>
+  </data>
 </root>

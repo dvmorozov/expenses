@@ -19,7 +19,7 @@ namespace Resources {
     // класс с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить элемент, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте проект Visual Studio.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Web.Application.StronglyTypedResourceProxyBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -139,6 +139,15 @@ namespace Resources {
         internal static string AccountCantLogin {
             get {
                 return ResourceManager.GetString("AccountCantLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, такую же, как Pets,Food,Fuel,Home,Car,Loans,Mobile,Internet,Clothing,Medicine,Gifts,Amusements,Taxes,Interior,Household,Transport,Education,Sport.
+        /// </summary>
+        internal static string AccountCategories {
+            get {
+                return ResourceManager.GetString("AccountCategories", resourceCulture);
             }
         }
         
