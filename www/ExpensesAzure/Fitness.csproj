@@ -319,9 +319,6 @@
     <Compile Include="Models\TodayExpensesByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TodayExpensesSumsByUser_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\MobileRepository.cs" />
     <Compile Include="Repositories\MobileRepositoryCategories.cs" />
@@ -367,6 +364,8 @@
       <DependentUpon>Expenses.edmx</DependentUpon>
       <LastGenOutput>Expenses1.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\ftnss - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ftnss - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

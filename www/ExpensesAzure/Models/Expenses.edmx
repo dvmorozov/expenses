@@ -235,10 +235,6 @@
           <Parameter Name="Today" Type="datetime" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="TodayExpensesSumsByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Today" Type="datetime" Mode="In" />
-          <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
-        </Function>
         <Function Name="UpdateCategoryByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="char" Mode="In" />
@@ -359,10 +355,6 @@
             <Parameter Name="LastMonthNumber" Mode="In" Type="Int32" />
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
           </FunctionImport>
-          <FunctionImport Name="TodayExpensesSumsByUser" ReturnType="Collection(ExpensesModel.TodayExpensesSumsByUser_Result)">
-            <Parameter Name="Today" Mode="In" Type="DateTime" />
-            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
-          </FunctionImport>
           <FunctionImport Name="AddMonthBudgetByUser2">
             <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="Month" Mode="In" Type="Int32" />
@@ -469,14 +461,6 @@
           <Property Type="Int32" Name="Y" Nullable="true" />
           <Property Type="Int32" Name="M" Nullable="true" />
           <Property Type="Double" Name="Balance" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="TodayExpensesSumsByUser_Result">
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
-          <Property Type="Double" Name="Cost" Nullable="true" />
-          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ExpenseEncryptedName" Nullable="true" />
-          <Property Type="String" Name="CategoryEncryptedName" Nullable="true" />
-          <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
         </ComplexType>
         <ComplexType Name="TodayExpensesByUser3_Result">
           <Property Type="DateTime" Name="Date" Nullable="false" Precision="23" />
@@ -722,18 +706,6 @@
                 <ScalarProperty Name="Y" ColumnName="Y" />
                 <ScalarProperty Name="M" ColumnName="M" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="TodayExpensesSumsByUser" FunctionName="Хранилище ExpensesModel.TodayExpensesSumsByUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExpensesModel.TodayExpensesSumsByUser_Result">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Cost" ColumnName="Cost" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="ExpenseEncryptedName" ColumnName="ExpenseEncryptedName" />
-                <ScalarProperty Name="CategoryEncryptedName" ColumnName="CategoryEncryptedName" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -92,6 +92,20 @@ namespace SocialApps.Models
         public short? Importance { get; set; }
         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
         public string Project { get; set; }
+        //  https://action.mindjet.com/task/14893592
+        public int CategoryID { get; set; }
+    }
+
+    //  https://action.mindjet.com/task/14893592
+    public partial class TodayExpenseSum
+    {
+        public string Name { get; set; }
+        public Nullable<double> Cost { get; set; }
+        public string CategoryName { get; set; }
+        public string ExpenseEncryptedName { get; set; }
+        public string CategoryEncryptedName { get; set; }
+        public string Currency { get; set; }
+        public int CategoryID { get; set; }
     }
 
     //  https://www.evernote.com/shard/s132/nl/14501366/6ad181b9-a410-4aab-b47a-7ea111aefb04
