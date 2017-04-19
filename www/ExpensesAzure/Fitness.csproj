@@ -319,9 +319,6 @@
     <Compile Include="Models\TodayExpensesByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TodayExpensesSumsByUser_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\MobileRepository.cs" />
     <Compile Include="Repositories\MobileRepositoryCategories.cs" />
