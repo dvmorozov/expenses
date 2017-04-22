@@ -37,24 +37,19 @@ namespace SocialApps.Controllers
                     }
                 }
 
-                var clientExpenseDate = Session["ClientIncomeDate"];
-                if (clientExpenseDate == null && Session["Day"] != null && Session["Month"] != null && Session["Year"] != null)
-                {
-                    //  In the case of transition from the "month incomes" form.
-                    clientExpenseDate = new DateTime((int)Session["Year"], (int)Session["Month"], (int)Session["Day"]);
-                }
+                var date = GetClientIncomeDate();
 
                 FillExpenseLinks("AddIncome");
 
                 return View("AddIncome",
                     new NewExpense
                     {
-                        Day = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Day : -1),
-                        Month = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Month : -1),
-                        Year = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Year : -1),
-                        Hour = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Hour : -1),
-                        Min = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Minute : -1),
-                        Sec = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Second : -1),
+                        Day = (date != null ? ((DateTime)date).Day : -1),
+                        Month = (date != null ? ((DateTime)date).Month : -1),
+                        Year = (date != null ? ((DateTime)date).Year : -1),
+                        Hour = (date != null ? ((DateTime)date).Hour : -1),
+                        Min = (date != null ? ((DateTime)date).Minute : -1),
+                        Sec = (date != null ? ((DateTime)date).Second : -1),
                         //  https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
                         ExpenseId = incomeId,
                         EncryptedName = income != null ? income.EncryptedName : null,
@@ -77,6 +72,22 @@ namespace SocialApps.Controllers
                 Application_Error(e);
                 return View("Error", new HandleErrorInfo(e, "Mobile", "AddIncome"));
             }
+        }
+
+        //  https://action.mindjet.com/task/14589889
+        private void SetClientIncomeDate(DateTime date)
+        {
+            Session["ClientIncomeDate"] = date;
+            //  These data are used in shared representations.
+            Session["Year"] = date.Year;
+            Session["Month"] = date.Month;
+            Session["Day"] = date.Day;
+        }
+
+        //  https://action.mindjet.com/task/14589889
+        private DateTime GetClientIncomeDate()
+        {
+            return Session["ClientIncomeDate"] != null ? (DateTime)Session["ClientIncomeDate"] : DateTime.Now;
         }
 
         //  https://vision.mindjet.com/action/task/14485574
@@ -105,16 +116,16 @@ namespace SocialApps.Controllers
                     //  https://action.mindjet.com/task/14479694
                     return RedirectToAction("SelectIncome", new { shortList = true });
 
-                var expense = ((ExpenseNameWithCategory[])Session["IncomeList"]).First(t => t.Id == (int)Session["IncomeId"]);
-                var clientIncomeDate = new DateTime(year, month, day, hour, min, sec, 0);
+                var income = ((ExpenseNameWithCategory[])Session["IncomeList"]).First(t => t.Id == (int)Session["IncomeId"]);
 
-                Session["ClientIncomeDate"] = clientIncomeDate;
+                var date = new DateTime(year, month, day, hour, min, sec, 0);
+                SetClientIncomeDate(date);
 
-                _repository.AddExpense(clientIncomeDate, expense.Name, amount, note, false, null, null, expense.EncryptedName, currency, null, null, null, project, GetUserId(), true);
+                _repository.AddExpense(date, income.Name, amount, note, false, null, null, income.EncryptedName, currency, null, null, null, project, GetUserId(), true);
 
                 DropSessionLinks();
 
-                return RedirectToAction("MonthIncome", new { year = clientIncomeDate.Year, month = clientIncomeDate.Month });
+                return RedirectToAction("MonthIncome", new { year = date.Year, month = date.Month });
             }
             catch (Exception e)
             {
@@ -129,9 +140,9 @@ namespace SocialApps.Controllers
             try
             {
                 Session["IncomeId"] = expenseId;
-                var clientIncomeDate = Session["ClientIncomeDate"] != null ? (DateTime)Session["ClientIncomeDate"] : DateTime.Now;
 
-                var expense = _repository.GetIncome(expenseId);
+                var date = GetClientIncomeDate();
+                var income = _repository.GetIncome(expenseId);
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/eb75b683-fead-4822-9d38-17e50ab7de2f
                 FillExpenseLinks("EditIncome", new { expenseId = expenseId });
@@ -154,31 +165,31 @@ namespace SocialApps.Controllers
                     {
                         //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
                         ExpenseId = expenseId,
-                        Name = expense != null && expense.Name != null ? expense.Name.Trim() : null,
-                        Cost = expense != null && expense.Cost != null ? ((double)expense.Cost).ToString(CultureInfo.InvariantCulture) : string.Empty,
-                        Currency = expense != null && expense.Currency != null ? expense.Currency.Trim() : null,
-                        EncryptedName = expense != null ? expense.EncryptedName : null,
-                        EndMonth = expense != null && expense.LastMonth != null ? ((DateTime)expense.LastMonth).Month : -1,
-                        EndYear = expense != null && expense.LastMonth != null ? ((DateTime)expense.LastMonth).Year : -1,
-                        Forever = expense != null && expense.LastMonth == null,
-                        Monthly = expense != null && expense.Monthly != null ? (bool)expense.Monthly : false,
-                        StartMonth = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Month : -1,
-                        StartYear = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Year : -1,
+                        Name = income != null && income.Name != null ? income.Name.Trim() : null,
+                        Cost = income != null && income.Cost != null ? ((double)income.Cost).ToString(CultureInfo.InvariantCulture) : string.Empty,
+                        Currency = income != null && income.Currency != null ? income.Currency.Trim() : null,
+                        EncryptedName = income != null ? income.EncryptedName : null,
+                        EndMonth = income != null && income.LastMonth != null ? ((DateTime)income.LastMonth).Month : -1,
+                        EndYear = income != null && income.LastMonth != null ? ((DateTime)income.LastMonth).Year : -1,
+                        Forever = income != null && income.LastMonth == null,
+                        Monthly = income != null && income.Monthly != null ? (bool)income.Monthly : false,
+                        StartMonth = income != null && income.FirstMonth != null ? ((DateTime)income.FirstMonth).Month : -1,
+                        StartYear = income != null && income.FirstMonth != null ? ((DateTime)income.FirstMonth).Year : -1,
 
-                        Day = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Day : clientIncomeDate.Day,
-                        Month = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Month : clientIncomeDate.Month,
-                        Year = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Year : clientIncomeDate.Year,
-                        Hour = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Hour : clientIncomeDate.Hour,
-                        Min = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Minute : clientIncomeDate.Minute,
-                        Sec = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Second : clientIncomeDate.Second,
+                        Day = income != null && income.FirstMonth != null ? ((DateTime)income.FirstMonth).Day : date.Day,
+                        Month = income != null && income.FirstMonth != null ? ((DateTime)income.FirstMonth).Month : date.Month,
+                        Year = income != null && income.FirstMonth != null ? ((DateTime)income.FirstMonth).Year : date.Year,
+                        Hour = income != null && income.FirstMonth != null ? ((DateTime)income.FirstMonth).Hour : date.Hour,
+                        Min = income != null && income.FirstMonth != null ? ((DateTime)income.FirstMonth).Minute : date.Minute,
+                        Sec = income != null && income.FirstMonth != null ? ((DateTime)income.FirstMonth).Second : date.Second,
 
                         //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
-                        Importance = expense != null ? expense.Importance : null,
-                        Rating = expense != null ? expense.Rating : null,
-                        Note = expense != null && expense.Note != null ? expense.Note.Trim() : null,
+                        Importance = income != null ? income.Importance : null,
+                        Rating = income != null ? income.Rating : null,
+                        Note = income != null && income.Note != null ? income.Note.Trim() : null,
 
                         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
-                        Project = expense != null && expense.Project != null ? expense.Project.Trim() : null
+                        Project = income != null && income.Project != null ? income.Project.Trim() : null
                     });
             }
             catch (Exception e)
@@ -214,10 +225,10 @@ namespace SocialApps.Controllers
                 if (Session["IncomeId"] == null)
                     return RedirectToAction("SelectIncome");
 
-                var expenseName = HttpUtility.HtmlDecode(name);
-                var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
+                var incomeName = HttpUtility.HtmlDecode(name);
 
-                Session["ClientIncomeDate"] = clientExpenseDate;
+                var date = new DateTime(year, month, day, hour, min, sec, 0);
+                SetClientIncomeDate(date);
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
                 DateTime? firstMonth = null;
@@ -232,10 +243,10 @@ namespace SocialApps.Controllers
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
                 //  https://action.mindjet.com/task/14509395
-                _repository.EditExpense((int)Session["IncomeId"], GetUserId(), clientExpenseDate, expenseName, amount, note, monthly, firstMonth, lastMonth, encryptedName, currency, null, null, project);
+                _repository.EditExpense((int)Session["IncomeId"], GetUserId(), date, incomeName, amount, note, monthly, firstMonth, lastMonth, encryptedName, currency, null, null, project);
 
                 //  Returns for adding another income.
-                return RedirectToAction("MonthIncome", new { year = clientExpenseDate.Year, month = clientExpenseDate.Month });
+                return RedirectToAction("MonthIncome", new { year = date.Year, month = date.Month });
             }
             catch (Exception e)
             {
@@ -249,19 +260,19 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var clientExpenseDate = Session["ClientIncomeDate"];
+                var date = GetClientIncomeDate();
 
                 FillExpenseLinks("NewIncome");
 
                 return View("NewIncome",
                     new NewExpense
                     {
-                        Day = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Day : -1),
-                        Month = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Month : -1),
-                        Year = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Year : -1),
-                        Hour = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Hour : -1),
-                        Min = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Minute : -1),
-                        Sec = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Second : -1)
+                        Day = (date != null ? ((DateTime)date).Day : -1),
+                        Month = (date != null ? ((DateTime)date).Month : -1),
+                        Year = (date != null ? ((DateTime)date).Year : -1),
+                        Hour = (date != null ? ((DateTime)date).Hour : -1),
+                        Min = (date != null ? ((DateTime)date).Minute : -1),
+                        Sec = (date != null ? ((DateTime)date).Second : -1)
                     });
             }
             catch (Exception e)
@@ -291,10 +302,10 @@ namespace SocialApps.Controllers
                 if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
                     return RedirectToAction("NewIncome");
 
-                var expenseName = HttpUtility.HtmlDecode(name);
-                var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
+                var incomeName = HttpUtility.HtmlDecode(name);
 
-                Session["ClientIncomeDate"] = clientExpenseDate;
+                var date = new DateTime(year, month, day, hour, min, sec, 0);
+                SetClientIncomeDate(date);
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
                 DateTime? firstMonth = null;
@@ -307,10 +318,10 @@ namespace SocialApps.Controllers
                 if (endYear != -1 && endMonth != -1 && (monthly != null && (bool)monthly) && !(forever != null && (bool)forever))
                     lastMonth = new DateTime(endYear, endMonth, 1);
 
-                _repository.AddExpense(clientExpenseDate, name, amount, note, monthly, firstMonth, lastMonth, encryptedName, currency, null, null, null, project, GetUserId(), true);
+                _repository.AddExpense(date, name, amount, note, monthly, firstMonth, lastMonth, encryptedName, currency, null, null, null, project, GetUserId(), true);
 
                 //  Returns for adding another income.
-                return RedirectToAction("MonthIncome", new { year = clientExpenseDate.Year, month = clientExpenseDate.Month });
+                return RedirectToAction("MonthIncome", new { year = date.Year, month = date.Month });
             }
             catch (Exception e)
             {
@@ -329,9 +340,9 @@ namespace SocialApps.Controllers
                 var start = DateTime.Now;
 
                 //  https://action.mindjet.com/task/14479694
-                var date = (Session["ClientIncomeDate"] != null ? (DateTime)Session["ClientIncomeDate"] : DateTime.Now);
+                var date = GetClientIncomeDate();
 
-                var expensesList = _repository.GetIncomeNames(userId, date, shortList);
+                var incomeList = _repository.GetIncomeNames(userId, date, shortList);
 
                 var end = DateTime.Now;
                 var diff = end - start;
@@ -340,24 +351,24 @@ namespace SocialApps.Controllers
                 //  https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
                 ViewBag.ControlTime = time;
                 //  https://action.mindjet.com/task/14479694
-                ViewBag.ItemCount = expensesList.Count();
+                ViewBag.ItemCount = incomeList.Count();
 
                 if (Session["IncomeId"] != null)
                 {
                     //  Selected item is moved to first position.
                     //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
-                    expensesList =
-                        expensesList.Where(t => t.Id == (int)Session["IncomeId"])
-                                    .Concat(expensesList.Where(t => t.Id != (int)Session["IncomeId"]))
+                    incomeList =
+                        incomeList.Where(t => t.Id == (int)Session["IncomeId"])
+                                    .Concat(incomeList.Where(t => t.Id != (int)Session["IncomeId"]))
                                     .ToArray();
                     //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
-                    if (expensesList.Count(t => t.Id == (int)Session["IncomeId"]) != 0)
-                        ViewBag.ExpenseName = expensesList.First(t => t.Id == (int)Session["IncomeId"]).Name.Trim();
+                    if (incomeList.Count(t => t.Id == (int)Session["IncomeId"]) != 0)
+                        ViewBag.ExpenseName = incomeList.First(t => t.Id == (int)Session["IncomeId"]).Name.Trim();
                 }
 
-                ViewBag.ExpenseIds = expensesList;
+                ViewBag.ExpenseIds = incomeList;
                 ViewBag.ExpenseId = Session["IncomeId"];
-                Session["IncomeList"] = expensesList;
+                Session["IncomeList"] = incomeList;
 
                 //  https://action.mindjet.com/task/14479694
                 if (shortList != null && (bool)shortList)
@@ -394,14 +405,12 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var date = (month != null && year != null) ? new DateTime((int)year, (int)month, 1) : DateTime.Now;
-                var userId = GetUserId();
-
-                var expensesList = _repository.GetIncomesForMonth(userId, date);
                 //  The day is not relevant.
-                Session["Day"] = date.Day;
-                Session["Month"] = date.Month;
-                Session["Year"] = date.Year;
+                var date = (month != null && year != null) ? new DateTime((int)year, (int)month, 1) : DateTime.Now;
+                SetClientIncomeDate(date);
+
+                var userId = GetUserId();
+                var expensesList = _repository.GetIncomesForMonth(userId, date);
 
                 //  Used in ExpenseAccordion. List expected!
                 ViewBag.TodayExpenses = expensesList;
