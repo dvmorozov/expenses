@@ -38,6 +38,11 @@ namespace SocialApps.Controllers
                 }
 
                 var clientExpenseDate = Session["ClientIncomeDate"];
+                if (clientExpenseDate == null && Session["Day"] != null && Session["Month"] != null && Session["Year"] != null)
+                {
+                    //  In the case of transition from the "month incomes" form.
+                    clientExpenseDate = new DateTime((int)Session["Year"], (int)Session["Month"], (int)Session["Day"]);
+                }
 
                 FillExpenseLinks("AddIncome");
 
@@ -109,7 +114,7 @@ namespace SocialApps.Controllers
 
                 DropSessionLinks();
 
-                return RedirectToAction("MonthIncome");
+                return RedirectToAction("MonthIncome", new { year = clientIncomeDate.Year, month = clientIncomeDate.Month });
             }
             catch (Exception e)
             {
@@ -230,7 +235,7 @@ namespace SocialApps.Controllers
                 _repository.EditExpense((int)Session["IncomeId"], GetUserId(), clientExpenseDate, expenseName, amount, note, monthly, firstMonth, lastMonth, encryptedName, currency, null, null, project);
 
                 //  Returns for adding another income.
-                return RedirectToAction("MonthIncome");
+                return RedirectToAction("MonthIncome", new { year = clientExpenseDate.Year, month = clientExpenseDate.Month });
             }
             catch (Exception e)
             {
@@ -305,7 +310,7 @@ namespace SocialApps.Controllers
                 _repository.AddExpense(clientExpenseDate, name, amount, note, monthly, firstMonth, lastMonth, encryptedName, currency, null, null, null, project, GetUserId(), true);
 
                 //  Returns for adding another income.
-                return RedirectToAction("MonthIncome");
+                return RedirectToAction("MonthIncome", new { year = clientExpenseDate.Year, month = clientExpenseDate.Month });
             }
             catch (Exception e)
             {
@@ -442,7 +447,7 @@ namespace SocialApps.Controllers
                 }
 
                 if (income == null)
-                    return RedirectToAction("MonthIncome");
+                    return RedirectToAction("MonthIncome", new { year = year, month = month });
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                 //  Allows both comma and point as decimal separator.
@@ -452,7 +457,7 @@ namespace SocialApps.Controllers
                 decimal dIncome;
 
                 if (!decimal.TryParse(b, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out dIncome))
-                    return RedirectToAction("MonthIncome");
+                    return RedirectToAction("MonthIncome", new { year = year, month = month });
 
                 _repository.AddMonthIncome(GetUserId(), (int)year, (int)month, dIncome, reset);
 
