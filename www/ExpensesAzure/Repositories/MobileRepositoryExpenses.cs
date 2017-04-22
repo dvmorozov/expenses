@@ -168,7 +168,11 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         public void DeleteExpense(int expenseId, Guid userId)
         {
-            DeleteCachedExpenses(userId, _db.ExpensesCategories.First(t => t.ExpenseID == expenseId).CategoryID);
+            //  This method is used also for deleting incomes.
+            //  A category isn't associated with incomes.
+            //  https://action.mindjet.com/task/14895523
+            if (_db.ExpensesCategories.Where(t => t.ExpenseID == expenseId).Count() != 0)
+                DeleteCachedExpenses(userId, _db.ExpensesCategories.First(t => t.ExpenseID == expenseId).CategoryID);
 
             _db.DeleteOperationByUser(expenseId, userId);
         }
