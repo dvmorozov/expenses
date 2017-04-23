@@ -117,9 +117,9 @@
 									}
 								</td>
 								<td>
-									@if (item.Importance != null)
+									@if (item.Importance.HasValue)
 									{
-										@Html.Raw(((ExpenseImportance)item.Importance).ToString("G"));
+										@Html.Raw(item.Importance.Value.ToString("G"));
 									}
 								</td>
 								<td>@Html.Partial("ExpenseRatingStars", item)</td>

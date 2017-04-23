@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocialApps.Repositories;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Security.AntiXss;
 
@@ -89,7 +90,7 @@ namespace SocialApps.Models
         public string Currency { get; set; }
         public bool HasLinkedDocs { get; set; }
         public short? Rating { get; set; }
-        public short? Importance { get; set; }
+        public ExpenseImportance? Importance { get; set; }
         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
         public string Project { get; set; }
         //  https://action.mindjet.com/task/14893592
