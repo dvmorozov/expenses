@@ -250,7 +250,7 @@ namespace SocialApps.Repositories
                      Name = exp.Name,
                      Note = exp.Note,
                      Rating = exp.Rating,
-                     Importance = exp.Importance,
+                     Importance = (ExpenseImportance?)exp.Importance,
                      //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
                      Project = exp.Project,
                      // https://action.mindjet.com/task/14893592
@@ -331,7 +331,7 @@ namespace SocialApps.Repositories
                     Cost = exp.Cost,
                     ExpenseEncryptedName = exp.EncryptedName,
                     Date = exp.Date,
-                    Importance = exp.Importance,
+                    Importance = (ExpenseImportance?)exp.Importance,
                     Rating = exp.Rating
                 }).ToArray();
 
@@ -359,7 +359,7 @@ namespace SocialApps.Repositories
                     Cost = exp.Cost,
                     ExpenseEncryptedName = exp.EncryptedName,
                     Date = exp.Date,
-                    Importance = exp.Importance,
+                    Importance = (ExpenseImportance?)exp.Importance,
                     Rating = exp.Rating
                 }).ToArray();
 
