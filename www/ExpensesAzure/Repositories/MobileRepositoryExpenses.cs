@@ -338,6 +338,37 @@ namespace SocialApps.Repositories
             return expenses;
         }
 
+        //  https://action.mindjet.com/task/14896530
+        public ExpenseNameWithCategory[] GetExpensesByName(Guid userId, int expenseId)
+        {
+            var e = (from exp in _db.Expenses
+                where (exp.DataOwner == userId) && (exp.ID == expenseId)
+                select new TodayExpense
+                {
+                    Name = exp.Name,
+                    ExpenseEncryptedName = exp.EncryptedName,
+                }).First();
+
+            var expenses =
+               (from exp in _db.Expenses
+                join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
+                join cat in _db.Categories on expCat.CategoryID equals cat.ID
+                where (exp.DataOwner == userId) &&
+                (
+                    ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                    exp.Name == e.Name && exp.EncryptedName == e.ExpenseEncryptedName)
+                )
+                orderby exp.Date descending
+                select new ExpenseNameWithCategory
+                {
+                    Name = exp.Name,
+                    EncryptedName = exp.EncryptedName,
+                    //Date = exp.Date,
+                }).ToArray();
+
+            return expenses;
+        }
+
         public TodayExpense[] GetExpensesByImportance(Guid userId, DateTime date, int importance)
         {
             //  https://www.evernote.com/shard/s132/nl/14501366/efb1faa9-2d68-4d40-b7e3-3eb9a0b2c1fe

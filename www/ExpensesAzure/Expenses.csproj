@@ -477,6 +477,7 @@
     <Content Include="Views\Shared\ExpenseCost.cshtml" />
     <Content Include="Views\Shared\ExpenseCurrency.cshtml" />
     <Content Include="Views\Shared\ExpenseName.cshtml" />
+    <Content Include="Views\Mobile\ExpensesByName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
