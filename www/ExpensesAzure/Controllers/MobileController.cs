@@ -1054,8 +1054,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var expensesList = _repository.GetExpensesByName(GetUserId(), expenseId);
-                ViewBag.ExpenseIds = expensesList;
+                ViewBag.ExpenseIds = _repository.GetExpensesByName(GetUserId(), expenseId); ;
                 return View();
             }
             catch (Exception e)

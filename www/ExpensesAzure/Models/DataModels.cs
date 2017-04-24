@@ -1,6 +1,7 @@
 ﻿using SocialApps.Repositories;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Web.Security.AntiXss;
 
 namespace SocialApps.Models
@@ -95,6 +96,44 @@ namespace SocialApps.Models
         public string Project { get; set; }
         //  https://action.mindjet.com/task/14893592
         public int CategoryID { get; set; }
+        //  https://action.mindjet.com/task/14896530
+        public string CostString
+        {
+            get
+            {
+                return (Cost != null ? ((float)Cost).ToString("F2", CultureInfo.InvariantCulture) :
+                    (0.0).ToString("F2", CultureInfo.InvariantCulture)) +
+                    (Currency != null ? " " + Currency : "");
+            }
+        }
+        public string NoteString
+        {
+            get
+            {
+                return Note != null ? AntiXssEncoder.HtmlEncode(Note.Trim(), false) : "";
+            }
+        }
+        public string ProjectString
+        {
+            get
+            {
+                return Project != null ? AntiXssEncoder.HtmlEncode(Project.Trim(), false) : "";
+            }
+        }
+        public string RatingString
+        {
+            get
+            {
+                return Rating != null ? Rating.ToString() : "";
+            }
+        }
+        public string ImportanceString
+        {
+            get
+            {
+                return Importance != null ? Importance.ToString() : "";
+            }
+        }
     }
 
     //  https://action.mindjet.com/task/14893592

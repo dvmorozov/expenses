@@ -339,7 +339,7 @@ namespace SocialApps.Repositories
         }
 
         //  https://action.mindjet.com/task/14896530
-        public ExpenseNameWithCategory[] GetExpensesByName(Guid userId, int expenseId)
+        public TodayExpense[] GetExpensesByName(Guid userId, int expenseId)
         {
             var e = (from exp in _db.Expenses
                 where (exp.DataOwner == userId) && (exp.ID == expenseId)
@@ -359,13 +359,18 @@ namespace SocialApps.Repositories
                     exp.Name == e.Name && exp.EncryptedName == e.ExpenseEncryptedName)
                 )
                 orderby exp.Date descending
-                select new ExpenseNameWithCategory
+                select new TodayExpense
                 {
                     Name = exp.Name,
-                    EncryptedName = exp.EncryptedName,
-                    Id = exp.ID,
-                    Count = 1
-                    //Date = exp.Date,
+                    ExpenseEncryptedName = exp.EncryptedName,
+                    ID = exp.ID,
+                    Date = exp.Date,
+                    Rating = exp.Rating,
+                    Importance = (ExpenseImportance?)exp.Importance,
+                    Currency = exp.Currency,
+                    Cost = exp.Cost,
+                    Note = exp.Note,
+                    Project = exp.Project
                 }).ToArray();
 
             return expenses;
