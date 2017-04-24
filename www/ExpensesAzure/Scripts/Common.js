@@ -756,6 +756,7 @@ function sortDecryptedList() {
 					? 0
 					: (a.text.trim() > b.text.trim() ? 1 : -1);
 		});
+		//	Remove unsorted rows with encrypted data.
 		$('.trlist').remove();
 
 		$.each(elements, function (index, value) {

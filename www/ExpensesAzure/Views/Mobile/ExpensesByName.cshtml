@@ -52,19 +52,20 @@
 		<div class="page-content">
 			@* https://www.evernote.com/shard/s132/nl/14501366/748e493d-9338-41b0-adfb-a9b40cbdb4dd *@
 			<table class="sorted table">
-				<tbody>
+				<thead>
 					<tr>
 						<th></th>
 						<th>@Html.Raw(Resources.Resources.Expense)</th>
 					</tr>
-
+				</thead>
+				<tbody>
 					@for (var i = 0; i < ((ExpenseNameWithCategory[])ViewBag.ExpenseIds).Count(); i++)
 					{
 						var exp = ((ExpenseNameWithCategory[])ViewBag.ExpenseIds)[i];
 						var expenseId = exp.Id.ToString();
 						var classId = (exp.EncryptedName != null && exp.EncryptedName != string.Empty) ? "encrypted" : "unencrypted";
 						@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-						<tr class="trlist">
+						<tr>
 							<td style="vertical-align: middle;">
 								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
 									<span class="glyphicon glyphicon-edit"></span>
@@ -86,7 +87,6 @@
 					}
 				</tbody>
 			</table>
-			@Html.Partial("FullListButton")
 		</div>
 		@Html.Partial("Jumbotron")
 		@Html.Partial("ProgressBar")

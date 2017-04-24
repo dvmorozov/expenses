@@ -363,6 +363,8 @@ namespace SocialApps.Repositories
                 {
                     Name = exp.Name,
                     EncryptedName = exp.EncryptedName,
+                    Id = exp.ID,
+                    Count = 1
                     //Date = exp.Date,
                 }).ToArray();
 
