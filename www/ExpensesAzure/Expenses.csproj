@@ -275,6 +275,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Expenses.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Expenses1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ExpensesByCategoryForMonthByUser2_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
@@ -317,9 +322,6 @@
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TodayExpensesByUser3_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TodayExpensesSumsByUser_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -475,6 +477,7 @@
     <Content Include="Views\Shared\ExpenseCost.cshtml" />
     <Content Include="Views\Shared\ExpenseCurrency.cshtml" />
     <Content Include="Views\Shared\ExpenseName.cshtml" />
+    <Content Include="Views\Mobile\ExpensesByName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

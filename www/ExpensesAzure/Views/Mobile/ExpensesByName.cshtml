@@ -1,6 +1,7 @@
 ﻿@using SocialApps.Controllers
 @using SocialApps.Models
 @using System.Web.Security.AntiXss
+@using System.Globalization
 
 @{
 	ViewBag.Title = Resources.Resources.SelectExpenseTitle;
@@ -52,46 +53,65 @@
 		<div class="page-content">
 			@* https://www.evernote.com/shard/s132/nl/14501366/748e493d-9338-41b0-adfb-a9b40cbdb4dd *@
 			<table class="sorted table">
-				<tbody>
+				<thead>
 					<tr>
 						<th></th>
+						<th>Date</th>
 						<th>@Html.Raw(Resources.Resources.Expense)</th>
+						<th>Cost</th>
+						<th>Rating</th>
+						<th>Importance</th>
+						<th>Note</th>
+						<th>Project</th>
 					</tr>
-
-					@for (var i = 0; i < ((ExpenseNameWithCategory[])ViewBag.ExpenseIds).Count(); i++)
+				</thead>
+				<tbody>
+					@for (var i = 0; i < ((TodayExpense[])ViewBag.ExpenseIds).Count(); i++)
 					{
-						var exp = ((ExpenseNameWithCategory[])ViewBag.ExpenseIds)[i];
-						var expenseId = exp.Id.ToString();
-						var classId = (exp.EncryptedName != null && exp.EncryptedName != string.Empty) ? "encrypted" : "unencrypted";
+						var exp = ((TodayExpense[])ViewBag.ExpenseIds)[i];
+						var expenseId = exp.ID.ToString();
+						var classId = (exp.ExpenseEncryptedName != null && exp.ExpenseEncryptedName != string.Empty) ? "encrypted" : "unencrypted";
 						@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-						<tr class="trlist" onclick="window.location.href = '@Url.Action("SelectExpenseF", "Mobile", new { expenseId = exp.Id })';" id="@Html.Raw("tr" + expenseId)">
+						<tr>
 							<td style="vertical-align: middle;">
-								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
+								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("EditExpense", "Mobile", new {expenseId = exp.ID})'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
 									<span class="glyphicon glyphicon-edit"></span>
 								</button>
 							</td>
 							<td style="vertical-align: middle;">
-								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("ExpensesByName", "Mobile", new {expenseId = exp.Id})'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
-									<span class="glyphicon glyphicon-time"></span>
-								</button>
+								@Html.Raw(exp.Date.ToString("dd MMM yyyy"))
 							</td>
-							<td style="width: 100%; vertical-align: middle;">
-								<div style="@Html.Raw((ViewBag.ExpenseId != null && (int)ViewBag.ExpenseId == exp.Id) ? "font-size: large;" : "")" id="@Html.Raw(expenseId)" class="@Html.Raw(classId)">
+							<td style="vertical-align: middle;">
+								<div id="@Html.Raw(expenseId)" class="@Html.Raw(classId)">
 									@Html.Raw(AntiXssEncoder.HtmlEncode(exp.Name.Trim(), false))
 								</div>
-								@if (exp.EncryptedName != null && exp.EncryptedName != string.Empty)
+								@if (exp.ExpenseEncryptedName != null && exp.ExpenseEncryptedName != string.Empty)
 								{
 									<script>
 										@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-										(function () { decryptListData('@Html.Raw(expenseId)', '@Html.Raw(exp.EncryptedName)') })();
+										(function () { decryptListData('@Html.Raw(expenseId)', '@Html.Raw(exp.ExpenseEncryptedName)') })();
 									</script>
 								}
+							</td>
+							<td style="vertical-align: middle;">
+								@Html.Raw(exp.CostString)
+							</td>
+							<td style="vertical-align: middle;">
+								@Html.Raw(exp.RatingString)
+							</td>
+							<td style="vertical-align: middle;">
+								@Html.Raw(exp.ImportanceString)
+							</td>
+							<td style="vertical-align: middle;">
+								@Html.Raw(exp.NoteString)
+							</td>
+							<td style="vertical-align: middle;">
+								@Html.Raw(exp.ProjectString)
 							</td>
 						</tr>
 					}
 				</tbody>
 			</table>
-			@Html.Partial("FullListButton")
 		</div>
 		@Html.Partial("Jumbotron")
 		@Html.Partial("ProgressBar")

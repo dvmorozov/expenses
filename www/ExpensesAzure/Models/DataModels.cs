@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SocialApps.Repositories;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Web.Security.AntiXss;
 
 namespace SocialApps.Models
@@ -89,9 +91,61 @@ namespace SocialApps.Models
         public string Currency { get; set; }
         public bool HasLinkedDocs { get; set; }
         public short? Rating { get; set; }
-        public short? Importance { get; set; }
+        public ExpenseImportance? Importance { get; set; }
         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
         public string Project { get; set; }
+        //  https://action.mindjet.com/task/14893592
+        public int CategoryID { get; set; }
+        //  https://action.mindjet.com/task/14896530
+        public string CostString
+        {
+            get
+            {
+                return (Cost != null ? ((float)Cost).ToString("F2", CultureInfo.InvariantCulture) :
+                    (0.0).ToString("F2", CultureInfo.InvariantCulture)) +
+                    (Currency != null ? " " + Currency : "");
+            }
+        }
+        public string NoteString
+        {
+            get
+            {
+                return Note != null ? AntiXssEncoder.HtmlEncode(Note.Trim(), false) : "";
+            }
+        }
+        public string ProjectString
+        {
+            get
+            {
+                return Project != null ? AntiXssEncoder.HtmlEncode(Project.Trim(), false) : "";
+            }
+        }
+        public string RatingString
+        {
+            get
+            {
+                return Rating != null ? Rating.ToString() : "";
+            }
+        }
+        public string ImportanceString
+        {
+            get
+            {
+                return Importance != null ? Importance.ToString() : "";
+            }
+        }
+    }
+
+    //  https://action.mindjet.com/task/14893592
+    public partial class TodayExpenseSum
+    {
+        public string Name { get; set; }
+        public Nullable<double> Cost { get; set; }
+        public string CategoryName { get; set; }
+        public string ExpenseEncryptedName { get; set; }
+        public string CategoryEncryptedName { get; set; }
+        public string Currency { get; set; }
+        public int CategoryID { get; set; }
     }
 
     //  https://www.evernote.com/shard/s132/nl/14501366/6ad181b9-a410-4aab-b47a-7ea111aefb04

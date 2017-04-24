@@ -1049,6 +1049,21 @@ namespace SocialApps.Controllers
             }
         }
 
+        //  https://action.mindjet.com/task/14896530
+        public ActionResult ExpensesByName(int expenseId)
+        {
+            try
+            {
+                ViewBag.ExpenseIds = _repository.GetExpensesByName(GetUserId(), expenseId); ;
+                return View();
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "ExpensesByName"));
+            }
+        }
+
         //  https://www.evernote.com/shard/s132/nl/14501366/a6faca57-602d-44d8-ba4a-94ce5054a642
         public ActionResult ExpensesByImportance(int importance)
         {

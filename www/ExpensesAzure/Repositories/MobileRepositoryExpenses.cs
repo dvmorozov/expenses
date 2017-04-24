@@ -168,7 +168,11 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         public void DeleteExpense(int expenseId, Guid userId)
         {
-            DeleteCachedExpenses(userId, _db.ExpensesCategories.First(t => t.ExpenseID == expenseId).CategoryID);
+            //  This method is used also for deleting incomes.
+            //  A category isn't associated with incomes.
+            //  https://action.mindjet.com/task/14895523
+            if (_db.ExpensesCategories.Where(t => t.ExpenseID == expenseId).Count() != 0)
+                DeleteCachedExpenses(userId, _db.ExpensesCategories.First(t => t.ExpenseID == expenseId).CategoryID);
 
             _db.DeleteOperationByUser(expenseId, userId);
         }
@@ -233,7 +237,7 @@ namespace SocialApps.Repositories
                      ((exp.Monthly != null && (bool)exp.Monthly) &&
                      exp.Date.Day == date.Day && date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
                  )
-                 orderby exp.ID descending
+                 orderby cat.ID, exp.Currency, exp.Cost descending
                  select new TodayExpense
                  {
                      CategoryEncryptedName = cat.EncryptedName,
@@ -246,9 +250,11 @@ namespace SocialApps.Repositories
                      Name = exp.Name,
                      Note = exp.Note,
                      Rating = exp.Rating,
-                     Importance = exp.Importance,
+                     Importance = (ExpenseImportance?)exp.Importance,
                      //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
-                     Project = exp.Project
+                     Project = exp.Project,
+                     // https://action.mindjet.com/task/14893592
+                     CategoryID = cat.ID
                  }).ToList();
 
             //  Must be outside LINQ expression.
@@ -258,13 +264,29 @@ namespace SocialApps.Repositories
             return expenses;
         }
 
-        public TodayExpensesSumsByUser_Result[] GetDayExpenseTotals(Guid userId, DateTime date)
+        public TodayExpenseSum[] GetDayExpenseTotals(Guid userId, DateTime date)
         {
-            return _db.TodayExpensesSumsByUser(date, userId).
-                OrderBy(t => t.CategoryEncryptedName).
-                ThenBy(t => t.CategoryName).
-                ThenBy(t => t.Currency).
-                ThenBy(t => t.Cost).Reverse().ToArray();
+            return GetDayExpenses(userId, date).GroupBy(t => new
+            {
+                CagegoryID = t.CategoryID,
+                CategoryName = t.CategoryName,
+                CategoryEncryptedName = t.CategoryEncryptedName,
+                ExpenseEncryptedName = t.ExpenseEncryptedName,
+                Name = t.Name,
+                Currency = t.Currency
+            }).Select(s => new TodayExpenseSum
+            {
+                CategoryID = s.Key.CagegoryID,
+                Name = s.Key.Name,
+                Cost = s.Sum(t => t.Cost),
+                CategoryName = s.Key.CategoryName,
+                ExpenseEncryptedName = s.Key.ExpenseEncryptedName,
+                CategoryEncryptedName = s.Key.CategoryEncryptedName,
+                Currency = s.Key.Currency
+            })
+            .OrderBy(t => t.CategoryID)
+            .ThenBy(t => t.Currency)
+            .ThenBy(t => t.Cost).ToArray();
         }
 
         public ExpenseNameWithCategory[] GetExpenseNamesWithCategory(Guid userId, DateTime date, int cat)
@@ -309,8 +331,46 @@ namespace SocialApps.Repositories
                     Cost = exp.Cost,
                     ExpenseEncryptedName = exp.EncryptedName,
                     Date = exp.Date,
-                    Importance = exp.Importance,
+                    Importance = (ExpenseImportance?)exp.Importance,
                     Rating = exp.Rating
+                }).ToArray();
+
+            return expenses;
+        }
+
+        //  https://action.mindjet.com/task/14896530
+        public TodayExpense[] GetExpensesByName(Guid userId, int expenseId)
+        {
+            var e = (from exp in _db.Expenses
+                where (exp.DataOwner == userId) && (exp.ID == expenseId)
+                select new TodayExpense
+                {
+                    Name = exp.Name,
+                    ExpenseEncryptedName = exp.EncryptedName,
+                }).First();
+
+            var expenses =
+               (from exp in _db.Expenses
+                join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
+                join cat in _db.Categories on expCat.CategoryID equals cat.ID
+                where (exp.DataOwner == userId) &&
+                (
+                    ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                    exp.Name == e.Name && exp.EncryptedName == e.ExpenseEncryptedName)
+                )
+                orderby exp.Date descending
+                select new TodayExpense
+                {
+                    Name = exp.Name,
+                    ExpenseEncryptedName = exp.EncryptedName,
+                    ID = exp.ID,
+                    Date = exp.Date,
+                    Rating = exp.Rating,
+                    Importance = (ExpenseImportance?)exp.Importance,
+                    Currency = exp.Currency,
+                    Cost = exp.Cost,
+                    Note = exp.Note,
+                    Project = exp.Project
                 }).ToArray();
 
             return expenses;
@@ -337,7 +397,7 @@ namespace SocialApps.Repositories
                     Cost = exp.Cost,
                     ExpenseEncryptedName = exp.EncryptedName,
                     Date = exp.Date,
-                    Importance = exp.Importance,
+                    Importance = (ExpenseImportance?)exp.Importance,
                     Rating = exp.Rating
                 }).ToArray();
 

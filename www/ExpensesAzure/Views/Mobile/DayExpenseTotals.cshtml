@@ -55,7 +55,7 @@
 			<div class="row">
 				<div class="col-md-9">
 					@{
-						var expenseList = (TodayExpensesSumsByUser_Result[]) ViewBag.TodayExpenses;
+						var expenseList = (TodayExpenseSum[]) ViewBag.TodayExpenses;
 					}
 					@if (expenseList.Any())
 					{
