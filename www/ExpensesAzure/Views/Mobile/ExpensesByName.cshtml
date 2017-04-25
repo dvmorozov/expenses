@@ -56,13 +56,13 @@
 				<thead>
 					<tr>
 						<th></th>
-						<th>Date</th>
+						<th>@Html.Raw(Resources.Resources.Date)</th>
 						<th>@Html.Raw(Resources.Resources.Expense)</th>
-						<th>Cost</th>
-						<th>Rating</th>
-						<th>Importance</th>
-						<th>Note</th>
-						<th>Project</th>
+						<th>@Html.Raw(Resources.Resources.Amount)</th>
+						<th>@Html.Raw(Resources.Resources.Rating)</th>
+						<th>@Html.Raw(Resources.Resources.Importance)</th>
+						<th>@Html.Raw(Resources.Resources.Note)</th>
+						<th>@Html.Raw(Resources.Resources.Project)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -70,9 +70,35 @@
 					{
 						var exp = ((TodayExpense[])ViewBag.ExpenseIds)[i];
 						var expenseId = exp.ID.ToString();
+						var style = "active";
+						if (exp.Importance != null)
+						{
+							switch ((short)exp.Importance)
+							{
+								case 5:
+									style = "active";
+									break;
+
+								case 4:
+									style = "success";
+									break;
+
+								case 3:
+									style = "info";
+									break;
+
+								case 2:
+									style = "warning";
+									break;
+
+								case 1:
+									style = "danger";
+									break;
+							}
+						}
 						var classId = (exp.ExpenseEncryptedName != null && exp.ExpenseEncryptedName != string.Empty) ? "encrypted" : "unencrypted";
 						@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-						<tr>
+						<tr class="@Html.Raw(style)">
 							<td style="vertical-align: middle;">
 								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("EditExpense", "Mobile", new {expenseId = exp.ID})'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
 									<span class="glyphicon glyphicon-edit"></span>
@@ -97,7 +123,7 @@
 								@Html.Raw(exp.CostString)
 							</td>
 							<td style="vertical-align: middle;">
-								@Html.Raw(exp.RatingString)
+								@Html.Partial("ExpenseRatingStars", exp)
 							</td>
 							<td style="vertical-align: middle;">
 								@Html.Raw(exp.ImportanceString)
