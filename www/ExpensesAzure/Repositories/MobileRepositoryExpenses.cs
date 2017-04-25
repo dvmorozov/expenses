@@ -351,8 +351,6 @@ namespace SocialApps.Repositories
 
             var expenses =
                (from exp in _db.Expenses
-                join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
-                join cat in _db.Categories on expCat.CategoryID equals cat.ID
                 where (exp.DataOwner == userId) &&
                 (
                     ((exp.Monthly == null || !(bool)exp.Monthly) &&
