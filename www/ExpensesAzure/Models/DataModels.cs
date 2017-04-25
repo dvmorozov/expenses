@@ -124,14 +124,14 @@ namespace SocialApps.Models
         {
             get
             {
-                return Rating != null ? Rating.ToString() : "";
+                return Rating != null ? ((short)Rating).ToString() : "";
             }
         }
         public string ImportanceString
         {
             get
             {
-                return Importance != null ? Importance.ToString() : "";
+                return Importance != null ? ((int)Importance).ToString() : "";
             }
         }
     }
