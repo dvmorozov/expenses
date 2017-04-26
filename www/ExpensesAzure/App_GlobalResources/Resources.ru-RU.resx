@@ -633,4 +633,13 @@
   <data name="AccountCategories" xml:space="preserve">
     <value>Животные,Продукты,Топливо,Дом,Авто,Кредиты,Телефон,Интернет,Одежда,Медицина,Подарки,Развлечения,Налоги,Интерьер,Домашнее Хозяйство,Транспорт,Образование,Спорт</value>
   </data>
+  <data name="ExpensesHistoryTitle" xml:space="preserve">
+    <value>История покупок</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>История</value>
+  </data>
 </root>

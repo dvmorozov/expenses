@@ -72,8 +72,8 @@
 									</button>
 
 									<ul class="dropdown-menu">
-										<li><a href="@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})">Edit</a></li>
-										<li><a href="@Url.Action("ExpensesByName", "Mobile", new {expenseId = exp.Id})">History</a></li>
+										<li><a href="@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})">@Html.Raw(Resources.Resources.Edit)</a></li>
+										<li><a href="@Url.Action("ExpensesByName", "Mobile", new {expenseId = exp.Id})">@Html.Raw(Resources.Resources.History)</a></li>
 									</ul>
 								</div>
 							</td>

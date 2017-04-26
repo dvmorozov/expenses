@@ -634,4 +634,13 @@ Sie sollten alle Passwörter halten Sie sie zu entschlüsseln wurden. </value>
   <data name="AccountCategories" xml:space="preserve">
     <value>Haustiere, Lebensmittel, Kraftstoff, Haus, Auto, Darlehen, Mobile, Internet, Kleidung, Medizin, Geschenke, Unterhaltungen, Steuern, Interieur, Haushalt, Transport, Bildung, Sport</value>
   </data>
+  <data name="ExpensesHistoryTitle" xml:space="preserve">
+    <value>Die Aufwendungen Geschichte</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>Geschichte</value>
+  </data>
 </root>

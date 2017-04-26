@@ -634,4 +634,13 @@ Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</v
   <data name="AccountCategories" xml:space="preserve">
     <value>Animales domésticos, Alimentación, Combustible, Casa, Coche, Préstamos, Móvil, Internet, Ropa, Medicina, Regalos, Divertidos, Impuestos, Interior, Hogar, Transporte, Educación, Deporte</value>
   </data>
+  <data name="ExpensesHistoryTitle" xml:space="preserve">
+    <value>Historial de compras</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>Historia</value>
+  </data>
 </root>

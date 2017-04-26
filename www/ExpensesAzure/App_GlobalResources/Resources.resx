@@ -635,4 +635,13 @@
   <data name="AccountCategories" xml:space="preserve">
     <value>Pets,Food,Fuel,Home,Car,Loans,Mobile,Internet,Clothing,Medicine,Gifts,Amusements,Taxes,Interior,Household,Transport,Education,Sport</value>
   </data>
+  <data name="ExpensesHistoryTitle" xml:space="preserve">
+    <value>Expense history</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
+  </data>
 </root>
