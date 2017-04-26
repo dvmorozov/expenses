@@ -64,18 +64,20 @@
 						var expenseId = exp.Id.ToString();
 						var classId = (exp.EncryptedName != null && exp.EncryptedName != string.Empty) ? "encrypted" : "unencrypted";
 						@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-						<tr class="trlist" onclick="window.location.href = '@Url.Action("SelectExpenseF", "Mobile", new { expenseId = exp.Id })';" id="@Html.Raw("tr" + expenseId)">
+						<tr class="trlist" id="@Html.Raw("tr" + expenseId)">
 							<td style="vertical-align: middle;">
-								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
-									<span class="glyphicon glyphicon-edit"></span>
-								</button>
+								<div class="btn-group">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>&nbsp;<span class="caret "></span>
+									</button>
+
+									<ul class="dropdown-menu">
+										<li><a href="@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})">@Html.Raw(Resources.Resources.Edit)</a></li>
+										<li><a href="@Url.Action("ExpensesByName", "Mobile", new {expenseId = exp.Id})">@Html.Raw(Resources.Resources.History)</a></li>
+									</ul>
+								</div>
 							</td>
-							<td style="vertical-align: middle;">
-								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("ExpensesByName", "Mobile", new {expenseId = exp.Id})'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
-									<span class="glyphicon glyphicon-time"></span>
-								</button>
-							</td>
-							<td style="width: 100%; vertical-align: middle;">
+							<td style="width: 100%; vertical-align: middle;"  onclick="window.location.href = '@Url.Action("SelectExpenseF", "Mobile", new { expenseId = exp.Id })';">
 								<div style="@Html.Raw((ViewBag.ExpenseId != null && (int)ViewBag.ExpenseId == exp.Id) ? "font-size: large;" : "")" id="@Html.Raw(expenseId)" class="@Html.Raw(classId)">
 									@Html.Raw(AntiXssEncoder.HtmlEncode(exp.Name.Trim(), false))
 								</div>

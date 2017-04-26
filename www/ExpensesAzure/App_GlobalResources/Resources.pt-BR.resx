@@ -633,4 +633,13 @@
   <data name="AccountCategories" xml:space="preserve">
     <value>Animais de Estimação, Comida, Combustível, Casa, Carro, Empréstimos, Mobile, Internet, Vestuário, Medicina, Presentes, Divertimentos, Impostos, Interior, Doméstico, Transporte, Educação, Desportohing,Medicine,Gifts,Amusements,Taxes,Interior,Household,Transport,Education,Sport</value>
   </data>
+  <data name="ExpensesHistoryTitle" xml:space="preserve">
+    <value>Histórico de compras</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>História</value>
+  </data>
 </root>

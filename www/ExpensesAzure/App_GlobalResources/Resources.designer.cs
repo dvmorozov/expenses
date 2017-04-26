@@ -584,6 +584,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, такую же, как Edit.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, такую же, как Edit category.
         /// </summary>
         internal static string EditCategoryTitle {
@@ -792,6 +801,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, такую же, как Expense history.
+        /// </summary>
+        internal static string ExpensesHistoryTitle {
+            get {
+                return ResourceManager.GetString("ExpensesHistoryTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, такую же, как Firts month.
         /// </summary>
         internal static string FirstMonth {
@@ -806,6 +824,15 @@ namespace Resources {
         internal static string Forever {
             get {
                 return ResourceManager.GetString("Forever", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, такую же, как History.
+        /// </summary>
+        internal static string History {
+            get {
+                return ResourceManager.GetString("History", resourceCulture);
             }
         }
         

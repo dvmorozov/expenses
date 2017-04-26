@@ -635,4 +635,13 @@ Byste měli mít všechna hesla jste používali k jejich dešifrování.</value
   <data name="AccountCategories" xml:space="preserve">
     <value>Domácí zvířata, potraviny, palivo, domov, auto, půjčky, mobile, Internet, oděvy, medicine, dárky, zábava, daně, vnitra, domácí, doprava, vzdělávání, sport</value>
   </data>
+  <data name="ExpensesHistoryTitle" xml:space="preserve">
+    <value>Historie výdajů</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Upravit</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>Dějiny</value>
+  </data>
 </root>
