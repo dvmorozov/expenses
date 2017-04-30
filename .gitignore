@@ -1,7 +1,8 @@
-/www/ExpensesAzure/Web.config
 /www/packages
 /www/ExpensesAzure/bin
 /www/ExpensesAzure/obj
 /www/.vs
 /www/ExpensesAzure/Properties/PublishProfiles
 *.bak
+/www/ExpensesAzure.v11.suo
+/www/.nuget

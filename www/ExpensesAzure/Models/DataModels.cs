@@ -14,7 +14,7 @@ namespace SocialApps.Models
         [Display(Name = "Name")]
         //  https://www.evernote.com/shard/s132/nl/14501366/8cc9b08f-c8b8-4f59-851e-39c444d2846d
         public string Name {
-            get { return _name; } 
+            get { return _name; }
             set { _name = value; }
         }
 
@@ -76,27 +76,12 @@ namespace SocialApps.Models
         public int Id { get; set; }
     }
 
-    //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
-    public class TodayExpense
+    //  https://action.mindjet.com/task/14896530
+    public class TodayExpenseBase
     {
-        //  TodayExpensesByUser3_Result attributes.
-        public DateTime Date { get; set; }
-        public string Name { get; set; }
-        public double? Cost { get; set; }
-        public string Note { get; set; }
-        public int ID { get; set; }
-        public string CategoryName { get; set; }
-        public string ExpenseEncryptedName { get; set; }
-        public string CategoryEncryptedName { get; set; }
-        public string Currency { get; set; }
-        public bool HasLinkedDocs { get; set; }
-        public short? Rating { get; set; }
-        public ExpenseImportance? Importance { get; set; }
-        //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
-        public string Project { get; set; }
-        //  https://action.mindjet.com/task/14893592
-        public int CategoryID { get; set; }
-        //  https://action.mindjet.com/task/14896530
+        public virtual double? Cost { get; set; }
+        public virtual string Currency { get; set; }
+
         public string CostString
         {
             get
@@ -106,6 +91,51 @@ namespace SocialApps.Models
                     (Currency != null ? " " + Currency : "");
             }
         }
+    }
+
+    public class EstimatedTop10CategoriesForMonthAdapter : TodayExpenseBase
+    {
+        private EstimatedTop10CategoriesForMonthByUser2_Result _r;
+
+        public EstimatedTop10CategoriesForMonthAdapter(EstimatedTop10CategoriesForMonthByUser2_Result r)
+        {
+            _r = r;
+        }
+
+        public override double? Cost { get { return _r.TOTAL; } }
+        public override string Currency { get { return null; } }
+
+        public double? TOTAL { get { return _r.TOTAL; } set { _r.TOTAL = value; } }
+        public double? LIMIT { get { return _r.LIMIT; } set { _r.LIMIT = value; } }
+        public string NAME { get { return _r.NAME; } set { _r.NAME = value; } }
+        public int ID { get { return _r.ID; } set { _r.ID = value; } }
+        public string ESTIMATION { get { return _r.ESTIMATION; } set { _r.ESTIMATION = value; } }
+        public string EncryptedName { get { return _r.EncryptedName; } set { _r.EncryptedName = value; } }
+    }
+
+    //  https://action.mindjet.com/task/14893592
+    public class TodayExpenseSum : TodayExpenseBase
+    {
+        public string Name { get; set; }
+        public string CategoryName { get; set; }
+        public string ExpenseEncryptedName { get; set; }
+        public string CategoryEncryptedName { get; set; }
+        //  https://action.mindjet.com/task/14893592
+        public int CategoryID { get; set; }
+    }
+
+    //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
+    public class TodayExpense : TodayExpenseSum
+    {
+        //  TodayExpensesByUser3_Result attributes.
+        public DateTime Date { get; set; }
+        public string Note { get; set; }
+        public int ID { get; set; }
+        public bool HasLinkedDocs { get; set; }
+        public short? Rating { get; set; }
+        public ExpenseImportance? Importance { get; set; }
+        //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
+        public string Project { get; set; }
         public string NoteString
         {
             get
@@ -134,18 +164,6 @@ namespace SocialApps.Models
                 return Importance != null ? ((int)Importance).ToString() : "";
             }
         }
-    }
-
-    //  https://action.mindjet.com/task/14893592
-    public partial class TodayExpenseSum
-    {
-        public string Name { get; set; }
-        public Nullable<double> Cost { get; set; }
-        public string CategoryName { get; set; }
-        public string ExpenseEncryptedName { get; set; }
-        public string CategoryEncryptedName { get; set; }
-        public string Currency { get; set; }
-        public int CategoryID { get; set; }
     }
 
     //  https://www.evernote.com/shard/s132/nl/14501366/6ad181b9-a410-4aab-b47a-7ea111aefb04

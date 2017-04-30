@@ -51,7 +51,7 @@
 							</text>
 						</a>
 						<span class="badge pull-right">
-							@Html.Raw((expense.Cost != null ? ((float)expense.Cost).ToString("F2", CultureInfo.InvariantCulture) : (0.0).ToString("F2", CultureInfo.InvariantCulture)) + (expense.Currency != null ? " " + expense.Currency : ""))
+							@Html.Raw(expense.CostString)
 						</span>
 						<span style="position: absolute; right: 120px;">
 							<sub>
