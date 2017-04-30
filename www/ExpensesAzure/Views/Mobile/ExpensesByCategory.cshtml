@@ -105,9 +105,7 @@
 								</td>
 								@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
 								<td id="@Html.Raw("ttl" + expenseId)">
-									@Html.Raw(item.Cost != null ?
-										((float)item.Cost).ToString("F2", CultureInfo.InvariantCulture) :
-										(0.0).ToString(CultureInfo.InvariantCulture))
+									@Html.Raw(item.CostString)
 									@if (item.ExpenseEncryptedName != null && item.ExpenseEncryptedName != string.Empty)
 									{
 										<script>

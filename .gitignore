@@ -5,3 +5,5 @@
 /www/.vs
 /www/ExpensesAzure/Properties/PublishProfiles
 *.bak
+/www/ExpensesAzure.v11.suo
+/www/.nuget

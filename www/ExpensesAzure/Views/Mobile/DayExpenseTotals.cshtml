@@ -76,7 +76,7 @@
 											</div>
 										</td>
 										<td style="vertical-align: middle;">
-											@Html.Raw((expense.Cost != null ? ((float)expense.Cost).ToString("F2", CultureInfo.InvariantCulture) : (0.0).ToString("F2", CultureInfo.InvariantCulture)) + (expense.Currency != null ? " " + expense.Currency : ""))
+											@Html.Raw(expense.CostString)
 										</td>
 									</tr>
 								}
