@@ -58,7 +58,6 @@ namespace SocialApps.Controllers
                         //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
                         Importance = income != null && income.Importance != null ? income.Importance : (short)ExpenseImportance.Necessary,
                         Rating = income != null && income.Rating != null ? income.Rating : null,
-                        Note = income != null && income.Note != null ? income.Note.Trim() : null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
                         //  https://www.evernote.com/shard/s132/nl/14501366/ac86d7cd-401e-4706-80f9-c8eeead71f35
                         Project = null,

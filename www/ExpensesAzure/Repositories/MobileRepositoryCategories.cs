@@ -35,8 +35,14 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         private void DeleteCachedCategories(Guid userId)
         {
-            DeleteBlobs(userId, SelectEstimatedCategoriesPrefix);
-            _session[SelectEstimatedCategoriesPrefix] = null;
+            try
+            {
+                DeleteBlobs(userId, SelectEstimatedCategoriesPrefix);
+                _session[SelectEstimatedCategoriesPrefix] = null;
+            }
+            catch
+            {
+            }
         }
 
         public EstimatedCategoriesByUser3_Result[] SelectEstimatedCategories(DateTime date, Guid userId, bool? shortList)

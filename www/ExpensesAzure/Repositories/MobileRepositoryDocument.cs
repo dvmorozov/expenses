@@ -19,23 +19,38 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         public void GetDocument(Guid userId, int linkId, out MemoryStream stream, out string fileName)
         {
-            var linkData =
-                (from link in _db.Links
-                where (link.ID == linkId) && (link.DataOwner == userId)
-                select new LinkModel { Id = link.ID, URL = link.URL, Name = link.Name }).First();
+            try
+            {
+                var linkData =
+                    (from link in _db.Links
+                     where (link.ID == linkId) && (link.DataOwner == userId)
+                     select new LinkModel { Id = link.ID, URL = link.URL, Name = link.Name }).First();
 
-            DownloadBlob(userId, out stream, (new Uri(linkData.URL)).Segments.Last());
-            fileName = linkData.Name;
+                DownloadBlob(userId, out stream, (new Uri(linkData.URL)).Segments.Last());
+                fileName = linkData.Name;
+            }
+            catch
+            {
+                stream = new MemoryStream();
+                fileName = "";
+            }
         }
 
         //  https://action.mindjet.com/task/14509395
         public void PutDocument(Guid userId, out int linkId, Stream stream, string fileName)
         {
-            //  File name for BLOB is replaced by GUID.
-            var link = _db.Links.Add(new Links { URL = UploadBlob(userId, stream, Guid.NewGuid().ToString()), Name = fileName, DataOwner = userId });
-            _db.SaveChanges();
+            try
+            {
+                //  File name for BLOB is replaced by GUID.
+                var link = _db.Links.Add(new Links { URL = UploadBlob(userId, stream, Guid.NewGuid().ToString()), Name = fileName, DataOwner = userId });
+                _db.SaveChanges();
 
-            linkId = link.ID;
+                linkId = link.ID;
+            }
+            catch
+            {
+                linkId = -1;
+            }
         }
 
         public List<LinkModel> GetLinks(Guid userId, List<int> sessionLinks)
@@ -104,9 +119,16 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         private string UploadText(Guid userId, string text, string fileName)
         {
-            var blockBlob = GetBlob(fileName, userId);
-            blockBlob.UploadText(text);
-            return blockBlob.Uri.ToString();
+            try
+            {
+                var blockBlob = GetBlob(fileName, userId);
+                blockBlob.UploadText(text);
+                return blockBlob.Uri.ToString();
+            }
+            catch
+            {
+                return "";
+            }
         }
 
         //  https://action.mindjet.com/task/14509395
@@ -124,12 +146,20 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         private bool DownloadText(Guid userId, out string text, string fileName)
         {
-            var blob = GetBlob(fileName, userId);
-            text = "";
-            if (!blob.Exists()) return false;
+            try
+            {
+                var blob = GetBlob(fileName, userId);
+                text = "";
+                if (!blob.Exists()) return false;
 
-            text = blob.DownloadText();
-            return true;
+                text = blob.DownloadText();
+                return true;
+            }
+            catch
+            {
+                text = "";
+                return false;
+            }
         }
 
         //  https://action.mindjet.com/task/14509395
