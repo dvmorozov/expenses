@@ -22,8 +22,14 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         private void DeleteCachedExpenses(Guid userId, int catId)
         {
-            DeleteBlobs(userId, SelectExpensesPrefix + "_" + catId);
-            _session[SelectExpensesPrefix] = null;
+            try
+            {
+                DeleteBlobs(userId, SelectExpensesPrefix + "_" + catId);
+                _session[SelectExpensesPrefix] = null;
+            }
+            catch
+            {
+            }
         }
 
         //  https://action.mindjet.com/task/14509395
