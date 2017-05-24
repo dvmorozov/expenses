@@ -84,15 +84,18 @@ namespace SocialApps.Repositories
 
         public List<TodayExpense> GetIncomesForMonth(Guid userId, DateTime date)
         {
-            //  https://action.mindjet.com/task/14834466
             //  https://vision.mindjet.com/action/task/14485587
             //  https://action.mindjet.com/task/14665340
+            //  https://action.mindjet.com/task/14915101
             var expenses =
-               (from exp in _db.IncomsForMonthByUser3(date.Year, date.Month, userId)
+               (from exp in _db.Operations
+                where (exp.DataOwner == userId) && (exp.Income != null) && ((bool)exp.Income) && 
+                      (exp.Date.Year == date.Year) && (exp.Date.Month == date.Month)
+                orderby exp.Currency
                 select new TodayExpense
                 {
                     Name = exp.Name,
-                    Cost = exp.Amount,
+                    Cost = exp.Cost,
                     ExpenseEncryptedName = exp.EncryptedName,
                     ID = exp.ID,
                     Date = exp.Date,
