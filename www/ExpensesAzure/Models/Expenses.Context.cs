@@ -379,22 +379,5 @@ namespace SocialApps.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TodayAndMonthTotalByUser2_Result>("TodayAndMonthTotalByUser2", todayParameter, dataOwnerParameter);
         }
-    
-        public virtual ObjectResult<IncomsForMonthByUser3_Result> IncomsForMonthByUser3(Nullable<int> year, Nullable<int> month, Nullable<System.Guid> dataOwner)
-        {
-            var yearParameter = year.HasValue ?
-                new ObjectParameter("Year", year) :
-                new ObjectParameter("Year", typeof(int));
-    
-            var monthParameter = month.HasValue ?
-                new ObjectParameter("Month", month) :
-                new ObjectParameter("Month", typeof(int));
-    
-            var dataOwnerParameter = dataOwner.HasValue ?
-                new ObjectParameter("DataOwner", dataOwner) :
-                new ObjectParameter("DataOwner", typeof(System.Guid));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<IncomsForMonthByUser3_Result>("IncomsForMonthByUser3", yearParameter, monthParameter, dataOwnerParameter);
-        }
     }
 }

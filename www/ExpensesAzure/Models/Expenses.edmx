@@ -194,16 +194,6 @@
           <Parameter Name="Day" Type="int" Mode="In" />
           <Parameter Name="ShortList" Type="bit" Mode="In" />
         </Function>
-        <Function Name="IncomsForMonthByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Year" Type="int" Mode="In" />
-          <Parameter Name="Month" Type="int" Mode="In" />
-          <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
-        </Function>
-        <Function Name="IncomsForMonthByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Year" Type="int" Mode="In" />
-          <Parameter Name="Month" Type="int" Mode="In" />
-          <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
-        </Function>
         <Function Name="LastYearBalanceByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LastMonthNumber" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
@@ -415,11 +405,6 @@
           </FunctionImport>
           <FunctionImport Name="TodayAndMonthTotalByUser2" ReturnType="Collection(ExpensesModel.TodayAndMonthTotalByUser2_Result)">
             <Parameter Name="Today" Mode="In" Type="DateTime" />
-            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
-          </FunctionImport>
-          <FunctionImport Name="IncomsForMonthByUser3" ReturnType="Collection(ExpensesModel.IncomsForMonthByUser3_Result)">
-            <Parameter Name="Year" Mode="In" Type="Int32" />
-            <Parameter Name="Month" Mode="In" Type="Int32" />
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
           </FunctionImport>
           </EntityContainer>
@@ -830,19 +815,6 @@
                 <ScalarProperty Name="TodayCurrency" ColumnName="TodayCurrency" />
                 <ScalarProperty Name="MonthTotal" ColumnName="MonthTotal" />
                 <ScalarProperty Name="MonthCurrency" ColumnName="MonthCurrency" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="IncomsForMonthByUser3" FunctionName="Хранилище ExpensesModel.IncomsForMonthByUser3">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExpensesModel.IncomsForMonthByUser3_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="EncryptedName" ColumnName="EncryptedName" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

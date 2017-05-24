@@ -409,16 +409,18 @@ namespace SocialApps.Controllers
                 SetClientIncomeDate(date);
 
                 var userId = GetUserId();
-                var expensesList = _repository.GetIncomesForMonth(userId, date);
 
                 //  Used in ExpenseAccordion. List expected!
-                ViewBag.TodayExpenses = expensesList;
+                ViewBag.TodayExpenses = _repository.GetIncomesForMonth(userId, date);
                 ViewBag.ShowOnlyMonth = true;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def
                 var totals = _repository.GetMonthBudget(userId, date);
                 if (totals != null)
                     ViewBag.MonthTotal = totals.MonthTotal;
+
+                //  https://action.mindjet.com/task/14915101
+                ViewBag.Balances = _repository.GetMonthBalances(userId, date);
 
                 var income = _repository.GetMonthIncome(userId, date);
                 if (income != null)
