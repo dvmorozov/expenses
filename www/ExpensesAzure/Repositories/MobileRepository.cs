@@ -77,6 +77,42 @@ namespace SocialApps.Repositories
             return _db.MonthBudgetByUser(date, userId).FirstOrDefault();
         }
 
+        public MonthBalance[] GetMonthBalances(Guid userId, DateTime date)
+        {
+            var incomes =
+                (from exp in _db.Operations
+                 where (exp.DataOwner == userId) && (exp.Income != null) && ((bool)exp.Income) &&
+                       (exp.Date.Year == date.Year) && (exp.Date.Month == date.Month)
+                 group exp by exp.Currency into g
+                 select new MonthCurrency
+                 {
+                    Sum = g.Sum(t => t.Cost != null ? (double)t.Cost : 0.0),
+                    Currency = g.FirstOrDefault().Currency
+                 }).ToList();
+
+            var expenses =
+                (from exp in _db.Expenses
+                 where (exp.DataOwner == userId) && (exp.Date.Year == date.Year) && (exp.Date.Month == date.Month)
+                 group exp by exp.Currency into g
+                 select new MonthCurrency
+                 {
+                     Sum = g.Sum(t => t.Cost != null ? (double)t.Cost : 0.0),
+                     Currency = g.FirstOrDefault().Currency
+                 }).ToList();
+
+            var result = 
+                (from income in incomes
+                join expense in expenses on income.Currency equals expense.Currency
+                select new MonthBalance
+                {
+                    Currency = income.Currency,
+                    SumExpenses = expense.Sum,
+                    SumIncomes = income.Sum
+                }).ToArray();
+
+            return result;
+        }
+
         public decimal? GetMonthIncome(Guid userId, DateTime date)
         {
             return _db.MonthIncomeByUser(date, userId).FirstOrDefault();
@@ -111,17 +147,17 @@ namespace SocialApps.Repositories
         {
             //  https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
             var expenses = (
-                    from exp in
-                        //  https://action.mindjet.com/task/14479694
-                        _db.GetIncomeNamesByUser(userId, date.Year, date.Month, date.Day, shortList)
-                    select new ExpenseNameWithCategory
-                    {
-                        Count = 1, //exp.Count,
-                        EncryptedName = exp.EncryptedName,
-                        Name = exp.Name,
-                        Id = exp.Id
-                    }
-                ).ToArray();
+                from exp in
+                    //  https://action.mindjet.com/task/14479694
+                    _db.GetIncomeNamesByUser(userId, date.Year, date.Month, date.Day, shortList)
+                select new ExpenseNameWithCategory
+                {
+                    Count = 1, //exp.Count,
+                    EncryptedName = exp.EncryptedName,
+                    Name = exp.Name,
+                    Id = exp.Id
+                }
+            ).ToArray();
 
             return expenses;
         }

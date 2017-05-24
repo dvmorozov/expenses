@@ -173,6 +173,21 @@ namespace SocialApps.Models
         public double Sum { get; set; }
     }
 
+    //  https://action.mindjet.com/task/14915101
+    public class MonthCurrency
+    {
+        public string Currency { get; set; }
+        public double Sum { get; set; }
+    }
+
+    //  https://action.mindjet.com/task/14915101
+    public class MonthBalance
+    {
+        public string Currency { get; set; }
+        public double SumExpenses { get; set; }
+        public double SumIncomes { get; set; }
+    }
+
     public class ExpenseNameWithCategory
     {
         private string _EncryptedName;

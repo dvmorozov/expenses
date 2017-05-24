@@ -419,6 +419,9 @@ namespace SocialApps.Controllers
                 if (totals != null)
                     ViewBag.MonthTotal = totals.MonthTotal;
 
+                //  https://action.mindjet.com/task/14915101
+                ViewBag.Balances = _repository.GetMonthBalances(userId, date);
+
                 var income = _repository.GetMonthIncome(userId, date);
                 if (income != null)
                 {
