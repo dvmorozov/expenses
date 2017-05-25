@@ -82,7 +82,8 @@ namespace SocialApps.Repositories
             var incomes =
                 (from exp in _db.Operations
                  where (exp.DataOwner == userId) && (exp.Income != null) && ((bool)exp.Income) &&
-                       (exp.Date.Year == date.Year) && (exp.Date.Month == date.Month)
+                       ((exp.Date.Year == date.Year && exp.Date.Month == date.Month) ||
+                       ((exp.Monthly != null ? (bool)exp.Monthly : false) && date >= exp.FirstMonth && (exp.LastMonth != null ? date <= exp.LastMonth : true)))
                  group exp by exp.Currency into g
                  select new MonthCurrency
                  {
@@ -92,7 +93,9 @@ namespace SocialApps.Repositories
 
             var expenses =
                 (from exp in _db.Expenses
-                 where (exp.DataOwner == userId) && (exp.Date.Year == date.Year) && (exp.Date.Month == date.Month)
+                 where (exp.DataOwner == userId) &&
+                       ((exp.Date.Year == date.Year && exp.Date.Month == date.Month) ||
+                       ((exp.Monthly != null ? (bool)exp.Monthly : false) && date >= exp.FirstMonth && (exp.LastMonth != null ? date <= exp.LastMonth : true)))
                  group exp by exp.Currency into g
                  select new MonthCurrency
                  {
