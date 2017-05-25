@@ -57,38 +57,33 @@
 			<div class="row">
 				<div class="col-md-9">
 					<table class="table">
+						<thead>
+							<tr>
+								<td>@Html.Raw(Resources.Resources.Currency)</td>
+								<td>@Html.Raw(Resources.Resources.Income)</td>
+								<td>@Html.Raw(Resources.Resources.Spent)</td>
+								<td>@Html.Raw(Resources.Resources.BalanceTitle)</td>
+							</tr>
+						</thead>
 						<tbody>
-							@* https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def *@
-							@if (ViewBag.MonthTotal != null)
+							@* 
+								https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def
+								https://action.mindjet.com/task/14915101
+							*@
+							@foreach (var b in (MonthBalance[])ViewBag.Balances)
 							{
 								<tr>
 									<td>
-										@Html.Raw(Resources.Resources.Spent)
+										@Html.Raw(b.Currency)
 									</td>
 									<td>
-										@Html.Raw(Math.Floor((decimal)ViewBag.MonthTotal).ToString())
-									</td>
-								</tr>
-							}
-							@if (ViewBag.Balance != null)
-							{
-								<tr>
-									<td>
-										@Html.Raw(Resources.Resources.BalanceTitle)
+										@Html.Raw(Math.Floor(b.SumIncomes).ToString())
 									</td>
 									<td>
-										@Html.Raw((decimal)ViewBag.Balance < 0 ? Math.Ceiling((decimal)ViewBag.Balance).ToString() : Math.Floor((decimal)ViewBag.Balance).ToString())
-									</td>
-								</tr>
-							}
-							@if (!Model.Income.IsEmpty())
-							{
-								<tr>
-									<td>
-										@Html.Raw(Resources.Resources.Income)
+										@Html.Raw(Math.Floor(b.SumExpenses).ToString())
 									</td>
 									<td>
-										@Html.Raw(Model.Income)
+										@Html.Raw(Math.Floor(b.SumIncomes - b.SumExpenses).ToString())
 									</td>
 								</tr>
 							}
