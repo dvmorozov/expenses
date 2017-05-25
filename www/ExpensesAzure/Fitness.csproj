@@ -535,8 +535,8 @@
   <PropertyGroup>
     <PreBuildEvent>cd "$(TargetDir)"
 del /Q *.*
-cd "$(ProjectDir)"
-_update_version.bat
+cd "$(ProjectDir)/obj/$(ConfigurationName)"
+del /Q *.*
 exit /B 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
