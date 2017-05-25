@@ -414,11 +414,6 @@ namespace SocialApps.Controllers
                 ViewBag.TodayExpenses = _repository.GetIncomesForMonth(userId, date);
                 ViewBag.ShowOnlyMonth = true;
 
-                //  https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def
-                var totals = _repository.GetMonthBudget(userId, date);
-                if (totals != null)
-                    ViewBag.MonthTotal = totals.MonthTotal;
-
                 //  https://action.mindjet.com/task/14915101
                 ViewBag.Balances = _repository.GetMonthBalances(userId, date);
 
@@ -426,13 +421,11 @@ namespace SocialApps.Controllers
                 if (income != null)
                 {
                     //  https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def
-                    ViewBag.Balance = totals != null && totals.MonthTotal != null ? income - totals.MonthTotal : income;
                     return View("MonthIncome", new IncomeModel { Month = date.Month, Year = date.Year, Income = Math.Floor((decimal)income).ToString(), Reset = 0 });
                 }
                 else
                 {
                     //  https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def
-                    ViewBag.Balance = totals != null && totals.MonthTotal != null ? -totals.MonthTotal : 0;
                     return View("MonthIncome", new IncomeModel { Month = date.Month, Year = date.Year, Income = "N/A", Reset = 0 });
                 }
             }
