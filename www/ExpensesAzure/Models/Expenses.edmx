@@ -173,6 +173,12 @@
           <Parameter Name="Day" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="EstimatedTop10CategoriesForMonthByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Day" Type="int" Mode="In" />
+          <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <Function Name="ExpensesByCategoryForMonthByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CategoryId" Type="int" Mode="In" />
           <Parameter Name="Year" Type="int" Mode="In" />
@@ -308,12 +314,6 @@
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
             <Parameter Name="EncryptedName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="EstimatedTop10CategoriesForMonthByUser2" ReturnType="Collection(ExpensesModel.EstimatedTop10CategoriesForMonthByUser2_Result)">
-            <Parameter Name="Year" Mode="In" Type="Int32" />
-            <Parameter Name="Month" Mode="In" Type="Int32" />
-            <Parameter Name="Day" Mode="In" Type="Int32" />
-            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
-          </FunctionImport>
           <FunctionImport Name="ExpensesByCategoryForMonthByUser2" ReturnType="Collection(ExpensesModel.ExpensesByCategoryForMonthByUser2_Result)">
             <Parameter Name="CategoryId" Mode="In" Type="Int32" />
             <Parameter Name="Year" Mode="In" Type="Int32" />
@@ -407,6 +407,12 @@
             <Parameter Name="Today" Mode="In" Type="DateTime" />
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
           </FunctionImport>
+          <FunctionImport Name="EstimatedTop10CategoriesForMonthByUser3" ReturnType="Collection(ExpensesModel.EstimatedTop10CategoriesForMonthByUser3_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Day" Mode="In" Type="Int32" />
+            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Categories">
           <Key>
@@ -419,14 +425,6 @@
           <Property Name="EncryptedName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ExpensesCategories" Relationship="ExpensesModel.FK_ExpensesCategories_Categories" FromRole="Categories" ToRole="ExpensesCategories" />
         </EntityType>
-        <ComplexType Name="EstimatedTop10CategoriesForMonthByUser2_Result">
-          <Property Type="Double" Name="TOTAL" Nullable="true" />
-          <Property Type="Double" Name="LIMIT" Nullable="true" />
-          <Property Type="String" Name="NAME" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="ESTIMATION" Nullable="false" MaxLength="9" />
-          <Property Type="String" Name="EncryptedName" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="ExpensesByCategoryForMonthByUser2_Result">
           <Property Type="String" Name="NAME" Nullable="true" MaxLength="50" />
           <Property Type="Double" Name="TOTAL" Nullable="true" />
@@ -623,6 +621,17 @@
           <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
           <Property Type="String" Name="Note" Nullable="true" MaxLength="200" />
         </ComplexType>
+        <ComplexType Name="EstimatedTop10CategoriesForMonthByUser3_Result">
+          <Property Type="Double" Name="TOTAL" Nullable="true" />
+          <Property Type="Double" Name="LIMIT" Nullable="true" />
+          <Property Type="String" Name="NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="ESTIMATION" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="EncryptedName" Nullable="true" />
+          <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="GROUPID1" Nullable="true" />
+          <Property Type="Int32" Name="GROUPID2" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -644,18 +653,6 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AddCategoryByUser" FunctionName="Хранилище ExpensesModel.AddCategoryByUser" />
-          <FunctionImportMapping FunctionImportName="EstimatedTop10CategoriesForMonthByUser2" FunctionName="Хранилище ExpensesModel.EstimatedTop10CategoriesForMonthByUser2">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExpensesModel.EstimatedTop10CategoriesForMonthByUser2_Result">
-                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
-                <ScalarProperty Name="LIMIT" ColumnName="LIMIT" />
-                <ScalarProperty Name="NAME" ColumnName="NAME" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ESTIMATION" ColumnName="ESTIMATION" />
-                <ScalarProperty Name="EncryptedName" ColumnName="EncryptedName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ExpensesByCategoryForMonthByUser2" FunctionName="Хранилище ExpensesModel.ExpensesByCategoryForMonthByUser2">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ExpensesModel.ExpensesByCategoryForMonthByUser2_Result">
@@ -815,6 +812,21 @@
                 <ScalarProperty Name="TodayCurrency" ColumnName="TodayCurrency" />
                 <ScalarProperty Name="MonthTotal" ColumnName="MonthTotal" />
                 <ScalarProperty Name="MonthCurrency" ColumnName="MonthCurrency" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EstimatedTop10CategoriesForMonthByUser3" FunctionName="Хранилище ExpensesModel.EstimatedTop10CategoriesForMonthByUser3">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExpensesModel.EstimatedTop10CategoriesForMonthByUser3_Result">
+                <ScalarProperty Name="TOTAL" ColumnName="TOTAL" />
+                <ScalarProperty Name="LIMIT" ColumnName="LIMIT" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ESTIMATION" ColumnName="ESTIMATION" />
+                <ScalarProperty Name="EncryptedName" ColumnName="EncryptedName" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="GROUPID1" ColumnName="GROUPID1" />
+                <ScalarProperty Name="GROUPID2" ColumnName="GROUPID2" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

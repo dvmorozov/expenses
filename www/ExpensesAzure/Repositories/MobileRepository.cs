@@ -35,9 +35,9 @@ namespace SocialApps.Repositories
             return _db.TodayAndMonthTotalByUser2(date, userId).FirstOrDefault();
         }
 
-        public List<EstimatedTop10CategoriesForMonthByUser2_Result> GetTop10Categories(Guid userId, DateTime now)
+        public List<EstimatedTop10CategoriesForMonthByUser3_Result> GetTop10Categories(Guid userId, DateTime now)
         {
-            return _db.EstimatedTop10CategoriesForMonthByUser2(now.Year, now.Month, now.Day, userId).ToList();
+            return _db.EstimatedTop10CategoriesForMonthByUser3(now.Year, now.Month, now.Day, userId).ToList();
         }
 
         public List<LastYearTotalExpensesByMonthByUser_Result> GetLastYearTotalExpensesByMonth(Guid userId, int lastMonthNumber)

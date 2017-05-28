@@ -95,9 +95,9 @@ namespace SocialApps.Models
 
     public class EstimatedTop10CategoriesForMonthAdapter : TodayExpenseBase
     {
-        private EstimatedTop10CategoriesForMonthByUser2_Result _r;
+        private EstimatedTop10CategoriesForMonthByUser3_Result _r;
 
-        public EstimatedTop10CategoriesForMonthAdapter(EstimatedTop10CategoriesForMonthByUser2_Result r)
+        public EstimatedTop10CategoriesForMonthAdapter(EstimatedTop10CategoriesForMonthByUser3_Result r)
         {
             _r = r;
         }

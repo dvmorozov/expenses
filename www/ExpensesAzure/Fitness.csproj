@@ -240,9 +240,7 @@
     <Compile Include="Models\EstimatedCategoriesByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser2_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser3_Result.cs" />
     <Compile Include="Models\Expenses.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
