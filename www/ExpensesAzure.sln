@@ -1,14 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expenses", "ExpensesAzure\Expenses.csproj", "{004A2A51-D041-44C7-AA86-AC04F5D32376}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitness", "ExpensesAzure\Fitness.csproj", "{5F8AD372-CCC9-43DB-BFC5-1945A4F1D1F3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{004A2A51-D041-44C7-AA86-AC04F5D32376} = {004A2A51-D041-44C7-AA86-AC04F5D32376}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

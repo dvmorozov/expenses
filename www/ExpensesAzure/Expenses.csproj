@@ -259,7 +259,7 @@
     <Compile Include="Models\EstimatedCategoriesByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser2_Result.cs">
+    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Expenses.Context.cs">
@@ -579,8 +579,8 @@
   <PropertyGroup>
     <PreBuildEvent>cd "$(TargetDir)"
 del /Q *.*
-cd "$(ProjectDir)"
-_update_version.bat
+cd "$(ProjectDir)/obj/$(ConfigurationName)"
+del /Q *.*
 exit /B 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

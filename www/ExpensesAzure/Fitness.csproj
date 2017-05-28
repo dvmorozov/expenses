@@ -240,9 +240,7 @@
     <Compile Include="Models\EstimatedCategoriesByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser2_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser3_Result.cs" />
     <Compile Include="Models\Expenses.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -346,8 +344,6 @@
       <DependentUpon>Expenses.edmx</DependentUpon>
       <LastGenOutput>Expenses1.cs</LastGenOutput>
     </Content>
-    <None Include="Properties\PublishProfiles\ftnss - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ftnss - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -537,8 +533,8 @@
   <PropertyGroup>
     <PreBuildEvent>cd "$(TargetDir)"
 del /Q *.*
-cd "$(ProjectDir)"
-_update_version.bat
+cd "$(ProjectDir)/obj/$(ConfigurationName)"
+del /Q *.*
 exit /B 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

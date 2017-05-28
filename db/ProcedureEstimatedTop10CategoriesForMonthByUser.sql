@@ -1,12 +1,13 @@
-DROP PROCEDURE EstimatedTop10CategoriesForMonthByUser2
+
+DROP PROCEDURE EstimatedTop10CategoriesForMonthByUser3
 GO
 
 -- =============================================
 -- Author:		D.V.Morozov
--- Create date: 21/05/2015
+-- Create date: 26/05/2017
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
 -- =============================================
-CREATE PROCEDURE EstimatedTop10CategoriesForMonthByUser2 @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
+CREATE PROCEDURE EstimatedTop10CategoriesForMonthByUser3 @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
 AS 
 	DECLARE @ADate DATETIME
 	SET @ADate = DATEFROMPARTS(@Year, @Month, @Day)
@@ -31,7 +32,10 @@ AS
 			--	Calculates estimated total for month by the real spend rate.
 			WHEN TOTAL > CAST(@DaysElapsed AS FLOAT) * LIMIT / CAST(@DaysInMonth AS FLOAT) THEN 'MayExceed' ELSE 'NotExceed'
 		END AS ESTIMATION,
-		C.EncryptedName
+		C.EncryptedName,
+		TT.Currency,
+		TT.GROUPID1,
+		TT.GROUPID2
 	FROM 
 	CATEGORIES C
 	JOIN
@@ -40,10 +44,14 @@ AS
 		--	Not all categories can be present.
 		--	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
 		SELECT COALESCE(E1.SingleTotal, 0) + COALESCE(E2.MonthlyTotal, 0) AS TOTAL, 
-			COALESCE(E1.CategoryId, E2.CategoryId) AS CATEGORYID
+			COALESCE(E1.CategoryId, E2.CategoryId) AS CATEGORYID,
+			COALESCE(E1.Currency, E2.Currency) AS CURRENCY,
+			COALESCE(E1.GROUPID, 0) AS GROUPID1,
+			COALESCE(E2.GROUPID, 0) AS GROUPID2
 		FROM
 		(
-			SELECT SUM(Cost) AS SingleTotal, c.ID AS CategoryId
+			SELECT SUM(Cost) AS SingleTotal, c.ID AS CategoryId, e.Currency AS Currency,
+				   GROUPING_ID(e.Currency) AS GROUPID
 			FROM Expenses e
 				JOIN ExpensesCategories ec
 				ON ec.ExpenseID = e.ID 
@@ -59,11 +67,12 @@ AS
 					OR Currency IS NULL
 					-- If the budget currency is not set then all expenses are considered as given in the same currency.
 					OR @BudgetCurrency IS NULL)
-			GROUP BY c.ID
+			GROUP BY c.ID, e.Currency
 		) E1
 		FULL OUTER JOIN
 		(
-			SELECT SUM(Cost) AS MonthlyTotal, c.ID AS CategoryId
+			SELECT SUM(Cost) AS MonthlyTotal, c.ID AS CategoryId, e.Currency AS Currency,
+				   GROUPING_ID(e.Currency) AS GROUPID
 			FROM Expenses e
 				JOIN ExpensesCategories ec
 				ON ec.ExpenseID = e.ID 
@@ -80,12 +89,40 @@ AS
 					-- If the budget currency is not set then all expenses are considered as given in the same currency.
 					OR @BudgetCurrency IS NULL)
 				--	https://www.evernote.com/shard/s132/nl/14501366/f53e1481-b9bc-47f7-a926-4b7011f1a1d9
-			GROUP BY c.ID
+			GROUP BY c.ID, e.Currency
 		) E2
 		ON E1.CategoryId = E2.CategoryId
 	) AS TT
 	ON C.ID = TT.CATEGORYID
-	ORDER BY TT.TOTAL DESC
+	ORDER BY TT.Currency, TT.TOTAL DESC
+GO
+
+DROP PROCEDURE EstimatedTop10CategoriesForMonthByUser2
+GO
+
+-- =============================================
+-- Author:		D.V.Morozov
+-- Create date: 21/05/2015
+-- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
+-- =============================================
+CREATE PROCEDURE EstimatedTop10CategoriesForMonthByUser2 @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
+AS 
+	DECLARE @T TABLE (
+		TOTAL FLOAT NOT NULL,
+		LIMIT FLOAT NULL,
+		NAME CHAR(100) NOT NULL, 
+		ID INT NOT NULL, 
+		ESTIMATION NVARCHAR(MAX) NOT NULL, 
+		EncryptedName NVARCHAR(MAX) NULL,
+		Currency NCHAR(5),
+		GROUPID1 INT,
+		GROUPID2 INT
+		)
+
+	INSERT INTO @T EXEC EstimatedTop10CategoriesForMonthByUser3 @Year, @Month, @Day, @DataOwner
+
+	SELECT TOTAL, LIMIT, NAME, ID, ESTIMATION, EncryptedName
+	FROM @T
 GO
 
 DROP PROCEDURE EstimatedTop10CategoriesForMonthByUser
@@ -106,10 +143,13 @@ BEGIN
 		NAME CHAR(100) NOT NULL, 
 		ID INT NOT NULL, 
 		ESTIMATION NVARCHAR(MAX) NOT NULL, 
-		EncryptedName NVARCHAR(MAX) NULL
+		EncryptedName NVARCHAR(MAX) NULL,
+		Currency NCHAR(5),
+		GROUPID1 INT,
+		GROUPID2 INT
 		)
 
-	INSERT INTO @T EXEC EstimatedTop10CategoriesForMonthByUser2 @Year, @Month, @Day, @DataOwner
+	INSERT INTO @T EXEC EstimatedTop10CategoriesForMonthByUser3 @Year, @Month, @Day, @DataOwner
 
 	SELECT TOTAL, LIMIT, NAME, ID, ESTIMATION
 	FROM @T

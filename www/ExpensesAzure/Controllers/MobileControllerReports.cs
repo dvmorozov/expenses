@@ -20,7 +20,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var res = (List<EstimatedTop10CategoriesForMonthByUser2_Result>)Session["Top10CategoriesResult"];
+                var res = (List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"];
                 //  Gets chart object.
                 var myChart = RenderTop10Chart(res, width, height, (int) Session["Top10Year"], (int) Session["Top10Month"], pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
@@ -32,7 +32,7 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
-        private Chart RenderTop10Chart(List<EstimatedTop10CategoriesForMonthByUser2_Result> items, int width, int height, int year, int month, bool? pie)
+        private Chart RenderTop10Chart(List<EstimatedTop10CategoriesForMonthByUser3_Result> items, int width, int height, int year, int month, bool? pie)
         {
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
