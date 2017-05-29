@@ -121,7 +121,7 @@
 											</td>
 											<td>
 												<div id="@Html.Raw("ttl" + categoryId)">
-													@Html.Raw(cat.TOTAL != null ? ((float)cat.TOTAL).ToString("F2", CultureInfo.InvariantCulture) : (0.0).ToString("F2", CultureInfo.InvariantCulture))
+													@Html.Raw((cat.TOTAL != null ? ((float)cat.TOTAL).ToString("F2", CultureInfo.InvariantCulture) : (0.0).ToString("F2", CultureInfo.InvariantCulture)) + " " + cat.Currency)
 												</div>
 												<div style="font-size: xx-small; text-align: right; font-style: italic;">
 													@Html.Raw(cat.LIMIT != null ? Math.Floor((float)cat.LIMIT).ToString(CultureInfo.InvariantCulture) : "NA")
