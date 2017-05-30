@@ -145,8 +145,8 @@ BEGIN
 		ESTIMATION NVARCHAR(MAX) NOT NULL, 
 		EncryptedName NVARCHAR(MAX) NULL,
 		Currency NCHAR(5),
-		GROUPID1 INT,
-		GROUPID2 INT
+		GROUPID1 INT NOT NULL,
+		GROUPID2 INT NOT NULL
 		)
 
 	INSERT INTO @T EXEC EstimatedTop10CategoriesForMonthByUser3 @Year, @Month, @Day, @DataOwner
