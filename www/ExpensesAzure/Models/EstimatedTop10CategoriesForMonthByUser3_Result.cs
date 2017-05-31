@@ -20,7 +20,7 @@ namespace SocialApps.Models
         public string ESTIMATION { get; set; }
         public string EncryptedName { get; set; }
         public string Currency { get; set; }
-        public Nullable<int> GROUPID1 { get; set; }
-        public Nullable<int> GROUPID2 { get; set; }
+        public Nullable<long> GROUPID1 { get; set; }
+        public Nullable<long> GROUPID2 { get; set; }
     }
 }

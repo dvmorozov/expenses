@@ -167,12 +167,6 @@
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="ShortList" Type="bit" Mode="In" />
         </Function>
-        <Function Name="EstimatedTop10CategoriesForMonthByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Year" Type="int" Mode="In" />
-          <Parameter Name="Month" Type="int" Mode="In" />
-          <Parameter Name="Day" Type="int" Mode="In" />
-          <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
-        </Function>
         <Function Name="EstimatedTop10CategoriesForMonthByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
@@ -629,8 +623,8 @@
           <Property Type="String" Name="ESTIMATION" Nullable="false" MaxLength="9" />
           <Property Type="String" Name="EncryptedName" Nullable="true" />
           <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
-          <Property Type="Int32" Name="GROUPID1" Nullable="true" />
-          <Property Type="Int32" Name="GROUPID2" Nullable="true" />
+          <Property Type="Int64" Name="GROUPID1" Nullable="true" />
+          <Property Type="Int64" Name="GROUPID2" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
