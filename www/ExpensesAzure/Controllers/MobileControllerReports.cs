@@ -34,8 +34,12 @@ namespace SocialApps.Controllers
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
         private Chart RenderTop10Chart(List<EstimatedTop10CategoriesForMonthByUser3_Result> allItems, int width, int height, int year, int month, bool? pie)
         {
-            //  Only the first group is selected.
-            var items = allItems.Where(t => t.GROUPID1 == 1);
+            //  Group ids are extracted.
+            var groupIds = allItems.Select(t => new { id = (int)t.GROUPID1, currency = t.Currency }).Distinct().ToArray();
+            Debug.Assert(groupIds.Count() >= 1);
+
+            //  Only items of the first group are selected.
+            var items = allItems.Where(t => (int)t.GROUPID1 == groupIds[0].id);
 
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
@@ -82,16 +86,16 @@ namespace SocialApps.Controllers
             if ((pie ?? false) && Session["MonthTotal"] != null)
             {
                 //  https://www.evernote.com/shard/s132/nl/14501366/41e0b392-d4cb-4843-bf6d-2dea63b9c42f
-                //  Adds the point supplementing chart to the total.
-                var positions = new string[items.Count()];
+                //  Add the point supplementing chart to the total.
+                var positions = new string[items.Count() + 1];
                 var top10Total = 0.0;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/a632edc9-5b3d-4f06-90e1-1e32683bc071
-                for (var j = 0; j < positions.Count(); j++) positions[j] = j < positions.Count() - 1 ? (j + 1).ToString() : "";
+                for (var j = 0; j < positions.Count(); j++) positions[j] = j < positions.Count() - 1 ? (j + 1).ToString() : "Others";
                 for (var j = 0; j < yValues.Count(); j++) top10Total += (double)yValues[j];
 
                 Debug.Assert(Math.Floor((double)Session["MonthTotal"]) - Math.Floor(top10Total) >= 0);
-                
+                //  Add supplementing value.
                 yValues.Add((double)Session["MonthTotal"] - top10Total);
                 Debug.Assert(positions.Count() == yValues.Count());
 
