@@ -154,6 +154,38 @@ GO
 
 -- =============================================
 -- Author:		D.V.Morozov
+-- Create date: 04/06/2017
+-- Description:	https://action.mindjet.com/task/14919145
+-- =============================================
+
+DROP PROCEDURE MonthTotalByUser3
+GO
+
+CREATE PROCEDURE MonthTotalByUser3 @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
+AS
+BEGIN
+	SELECT SUM(Cost) AS Total, Currency
+	FROM Expenses
+	WHERE DataOwner = @DataOwner AND (
+		(
+			(Monthly IS NULL OR Monthly = 0) AND
+			DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
+			DATEPART(MONTH, Date) = DATEPART(MONTH, @Today)
+		)
+		OR
+		(
+			(Monthly IS NOT NULL AND Monthly = 1) AND 
+			--	FirstMonth and LastMonth correspond to the first day of month.
+			(@Today >= FirstMonth) AND 
+			(@Today <= EOMONTH(LastMonth) OR LastMonth IS NULL)
+		)
+	)
+	GROUP BY Currency
+END
+GO
+
+-- =============================================
+-- Author:		D.V.Morozov
 -- Create date: 29/11/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/81118259-b36e-4404-a632-7b140f099b2d
 -- =============================================
