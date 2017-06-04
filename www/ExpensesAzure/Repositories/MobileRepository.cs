@@ -35,6 +35,12 @@ namespace SocialApps.Repositories
             return _db.TodayAndMonthTotalByUser2(date, userId).FirstOrDefault();
         }
 
+        //  https://action.mindjet.com/task/14919145
+        public MonthTotalByUser3_Result[] GetMonthTotalsWithCurrencies(Guid userId, int year, int month)
+        {
+            return _db.MonthTotalByUser3(new DateTime(year, month, 1), userId).ToArray();
+        }
+
         public List<EstimatedTop10CategoriesForMonthByUser3_Result> GetTop10Categories(Guid userId, DateTime now)
         {
             return _db.EstimatedTop10CategoriesForMonthByUser3(now.Year, now.Month, now.Day, userId).ToList();

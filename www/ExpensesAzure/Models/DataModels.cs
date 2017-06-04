@@ -307,4 +307,11 @@ namespace SocialApps.Models
         [Display(Name = "Project")]
         public string Project { get; set; }
     }
+
+    //  https://action.mindjet.com/task/14919145
+    public class CurrencyGroup
+    {
+        public int GroupId { get; set; }
+        public string Currency { get; set; }
+    }
 }

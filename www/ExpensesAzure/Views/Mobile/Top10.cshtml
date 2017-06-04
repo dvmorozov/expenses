@@ -10,7 +10,7 @@
 }
 
 <script type="text/javascript">
-	//	For every page chart of each type is rendered only once until page reloading.
+	//  Constructing basic URL which is used from updateDiagram.
 	var imageURL = '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })';
 </script>
 
@@ -142,6 +142,23 @@
 				<div class="col-md-3">
 					<div class="panel panel-default">
 						<div class="panel-heading">@Html.Raw(ViewBag.Title)</div>
+						<ul class="nav nav-tabs">
+							@{ 
+								var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
+								for (var i = 0; i < currencyGroups.Count(); i++)
+								{
+									if (i == 0) 
+									{
+										@Html.Raw("<li role=\"presentation\" class=\"active\"><a href=\"#\">" + currencyGroups[i].Currency + "</a></li>")
+									}
+									else
+									{
+										@Html.Raw("<li role=\"presentation\"><a href=\"#\">" + currencyGroups[i].Currency + "</a></li>")
+									}
+								}
+							}
+						</ul>
+
 						<div class="panel-body" id="diagram_container">
 							<img id="diagram" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
 

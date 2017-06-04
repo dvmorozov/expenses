@@ -379,5 +379,18 @@ namespace SocialApps.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EstimatedTop10CategoriesForMonthByUser3_Result>("EstimatedTop10CategoriesForMonthByUser3", yearParameter, monthParameter, dayParameter, dataOwnerParameter);
         }
+    
+        public virtual ObjectResult<MonthTotalByUser3_Result> MonthTotalByUser3(Nullable<System.DateTime> today, Nullable<System.Guid> dataOwner)
+        {
+            var todayParameter = today.HasValue ?
+                new ObjectParameter("Today", today) :
+                new ObjectParameter("Today", typeof(System.DateTime));
+    
+            var dataOwnerParameter = dataOwner.HasValue ?
+                new ObjectParameter("DataOwner", dataOwner) :
+                new ObjectParameter("DataOwner", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MonthTotalByUser3_Result>("MonthTotalByUser3", todayParameter, dataOwnerParameter);
+        }
     }
 }

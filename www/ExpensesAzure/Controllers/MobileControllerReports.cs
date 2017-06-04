@@ -20,9 +20,8 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var res = (List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"];
                 //  Gets chart object.
-                var myChart = RenderTop10Chart(res, width, height, (int) Session["Top10Year"], (int) Session["Top10Month"], pie);
+                var myChart = RenderTop10Chart(width, height, pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
             catch
@@ -31,15 +30,26 @@ namespace SocialApps.Controllers
             }
         }
 
-        //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
-        private Chart RenderTop10Chart(List<EstimatedTop10CategoriesForMonthByUser3_Result> allItems, int width, int height, int year, int month, bool? pie)
+        //  https://action.mindjet.com/task/14919145
+        private CurrencyGroup[] GetCurrencyGroups(List<EstimatedTop10CategoriesForMonthByUser3_Result> allItems)
         {
+            return allItems.Select(t => new CurrencyGroup { GroupId = (int)t.GROUPID1, Currency = t.Currency }).Distinct().ToArray();
+        }
+
+        //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
+        private Chart RenderTop10Chart(int width, int height, bool? pie)
+        {
+            var allItems = (List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"];
+
+            var year = (int)Session["Top10Year"];
+            var month = (int)Session["Top10Month"];
+
             //  Group ids are extracted.
-            var groupIds = allItems.Select(t => new { id = (int)t.GROUPID1, currency = t.Currency }).Distinct().ToArray();
+            var groupIds = GetCurrencyGroups(allItems);
             Debug.Assert(groupIds.Count() >= 1);
 
             //  Only items of the first group are selected.
-            var items = allItems.Where(t => (int)t.GROUPID1 == groupIds[0].id);
+            var items = allItems.Where(t => (int)t.GROUPID1 == groupIds[0].GroupId);
 
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
@@ -94,7 +104,11 @@ namespace SocialApps.Controllers
                 for (var j = 0; j < positions.Count(); j++) positions[j] = j < positions.Count() - 1 ? (j + 1).ToString() : "Others";
                 for (var j = 0; j < yValues.Count(); j++) top10Total += (double)yValues[j];
 
-                Debug.Assert(Math.Floor((double)Session["MonthTotal"]) - Math.Floor(top10Total) >= 0);
+                var monthTotalsWithCurrencies = (MonthTotalByUser3_Result[])Session["MonthTotalsWithCurrencies"];
+                var monthTotal = monthTotalsWithCurrencies.Where(t => t.Currency == groupIds[0].Currency).First().Total;
+
+                var d = Math.Floor((double)monthTotal) - Math.Floor(top10Total);
+                Debug.Assert(d >= 0);
                 //  Add supplementing value.
                 yValues.Add((double)Session["MonthTotal"] - top10Total);
                 Debug.Assert(positions.Count() == yValues.Count());
@@ -220,7 +234,14 @@ namespace SocialApps.Controllers
                 var now = (month != null && year != null) ? new DateTime((int)year, (int)month, 1) : DateTime.Now;
                 Session["Top10Month"] = now.Month;
                 Session["Top10Year"] = now.Year;
-                Session["Top10CategoriesResult"] = _repository.GetTop10Categories(userId, now);
+                //  Caching repository data.
+                var allItems = _repository.GetTop10Categories(userId, now);
+                Session["Top10CategoriesResult"] = allItems;
+
+                //  https://action.mindjet.com/task/14919145
+                Session["MonthTotalsWithCurrencies"] = _repository.GetMonthTotalsWithCurrencies(GetUserId(), (int)Session["Top10Year"], (int)Session["Top10Month"]);
+
+                ViewBag.CurrencyGroups = GetCurrencyGroups(allItems);
 
                 var totals = _repository.GetTodayAndMonthTotals(userId, now);
                 //  https://action.mindjet.com/task/14672437
