@@ -215,6 +215,10 @@
           <Parameter Name="Today" Type="datetime" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="MonthTotalByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Today" Type="datetime" Mode="In" />
+          <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <Function Name="ResetMonthIncomeByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
@@ -405,6 +409,10 @@
             <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="Month" Mode="In" Type="Int32" />
             <Parameter Name="Day" Mode="In" Type="Int32" />
+            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="MonthTotalByUser3" ReturnType="Collection(ExpensesModel.MonthTotalByUser3_Result)">
+            <Parameter Name="Today" Mode="In" Type="DateTime" />
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
           </FunctionImport>
           </EntityContainer>
@@ -626,6 +634,10 @@
           <Property Type="Int64" Name="GROUPID1" Nullable="true" />
           <Property Type="Int64" Name="GROUPID2" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="MonthTotalByUser3_Result">
+          <Property Type="Double" Name="Total" Nullable="true" />
+          <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -821,6 +833,14 @@
                 <ScalarProperty Name="Currency" ColumnName="Currency" />
                 <ScalarProperty Name="GROUPID1" ColumnName="GROUPID1" />
                 <ScalarProperty Name="GROUPID2" ColumnName="GROUPID2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MonthTotalByUser3" FunctionName="Хранилище ExpensesModel.MonthTotalByUser3">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExpensesModel.MonthTotalByUser3_Result">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

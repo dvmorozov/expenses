@@ -315,6 +315,9 @@
     <Compile Include="Models\MonthBudgetByUser_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MonthTotalByUser3_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Operations.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
