@@ -33,7 +33,8 @@ namespace SocialApps.Controllers
         //  https://action.mindjet.com/task/14919145
         private CurrencyGroup[] GetCurrencyGroups(List<EstimatedTop10CategoriesForMonthByUser3_Result> allItems)
         {
-            return allItems.Select(t => new CurrencyGroup { GroupId = (int)t.GROUPID1, Currency = t.Currency }).Distinct().ToArray();
+            return allItems.GroupBy(t => new { GroupId = (int)t.GROUPID1 })
+                .Select(t => new CurrencyGroup { GroupId = t.Key.GroupId, Currency = t.First().Currency }).ToArray();
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
