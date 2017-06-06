@@ -34,7 +34,7 @@ namespace SocialApps.Controllers
         private CurrencyGroup[] GetCurrencyGroups(List<EstimatedTop10CategoriesForMonthByUser3_Result> allItems)
         {
             return allItems.GroupBy(t => new { GroupId = (int)t.GROUPID1 })
-                .Select(t => new CurrencyGroup { GroupId = t.Key.GroupId, Currency = t.First().Currency }).ToArray();
+                .Select(t => new CurrencyGroup { GroupId = t.Key.GroupId, Currency = t.First().Currency.Trim() }).ToArray();
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
@@ -106,7 +106,7 @@ namespace SocialApps.Controllers
                 for (var j = 0; j < yValues.Count(); j++) top10Total += (double)yValues[j];
 
                 var monthTotalsWithCurrencies = (MonthTotalByUser3_Result[])Session["MonthTotalsWithCurrencies"];
-                var monthTotal = monthTotalsWithCurrencies.Where(t => t.Currency == groupIds[0].Currency).First().Total;
+                var monthTotal = monthTotalsWithCurrencies.Where(t => t.Currency.Trim() == groupIds[0].Currency).First().Total;
 
                 var d = Math.Floor((double)monthTotal) - Math.Floor(top10Total);
                 Debug.Assert(d >= 0);
