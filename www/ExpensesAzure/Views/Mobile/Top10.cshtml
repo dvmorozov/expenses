@@ -9,11 +9,6 @@
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
-<script type="text/javascript">
-	//  Constructing basic URL which is used from updateDiagram.
-	var imageURL = '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })';
-</script>
-
 @* ReSharper disable UnknownCssClass *@
 @using (Html.BeginForm("Top10", "Mobile"))
 {
@@ -188,8 +183,11 @@
 								<tr>
 									<td>
 										<div class="btn-group">
-											<button type="button" class="btn btn-default" onclick="updateDiagram(false);">@Html.Raw(Resources.Resources.Bar)</button>
-											<button type="button" class="btn btn-default" onclick="updateDiagram(true);">@Html.Raw(Resources.Resources.Pie)</button>
+											<script>
+												(function () { updateDiagramURL(true, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })'); })();
+											</script>
+											<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })');">@Html.Raw(Resources.Resources.Bar)</button>
+											<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })');">@Html.Raw(Resources.Resources.Pie)</button>
 										</div>
 										<button type="submit" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Refresh)">
 											<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>

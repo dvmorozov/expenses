@@ -299,10 +299,11 @@ function fillDateElementsFromDatePicker() {
 }
 */
 
-function updateDiagram(pie) {
+//	https://action.mindjet.com/task/14919145
+function updateDiagramURL(pie, url) {
 	// ReSharper disable UseOfImplicitGlobalInFunctionScope
 	var image = document.getElementById("diagram");
-	if (image && isDefined(imageURL)) {
+	if (image && isDefined(url)) {
 		var el = document.getElementById("diagram_container");
 		if (!isDefined(el))
 			el = $(".panel-body")[0];
@@ -314,8 +315,8 @@ function updateDiagram(pie) {
 		if (imageHeight > 640) imageHeight = 640;
 		if (imageWidth > 640) imageWidth = 640;
 
-		var src = imageURL;
-		if (imageURL.indexOf("?") == -1)
+		var src = url;
+		if (url.indexOf("?") == -1)
 			src += "?";
 		else
 			src += "&";
@@ -324,6 +325,10 @@ function updateDiagram(pie) {
 		image.src = src;
 	}
 	// ReSharper restore UseOfImplicitGlobalInFunctionScope
+}
+
+function updateDiagram(pie) {
+	updateDiagramURL(imageURL, url);
 }
 
 function updateDiagramSize() {
@@ -364,9 +369,9 @@ var messageDestination = null;
 
 function updateParentHeight() {
 	if (isDefined(messageDestination)) {
-	    //  https://action.mindjet.com/task/14501085
-	    //  https://action.mindjet.com/task/14505157
-	    //  https://action.mindjet.com/task/14708792
+		//  https://action.mindjet.com/task/14501085
+		//  https://action.mindjet.com/task/14505157
+		//  https://action.mindjet.com/task/14708792
 		window.parent.postMessage(document.body.scrollHeight, messageDestination);
 	}
 }
