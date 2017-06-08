@@ -300,11 +300,11 @@ function fillDateElementsFromDatePicker() {
 */
 
 //	https://action.mindjet.com/task/14919145
-function updateDiagramURL(pie, url) {
+function updateDiagramURL(pie, url, diagramId, diagramContainerId) {
 	// ReSharper disable UseOfImplicitGlobalInFunctionScope
-	var image = document.getElementById("diagram");
+    var image = document.getElementById(diagramId);
 	if (image && isDefined(url)) {
-		var el = document.getElementById("diagram_container");
+        var el = document.getElementById(diagramContainerId);
 		if (!isDefined(el))
 			el = $(".panel-body")[0];
 		//	Square shape is better in most of the cases.
@@ -328,7 +328,8 @@ function updateDiagramURL(pie, url) {
 }
 
 function updateDiagram(pie) {
-	updateDiagramURL(imageURL, url);
+	if (imageURL !== undefined)
+		updateDiagramURL(pie, imageURL, "diagram", "diagram_container");
 }
 
 function updateDiagramSize() {
