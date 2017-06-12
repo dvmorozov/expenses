@@ -24,7 +24,7 @@ namespace SocialApps.Controllers
                 var myChart = RenderTop10Chart(width, height, pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
-            catch
+            catch(Exception e)
             {
                 return File(Url.Content("~/Content/failure.png"), System.Net.Mime.MediaTypeNames.Application.Octet);
             }

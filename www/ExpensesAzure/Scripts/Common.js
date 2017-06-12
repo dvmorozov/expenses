@@ -300,17 +300,25 @@ function fillDateElementsFromDatePicker() {
 */
 
 //	https://action.mindjet.com/task/14919145
+var imageHeight;
+var imageWidth;
+
+//	https://action.mindjet.com/task/14919145
 function updateDiagramURL(pie, url, diagramId, diagramContainerId) {
 	// ReSharper disable UseOfImplicitGlobalInFunctionScope
-    var image = document.getElementById(diagramId);
+	var image = document.getElementById(diagramId);
 	if (image && isDefined(url)) {
-        var el = document.getElementById(diagramContainerId);
+		var el = document.getElementById(diagramContainerId);
 		if (!isDefined(el))
 			el = $(".panel-body")[0];
 		//	Square shape is better in most of the cases.
 		//	https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
-		var imageHeight = /*194*/ $(el).width();
-		var imageWidth = /*210*/  $(el).width();
+		//	For multiple charts only first non-negative values are taken.
+		//	https://action.mindjet.com/task/14919145
+		if ($(el).width() > 0) {
+			imageHeight = /*194*/ $(el).width();
+			imageWidth = /*210*/  $(el).width();
+		}
 
 		if (imageHeight > 640) imageHeight = 640;
 		if (imageWidth > 640) imageWidth = 640;
@@ -328,8 +336,15 @@ function updateDiagramURL(pie, url, diagramId, diagramContainerId) {
 }
 
 function updateDiagram(pie) {
-	if (imageURL !== undefined)
+	if (typeof imageURL === 'string')
 		updateDiagramURL(pie, imageURL, "diagram", "diagram_container");
+	else {
+		//	https://action.mindjet.com/task/14919145
+		for (var i = 0; i < imageURL.length; i++) {
+			var item = imageURL[i];
+			updateDiagramURL(item.pie, item.url, item.diagramId, item.diagramContainerId);
+		}
+	}
 }
 
 function updateDiagramSize() {

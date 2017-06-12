@@ -9,6 +9,12 @@
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
+<script type="text/javascript">
+	@*	Constructing array of data which are used to build graphs.
+		Variable must have the same name as on other pages. *@
+	var imageURL = [];
+</script>
+
 @* ReSharper disable UnknownCssClass *@
 @using (Html.BeginForm("Top10", "Mobile"))
 {
@@ -176,12 +182,17 @@
 														<td>
 															<div class="btn-group">
 																<script>
-																	(function () { updateDiagramURL(true, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })', @Html.Raw(diagramId), @Html.Raw(diagramContainerId)); })();
+																	imageURL.push({
+																		pie: true,
+																		url: '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })',
+																		diagramId: '@Html.Raw(diagramId)',
+																		diagramContainerId: '@Html.Raw(diagramContainerId)'
+																	});
 																</script>
-																<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })', @Html.Raw(diagramId), @Html.Raw(diagramContainerId));">
+																<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
 																	@Html.Raw(Resources.Resources.Bar)
 																</button>
-																<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })', @Html.Raw(diagramId), @Html.Raw(diagramContainerId));">
+																<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
 																	@Html.Raw(Resources.Resources.Pie)
 																</button>
 															</div>
