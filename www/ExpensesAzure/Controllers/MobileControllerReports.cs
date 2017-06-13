@@ -16,12 +16,12 @@ namespace SocialApps.Controllers
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
         //  Renders and returns chart image.
-        public FileResult GetTop10ChartContentWh(int width, int height, bool? pie)
+        public FileResult GetTop10ChartContentWh(int groupId, int width, int height, bool? pie)
         {
             try
             {
                 //  Gets chart object.
-                var myChart = RenderTop10Chart(width, height, pie);
+                var myChart = RenderTop10Chart(groupId, width, height, pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
             catch(Exception e)
@@ -38,7 +38,7 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
-        private Chart RenderTop10Chart(int width, int height, bool? pie)
+        private Chart RenderTop10Chart(int groupId, int width, int height, bool? pie)
         {
             var allItems = (List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"];
 
@@ -49,8 +49,8 @@ namespace SocialApps.Controllers
             var groupIds = GetCurrencyGroups(allItems);
             Debug.Assert(groupIds.Count() >= 1);
 
-            //  Only items of the first group are selected.
-            var items = allItems.Where(t => (int)t.GROUPID1 == groupIds[0].GroupId);
+            //  
+            var items = allItems.Where(t => (int)t.GROUPID1 == groupId);
 
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
