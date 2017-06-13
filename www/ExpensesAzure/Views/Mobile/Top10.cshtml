@@ -59,87 +59,108 @@
 					@Html.Partial("CurrencyTabs")
 
 					@{
-						var list = (List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"];
-						if (list.Count() != 0)
-						{
-							<table class="encrypted table">
-								<tbody>
-									<tr>
-										<th>#</th>
-										<th style="width: 100%;">@Html.Raw(Resources.Resources.Category)</th>
-										<th>@Html.Raw(Resources.Resources.Spent)</th>
-									</tr>
-
-									@for (var index = 0; index < list.Count(); index++)
-									{
-										var cat = list[index];
-										//	https://www.evernote.com/shard/s132/nl/14501366/4bc52f46-5b79-4788-824d-f3a4b0e9fad3
-										//	By default the color is unchanged.
-										//	https://www.evernote.com/shard/s132/nl/14501366/f5b79ea0-10c5-4b6d-ae26-f00858ffa936
-										var itemClass = "progress-bar";
-										if (cat.LIMIT != null)
-										{
-											switch (cat.ESTIMATION.ToLower())
-											{
-												case ("mayexceed"):
-													itemClass = "progress-bar progress-bar-warning";
-													break;
-
-												case ("exceed"):
-													itemClass = "progress-bar progress-bar-danger";
-													break;
-
-												case ("notexceed"):
-													itemClass = "progress-bar progress-bar-success";
-													break;
-											}
-										}
-										var percent = cat.LIMIT != null && cat.TOTAL != null && Math.Floor((double)cat.LIMIT) != 0 ? Math.Floor((double)cat.TOTAL * 100.0 / (double)cat.LIMIT) : 0;
-										var categoryId = "CategoryName" + index.ToString();
-
-										@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-										<tr class="trlist" onclick="window.location.href = '@Url.Action("ExpensesByCategory", "Mobile", new { categoryId = cat.ID })';" id="@Html.Raw("tr" + categoryId)">
-											<td>
-												@Html.Raw(((int)cat.GROUPID2).ToString(CultureInfo.InvariantCulture))
-											</td>
-											<td>
-												<div id="@Html.Raw(categoryId)">
-													@Html.Raw(AntiXssEncoder.HtmlEncode(cat.NAME.Trim(), false))
-												</div>
-
-												@if (cat.EncryptedName != null && cat.EncryptedName != string.Empty)
-												{
-													<script>
-														@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-														(function () { decryptListData('@Html.Raw(categoryId)', '@Html.Raw(cat.EncryptedName)') })();
-													</script>
-												}
-
-												<div class="progress" style="margin-bottom: 0;">
-													<div class="@Html.Raw(itemClass)" role="progressbar" aria-valuenow="@Html.Raw(percent)" aria-valuemin="0" aria-valuemax="100" style="width: @Html.Raw(percent < 100 ? percent : 100)%;">
-														@Html.Raw(percent)%
-													</div>
-												</div>
-											</td>
-											<td>
-												<div id="@Html.Raw("ttl" + categoryId)">
-													@Html.Raw((cat.TOTAL != null ? ((float)cat.TOTAL).ToString("F2", CultureInfo.InvariantCulture) : (0.0).ToString("F2", CultureInfo.InvariantCulture)) + " " + cat.Currency)
-												</div>
-												<div style="font-size: xx-small; text-align: right; font-style: italic;">
-													@Html.Raw(cat.LIMIT != null ? Math.Floor((float)cat.LIMIT).ToString(CultureInfo.InvariantCulture) : "NA")
-												</div>
-											</td>
-										</tr>
-									}
-								</tbody>
-							</table>
-						}
-						else
-						{
-							<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
-							<br />
-						}
+						var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
 					}
+
+					@* Add tab content. *@
+					<div class="tab-content">
+						@{
+							for (var i = 0; i < currencyGroups.Count(); i++)
+							{
+								var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
+								var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
+
+								<div class="@Html.Raw(tabClass)" id="@Html.Raw(currencyGroups[i].GroupId.ToString())" style="margin-top: 8px;">
+									<div style="display: inline-block; margin-top: 8px;">
+										<div class="panel-body" id="@Html.Raw(tableContainerId)">
+											@{
+												var list = ((List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"]).Where(t => t.GROUPID1 == currencyGroups[i].GroupId).ToList();
+												if (list.Count() != 0)
+												{
+													<table class="encrypted table">
+														<tbody>
+															<tr>
+																<th>#</th>
+																<th style="width: 100%;">@Html.Raw(Resources.Resources.Category)</th>
+																<th>@Html.Raw(Resources.Resources.Spent)</th>
+															</tr>
+
+															@for (var index = 0; index < list.Count(); index++)
+															{
+																var cat = list[index];
+																//	https://www.evernote.com/shard/s132/nl/14501366/4bc52f46-5b79-4788-824d-f3a4b0e9fad3
+																//	By default the color is unchanged.
+																//	https://www.evernote.com/shard/s132/nl/14501366/f5b79ea0-10c5-4b6d-ae26-f00858ffa936
+																var itemClass = "progress-bar";
+																if (cat.LIMIT != null)
+																{
+																	switch (cat.ESTIMATION.ToLower())
+																	{
+																		case ("mayexceed"):
+																			itemClass = "progress-bar progress-bar-warning";
+																			break;
+
+																		case ("exceed"):
+																			itemClass = "progress-bar progress-bar-danger";
+																			break;
+
+																		case ("notexceed"):
+																			itemClass = "progress-bar progress-bar-success";
+																			break;
+																	}
+																}
+																var percent = cat.LIMIT != null && cat.TOTAL != null && Math.Floor((double)cat.LIMIT) != 0 ? Math.Floor((double)cat.TOTAL * 100.0 / (double)cat.LIMIT) : 0;
+																var categoryId = "CategoryName" + index.ToString();
+
+																@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+																<tr class="trlist" onclick="window.location.href = '@Url.Action("ExpensesByCategory", "Mobile", new { categoryId = cat.ID })';" id="@Html.Raw("tr" + categoryId)">
+																	<td>
+																		@Html.Raw(((int)cat.GROUPID2).ToString(CultureInfo.InvariantCulture))
+																	</td>
+																	<td>
+																		<div id="@Html.Raw(categoryId)">
+																			@Html.Raw(AntiXssEncoder.HtmlEncode(cat.NAME.Trim(), false))
+																		</div>
+
+																		@if (cat.EncryptedName != null && cat.EncryptedName != string.Empty)
+																		{
+																			<script>
+																				@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+																				(function () { decryptListData('@Html.Raw(categoryId)', '@Html.Raw(cat.EncryptedName)') })();
+																			</script>
+																		}
+
+																		<div class="progress" style="margin-bottom: 0;">
+																			<div class="@Html.Raw(itemClass)" role="progressbar" aria-valuenow="@Html.Raw(percent)" aria-valuemin="0" aria-valuemax="100" style="width: @Html.Raw(percent < 100 ? percent : 100)%;">
+																				@Html.Raw(percent)%
+																			</div>
+																		</div>
+																	</td>
+																	<td>
+																		<div id="@Html.Raw("ttl" + categoryId)">
+																			@Html.Raw((cat.TOTAL != null ? ((float)cat.TOTAL).ToString("F2", CultureInfo.InvariantCulture) : (0.0).ToString("F2", CultureInfo.InvariantCulture)) + " " + cat.Currency)
+																		</div>
+																		<div style="font-size: xx-small; text-align: right; font-style: italic;">
+																			@Html.Raw(cat.LIMIT != null ? Math.Floor((float)cat.LIMIT).ToString(CultureInfo.InvariantCulture) : "NA")
+																		</div>
+																	</td>
+																</tr>
+															}
+														</tbody>
+													</table>
+												}
+												else
+												{
+													<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
+													<br />
+												}
+											}
+										</div>
+									</div>
+								</div>
+							}
+						}
+					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="panel panel-default">
@@ -147,9 +168,6 @@
 						@* Add tab headers. *@
 						@Html.Partial("CurrencyTabs")
 						
-						@{
-							var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
-						}
 						@* Add tab content. *@
 						<div class="tab-content">
 							@{
