@@ -1,0 +1,19 @@
+﻿
+@using SocialApps.Models
+
+<ul class="nav nav-tabs">
+	@{
+		var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
+		for (var i = 0; i < currencyGroups.Count(); i++)
+		{
+			if (i == 0)
+			{
+				@Html.Raw("<li role=\"presentation\" class=\"active\"><a href=\"#" + currencyGroups[i].GroupId + "\" data-toggle=\"tab\">" + currencyGroups[i].Currency + "</a></li>")
+			}
+			else
+			{
+				@Html.Raw("<li role=\"presentation\"><a href=\"#" + currencyGroups[i].GroupId + "\" data-toggle=\"tab\">" + currencyGroups[i].Currency + "</a></li>")
+			}
+		}
+	}
+</ul>

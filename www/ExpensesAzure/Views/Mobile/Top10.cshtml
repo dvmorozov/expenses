@@ -55,6 +55,9 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-9">
+					@* Add tab headers. *@
+					@Html.Partial("CurrencyTabs")
+
 					@{
 						var list = (List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"];
 						if (list.Count() != 0)
@@ -142,22 +145,11 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">@Html.Raw(ViewBag.Title)</div>
 						@* Add tab headers. *@
-						<ul class="nav nav-tabs">
-							@{ 
-								var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
-								for (var i = 0; i < currencyGroups.Count(); i++)
-								{
-									if (i == 0) 
-									{
-										@Html.Raw("<li role=\"presentation\" class=\"active\"><a href=\"#" + currencyGroups[i].GroupId + "\" data-toggle=\"tab\">" + currencyGroups[i].Currency + "</a></li>")
-									}
-									else
-									{
-										@Html.Raw("<li role=\"presentation\"><a href=\"#" + currencyGroups[i].GroupId + "\" data-toggle=\"tab\">" + currencyGroups[i].Currency + "</a></li>")
-									}
-								}
-							}
-						</ul>
+						@Html.Partial("CurrencyTabs")
+						
+						@{
+							var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
+						}
 						@* Add tab content. *@
 						<div class="tab-content">
 							@{
