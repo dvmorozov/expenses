@@ -339,10 +339,13 @@ function updateDiagram(pie) {
 	if (typeof imageURL === 'string')
 		updateDiagramURL(pie, imageURL, "diagram", "diagram_container");
 	else {
-		//	https://action.mindjet.com/task/14919145
-		for (var i = 0; i < imageURL.length; i++) {
-			var item = imageURL[i];
-			updateDiagramURL(item.pie, item.url, item.diagramId, item.diagramContainerId);
+		//	https://action.mindjet.com/task/14931290
+		if (typeof imageURL === 'object') {
+			//	https://action.mindjet.com/task/14919145
+			for (var i = 0; i < imageURL.length; i++) {
+				var item = imageURL[i];
+				updateDiagramURL(item.pie, item.url, item.diagramId, item.diagramContainerId);
+			}
 		}
 	}
 }
