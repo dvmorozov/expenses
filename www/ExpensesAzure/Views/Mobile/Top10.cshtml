@@ -68,6 +68,9 @@
 					@* Add tab content. *@
 					<div class="tab-content">
 						@{
+							//	Category id must be unique among all groups.
+							//	https://action.mindjet.com/task/14945733
+							var categorySeqNum = 0;
 							for (var i = 0; i < currencyGroups.Count(); i++)
 							{
 								var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
@@ -114,7 +117,8 @@
 																	}
 																}
 																var percent = cat.LIMIT != null && cat.TOTAL != null && Math.Floor((double)cat.LIMIT) != 0 ? Math.Floor((double)cat.TOTAL * 100.0 / (double)cat.LIMIT) : 0;
-																var categoryId = "CategoryName" + index.ToString();
+																//	https://action.mindjet.com/task/14945733
+																var categoryId = "CategoryName" + (categorySeqNum++).ToString();
 
 																@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
 																<tr class="trlist" onclick="window.location.href = '@Url.Action("ExpensesByCategory", "Mobile", new { categoryId = cat.ID })';" id="@Html.Raw("tr" + categoryId)">
