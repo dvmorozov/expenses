@@ -1,9 +1,0 @@
-﻿@* https://action.mindjet.com/task/14479694 *@
-@if (ViewBag.ShortView != null && (bool)ViewBag.ShortView && ViewBag.FullListMethod != null)
-{
-	<div style="margin-bottom: 16px; margin-left: 8px;">
-		<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.ShowMore)" onclick="window.location.href='@Url.Action((string)ViewBag.FullListMethod, "Mobile", new { shortList = false })';">
-			<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;@Html.Raw(Resources.Resources.ShowMore)
-		</button>
-	</div>
-}
