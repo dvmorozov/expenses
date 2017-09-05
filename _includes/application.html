@@ -1,3 +1,18 @@
-<div class="iframe_container">
+<script>
+    function resizeIframe(data) {
+        document.getElementById('iframe').style.height = data + 'px';
+    } 
+    function sendLocation(){
+        var win = window.frames.expensesFrame; 
+        win.postMessage(window.location.origin, 'https://xpnss.azurewebsites.net');
+    };
+    var messageEventHandler = function(event){
+        //console.log(event.origin); 
+        if(event.origin === 'https://xpnss.azurewebsites.net'){resizeIframe(event.data);}
+    }; 
+    window.addEventListener('message', messageEventHandler, false);
+</script>
+
+<div>
 <iframe src="https://xpnss.azurewebsites.net/Account/Register2" seamless id ="iframe" scrolling="no" style="width:100%;" name="expensesFrame" onload="sendLocation();"></iframe>
 </div>

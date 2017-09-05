@@ -8,4 +8,8 @@
 
 {% include application.html %}
 
+{% include google_ads.html %}
+
 {% include twitter.html %}
+
+{% include contacts.html %}
