@@ -16,6 +16,8 @@ layout: default
 
 {% include application.html %}
 
+> You can also use it directly from your [Facebook account](https://apps.facebook.com/xpenses).
+
 > The application now supports German, French, Spanish, Portugese, Russian.
 
 {% include google_ads.html %}
