@@ -22,4 +22,6 @@ layout: default
 
 {% include twitter.html %}
 
+## Find me on
+
 {% include contacts.html %}
