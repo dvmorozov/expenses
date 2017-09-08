@@ -10,11 +10,11 @@ layout: default
 
 {% include video_encrypting.html %}
 
-> The application now supports German, French, Spanish, Portugese, Russian.
-
 ## Register and start using
 
 {% include application.html %}
+
+> The application now supports German, French, Spanish, Portugese, Russian.
 
 {% include google_ads.html %}
 
@@ -24,4 +24,4 @@ layout: default
 
 ## Find me on
 
-{% include contacts.html %}
+> {% include contacts.html %}
