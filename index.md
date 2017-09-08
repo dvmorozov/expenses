@@ -2,7 +2,7 @@
 layout: default
 ---
 
-## The unique feature is the client-side data encryption
+## The unique feature is client-side data encryption
 
 > Client-side data encrypting means that your data are encrypted in your browser before sending to the storage. This guarantees that your data exist as plain text only until you close the application page. Password never transmitted to server. This means that you are responsible for protecting the password from being stolen. If you will forget or lost your password your data will become unrecoverable. They are belong only to you. 
 
