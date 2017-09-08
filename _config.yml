@@ -2,6 +2,12 @@ title: Looking for expense tracking app?
 description: Try this secure personal expense tracker
 github:
   is_project_page: true
+  owner_url: https://github.com/dvmorozov
+  owner_name: Dmitry Morozov
+  repository_name: expenses
+  repository_url: https://github.com/dvmorozov/expenses
+  zip_url: https://github.com/dvmorozov/expenses/archive/master.zip
+  tar_url: https://github.com/dvmorozov/expenses/archive/master.tar.gz
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-architect
