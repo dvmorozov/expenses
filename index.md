@@ -29,3 +29,7 @@ layout: default
 ## Find me on
 
 > {% include contacts.html %}
+
+## More info
+
+You can find on my [blog](http://scanposts.azurewebsites.net/)
