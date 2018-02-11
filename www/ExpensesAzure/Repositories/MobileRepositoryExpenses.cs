@@ -238,10 +238,15 @@ namespace SocialApps.Repositories
                  join cat in _db.Categories on expCat.CategoryID equals cat.ID
                  where (exp.DataOwner == userId) &&
                  (
+                     // Unrepeatable expense.
                      ((exp.Monthly == null || !(bool)exp.Monthly) &&
                      exp.Date.Day == date.Day && exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||
+                     // Repeatable expense.
                      ((exp.Monthly != null && (bool)exp.Monthly) &&
-                     exp.Date.Day == date.Day && date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
+                        exp.Date.Day == date.Day &&
+                        //  FirstMonth, Last month are optional.
+                        (exp.FirstMonth == null || date.Month >= ((DateTime)exp.FirstMonth).Month) && 
+                        (exp.LastMonth == null || date.Month <= ((DateTime)exp.LastMonth).Month))
                  )
                  orderby cat.ID, exp.Currency, exp.Cost descending
                  select new TodayExpense
@@ -274,15 +279,15 @@ namespace SocialApps.Repositories
         {
             return GetDayExpenses(userId, date).GroupBy(t => new
             {
-                CagegoryID = t.CategoryID,
-                CategoryName = t.CategoryName,
-                CategoryEncryptedName = t.CategoryEncryptedName,
-                ExpenseEncryptedName = t.ExpenseEncryptedName,
-                Name = t.Name,
-                Currency = t.Currency
+                t.CategoryID,
+                t.CategoryName,
+                t.CategoryEncryptedName,
+                t.ExpenseEncryptedName,
+                t.Name,
+                t.Currency
             }).Select(s => new TodayExpenseSum
             {
-                CategoryID = s.Key.CagegoryID,
+                CategoryID = s.Key.CategoryID,
                 Name = s.Key.Name,
                 Cost = s.Sum(t => t.Cost),
                 CategoryName = s.Key.CategoryName,
