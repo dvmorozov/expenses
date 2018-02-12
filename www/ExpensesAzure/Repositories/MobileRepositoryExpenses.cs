@@ -343,7 +343,8 @@ namespace SocialApps.Repositories
                     ExpenseEncryptedName = exp.EncryptedName,
                     Date = exp.Date,
                     Importance = (ExpenseImportance?)exp.Importance,
-                    Rating = exp.Rating
+                    Rating = exp.Rating,
+                    Currency = exp.Currency
                 }).ToArray();
 
             return expenses;
