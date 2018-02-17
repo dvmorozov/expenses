@@ -16,6 +16,7 @@ AS
 	SET @DaysInMonth = (SELECT DAY(EOMONTH(@ADate)))
 
 	DECLARE @BudgetCurrency NCHAR(5)
+	--  Select budget currency if it was set for given month.
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
 		FROM Month
@@ -45,6 +46,7 @@ AS
 			--	Calculates totals by categories for given month.
 			--	Not all categories can be present.
 			--	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
+			--	Sums totals for repeated and non-repeated expenses for given category.
 			SELECT COALESCE(E1.SingleTotal, 0) + COALESCE(E2.MonthlyTotal, 0) AS TOTAL, 
 				COALESCE(E1.CategoryId, E2.CategoryId) AS CATEGORYID,
 				COALESCE(E1.Currency, E2.Currency) AS CURRENCY
@@ -89,7 +91,9 @@ AS
 					--	https://www.evernote.com/shard/s132/nl/14501366/f53e1481-b9bc-47f7-a926-4b7011f1a1d9
 				GROUP BY c.ID, e.Currency
 			) E2
-			ON E1.CategoryId = E2.CategoryId
+			--	https://action.mindjet.com/task/14968958
+			--	Expenses should be joined by category and currency in the case when budget currency isn't given.
+			ON E1.CategoryId = E2.CategoryId AND E1.Currency = E2.Currency
 		) AS TT
 		ON C.ID = TT.CATEGORYID
 	) TT
