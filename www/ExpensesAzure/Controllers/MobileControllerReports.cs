@@ -16,12 +16,12 @@ namespace SocialApps.Controllers
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
         //  Renders and returns chart image.
-        public FileResult GetTop10ChartContentWh(int groupId, int width, int height, bool? pie)
+        public FileResult GetTop10ChartContentWh(int currencyGroupId, int width, int height, bool? pie)
         {
             try
             {
                 //  Gets chart object.
-                var myChart = RenderTop10Chart(groupId, width, height, pie);
+                var myChart = RenderTop10Chart(currencyGroupId, width, height, pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
             catch
@@ -38,7 +38,7 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
-        private Chart RenderTop10Chart(int groupId, int width, int height, bool? pie)
+        private Chart RenderTop10Chart(int currencyGroupId, int width, int height, bool? pie)
         {
             var allItems = (List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"];
 
@@ -49,8 +49,8 @@ namespace SocialApps.Controllers
             var groupIds = GetCurrencyGroups(allItems);
             Debug.Assert(groupIds.Count() >= 1);
 
-            //  
-            var items = allItems.Where(t => (int)t.GROUPID1 == groupId);
+            //  Select items of given currency group.
+            var items = allItems.Where(t => (int)t.GROUPID1 == currencyGroupId);
 
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
@@ -99,6 +99,7 @@ namespace SocialApps.Controllers
                 //  https://www.evernote.com/shard/s132/nl/14501366/41e0b392-d4cb-4843-bf6d-2dea63b9c42f
                 //  Add the point supplementing chart to the total.
                 var positions = new string[items.Count() + 1];
+                //  Total value for selected "top 10" categories.
                 var top10Total = 0.0;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/a632edc9-5b3d-4f06-90e1-1e32683bc071
@@ -106,12 +107,14 @@ namespace SocialApps.Controllers
                 for (var j = 0; j < yValues.Count(); j++) top10Total += (double)yValues[j];
 
                 var monthTotalsWithCurrencies = (MonthTotalByUser3_Result[])Session["MonthTotalsWithCurrencies"];
-                var monthTotal = monthTotalsWithCurrencies.Where(t => t.Currency.Trim() == groupIds[0].Currency).First().Total;
-
-                var d = Math.Floor((double)monthTotal) - Math.Floor(top10Total);
+                var groupCurrency = groupIds.Where(t => t.GroupId == currencyGroupId).First().Currency.Trim();
+                //  Select month total for given currency.
+                var monthTotal = (double)monthTotalsWithCurrencies.Where(t => t.Currency.Trim() == groupCurrency).First().Total;
+                //  Check that the residue is positive.
+                var d = Math.Floor(monthTotal) - Math.Floor(top10Total);
                 Debug.Assert(d >= 0);
-                //  Add supplementing value.
-                yValues.Add((double)Session["MonthTotal"] - top10Total);
+                //  Add supplementing value subtracting from total for given currency.
+                yValues.Add(monthTotal - top10Total);
                 Debug.Assert(positions.Count() == yValues.Count());
 
                 chart.AddSeries("Top 10 cat.", "Pie",  // markerStep: 1, 
@@ -243,7 +246,7 @@ namespace SocialApps.Controllers
                 Session["MonthTotalsWithCurrencies"] = _repository.GetMonthTotalsWithCurrencies(GetUserId(), (int)Session["Top10Year"], (int)Session["Top10Month"]);
 
                 ViewBag.CurrencyGroups = GetCurrencyGroups(allItems);
-
+                //  This is used to show total in the top-right corner of form.
                 var totals = _repository.GetTodayAndMonthTotals(userId, now);
                 //  https://action.mindjet.com/task/14672437
                 PutTotalsIntoSession(totals);
