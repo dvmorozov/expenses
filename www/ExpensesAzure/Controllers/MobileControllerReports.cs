@@ -96,30 +96,37 @@ namespace SocialApps.Controllers
 
             if ((pie ?? false) && Session["MonthTotal"] != null)
             {
-                //  https://www.evernote.com/shard/s132/nl/14501366/41e0b392-d4cb-4843-bf6d-2dea63b9c42f
-                //  Add the point supplementing chart to the total.
-                var positions = new string[items.Count() + 1];
+                var positions = new List<string>();
                 //  Total value for selected "top 10" categories.
                 var top10Total = 0.0;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/a632edc9-5b3d-4f06-90e1-1e32683bc071
-                for (var j = 0; j < positions.Count(); j++) positions[j] = j < positions.Count() - 1 ? (j + 1).ToString() : "Others";
-                for (var j = 0; j < yValues.Count(); j++) top10Total += (double)yValues[j];
+                for (var j = 0; j < yValues.Count(); j++)
+                {
+                    positions.Add((j + 1).ToString());
+                    top10Total += (double)yValues[j];
+                }
 
                 var monthTotalsWithCurrencies = (MonthTotalByUser3_Result[])Session["MonthTotalsWithCurrencies"];
                 var groupCurrency = groupIds.Where(t => t.GroupId == currencyGroupId).First().Currency.Trim();
                 //  Select month total for given currency.
                 var monthTotal = (double)monthTotalsWithCurrencies.Where(t => t.Currency.Trim() == groupCurrency).First().Total;
                 //  Check that the residue is positive.
-                var d = Math.Floor(monthTotal) - Math.Floor(top10Total);
-                Debug.Assert(d >= 0);
-                //  Add supplementing value subtracting from total for given currency.
-                yValues.Add(monthTotal - top10Total);
-                Debug.Assert(positions.Count() == yValues.Count());
-
-                chart.AddSeries("Top 10 cat.", "Pie",  // markerStep: 1, 
-                    //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
-                    //  This gives more convenient chart representation.
+                var residue = Math.Floor(monthTotal) - Math.Floor(top10Total);
+                Debug.Assert(residue >= 0);
+                if (residue > 0)
+                {
+                    //  https://www.evernote.com/shard/s132/nl/14501366/41e0b392-d4cb-4843-bf6d-2dea63b9c42f
+                    //  https://action.mindjet.com/task/15016557
+                    //  Looks better without word.
+                    positions.Add(/*"Others"*/"");
+                    //  Add complementary value by subtracting total of "top 10" for given currency.
+                    yValues.Add(monthTotal - top10Total);
+                    Debug.Assert(positions.Count() == yValues.Count());
+                }
+                chart.AddSeries("Top 10 cat.", "Pie",   // markerStep: 1, 
+                                                        //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
+                                                        //  This gives more convenient chart representation.
                     xValue: positions, xField: "Position",
                     yValues: yValues, yFields: "Total"
                     );
