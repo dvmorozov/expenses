@@ -206,16 +206,16 @@
 																<script>
 																	imageURL.push({
 																		pie: true,
-																		url: '@Url.Action("GetTop10ChartContentWh", "Mobile", new { groupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
+																		url: '@Url.Action("GetTop10ChartContentWh", "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
 																		diagramId: '@Html.Raw(diagramId)',
 																		diagramContainerId: '@Html.Raw(diagramContainerId)'
 																	});
 																</script>
 																@* Timestamp parameter is added to overcome image caching. *@
-																<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { groupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
+																<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
 																	@Html.Raw(Resources.Resources.Bar)
 																</button>
-																<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { groupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
+																<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
 																	@Html.Raw(Resources.Resources.Pie)
 																</button>
 															</div>
