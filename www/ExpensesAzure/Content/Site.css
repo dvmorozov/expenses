@@ -67,3 +67,7 @@ textarea {
 .sorted, .encrypted {
     visibility: hidden;
 }
+
+.panel-primary {
+    min-width: 278px;
+ }
