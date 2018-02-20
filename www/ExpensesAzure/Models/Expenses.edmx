@@ -63,7 +63,7 @@
           <Property Name="Income" Type="bit" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "ExpensesProd.dbo.Expenses" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+предупреждение 6002: В таблице или представлении "ExpensesProd.expenses.Expenses" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="Expenses">
           <Key>
             <PropertyRef Name="ID" />
@@ -137,49 +137,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="AddCategoryByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="AddCategoryByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Name" Type="nchar" Mode="In" />
           <Parameter Name="Limit" Type="float" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="EncryptedName" Type="nvarchar(max)" Mode="In" />
         </Function>
-        <Function Name="AddMonthBudgetByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="AddMonthBudgetByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="Budget" Type="money" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="Currency" Type="nchar" Mode="In" />
         </Function>
-        <Function Name="AddMonthIncomeByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="AddMonthIncomeByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="Income" Type="money" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="DeleteOperationByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="DeleteOperationByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="ExpenseId" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="EstimatedCategoriesByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="EstimatedCategoriesByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="Day" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="ShortList" Type="bit" Mode="In" />
         </Function>
-        <Function Name="EstimatedTop10CategoriesForMonthByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="EstimatedTop10CategoriesForMonthByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="Day" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="ExpensesByCategoryForMonthByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="ExpensesByCategoryForMonthByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="CategoryId" Type="int" Mode="In" />
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="GetExpenseNamesWithCategoryByUser5" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetExpenseNamesWithCategoryByUser5" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="Year" Type="int" Mode="In" />
@@ -187,67 +187,67 @@
           <Parameter Name="Day" Type="int" Mode="In" />
           <Parameter Name="ShortList" Type="bit" Mode="In" />
         </Function>
-        <Function Name="GetIncomeNamesByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetIncomeNamesByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="Day" Type="int" Mode="In" />
           <Parameter Name="ShortList" Type="bit" Mode="In" />
         </Function>
-        <Function Name="LastYearBalanceByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="LastYearBalanceByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="LastMonthNumber" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="LastYearCategoryExpensesByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="LastYearCategoryExpensesByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
           <Parameter Name="LastMonthNumber" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="LastYearTotalExpensesByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="LastYearTotalExpensesByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="LastMonthNumber" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="MonthBudgetByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="MonthBudgetByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Today" Type="datetime" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="MonthIncomeByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="MonthIncomeByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Today" Type="datetime" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="MonthTotalByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="MonthTotalByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Today" Type="datetime" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="ResetMonthIncomeByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="ResetMonthIncomeByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="Income" Type="money" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="TodayAndMonthTotalByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="TodayAndMonthTotalByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Today" Type="datetime" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="UpdateCategoryByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="UpdateCategoryByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="char" Mode="In" />
           <Parameter Name="EncryptedName" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="UpdateExpenseByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="UpdateExpenseByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="ExpenseID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="nchar" Mode="In" />
           <Parameter Name="EncryptedName" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
         <EntityContainer Name="Хранилище ExpensesModelContainer">
-          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ExpensesCategories" EntityType="Self.ExpensesCategories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ExpensesLinks" EntityType="Self.ExpensesLinks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Links" EntityType="Self.Links" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Operations" EntityType="Self.Operations" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Expenses" EntityType="Self.Expenses" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="ExpensesCategories" EntityType="Self.ExpensesCategories" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="ExpensesLinks" EntityType="Self.ExpensesLinks" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Links" EntityType="Self.Links" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Operations" EntityType="Self.Operations" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" store:Type="Views" store:Schema="expenses">
             <DefiningQuery>SELECT 
     [Expenses].[ID] AS [ID], 
     [Expenses].[Date] AS [Date], 
@@ -265,7 +265,7 @@
     [Expenses].[NameChecksum] AS [NameChecksum], 
     [Expenses].[Project] AS [Project], 
     [Expenses].[Name] AS [Name]
-    FROM [dbo].[Expenses] AS [Expenses]</DefiningQuery>
+    FROM [expenses].[Expenses] AS [Expenses]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_ExpensesCategories_Categories" Association="Self.FK_ExpensesCategories_Categories">
             <End Role="Categories" EntitySet="Categories" />
