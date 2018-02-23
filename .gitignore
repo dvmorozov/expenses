@@ -6,4 +6,5 @@
 *.bak
 /www/ExpensesAzure.v11.suo
 /www/.nuget
-/www/ExpensesAzure/Web.Debug.config
+Web.Debug.config
+Web.Release.config
