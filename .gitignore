@@ -8,3 +8,4 @@
 /www/.nuget
 Web.Debug.config
 Web.Release.config
+Web.config
