@@ -15,30 +15,16 @@ namespace SocialApps.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Categories
+public partial class Exchange
 {
 
-    public Categories()
-    {
+    public Nullable<double> EUR { get; set; }
 
-        this.ExpensesCategories = new HashSet<ExpensesCategories>();
+    public Nullable<double> USD { get; set; }
 
-    }
+    public System.DateTime Date { get; set; }
 
-
-    public int ID { get; set; }
-
-    public string Name { get; set; }
-
-    public System.Guid DataOwner { get; set; }
-
-    public Nullable<double> Limit { get; set; }
-
-    public string EncryptedName { get; set; }
-
-
-
-    public virtual ICollection<ExpensesCategories> ExpensesCategories { get; set; }
+    public long ID { get; set; }
 
 }
 

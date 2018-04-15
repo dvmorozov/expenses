@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="86d1a54b3d994167b533b937216b1cce" Name="Diagram1">
+      <Diagram DiagramId="86d1a54b3d994167b533b937216b1cce" Name="Diagram1" ZoomLevel="96">
         <EntityTypeShape EntityType="ExpensesModel.Categories" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ExpensesModel.ExpensesLinks" Width="1.5" PointX="5.625" PointY="1.5" />
         <EntityTypeShape EntityType="ExpensesModel.Links" Width="1.5" PointX="0.75" PointY="3.875" />
@@ -15,6 +15,15 @@
         <AssociationConnector Association="ExpensesModel.FK_ExpensesCategories_Expenses" />
         <AssociationConnector Association="ExpensesModel.FK_ExpensesLinks_Expenses" />
         <EntityTypeShape EntityType="ExpensesModel.Expenses" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ExpensesModel.CategoriesOwnership" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ExpensesModel.Contacts" Width="1.5" PointX="8.375" PointY="3.75" />
+        <EntityTypeShape EntityType="ExpensesModel.Controls" Width="1.5" PointX="3.375" PointY="8.25" />
+        <EntityTypeShape EntityType="ExpensesModel.Exchange" Width="1.5" PointX="8.375" PointY="7.75" />
+        <EntityTypeShape EntityType="ExpensesModel.Languages" Width="1.5" PointX="3.375" PointY="11.25" />
+        <EntityTypeShape EntityType="ExpensesModel.Month" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ExpensesModel.Strings" Width="1.5" PointX="5.625" PointY="7.875" />
+        <AssociationConnector Association="ExpensesModel.FK_Strings_Controls" />
+        <AssociationConnector Association="ExpensesModel.FK_Strings_Languages" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

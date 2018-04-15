@@ -264,7 +264,7 @@ BEGIN
 	)
 
 	DECLARE @MonthTotal FLOAT
-	EXEC MonthTotalByUser2 @Today, @DataOwner, @MonthTotal OUTPUT
+	EXEC [expenses].MonthTotalByUser2 @Today, @DataOwner, @MonthTotal OUTPUT
 
 	SELECT 
 		CASE WHEN @TodayTotal IS NOT NULL THEN @TodayTotal ELSE 0 END AS TodayTotal, 
@@ -370,7 +370,7 @@ BEGIN
 
 	DECLARE @MonthTotal FLOAT
 	DECLARE @MonthCurrency NCHAR(5)
-	EXEC MonthTotalByUser2 @Today, @DataOwner, @MonthTotal OUTPUT, @MonthCurrency OUTPUT
+	EXEC [expenses].MonthTotalByUser2 @Today, @DataOwner, @MonthTotal OUTPUT, @MonthCurrency OUTPUT
 
 	SELECT 
 		CASE WHEN @TodayTotal IS NOT NULL THEN @TodayTotal ELSE 0 END AS TodayTotal,

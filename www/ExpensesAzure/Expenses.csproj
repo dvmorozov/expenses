@@ -249,13 +249,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504040602036_Initial.cs" />
-    <Compile Include="Migrations\201504040602036_Initial.Designer.cs">
-      <DependentUpon>201504040602036_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categories.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CategoriesOwnership.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Contacts.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Controls.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataModels.cs" />
@@ -263,6 +267,9 @@
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser3_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Exchange.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Expenses.Context.cs">
@@ -302,6 +309,9 @@
     <Compile Include="Models\IncomsForMonthByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Languages.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LastYearBalanceByMonthByUser_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
@@ -315,6 +325,9 @@
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Month.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MonthBudgetByUser_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
@@ -322,6 +335,9 @@
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Operations.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Strings.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TodayAndMonthTotalByUser2_Result.cs">
@@ -520,9 +536,6 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Resources.cs.designer.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="Migrations\201504040602036_Initial.resx">
-      <DependentUpon>201504040602036_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

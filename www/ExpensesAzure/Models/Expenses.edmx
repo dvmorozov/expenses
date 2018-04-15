@@ -15,6 +15,42 @@
           <Property Name="Limit" Type="float" />
           <Property Name="EncryptedName" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="CategoriesOwnership">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="OwnerID" Type="int" />
+          <Property Name="OwneeID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
+          <Property Name="State" Type="nvarchar(max)" />
+          <Property Name="Zip" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Controls">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Exchange">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="EUR" Type="float" />
+          <Property Name="USD" Type="float" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="ExpensesCategories">
           <Key>
             <PropertyRef Name="ID" />
@@ -31,6 +67,13 @@
           <Property Name="LinkID" Type="int" Nullable="false" />
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Language" Type="nchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Links">
           <Key>
             <PropertyRef Name="ID" />
@@ -39,6 +82,18 @@
           <Property Name="URL" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DataOwner" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Month">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Budget" Type="money" />
+          <Property Name="Income" Type="money" />
+          <Property Name="DataOwner" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Currency" Type="nchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="Operations">
           <Key>
@@ -62,8 +117,17 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Income" Type="bit" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "ExpensesProd.expenses.Expenses" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Strings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="ControlId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ExpensesProd_2018-04-05T06-29Z.expenses.Expenses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Expenses">
           <Key>
             <PropertyRef Name="ID" />
@@ -134,6 +198,34 @@
             </Principal>
             <Dependent Role="ExpensesLinks">
               <PropertyRef Name="LinkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Strings_Controls">
+          <End Role="Controls" Type="Self.Controls" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Strings" Type="Self.Strings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Controls">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Strings">
+              <PropertyRef Name="ControlId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Strings_Languages">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Strings" Type="Self.Strings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Strings">
+              <PropertyRef Name="LangId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -243,10 +335,17 @@
         </Function>
         <EntityContainer Name="Хранилище ExpensesModelContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="CategoriesOwnership" EntityType="Self.CategoriesOwnership" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Controls" EntityType="Self.Controls" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Exchange" EntityType="Self.Exchange" Schema="expenses" store:Type="Tables" />
           <EntitySet Name="ExpensesCategories" EntityType="Self.ExpensesCategories" Schema="expenses" store:Type="Tables" />
           <EntitySet Name="ExpensesLinks" EntityType="Self.ExpensesLinks" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Languages" EntityType="Self.Languages" Schema="expenses" store:Type="Tables" />
           <EntitySet Name="Links" EntityType="Self.Links" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Month" EntityType="Self.Month" Schema="expenses" store:Type="Tables" />
           <EntitySet Name="Operations" EntityType="Self.Operations" Schema="expenses" store:Type="Tables" />
+          <EntitySet Name="Strings" EntityType="Self.Strings" Schema="expenses" store:Type="Tables" />
           <EntitySet Name="Expenses" EntityType="Self.Expenses" store:Type="Views" store:Schema="expenses">
             <DefiningQuery>SELECT 
     [Expenses].[ID] AS [ID], 
@@ -282,6 +381,14 @@
           <AssociationSet Name="FK_ExpensesLinks_Links" Association="Self.FK_ExpensesLinks_Links">
             <End Role="Links" EntitySet="Links" />
             <End Role="ExpensesLinks" EntitySet="ExpensesLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Strings_Controls" Association="Self.FK_Strings_Controls">
+            <End Role="Controls" EntitySet="Controls" />
+            <End Role="Strings" EntitySet="Strings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Strings_Languages" Association="Self.FK_Strings_Languages">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="Strings" EntitySet="Strings" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -415,6 +522,21 @@
             <Parameter Name="Today" Mode="In" Type="DateTime" />
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
           </FunctionImport>
+          <EntitySet Name="CategoriesOwnership" EntityType="ExpensesModel.CategoriesOwnership" />
+          <EntitySet Name="Contacts" EntityType="ExpensesModel.Contacts" />
+          <EntitySet Name="Controls" EntityType="ExpensesModel.Controls" />
+          <EntitySet Name="Exchange" EntityType="ExpensesModel.Exchange" />
+          <EntitySet Name="Languages" EntityType="ExpensesModel.Languages" />
+          <EntitySet Name="Month" EntityType="ExpensesModel.Month" />
+          <EntitySet Name="Strings" EntityType="ExpensesModel.Strings" />
+          <AssociationSet Name="FK_Strings_Controls" Association="ExpensesModel.FK_Strings_Controls">
+            <End Role="Controls" EntitySet="Controls" />
+            <End Role="Strings" EntitySet="Strings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Strings_Languages" Association="ExpensesModel.FK_Strings_Languages">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="Strings" EntitySet="Strings" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Categories">
           <Key>
@@ -638,6 +760,102 @@
           <Property Type="Double" Name="Total" Nullable="true" />
           <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
         </ComplexType>
+        <EntityType Name="CategoriesOwnership">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="OwnerID" Type="Int32" />
+          <Property Name="OwneeID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Controls">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Strings" Relationship="ExpensesModel.FK_Strings_Controls" FromRole="Controls" ToRole="Strings" />
+        </EntityType>
+        <EntityType Name="Exchange">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="EUR" Type="Double" />
+          <Property Name="USD" Type="Double" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Language" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Strings" Relationship="ExpensesModel.FK_Strings_Languages" FromRole="Languages" ToRole="Strings" />
+        </EntityType>
+        <EntityType Name="Month">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Budget" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Income" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DataOwner" Type="Guid" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month1" Type="Int32" Nullable="false" />
+          <Property Name="Currency" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Strings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="ControlId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Controls" Relationship="ExpensesModel.FK_Strings_Controls" FromRole="Strings" ToRole="Controls" />
+          <NavigationProperty Name="Languages" Relationship="ExpensesModel.FK_Strings_Languages" FromRole="Strings" ToRole="Languages" />
+        </EntityType>
+        <Association Name="FK_Strings_Controls">
+          <End Type="ExpensesModel.Controls" Role="Controls" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ExpensesModel.Strings" Role="Strings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Controls">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Strings">
+              <PropertyRef Name="ControlId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Strings_Languages">
+          <End Type="ExpensesModel.Languages" Role="Languages" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ExpensesModel.Strings" Role="Strings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Strings">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -844,6 +1062,77 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="CategoriesOwnership">
+            <EntityTypeMapping TypeName="ExpensesModel.CategoriesOwnership">
+              <MappingFragment StoreEntitySet="CategoriesOwnership">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OwneeID" ColumnName="OwneeID" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="ExpensesModel.Contacts">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Controls">
+            <EntityTypeMapping TypeName="ExpensesModel.Controls">
+              <MappingFragment StoreEntitySet="Controls">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exchange">
+            <EntityTypeMapping TypeName="ExpensesModel.Exchange">
+              <MappingFragment StoreEntitySet="Exchange">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="EUR" ColumnName="EUR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="ExpensesModel.Languages">
+              <MappingFragment StoreEntitySet="Languages">
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Month">
+            <EntityTypeMapping TypeName="ExpensesModel.Month">
+              <MappingFragment StoreEntitySet="Month">
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Month1" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="DataOwner" ColumnName="DataOwner" />
+                <ScalarProperty Name="Income" ColumnName="Income" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Strings">
+            <EntityTypeMapping TypeName="ExpensesModel.Strings">
+              <MappingFragment StoreEntitySet="Strings">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ControlId" ColumnName="ControlId" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -862,6 +1151,7 @@
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="DefaultDatabaseSchema" Value="expenses" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

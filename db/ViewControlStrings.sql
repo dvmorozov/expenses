@@ -1,22 +1,22 @@
 USE [ExpensesDev]
 GO
 
-DROP VIEW [dbo].[ControlStrings]
+DROP VIEW [expenses].[ControlStrings]
 GO
 
-/****** Object:  View [dbo].[ControlStrings]    Script Date: 01/15/2014 18:34:08 ******/
+/****** Object:  View [expenses].[ControlStrings]    Script Date: 01/15/2014 18:34:08 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [dbo].[ControlStrings]
+CREATE VIEW [expenses].[ControlStrings]
 AS
-SELECT     dbo.Strings.Text, dbo.Languages.Language, dbo.Controls.Name AS ControlName, dbo.Languages.ID AS LanguageId
-FROM         dbo.Strings INNER JOIN
-                      dbo.Languages ON dbo.Strings.LangId = dbo.Languages.ID INNER JOIN
-                      dbo.Controls ON dbo.Strings.ControlId = dbo.Controls.ID
+SELECT Strings.Text, Languages.Language, Controls.Name AS ControlName, Languages.ID AS LanguageId
+FROM expenses.Strings INNER JOIN
+                  expenses.Languages ON Strings.LangId = Languages.ID INNER JOIN
+                  expenses.Controls ON Strings.ControlId = Controls.ID
 
 GO
 

@@ -24,6 +24,7 @@
     <ApplicationInsightsResourceId>/subscriptions/440ffac1-c6e5-4539-9e50-6b764ccb950e/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/ContactManager</ApplicationInsightsResourceId>
     <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -227,11 +228,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504040602036_Initial.cs" />
-    <Compile Include="Migrations\201504040602036_Initial.Designer.cs">
-      <DependentUpon>201504040602036_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categories.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
@@ -475,9 +471,6 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Resources.pt-BR.designer.cs</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="Migrations\201504040602036_Initial.resx">
-      <DependentUpon>201504040602036_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

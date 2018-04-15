@@ -15,13 +15,13 @@ namespace SocialApps.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Categories
+public partial class Controls
 {
 
-    public Categories()
+    public Controls()
     {
 
-        this.ExpensesCategories = new HashSet<ExpensesCategories>();
+        this.Strings = new HashSet<Strings>();
 
     }
 
@@ -30,15 +30,9 @@ public partial class Categories
 
     public string Name { get; set; }
 
-    public System.Guid DataOwner { get; set; }
-
-    public Nullable<double> Limit { get; set; }
-
-    public string EncryptedName { get; set; }
 
 
-
-    public virtual ICollection<ExpensesCategories> ExpensesCategories { get; set; }
+    public virtual ICollection<Strings> Strings { get; set; }
 
 }
 
