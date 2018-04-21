@@ -5,10 +5,10 @@
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/81118259-b36e-4404-a632-7b140f099b2d
 -- =============================================
 
-DROP PROCEDURE MonthTotalByUser
+DROP PROCEDURE [expenses].MonthTotalByUser
 GO
 
-CREATE PROCEDURE MonthTotalByUser @Today DATETIME, @DataOwner UNIQUEIDENTIFIER, @MonthTotal FLOAT OUTPUT
+CREATE PROCEDURE [expenses].MonthTotalByUser @Today DATETIME, @DataOwner UNIQUEIDENTIFIER, @MonthTotal FLOAT OUTPUT
 AS
 BEGIN
 	DECLARE @BudgetCurrency NCHAR(5)
@@ -79,10 +79,10 @@ GO
 -- Description:	https://action.mindjet.com/task/14672437
 -- =============================================
 
-DROP PROCEDURE MonthTotalByUser2
+DROP PROCEDURE [expenses].MonthTotalByUser2
 GO
 
-CREATE PROCEDURE MonthTotalByUser2 @Today DATETIME, @DataOwner UNIQUEIDENTIFIER, @MonthTotal FLOAT OUTPUT, @Currency NCHAR(5) OUTPUT
+CREATE PROCEDURE [expenses].MonthTotalByUser2 @Today DATETIME, @DataOwner UNIQUEIDENTIFIER, @MonthTotal FLOAT OUTPUT, @Currency NCHAR(5) OUTPUT
 AS
 BEGIN
 	DECLARE @BudgetCurrency NCHAR(5)
@@ -158,10 +158,10 @@ GO
 -- Description:	https://action.mindjet.com/task/14919145
 -- =============================================
 
-DROP PROCEDURE MonthTotalByUser3
+DROP PROCEDURE [expenses].MonthTotalByUser3
 GO
 
-CREATE PROCEDURE MonthTotalByUser3 @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].MonthTotalByUser3 @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	SELECT SUM(Cost) AS Total, Currency
@@ -190,10 +190,10 @@ GO
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/81118259-b36e-4404-a632-7b140f099b2d
 -- =============================================
 
-DROP PROCEDURE TodayAndMonthTotalByUser
+DROP PROCEDURE [expenses].TodayAndMonthTotalByUser
 GO
 
-CREATE PROCEDURE TodayAndMonthTotalByUser @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].TodayAndMonthTotalByUser @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	DECLARE @Year INT
@@ -278,10 +278,10 @@ GO
 -- Description:	https://action.mindjet.com/task/14672437
 -- =============================================
 
-DROP PROCEDURE TodayAndMonthTotalByUser2
+DROP PROCEDURE [expenses].TodayAndMonthTotalByUser2
 GO
 
-CREATE PROCEDURE TodayAndMonthTotalByUser2 @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].TodayAndMonthTotalByUser2 @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	DECLARE @Year INT
