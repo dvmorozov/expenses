@@ -4,7 +4,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE MonthBudgetByUser
+DROP PROCEDURE [expenses].MonthBudgetByUser
 GO
 
 -- =============================================
@@ -12,7 +12,7 @@ GO
 -- Create date: 06/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/14e369f7-348f-4f68-aa65-6a5e7dda1da7
 -- =============================================
-CREATE PROCEDURE MonthBudgetByUser @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].MonthBudgetByUser @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	DECLARE @Year INT
@@ -30,18 +30,18 @@ BEGIN
 	DECLARE @BudgetCurrency NCHAR(5)
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
 	--	https://www.evernote.com/shard/s132/nl/14501366/81118259-b36e-4404-a632-7b140f099b2d
 	DECLARE @MonthTotal MONEY
-	EXEC MonthTotalByUser @Today, @DataOwner, @MonthTotal OUTPUT
+	EXEC [expenses].MonthTotalByUser @Today, @DataOwner, @MonthTotal OUTPUT
 
 	DECLARE @MonthBudget MONEY
 	SET @MonthBudget = (
 		SELECT TOP 1 Budget
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 

@@ -5,7 +5,7 @@
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
 -- =============================================
 
-DROP PROCEDURE Top10CategoriesForMonthByUser2
+DROP PROCEDURE [expenses].Top10CategoriesForMonthByUser2
 GO
 
 SET ANSI_NULLS OFF
@@ -13,25 +13,25 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
-CREATE PROCEDURE Top10CategoriesForMonthByUser2 @Year int, @Month int, @DataOwner UNIQUEIDENTIFIER 
+CREATE PROCEDURE [expenses].Top10CategoriesForMonthByUser2 @Year int, @Month int, @DataOwner UNIQUEIDENTIFIER 
 AS 
 BEGIN
 	DECLARE @BudgetCurrency NCHAR(5)
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
 	SELECT TOP 10 RTRIM(CC.NAME) AS NAME, TT.TOTAL, CC.ID,
 		CC.EncryptedName 
-	FROM CATEGORIES AS CC 
+	FROM [expenses].CATEGORIES AS CC 
 	JOIN 
 	(
 		SELECT SUM(E.COST) AS TOTAL, C.ID AS CATEGORYID 
-		FROM EXPENSES AS E 
-		JOIN EXPENSESCATEGORIES AS EC ON EC.EXPENSEID=E.ID 
-		JOIN CATEGORIES AS C ON EC.CATEGORYID=C.ID 
+		FROM [expenses].EXPENSES AS E 
+		JOIN [expenses].EXPENSESCATEGORIES AS EC ON EC.EXPENSEID=E.ID 
+		JOIN [expenses].CATEGORIES AS C ON EC.CATEGORYID=C.ID 
 		WHERE E.DataOwner = @DataOwner AND 
 			--	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
 			(
@@ -60,7 +60,7 @@ GO
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
 -- =============================================
 
-DROP PROCEDURE Top10CategoriesForMonthByUser
+DROP PROCEDURE [expenses].Top10CategoriesForMonthByUser
 GO
 
 SET ANSI_NULLS OFF
@@ -68,7 +68,7 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
-CREATE PROCEDURE Top10CategoriesForMonthByUser @Year int, @Month int, @DataOwner UNIQUEIDENTIFIER 
+CREATE PROCEDURE [expenses].Top10CategoriesForMonthByUser @Year int, @Month int, @DataOwner UNIQUEIDENTIFIER 
 AS
 BEGIN
 	DECLARE @T TABLE (
@@ -78,7 +78,7 @@ BEGIN
 		EncryptedName NVARCHAR(MAX) NULL
 		)
 
-	INSERT INTO @T EXEC Top10CategoriesForMonthByUser2 @Year, @Month, @DataOwner
+	INSERT INTO @T EXEC [expenses].Top10CategoriesForMonthByUser2 @Year, @Month, @DataOwner
 
 	SELECT NAME, TOTAL, ID
 	FROM @T

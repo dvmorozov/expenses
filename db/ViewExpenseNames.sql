@@ -1,8 +1,8 @@
 
-DROP VIEW ExpenseNames
+DROP VIEW [expenses].[ExpenseNames]
 GO
 
-CREATE VIEW ExpenseNames
+CREATE VIEW [expenses].[ExpenseNames]
 AS
 SELECT LTRIM(RTRIM(Name)) AS Name, MIN(ID) AS ID, DataOwner
 FROM expenses.Expenses

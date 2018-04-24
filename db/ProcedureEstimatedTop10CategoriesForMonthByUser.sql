@@ -1,5 +1,5 @@
 
-DROP PROCEDURE EstimatedTop10CategoriesForMonthByUser3
+DROP PROCEDURE [expenses].EstimatedTop10CategoriesForMonthByUser3
 GO
 
 -- =============================================
@@ -7,7 +7,7 @@ GO
 -- Create date: 26/05/2017
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
 -- =============================================
-CREATE PROCEDURE EstimatedTop10CategoriesForMonthByUser3 @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
+CREATE PROCEDURE [expenses].EstimatedTop10CategoriesForMonthByUser3 @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
 AS 
 	DECLARE @ADate DATETIME
 	SET @ADate = DATEFROMPARTS(@Year, @Month, @Day)
@@ -19,7 +19,7 @@ AS
 	--  Select budget currency if it was set for given month.
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
@@ -40,7 +40,7 @@ AS
 			DENSE_RANK() OVER (ORDER BY TT.Currency) AS GROUPID1,
 			DENSE_RANK() OVER (PARTITION BY TT.Currency ORDER BY TOTAL DESC) AS GROUPID2
 		FROM 
-		CATEGORIES C
+		[expenses].CATEGORIES C
 		JOIN
 		(
 			--	Calculates totals by categories for given month.
@@ -53,7 +53,7 @@ AS
 			FROM
 			(
 				SELECT SUM(Cost) AS SingleTotal, c.ID AS CategoryId, e.Currency AS Currency
-				FROM Expenses e
+				FROM [expenses].Expenses e
 					JOIN ExpensesCategories ec
 					ON ec.ExpenseID = e.ID 
 					JOIN Categories c
@@ -73,7 +73,7 @@ AS
 			FULL OUTER JOIN
 			(
 				SELECT SUM(Cost) AS MonthlyTotal, c.ID AS CategoryId, e.Currency AS Currency
-				FROM Expenses e
+				FROM [expenses].Expenses e
 					JOIN ExpensesCategories ec
 					ON ec.ExpenseID = e.ID 
 					JOIN Categories c
@@ -101,7 +101,7 @@ AS
 	ORDER BY TT.Currency, TT.TOTAL DESC
 GO
 
-DROP PROCEDURE EstimatedTop10CategoriesForMonthByUser2
+DROP PROCEDURE [expenses].EstimatedTop10CategoriesForMonthByUser2
 GO
 
 -- =============================================
@@ -109,7 +109,7 @@ GO
 -- Create date: 21/05/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
 -- =============================================
-CREATE PROCEDURE EstimatedTop10CategoriesForMonthByUser2 @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
+CREATE PROCEDURE [expenses].EstimatedTop10CategoriesForMonthByUser2 @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
 AS 
 	DECLARE @T TABLE (
 		TOTAL FLOAT NOT NULL,
@@ -123,13 +123,13 @@ AS
 		GROUPID2 INT NOT NULL
 		)
 
-	INSERT INTO @T EXEC EstimatedTop10CategoriesForMonthByUser3 @Year, @Month, @Day, @DataOwner
+	INSERT INTO @T EXEC [expenses].EstimatedTop10CategoriesForMonthByUser3 @Year, @Month, @Day, @DataOwner
 
 	SELECT TOTAL, LIMIT, NAME, ID, ESTIMATION, EncryptedName
 	FROM @T
 GO
 
-DROP PROCEDURE EstimatedTop10CategoriesForMonthByUser
+DROP PROCEDURE [expenses].EstimatedTop10CategoriesForMonthByUser
 GO
 
 -- =============================================
@@ -138,7 +138,7 @@ GO
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/4bc52f46-5b79-4788-824d-f3a4b0e9fad3
 -- =============================================
 
-CREATE PROCEDURE EstimatedTop10CategoriesForMonthByUser @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
+CREATE PROCEDURE [expenses].EstimatedTop10CategoriesForMonthByUser @Year int, @Month int, @Day INT, @DataOwner UNIQUEIDENTIFIER 
 AS 
 BEGIN
 	DECLARE @T TABLE (
@@ -153,7 +153,7 @@ BEGIN
 		GROUPID2 INT NOT NULL
 		)
 
-	INSERT INTO @T EXEC EstimatedTop10CategoriesForMonthByUser3 @Year, @Month, @Day, @DataOwner
+	INSERT INTO @T EXEC [expenses].EstimatedTop10CategoriesForMonthByUser3 @Year, @Month, @Day, @DataOwner
 
 	SELECT TOTAL, LIMIT, NAME, ID, ESTIMATION
 	FROM @T

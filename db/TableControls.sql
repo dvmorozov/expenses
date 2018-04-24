@@ -1,14 +1,13 @@
-USE [ExpensesDev]
-GO
 
-/****** Object:  Table [dbo].[Controls]    Script Date: 01/15/2014 19:27:35 ******/
+
+/****** Object:  Table [expenses].[Controls]    Script Date: 01/15/2014 19:27:35 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[Controls](
+CREATE TABLE [expenses].[Controls](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nchar](30) NOT NULL,
  CONSTRAINT [PK_Controls] PRIMARY KEY CLUSTERED 

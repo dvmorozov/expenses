@@ -1,4 +1,5 @@
-DROP PROCEDURE LastYearBalanceByMonthByUser
+
+DROP PROCEDURE [expenses].LastYearBalanceByMonthByUser
 GO
 
 SET ANSI_NULLS ON
@@ -10,7 +11,7 @@ GO
 -- Create date: 08/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def
 -- =============================================
-CREATE PROCEDURE LastYearBalanceByMonthByUser @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].LastYearBalanceByMonthByUser @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	SELECT t.Y, t.M, 
@@ -31,13 +32,13 @@ BEGIN
 					SUM(Cost) AS Total,
 					DATEPART(year, Date) AS Y, DATEPART(month, Date) AS M,
 					DATEFROMPARTS(DATEPART(year, Date), DATEPART(month, Date), 1) AS CurMonth
-				FROM Expenses
+				FROM [expenses].Expenses
 				WHERE DataOwner = @DataOwner AND Monthly IS NULL OR Monthly = 0
 					--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
 					--	Only given currency taken into account in calculating of the total.
 					AND (Currency = (
 							SELECT TOP 1 Currency
-							FROM Month
+							FROM [expenses].Month
 							WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
 						)
 					-- If not set the currency is considered as it is set for month.
@@ -45,7 +46,7 @@ BEGIN
 					-- If the budget currency is not set then all expenses are considered as given in the same currency.
 					OR (
 							SELECT TOP 1 Currency
-							FROM Month
+							FROM [expenses].Month
 							WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
 						) IS NULL)
 				GROUP BY DATEPART(year, Date), DATEPART(month, Date)
@@ -56,13 +57,13 @@ BEGIN
 			(
 				SELECT Cost, FirstMonth, LastMonth,
 					DATEPART(year, Date) AS Y, DATEPART(month, Date) AS M
-				FROM Expenses
+				FROM [expenses].Expenses
 				WHERE DataOwner = @DataOwner AND Monthly IS NOT NULL AND Monthly = 1
 					--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
 					--	Only given currency taken into account in calculating of the total.
 					AND (Currency = (
 							SELECT TOP 1 Currency
-							FROM Month
+							FROM [expenses].Month
 							WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
 						)
 					-- If not set the currency is considered as it is set for month.
@@ -70,7 +71,7 @@ BEGIN
 					-- If the budget currency is not set then all expenses are considered as given in the same currency.
 					OR (
 							SELECT TOP 1 Currency
-							FROM Month
+							FROM [expenses].Month
 							WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
 						) IS NULL)
 			) E2

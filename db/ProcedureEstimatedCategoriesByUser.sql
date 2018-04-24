@@ -1,4 +1,4 @@
-DROP PROCEDURE EstimatedCategoriesByUser3
+DROP PROCEDURE [expenses].EstimatedCategoriesByUser3
 GO
 
 -- =============================================
@@ -6,7 +6,7 @@ GO
 -- Create date: 07/12/2015
 -- Description:	https://action.mindjet.com/task/14479694
 -- =============================================
-CREATE PROCEDURE EstimatedCategoriesByUser3 @Year INT, @Month INT, @Day INT, @DataOwner UNIQUEIDENTIFIER, @ShortList BIT
+CREATE PROCEDURE [expenses].EstimatedCategoriesByUser3 @Year INT, @Month INT, @Day INT, @DataOwner UNIQUEIDENTIFIER, @ShortList BIT
 AS 
 	DECLARE @ADate DATETIME
 	SET @ADate = DATEFROMPARTS(@Year, @Month, @Day)
@@ -21,7 +21,7 @@ AS
 	DECLARE @BudgetCurrency NCHAR(5)
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
@@ -39,10 +39,10 @@ AS
 		--	Categories without expenses must be present always 
 		--	regardless of value of the ShortList parameter.
 		--	https://action.mindjet.com/task/14816150
-		FROM Categories c
-		LEFT JOIN ExpensesCategories ec
+		FROM [expenses].Categories c
+		LEFT JOIN [expenses].ExpensesCategories ec
 		ON ec.CategoryID = c.ID 
-		LEFT JOIN Expenses e
+		LEFT JOIN [expenses].Expenses e
 		ON ec.ExpenseID = e.ID
 		WHERE c.DataOwner = @DataOwner AND
 		(
@@ -59,7 +59,7 @@ AS
 			WHEN TT.TOTAL > CAST(@DaysElapsed AS FLOAT) * CC.Limit / CAST(@DaysInMonth AS FLOAT) THEN 'MayExceed' ELSE 'NotExceed'
 		END AS Estimation,
 		CC.EncryptedName	
-	FROM CATEGORIES AS CC 
+	FROM [expenses].CATEGORIES AS CC 
 	-- Selects active categories for given range.
 	JOIN 
 	(
@@ -105,7 +105,7 @@ AS
 	WHERE CC.DataOwner = @DataOwner
 GO
 
-DROP PROCEDURE EstimatedCategoriesByUser2
+DROP PROCEDURE [expenses].EstimatedCategoriesByUser2
 GO
 
 -- =============================================
@@ -113,7 +113,7 @@ GO
 -- Create date: 19/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
 -- =============================================
-CREATE PROCEDURE EstimatedCategoriesByUser2 @Year INT, @Month INT, @Day INT, @DataOwner UNIQUEIDENTIFIER 
+CREATE PROCEDURE [expenses].EstimatedCategoriesByUser2 @Year INT, @Month INT, @Day INT, @DataOwner UNIQUEIDENTIFIER 
 AS 
 	DECLARE @ADate DATETIME
 	SET @ADate = DATEFROMPARTS(@Year, @Month, @Day)
@@ -128,7 +128,7 @@ AS
 	DECLARE @BudgetCurrency NCHAR(5)
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
@@ -140,7 +140,7 @@ AS
 			WHEN TT.TOTAL > CAST(@DaysElapsed AS FLOAT) * CC.Limit / CAST(@DaysInMonth AS FLOAT) THEN 'MayExceed' ELSE 'NotExceed'
 		END AS Estimation,
 		CC.EncryptedName	
-	FROM CATEGORIES AS CC 
+	FROM [expenses].CATEGORIES AS CC 
 	LEFT JOIN 
 	(
 		--	Calculates totals by categories for given month.
@@ -151,10 +151,10 @@ AS
 		FROM
 		(
 			SELECT SUM(Cost) AS SingleTotal, c.ID AS CategoryId
-			FROM Expenses e
-				JOIN ExpensesCategories ec
+			FROM [expenses].Expenses e
+				JOIN [expenses].ExpensesCategories ec
 				ON ec.ExpenseID = e.ID 
-				JOIN Categories c
+				JOIN [expenses].Categories c
 				ON ec.CategoryID = c.ID
 			WHERE e.DataOwner = @DataOwner 
 				AND (Monthly IS NULL OR Monthly = 0)
@@ -171,10 +171,10 @@ AS
 		FULL OUTER JOIN
 		(
 			SELECT SUM(Cost) AS MonthlyTotal, c.ID AS CategoryId
-			FROM Expenses e
-				JOIN ExpensesCategories ec
+			FROM [expenses].Expenses e
+				JOIN [expenses].ExpensesCategories ec
 				ON ec.ExpenseID = e.ID 
-				JOIN Categories c
+				JOIN [expenses].Categories c
 				ON ec.CategoryID = c.ID
 			WHERE e.DataOwner = @DataOwner 
 				AND (Monthly IS NOT NULL AND Monthly = 1)
@@ -194,7 +194,7 @@ AS
 	ORDER BY CC.NAME
 GO
 
-DROP PROCEDURE EstimatedCategoriesByUser
+DROP PROCEDURE [expenses].EstimatedCategoriesByUser
 GO
 
 -- =============================================
@@ -202,7 +202,7 @@ GO
 -- Create date: 09/03/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/0fc35d9b-80d0-4159-be22-4d935bc2825a
 -- =============================================
-CREATE PROCEDURE EstimatedCategoriesByUser @Year INT, @Month INT, @Day INT, @DataOwner UNIQUEIDENTIFIER 
+CREATE PROCEDURE [expenses].EstimatedCategoriesByUser @Year INT, @Month INT, @Day INT, @DataOwner UNIQUEIDENTIFIER 
 AS 
 	DECLARE @T TABLE (
 		NAME CHAR(100) NOT NULL, 
@@ -213,7 +213,7 @@ AS
 		EncryptedName NVARCHAR(MAX) NULL
 		)
 
-	INSERT INTO @T EXEC EstimatedCategoriesByUser2 @Year, @Month, @Day, @DataOwner 
+	INSERT INTO @T EXEC [expenses].EstimatedCategoriesByUser2 @Year, @Month, @Day, @DataOwner 
 	
 	SELECT NAME, Limit, ID, Total, Estimation
 	FROM @T

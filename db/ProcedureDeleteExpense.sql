@@ -1,5 +1,5 @@
 
-DROP PROCEDURE DeleteExpenseByUser
+DROP PROCEDURE [expenses].DeleteExpenseByUser
 GO
 
 SET ANSI_NULLS ON
@@ -11,7 +11,7 @@ GO
 -- Create date: 17/02/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/6a98cd82-4552-4766-be48-172a1bccbf88
 -- =============================================
-CREATE PROCEDURE DeleteExpenseByUser 
+CREATE PROCEDURE [expenses].DeleteExpenseByUser 
 	@ExpenseId INT,
 	@DataOwner UNIQUEIDENTIFIER
 AS
@@ -24,14 +24,14 @@ BEGIN
 	BEGIN
 		BEGIN TRANSACTION
 
-		DELETE FROM ExpensesCategories
+		DELETE FROM [expenses].ExpensesCategories
 		WHERE ExpenseId = @ExpenseId
 
 		--	https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
-		DELETE FROM ExpensesLinks
+		DELETE FROM [expenses].ExpensesLinks
 		WHERE ExpenseId = @ExpenseId
 
-		DELETE FROM Expenses
+		DELETE FROM [expenses].Expenses
 		WHERE ID = @ExpenseId
 
 		COMMIT
@@ -39,7 +39,7 @@ BEGIN
 END
 GO
 
-DROP PROCEDURE DeleteOperationByUser
+DROP PROCEDURE [expenses].DeleteOperationByUser
 GO
 
 SET ANSI_NULLS ON
@@ -51,7 +51,7 @@ GO
 -- Create date: 16/12/2015
 -- Description:	https://vision.mindjet.com/action/task/14485574
 -- =============================================
-CREATE PROCEDURE DeleteOperationByUser 
+CREATE PROCEDURE [expenses].DeleteOperationByUser 
 	@ExpenseId INT,
 	@DataOwner UNIQUEIDENTIFIER
 AS
@@ -64,14 +64,14 @@ BEGIN
 	BEGIN
 		BEGIN TRANSACTION
 
-		DELETE FROM ExpensesCategories
+		DELETE FROM [expenses].ExpensesCategories
 		WHERE ExpenseId = @ExpenseId
 
 		--	https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
-		DELETE FROM ExpensesLinks
+		DELETE FROM [expenses].ExpensesLinks
 		WHERE ExpenseId = @ExpenseId
 
-		DELETE FROM Operations
+		DELETE FROM [expenses].Operations
 		WHERE ID = @ExpenseId
 
 		COMMIT

@@ -4,7 +4,7 @@
 -- Description:	https://vision.mindjet.com/action/task/14485573
 -- =============================================
 
-ALTER TABLE Operations ADD Income BIT;
+ALTER TABLE [expenses].Operations ADD Income BIT;
 GO
 
 -- =============================================
@@ -18,12 +18,12 @@ IF OBJECT_ID ('TG_UpdateNameChecksum','TR') IS NOT NULL
 GO
 
 CREATE TRIGGER TG_UpdateNameChecksum
-ON dbo.Operations
+ON expenses.Operations
 AFTER INSERT, UPDATE
 AS
-   UPDATE Operations
+   UPDATE [expenses].Operations
    SET NameChecksum = CHECKSUM(i.Name, i.EncryptedName)
-   FROM Operations e
+   FROM [expenses].Operations e
    JOIN (SELECT * FROM inserted) i
    ON i.ID = e.ID
 GO
@@ -39,7 +39,7 @@ IF OBJECT_ID ('TG_UpdateMonthIncome','TR') IS NOT NULL
 GO
 
 CREATE TRIGGER TG_UpdateMonthIncome
-ON dbo.Operations
+ON [expenses].Operations
 AFTER INSERT, UPDATE
 AS
 	DECLARE @t TABLE
@@ -63,7 +63,7 @@ AS
 		FETCH FROM @cursor INTO @Year, @Month, @DataOwner
 		IF @@fetch_status <> 0 BREAK
 
-		EXEC RecalcMonthIncome @Year, @Month, @DataOwner
+		EXEC [expenses].RecalcMonthIncome @Year, @Month, @DataOwner
 	END
 GO
 
@@ -72,7 +72,7 @@ IF OBJECT_ID ('TG_DeleteMonthIncome','TR') IS NOT NULL
 GO
 
 CREATE TRIGGER TG_DeleteMonthIncome
-ON dbo.Operations
+ON [expenses].Operations
 AFTER DELETE
 AS
 	DECLARE @t TABLE
@@ -96,6 +96,6 @@ AS
 		FETCH FROM @cursor INTO @Year, @Month, @DataOwner
 		IF @@fetch_status <> 0 BREAK
 
-		EXEC RecalcMonthIncome @Year, @Month, @DataOwner
+		EXEC [expenses].RecalcMonthIncome @Year, @Month, @DataOwner
 	END
 GO

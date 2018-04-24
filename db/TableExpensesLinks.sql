@@ -1,15 +1,12 @@
 
---DROP TABLE [dbo].[ExpensesLinks]
---GO
-
-/****** Object:  Table [dbo].[ExpensesLinks]    Script Date: 23.09.2015 21:09:42 ******/
+/****** Object:  Table [expenses].[ExpensesLinks]    Script Date: 23.09.2015 21:09:42 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[ExpensesLinks](
+CREATE TABLE [expenses].[ExpensesLinks](
 	[ExpenseID] [int] NOT NULL,
 	[LinkID] [int] NOT NULL,
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
@@ -21,18 +18,18 @@ CREATE TABLE [dbo].[ExpensesLinks](
 
 GO
 
-ALTER TABLE [dbo].[ExpensesLinks]  WITH CHECK ADD  CONSTRAINT [FK_ExpensesLinks_Expenses] FOREIGN KEY([ExpenseID])
-REFERENCES [dbo].[Expenses] ([ID])
+ALTER TABLE [expenses].[ExpensesLinks]  WITH CHECK ADD  CONSTRAINT [FK_ExpensesLinks_Expenses] FOREIGN KEY([ExpenseID])
+REFERENCES [expenses].[Expenses] ([ID])
 GO
 
-ALTER TABLE [dbo].[ExpensesLinks] CHECK CONSTRAINT [FK_ExpensesLinks_Expenses]
+ALTER TABLE [expenses].[ExpensesLinks] CHECK CONSTRAINT [FK_ExpensesLinks_Expenses]
 GO
 
-ALTER TABLE [dbo].[ExpensesLinks]  WITH CHECK ADD  CONSTRAINT [FK_ExpensesLinks_Links] FOREIGN KEY([LinkID])
-REFERENCES [dbo].[Links] ([ID])
+ALTER TABLE [expenses].[ExpensesLinks]  WITH CHECK ADD  CONSTRAINT [FK_ExpensesLinks_Links] FOREIGN KEY([LinkID])
+REFERENCES [expenses].[Links] ([ID])
 GO
 
-ALTER TABLE [dbo].[ExpensesLinks] CHECK CONSTRAINT [FK_ExpensesLinks_Links]
+ALTER TABLE [expenses].[ExpensesLinks] CHECK CONSTRAINT [FK_ExpensesLinks_Links]
 GO
 
 

@@ -1,4 +1,4 @@
-DROP PROCEDURE GetExpenseNamesWithCategoryByUser
+DROP PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser
 GO
 
 -- =============================================
@@ -6,7 +6,7 @@ GO
 -- Create date: 19/01/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/42b4d734-28a0-48b6-9403-148faa8409a2
 -- =============================================
-CREATE PROCEDURE GetExpenseNamesWithCategoryByUser 
+CREATE PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser 
 	@CategoryID INT,
 	@DataOwner UNIQUEIDENTIFIER
 AS
@@ -17,14 +17,14 @@ BEGIN
 		EncryptedName NVARCHAR(MAX) NULL
 		)
 
-	INSERT INTO @T EXEC GetExpenseNamesWithCategoryByUser2 @CategoryID, @DataOwner 
+	INSERT INTO @T EXEC [expenses].GetExpenseNamesWithCategoryByUser2 @CategoryID, @DataOwner 
 	
 	SELECT Name, Id
 	FROM @T
 END
 GO
 
-DROP PROCEDURE GetExpenseNamesWithCategoryByUser2
+DROP PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser2
 GO
 
 -- =============================================
@@ -32,7 +32,7 @@ GO
 -- Create date: 19/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/d8e9d2dc-b1df-47af-882e-f84727e5c435
 -- =============================================
-CREATE PROCEDURE GetExpenseNamesWithCategoryByUser2 
+CREATE PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser2 
 	@CategoryID INT,
 	@DataOwner UNIQUEIDENTIFIER
 AS
@@ -44,7 +44,7 @@ BEGIN
 		Count INT NOT NULL
 		)
 
-	INSERT INTO @T EXEC GetExpenseNamesWithCategoryByUser3 @CategoryID, @DataOwner 
+	INSERT INTO @T EXEC [expenses].GetExpenseNamesWithCategoryByUser3 @CategoryID, @DataOwner 
 	
 	SELECT Name, Id, EncryptedName
 	FROM @T
@@ -52,7 +52,7 @@ END
 GO
 
 
-DROP PROCEDURE GetExpenseNamesWithCategoryByUser3
+DROP PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser3
 GO
 
 -- =============================================
@@ -60,7 +60,7 @@ GO
 -- Create date: 30/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/8cc36717-9904-4f5c-bb2b-fffb8cfb37d1
 -- =============================================
-CREATE PROCEDURE GetExpenseNamesWithCategoryByUser3 
+CREATE PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser3 
 	@CategoryID INT,
 	@DataOwner UNIQUEIDENTIFIER
 AS
@@ -72,13 +72,13 @@ BEGIN
 	--	https://www.evernote.com/shard/s132/nl/14501366/adbb4c02-3975-460d-88f1-8a65312ca83f
 	--	The last expense is selected in each group.
 	SELECT e.Name, e.EncryptedName, c.Id, c.Count
-	FROM Expenses e
+	FROM [expenses].Expenses e
 	JOIN 
 	(
 		--	https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
 		SELECT MAX(e.ID) AS Id, COUNT(*) AS Count
-		FROM Expenses e
-		JOIN ExpensesCategories ec
+		FROM [expenses].Expenses e
+		JOIN [expenses].ExpensesCategories ec
 		ON e.ID = ec.ExpenseID
 		WHERE CategoryID = @CategoryID AND DataOwner = @DataOwner
 		GROUP BY NameChecksum
@@ -88,7 +88,7 @@ BEGIN
 END
 GO
 
-DROP PROCEDURE GetExpenseNamesWithCategoryByUser4
+DROP PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser4
 GO
 
 -- =============================================
@@ -96,7 +96,7 @@ GO
 -- Create date: 05/11/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
 -- =============================================
-CREATE PROCEDURE GetExpenseNamesWithCategoryByUser4
+CREATE PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser4
 	@CategoryID INT,
 	@DataOwner UNIQUEIDENTIFIER
 AS
@@ -108,13 +108,13 @@ BEGIN
 	--	https://www.evernote.com/shard/s132/nl/14501366/adbb4c02-3975-460d-88f1-8a65312ca83f
 	--	The last expense is selected in each group.
 	SELECT e.Name, e.EncryptedName, c.Id
-	FROM Expenses e
+	FROM [expenses].Expenses e
 	JOIN 
 	(
 		--	https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
 		SELECT MAX(e.ID) AS Id
-		FROM Expenses e
-		JOIN ExpensesCategories ec
+		FROM [expenses].Expenses e
+		JOIN [expenses].ExpensesCategories ec
 		ON e.ID = ec.ExpenseID
 		WHERE CategoryID = @CategoryID AND DataOwner = @DataOwner
 		GROUP BY NameChecksum
@@ -123,7 +123,7 @@ BEGIN
 END
 GO
 
-DROP PROCEDURE GetExpenseNamesWithCategoryByUser5
+DROP PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser5
 GO
 
 -- =============================================
@@ -131,7 +131,7 @@ GO
 -- Create date: 09/12/2015
 -- Description:	https://action.mindjet.com/task/14479694
 -- =============================================
-CREATE PROCEDURE GetExpenseNamesWithCategoryByUser5
+CREATE PROCEDURE [expenses].GetExpenseNamesWithCategoryByUser5
 	@CategoryID INT,
 	@DataOwner UNIQUEIDENTIFIER,
 	@Year INT, @Month INT, @Day INT,
@@ -150,13 +150,13 @@ BEGIN
 	--	https://www.evernote.com/shard/s132/nl/14501366/adbb4c02-3975-460d-88f1-8a65312ca83f
 	--	The last expense is selected in each group.
 	SELECT e.Name, e.EncryptedName, c.Id
-	FROM Expenses e
+	FROM [expenses].Expenses e
 	JOIN 
 	(
 		--	https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
 		SELECT MAX(e.ID) AS Id
-		FROM Expenses e
-		JOIN ExpensesCategories ec
+		FROM [expenses].Expenses e
+		JOIN [expenses].ExpensesCategories ec
 		ON e.ID = ec.ExpenseID
 		WHERE CategoryID = @CategoryID AND DataOwner = @DataOwner
 			AND
@@ -170,7 +170,7 @@ BEGIN
 END
 GO
 
-DROP PROCEDURE GetIncomeNamesByUser
+DROP PROCEDURE [expenses].GetIncomeNamesByUser
 GO
 
 -- =============================================
@@ -178,7 +178,7 @@ GO
 -- Create date: 14/12/2015
 -- Description:	https://vision.mindjet.com/action/task/14485585
 -- =============================================
-CREATE PROCEDURE GetIncomeNamesByUser
+CREATE PROCEDURE [expenses].GetIncomeNamesByUser
 	@DataOwner UNIQUEIDENTIFIER,
 	@Year INT, @Month INT, @Day INT,
 	@ShortList BIT
@@ -196,12 +196,12 @@ BEGIN
 	--	https://www.evernote.com/shard/s132/nl/14501366/adbb4c02-3975-460d-88f1-8a65312ca83f
 	--	The last expense is selected in each group.
 	SELECT e.Name, e.EncryptedName, c.Id
-	FROM Operations e
+	FROM [expenses].Operations e
 	JOIN 
 	(
 		--	https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
 		SELECT MAX(e.ID) AS Id
-		FROM Operations e
+		FROM [expenses].Operations e
 		WHERE DataOwner = @DataOwner AND Income IS NOT NULL AND Income = 1
 			AND
 			(

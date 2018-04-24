@@ -1,14 +1,12 @@
-USE [ExpensesDev]
-GO
 
-/****** Object:  Table [dbo].[Languages]    Script Date: 01/15/2014 19:26:53 ******/
+/****** Object:  Table [expenses].[Languages]    Script Date: 01/15/2014 19:26:53 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[Languages](
+CREATE TABLE [expenses].[Languages](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Language] [nchar](20) NOT NULL,
  CONSTRAINT [PK_Languages] PRIMARY KEY CLUSTERED 

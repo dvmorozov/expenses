@@ -1,5 +1,5 @@
 
-DROP PROCEDURE GetControlStrings
+DROP PROCEDURE [expenses].GetControlStrings
 GO
 
 SET ANSI_NULLS ON
@@ -11,7 +11,7 @@ GO
 -- Create date: 08/01/2013
 -- Description:	evernote:///view/14501366/s132/04464e18-8439-4182-8b5a-bf3171762cc4/04464e18-8439-4182-8b5a-bf3171762cc4/
 -- =============================================
-CREATE PROCEDURE GetControlStrings 
+CREATE PROCEDURE [expenses].GetControlStrings 
 	@LangId INT = 0
 AS
 BEGIN
@@ -21,7 +21,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT RTRIM(ControlName) AS ControlName, RTRIM(Text) AS Text
-	FROM ControlStrings
+	FROM [expenses].ControlStrings
 	WHERE LanguageId = @LangId
 END
 GO

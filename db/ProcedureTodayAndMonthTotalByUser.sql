@@ -14,7 +14,7 @@ BEGIN
 	DECLARE @BudgetCurrency NCHAR(5)
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = DATEPART(year, @Today) AND Month = DATEPART(month, @Today) AND DataOwner = @DataOwner
 	)
 
@@ -28,7 +28,7 @@ BEGIN
 			(
 				--	https://www.evernote.com/shard/s132/nl/14501366/f53e1481-b9bc-47f7-a926-4b7011f1a1d9
 				SELECT TOP(1) SUM(Cost) AS SingleTotal
-				FROM Expenses
+				FROM [expenses].Expenses
 				WHERE DataOwner = @DataOwner AND 
 					(Monthly IS NULL OR Monthly = 0) AND
 					DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
@@ -51,7 +51,7 @@ BEGIN
 			(
 				--	https://www.evernote.com/shard/s132/nl/14501366/f53e1481-b9bc-47f7-a926-4b7011f1a1d9
 				SELECT TOP(1) SUM(Cost) AS MonthlyTotal
-				FROM Expenses
+				FROM [expenses].Expenses
 				WHERE DataOwner = @DataOwner
 					AND (Monthly IS NOT NULL AND Monthly = 1)
 					--	FirstMonth and LastMonth correspond to the first day of month.
@@ -88,7 +88,7 @@ BEGIN
 	DECLARE @BudgetCurrency NCHAR(5)
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = DATEPART(year, @Today) AND Month = DATEPART(month, @Today) AND DataOwner = @DataOwner
 	)
 
@@ -99,7 +99,7 @@ BEGIN
 	FROM
 	(
 		SELECT SUM(Cost) AS Total, Currency, COUNT(*) AS CurrencyCount
-		FROM Expenses
+		FROM [expenses].Expenses
 		WHERE DataOwner = @DataOwner AND 
 			(Monthly IS NULL OR Monthly = 0) AND
 			DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
@@ -129,7 +129,7 @@ BEGIN
 	FROM
 	(
 		SELECT SUM(Cost) AS Total, Currency, COUNT(*) AS CurrencyCount
-		FROM Expenses
+		FROM [expenses].Expenses
 		WHERE DataOwner = @DataOwner
 			AND (Monthly IS NOT NULL AND Monthly = 1)
 			--	FirstMonth and LastMonth correspond to the first day of month.
@@ -165,7 +165,7 @@ CREATE PROCEDURE [expenses].MonthTotalByUser3 @Today DATETIME, @DataOwner UNIQUE
 AS
 BEGIN
 	SELECT SUM(Cost) AS Total, Currency
-	FROM Expenses
+	FROM [expenses].Expenses
 	WHERE DataOwner = @DataOwner AND (
 		(
 			(Monthly IS NULL OR Monthly = 0) AND
@@ -205,7 +205,7 @@ BEGIN
 	DECLARE @BudgetCurrency NCHAR(5)
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
@@ -220,7 +220,7 @@ BEGIN
 			(
 				--	https://www.evernote.com/shard/s132/nl/14501366/f53e1481-b9bc-47f7-a926-4b7011f1a1d9
 				SELECT TOP(1) SUM(Cost) AS SingleTotal
-				FROM Expenses
+				FROM [expenses].Expenses
 				WHERE DataOwner = @DataOwner AND 
 					(Monthly IS NULL OR Monthly = 0) AND
 					DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
@@ -243,7 +243,7 @@ BEGIN
 			(
 				--	https://www.evernote.com/shard/s132/nl/14501366/f53e1481-b9bc-47f7-a926-4b7011f1a1d9
 				SELECT TOP(1) SUM(Cost) AS MonthlyTotal
-				FROM Expenses
+				FROM [expenses].Expenses
 				WHERE DataOwner = @DataOwner
 					AND (Monthly IS NOT NULL AND Monthly = 1)
 					AND DATEPART(DAY, Date) = DATEPART(DAY, @Today)
@@ -293,7 +293,7 @@ BEGIN
 	DECLARE @BudgetCurrency NCHAR(5)
 	SET @BudgetCurrency = (
 		SELECT TOP 1 Currency
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
@@ -306,7 +306,7 @@ BEGIN
 	FROM 
 	(
 		SELECT SUM(Cost) AS Total, Currency, COUNT(*) AS CurrencyCount
-		FROM Expenses
+		FROM [expenses].Expenses
 		WHERE DataOwner = @DataOwner AND 
 			(Monthly IS NULL OR Monthly = 0) AND
 			DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
@@ -345,7 +345,7 @@ BEGIN
 	FROM
 	(
 		SELECT SUM(Cost) AS Total, Currency, COUNT(*) AS CurrencyCount
-		FROM Expenses
+		FROM [expenses].Expenses
 		WHERE DataOwner = @DataOwner
 			AND (Monthly IS NOT NULL AND Monthly = 1)
 			AND DATEPART(DAY, Date) = DATEPART(DAY, @Today)

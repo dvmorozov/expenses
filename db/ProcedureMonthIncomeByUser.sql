@@ -4,7 +4,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE MonthIncomeByUser
+DROP PROCEDURE [expenses].MonthIncomeByUser
 GO
 
 -- =============================================
@@ -12,7 +12,7 @@ GO
 -- Create date: 06/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/e9be060a-5343-47e7-9441-65cbb5c80f60
 -- =============================================
-CREATE PROCEDURE MonthIncomeByUser @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].MonthIncomeByUser @Today DATETIME, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	DECLARE @Year INT
@@ -22,7 +22,7 @@ BEGIN
 	SET @Month = DATEPART(MONTH, @Today)
 
 	SELECT Income
-	FROM Month
+	FROM [expenses].Month
 	WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 END
 GO

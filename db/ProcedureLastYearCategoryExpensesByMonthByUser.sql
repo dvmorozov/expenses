@@ -1,8 +1,8 @@
 
-DROP PROCEDURE LastYearCategoryExpensesByMonthByUser
+DROP PROCEDURE [expenses].LastYearCategoryExpensesByMonthByUser
 GO
 
-CREATE PROCEDURE LastYearCategoryExpensesByMonthByUser @CategoryID INT, @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].LastYearCategoryExpensesByMonthByUser @CategoryID INT, @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	DECLARE @T TABLE (
@@ -12,17 +12,17 @@ BEGIN
 		Month NVARCHAR(10) NULL
 		)
 
-	INSERT INTO @T EXEC LastYearCategoryExpensesByMonthByUser2 @CategoryID, @LastMonthNumber, @DataOwner
+	INSERT INTO @T EXEC [expenses].LastYearCategoryExpensesByMonthByUser2 @CategoryID, @LastMonthNumber, @DataOwner
 
 	SELECT Y, M, Total
 	FROM @T
 END
 GO
 
-DROP PROCEDURE LastYearCategoryExpensesByMonthByUser2
+DROP PROCEDURE [expenses].LastYearCategoryExpensesByMonthByUser2
 GO
 
-CREATE PROCEDURE LastYearCategoryExpensesByMonthByUser2 @CategoryID INT, @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].LastYearCategoryExpensesByMonthByUser2 @CategoryID INT, @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	--	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
@@ -38,7 +38,7 @@ BEGIN
 					SUM(Cost) AS Total,
 					DATEPART(year, Date) AS Y, DATEPART(month, Date) AS M,
 					DATEFROMPARTS(DATEPART(year, Date), DATEPART(month, Date), 1) AS CurMonth
-				FROM Expenses e
+				FROM [expenses].Expenses e
 					JOIN ExpensesCategories ec
 					ON ec.ExpenseID = e.ID AND ec.CategoryID = @CategoryID
 				WHERE DataOwner = @DataOwner AND Monthly IS NULL OR Monthly = 0
@@ -46,7 +46,7 @@ BEGIN
 					--	Only given currency taken into account in calculating of the total.
 					AND (Currency = (
 							SELECT TOP 1 Currency
-							FROM Month
+							FROM [expenses].Month
 							WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
 						)
 					-- If not set the currency is considered as it is set for month.
@@ -54,7 +54,7 @@ BEGIN
 					-- If the budget currency is not set then all expenses are considered as given in the same currency.
 					OR (
 							SELECT TOP 1 Currency
-							FROM Month
+							FROM [expenses].Month
 							WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
 						) IS NULL)
 				GROUP BY DATEPART(year, Date), DATEPART(month, Date)
@@ -65,7 +65,7 @@ BEGIN
 		(
 			SELECT Cost, FirstMonth, LastMonth,
 				DATEPART(year, Date) AS Y, DATEPART(month, Date) AS M
-			FROM Expenses e
+			FROM [expenses].Expenses e
 				JOIN ExpensesCategories ec
 				ON ec.ExpenseID = e.ID AND ec.CategoryID = @CategoryID
 			WHERE DataOwner = @DataOwner AND Monthly IS NOT NULL AND Monthly = 1
@@ -73,7 +73,7 @@ BEGIN
 				--	Only given currency taken into account in calculating of the total.
 				AND (Currency = (
 						SELECT TOP 1 Currency
-						FROM Month
+						FROM [expenses].Month
 						WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
 					)
 				-- If not set the currency is considered as it is set for month.
@@ -81,7 +81,7 @@ BEGIN
 				-- If the budget currency is not set then all expenses are considered as given in the same currency.
 				OR (
 						SELECT TOP 1 Currency
-						FROM Month
+						FROM [expenses].Month
 						WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
 					) IS NULL)
 		) E2

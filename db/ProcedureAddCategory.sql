@@ -1,17 +1,18 @@
 
-DROP PROCEDURE AddCategoryByUser
+DROP PROCEDURE [expenses].AddCategoryByUser
 GO
 
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Author:		D.V.Morozov
 -- Create date: 19/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
 -- =============================================
-CREATE PROCEDURE AddCategoryByUser
+CREATE PROCEDURE [expenses].AddCategoryByUser
 	@Name NCHAR(100),
 	@Limit FLOAT,
 	@DataOwner UNIQUEIDENTIFIER,
@@ -27,18 +28,20 @@ BEGIN
 	--	https://www.evernote.com/shard/s132/nl/14501366/25896f00-ff68-4e71-af5e-736cee72fa43
 	IF @EncryptedName IS NOT NULL
 	BEGIN
-		SET @CategoryID = (SELECT TOP(1) ID FROM Categories WHERE EncryptedName = @EncryptedName AND DataOwner = @DataOwner)
+		SET @CategoryID = (SELECT TOP(1) ID 
+		FROM [expenses].Categories WHERE EncryptedName = @EncryptedName AND DataOwner = @DataOwner)
 	END
 	ELSE
 	BEGIN
-		SET @CategoryID = (SELECT TOP(1) ID FROM Categories WHERE Name = @Name AND DataOwner = @DataOwner)
+		SET @CategoryID = (SELECT TOP(1) ID 
+		FROM [expenses].Categories WHERE Name = @Name AND DataOwner = @DataOwner)
 	END
 
 	IF @CategoryID IS NULL
 	BEGIN
 		DECLARE @CategoryIDs TABLE (ID INT)
 	
-		INSERT INTO Categories (Name, Limit, DataOwner, EncryptedName)
+		INSERT INTO [expenses].Categories (Name, Limit, DataOwner, EncryptedName)
 		OUTPUT INSERTED.ID INTO @CategoryIDs
 		VALUES (@Name, @Limit, @DataOwner, @EncryptedName)
 	

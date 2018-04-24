@@ -4,7 +4,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE ResetMonthIncomeByUser
+DROP PROCEDURE [expenses].ResetMonthIncomeByUser
 GO
 
 -- =============================================
@@ -12,20 +12,20 @@ GO
 -- Create date: 07/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/e9be060a-5343-47e7-9441-65cbb5c80f60
 -- =============================================
-CREATE PROCEDURE ResetMonthIncomeByUser @Year INT, @Month INT, @Income MONEY, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].ResetMonthIncomeByUser @Year INT, @Month INT, @Income MONEY, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	DECLARE @ID INT
 	SET @ID = (
 		SELECT ID
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
 	IF @ID IS NOT NULL
 	BEGIN
 		--	Updates Income value.
-		UPDATE Month
+		UPDATE [expenses].Month
 		--  Resets income value.
 		SET Income = @Income
 		WHERE ID = @ID
@@ -33,7 +33,7 @@ BEGIN
 	ELSE
 	BEGIN
 		--	Inserts new Income value.
-		INSERT INTO Month (Income, Year, Month, DataOwner)
+		INSERT INTO [expenses].Month (Income, Year, Month, DataOwner)
 		VALUES (@Income, @Year, @Month, @DataOwner)
 	END
 END

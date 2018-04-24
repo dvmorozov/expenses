@@ -8,7 +8,7 @@
 ALTER TABLE Month ADD Currency NCHAR(5);
 GO
 
-/****** Object:  Table [dbo].[Month]    Script Date: 02.06.2015 21:43:37 ******/
+/****** Object:  Table [expenses].[Month]    Script Date: 02.06.2015 21:43:37 ******/
 /* https://www.evernote.com/shard/s132/nl/14501366/14e369f7-348f-4f68-aa65-6a5e7dda1da7 */
 
 SET ANSI_NULLS ON
@@ -17,10 +17,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP TABLE [dbo].[Month]
+DROP TABLE [expenses].[Month]
 GO
 
-CREATE TABLE [dbo].[Month](
+CREATE TABLE [expenses].[Month](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Budget] [money] NULL,
 	[Income] [money] NULL,

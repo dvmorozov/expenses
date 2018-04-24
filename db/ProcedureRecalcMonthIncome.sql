@@ -4,7 +4,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-DROP PROCEDURE RecalcMonthIncome
+DROP PROCEDURE [expenses].RecalcMonthIncome
 GO
 
 -- =============================================
@@ -13,12 +13,12 @@ GO
 -- Description:	https://vision.mindjet.com/action/task/14486189
 -- =============================================
 
-CREATE PROCEDURE RecalcMonthIncome @Year INT, @Month INT, @DataOwner UNIQUEIDENTIFIER
+CREATE PROCEDURE [expenses].RecalcMonthIncome @Year INT, @Month INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
 	DECLARE @Currency NCHAR(5)
 	SET @Currency = (
-		SELECT Currency FROM Month 
+		SELECT Currency FROM [expenses].Month 
 		WHERE Year = @Year AND Month = @Month 
 			AND DataOwner = @DataOwner
 		)
@@ -26,7 +26,7 @@ BEGIN
 	DECLARE @TotalIncome MONEY
 	SET @TotalIncome = (
 		SELECT TOP 1 SUM(Cost)
-		FROM Operations
+		FROM [expenses].Operations
 		WHERE 
 			Income IS NOT NULL AND Income = 1
 			AND DATEPART(year, Date) = @Year AND DATEPART(month, Date) = @Month
@@ -43,14 +43,14 @@ BEGIN
 	DECLARE @ID INT
 	SET @ID = (
 		SELECT ID
-		FROM Month
+		FROM [expenses].Month
 		WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
 	)
 
 	IF @ID IS NOT NULL
 	BEGIN
 		--	Updates Income value.
-		UPDATE Month
+		UPDATE [expenses].Month
 		SET Income = @TotalIncome
 		WHERE Year = @Year AND Month = @Month 
 			AND DataOwner = @DataOwner
@@ -58,7 +58,7 @@ BEGIN
 	ELSE
 	BEGIN
 		--	Inserts new Income value.
-		INSERT INTO Month (Income, Year, Month, DataOwner)
+		INSERT INTO [expenses].Month (Income, Year, Month, DataOwner)
 		VALUES (@TotalIncome, @Year, @Month, @DataOwner)
 	END
 END

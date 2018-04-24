@@ -1,7 +1,5 @@
-USE [ExpensesDev]
-GO
 
-/****** Object:  Table [dbo].[Categories]    Script Date: 04.11.2015 10:45:26 ******/
+/****** Object:  Table [expenses].[Categories]    Script Date: 04.11.2015 10:45:26 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,7 +9,7 @@ GO
 SET ANSI_PADDING ON
 GO
 
-CREATE TABLE [dbo].[Categories](
+CREATE TABLE [expenses].[Categories](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [char](100) NOT NULL,
 	[DataOwner] [uniqueidentifier] NOT NULL,

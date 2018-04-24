@@ -1,5 +1,5 @@
 
-DROP PROCEDURE UpdateExpenseByUser
+DROP PROCEDURE [expenses].UpdateExpenseByUser
 GO
 
 SET ANSI_NULLS ON
@@ -11,7 +11,7 @@ GO
 -- Create date: 22/06/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/5ea53405-2fc4-4166-a9e3-e918f3583785
 -- =============================================
-CREATE PROCEDURE UpdateExpenseByUser 
+CREATE PROCEDURE [expenses].UpdateExpenseByUser 
 	@ExpenseID INT,
 	@Name NCHAR(50),
 	@EncryptedName NVARCHAR(MAX),
@@ -23,19 +23,20 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	DECLARE @N NCHAR(50)
-	SET @N = (SELECT LTRIM(RTRIM(Name)) FROM Expenses WHERE ID = @ExpenseID AND DataOwner = @DataOwner AND EncryptedName IS NULL)
+	SET @N = (SELECT LTRIM(RTRIM(Name)) 
+	FROM [expenses].Expenses WHERE ID = @ExpenseID AND DataOwner = @DataOwner AND EncryptedName IS NULL)
 
 	--	Updates only one time.
 	IF @N IS NOT NULL AND @N <> ''
 	BEGIN
-		UPDATE Expenses
+		UPDATE [expenses].Expenses
 		SET Name = @Name, EncryptedName = @EncryptedName
 		WHERE Name = @N AND DataOwner = @DataOwner
 	END
 END
 GO
 
-DROP PROCEDURE UpdateExpenseByUser2
+DROP PROCEDURE [expenses].UpdateExpenseByUser2
 GO
 
 -- =============================================
@@ -43,7 +44,7 @@ GO
 -- Create date: 09/09/2015
 -- Description:	https://www.evernote.com/shard/s132/nl/14501366/adbb4c02-3975-460d-88f1-8a65312ca83f
 -- =============================================
-CREATE PROCEDURE UpdateExpenseByUser2
+CREATE PROCEDURE [expenses].UpdateExpenseByUser2
 	@ExpenseID INT,
 	@Date DATETIME, 
 	@Name NCHAR(50),
@@ -62,7 +63,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	UPDATE Expenses 
+	UPDATE [expenses].Expenses 
 	SET Date = @Date, Name = @Name, Cost = @Cost, Note = @Note, Monthly = @Monthly, FirstMonth = @FirstMonth, LastMonth = @LastMonth, EncryptedName = @EncryptedName, Currency = @Currency
 	WHERE ID = @ExpenseID AND DataOwner = @DataOwner
 END
