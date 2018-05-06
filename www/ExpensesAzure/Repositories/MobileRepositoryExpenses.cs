@@ -110,6 +110,21 @@ namespace SocialApps.Repositories
             }
         }
 
+        //  Null will cause an exception in adding.
+        //  https://www.evernote.com/shard/s132/nl/14501366/517ecc17-f01d-4856-b729-2330c22e4a1e
+        private string CheckName(string name, string encryptedName)
+        {
+            return (name == null || name.Trim() == string.Empty) ?
+                   (!string.IsNullOrEmpty(encryptedName) ? "password required" : null) : name;
+        }
+
+        //  All empty text fields must be set to NULL.
+        //  https://action.mindjet.com/task/14962990
+        private string CheckString(string p)
+        {
+            return (p == null || p.Trim() == string.Empty) ? null : p;
+        }
+
         public void AddExpense(DateTime date, string name, double amount, string note, bool? monthly, DateTime? firstMonth, DateTime? lastMonth, string encryptedName, string currency, short? rating, int? categoryId, short? importance, string project, Guid userId, bool? income = null)
         {
             using (var tran = _db.Database.BeginTransaction())
@@ -123,19 +138,20 @@ namespace SocialApps.Repositories
                         Date = date,
                         //  Null will cause an exception in adding.
                         //  https://www.evernote.com/shard/s132/nl/14501366/517ecc17-f01d-4856-b729-2330c22e4a1e
-                        Name = (name == null || name.Trim() == "") ?
-                               (!string.IsNullOrEmpty(encryptedName) ? "password required" : null) : name,
+                        Name = CheckName(name, encryptedName),
+                        //  All empty text fields must be set to NULL.
+                        //  https://action.mindjet.com/task/14962990
                         Cost = amount,
-                        Note = (note == null || note.Trim() == "") ? null : note,
+                        Note = CheckString(note),
                         DataOwner = userId,
                         Monthly = monthly,
                         FirstMonth = firstMonth,
                         LastMonth = lastMonth,
-                        EncryptedName = encryptedName,
-                        Currency = (currency == null || currency.Trim() == "") ? null : currency,
+                        EncryptedName = CheckString(encryptedName),
+                        Currency = CheckString(currency),
                         Rating = rating,
                         Importance = importance,
-                        Project = (project == null || project.Trim() == "") ? null : project,
+                        Project = CheckString(project),
                         Income = income
                     }
                 );
@@ -209,19 +225,21 @@ namespace SocialApps.Repositories
                 DeleteCachedExpenses(userId, categories.First().CategoryID);
 
             var expense = _db.Operations.First(t => t.ID == expenseId && t.DataOwner == userId);
+            //  All empty text fields must be set to NULL.
+            //  https://action.mindjet.com/task/14962990
             expense.Date = clientExpenseDate;
-            expense.Name = expenseName;
+            expense.Name = CheckName(expenseName, encryptedName);
             expense.Cost = amount;
-            expense.Note = note;
+            expense.Note = CheckString(note);
             expense.Monthly = monthly;
             expense.FirstMonth = firstMonth;
             expense.LastMonth = lastMonth;
-            expense.EncryptedName = encryptedName == string.Empty ? null : encryptedName;
-            expense.Currency = currency;
+            expense.EncryptedName = CheckString(encryptedName);
+            expense.Currency = CheckString(currency);
             expense.Rating = rating;
             expense.Importance = importance;
             //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
-            expense.Project = project;
+            expense.Project = CheckString(project);
             _db.SaveChanges();
 
             //  https://www.evernote.com/shard/s132/nl/14501366/eb75b683-fead-4822-9d38-17e50ab7de2f
@@ -270,7 +288,18 @@ namespace SocialApps.Repositories
 
             //  Must be outside LINQ expression.
             foreach (var e in expenses)
+            {
                 e.HasLinkedDocs = HasLinkedDocs(e.ID, userId);
+                // All empty string are converted to NULLs.
+                // https://action.mindjet.com/task/14962990
+                e.CategoryEncryptedName = CheckString(e.CategoryEncryptedName);
+                e.CategoryName = CheckString(e.CategoryName);
+                e.Currency = CheckString(e.Currency);
+                e.ExpenseEncryptedName = CheckString(e.ExpenseEncryptedName);
+                e.Name = CheckString(e.Name);
+                e.Note = CheckString(e.Note);
+                e.Project = CheckString(e.Project);
+            }
 
             return expenses;
         }
