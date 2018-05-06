@@ -99,20 +99,26 @@ BEGIN
 	FROM
 	(
 		SELECT SUM(Cost) AS Total, Currency, COUNT(*) AS CurrencyCount
-		FROM [expenses].Expenses
-		WHERE DataOwner = @DataOwner AND 
-			(Monthly IS NULL OR Monthly = 0) AND
-			DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
-			DATEPART(MONTH, Date) = DATEPART(MONTH, @Today)
-			--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-			--	Only given currency taken into account in calculating of the total.
-			AND (
-				Currency = @BudgetCurrency
-				-- If not set the currency form separate group.
-				OR Currency IS NULL
-				-- If the budget currency is not set then all expenses are summed (by groups).
-				OR @BudgetCurrency IS NULL
-			)
+		FROM
+		(
+			SELECT Cost,
+				CASE WHEN NOT Currency IS NULL AND LEN(TRIM(Currency)) = 0 
+				THEN NULL ELSE Currency END AS Currency
+			FROM [expenses].Expenses
+			WHERE DataOwner = @DataOwner AND 
+				(Monthly IS NULL OR Monthly = 0) AND
+				DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
+				DATEPART(MONTH, Date) = DATEPART(MONTH, @Today)
+				--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
+				--	Only given currency taken into account in calculating of the total.
+				AND (
+					Currency = @BudgetCurrency
+					-- If not set the currency form separate group.
+					OR Currency IS NULL
+					-- If the budget currency is not set then all expenses are summed (by groups).
+					OR @BudgetCurrency IS NULL
+				)
+		) T
 		--	https://action.mindjet.com/task/14672437
 		--	If a few records with different currencies are passed the filters above
 		--	then group them by currency and take only the first record (it's best what possibly to do).
@@ -129,15 +135,21 @@ BEGIN
 	FROM
 	(
 		SELECT SUM(Cost) AS Total, Currency, COUNT(*) AS CurrencyCount
-		FROM [expenses].Expenses
-		WHERE DataOwner = @DataOwner
-			AND (Monthly IS NOT NULL AND Monthly = 1)
-			--	FirstMonth and LastMonth correspond to the first day of month.
-			AND (@Today >= FirstMonth)
-			AND (@Today <= EOMONTH(LastMonth) OR LastMonth IS NULL)
-			--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-			--	Only given currency taken into account in calculating of the total.
-			AND (Currency = @Currency OR @Currency IS NULL)
+		FROM
+		(
+			SELECT Cost,
+				CASE WHEN NOT Currency IS NULL AND LEN(TRIM(Currency)) = 0 
+				THEN NULL ELSE Currency END AS Currency
+			FROM [expenses].Expenses
+			WHERE DataOwner = @DataOwner
+				AND (Monthly IS NOT NULL AND Monthly = 1)
+				--	FirstMonth and LastMonth correspond to the first day of month.
+				AND (@Today >= FirstMonth)
+				AND (@Today <= EOMONTH(LastMonth) OR LastMonth IS NULL)
+				--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
+				--	Only given currency taken into account in calculating of the total.
+				AND (Currency = @Currency OR @Currency IS NULL)
+		) T
 		--	If a few records with different currencies are passed the filters above
 		--	then group them by currency and take only the first record (it's best what possibly to do).
 		GROUP BY Currency
@@ -165,21 +177,27 @@ CREATE PROCEDURE [expenses].MonthTotalByUser3 @Today DATETIME, @DataOwner UNIQUE
 AS
 BEGIN
 	SELECT SUM(Cost) AS Total, Currency
-	FROM [expenses].Expenses
-	WHERE DataOwner = @DataOwner AND (
-		(
-			(Monthly IS NULL OR Monthly = 0) AND
-			DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
-			DATEPART(MONTH, Date) = DATEPART(MONTH, @Today)
+	FROM
+	(
+		SELECT Cost,
+			CASE WHEN NOT Currency IS NULL AND LEN(TRIM(Currency)) = 0 
+			THEN NULL ELSE Currency END AS Currency
+		FROM [expenses].Expenses
+		WHERE DataOwner = @DataOwner AND (
+			(
+				(Monthly IS NULL OR Monthly = 0) AND
+				DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
+				DATEPART(MONTH, Date) = DATEPART(MONTH, @Today)
+			)
+			OR
+			(
+				(Monthly IS NOT NULL AND Monthly = 1) AND 
+				--	FirstMonth and LastMonth correspond to the first day of month.
+				(@Today >= FirstMonth) AND 
+				(@Today <= EOMONTH(LastMonth) OR LastMonth IS NULL)
+			)
 		)
-		OR
-		(
-			(Monthly IS NOT NULL AND Monthly = 1) AND 
-			--	FirstMonth and LastMonth correspond to the first day of month.
-			(@Today >= FirstMonth) AND 
-			(@Today <= EOMONTH(LastMonth) OR LastMonth IS NULL)
-		)
-	)
+	) T
 	GROUP BY Currency
 END
 GO
@@ -306,28 +324,27 @@ BEGIN
 	FROM 
 	(
 		SELECT SUM(Cost) AS Total, Currency, COUNT(*) AS CurrencyCount
-		FROM [expenses].Expenses
-		WHERE DataOwner = @DataOwner AND 
-			(Monthly IS NULL OR Monthly = 0) AND
-			DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
-			DATEPART(MONTH, Date) = DATEPART(MONTH, @Today) AND
-			DATEPART(DAY, Date) = DATEPART(DAY, @Today)
-			--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-			AND (Currency = @BudgetCurrency
-				-- If not set the currency is considered as it is set for month.
-				OR Currency IS NULL
-				-- If the budget currency is not set then all expenses are considered as given in the same currency.
-				OR @BudgetCurrency IS NULL
-			)
-			--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-			--	Only given currency taken into account in calculating of the total.
-			AND (Currency = @BudgetCurrency
-				--	https://www.evernote.com/shard/s132/nl/14501366/7fce5a39-55fc-4419-a2af-6178d77af840
-				-- If not set the currency form separate group.
-				OR Currency IS NULL
-				-- If the budget currency is not set then all expenses are summed (by groups).
-				OR @BudgetCurrency IS NULL
-			)
+		FROM
+		(
+			SELECT Cost, 
+				CASE WHEN NOT Currency IS NULL AND LEN(TRIM(Currency)) = 0 
+				THEN NULL ELSE Currency END AS Currency
+			FROM [expenses].Expenses
+			WHERE DataOwner = @DataOwner AND 
+				(Monthly IS NULL OR Monthly = 0) AND
+				DATEPART(YEAR, Date) = DATEPART(YEAR, @Today) AND 
+				DATEPART(MONTH, Date) = DATEPART(MONTH, @Today) AND
+				DATEPART(DAY, Date) = DATEPART(DAY, @Today)
+				--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
+				--	Only given currency taken into account in calculating of the total.
+				AND (Currency = @BudgetCurrency
+					--	https://www.evernote.com/shard/s132/nl/14501366/7fce5a39-55fc-4419-a2af-6178d77af840
+					-- If not set the currency form separate group.
+					OR Currency IS NULL
+					-- If the budget currency is not set then all expenses are summed (by groups).
+					OR @BudgetCurrency IS NULL
+				)
+		) T
 		--	https://action.mindjet.com/task/14672437
 		--	If a few records with different currencies are passed the filters above
 		--	then group them by currency and take only the first record (it's best what possibly to do).
@@ -345,15 +362,21 @@ BEGIN
 	FROM
 	(
 		SELECT SUM(Cost) AS Total, Currency, COUNT(*) AS CurrencyCount
-		FROM [expenses].Expenses
-		WHERE DataOwner = @DataOwner
-			AND (Monthly IS NOT NULL AND Monthly = 1)
-			AND DATEPART(DAY, Date) = DATEPART(DAY, @Today)
-			--	FirstMonth and LastMonth correspond to the first day of month.
-			AND (@Today >= FirstMonth)
-			AND (@Today <= EOMONTH(LastMonth) OR LastMonth IS NULL)
-			--	Only currency for non-repeated expenses is taken into account.
-			AND (Currency = @TodayCurrency OR @TodayCurrency IS NULL)
+		FROM
+		(
+			SELECT Cost, 
+				CASE WHEN NOT Currency IS NULL AND LEN(TRIM(Currency)) = 0 
+				THEN NULL ELSE Currency END AS Currency
+			FROM [expenses].Expenses
+			WHERE DataOwner = @DataOwner
+				AND (Monthly IS NOT NULL AND Monthly = 1)
+				AND DATEPART(DAY, Date) = DATEPART(DAY, @Today)
+				--	FirstMonth and LastMonth correspond to the first day of month.
+				AND (@Today >= FirstMonth)
+				AND (@Today <= EOMONTH(LastMonth) OR LastMonth IS NULL)
+				--	Only currency for non-repeated expenses is taken into account.
+				AND (Currency = @TodayCurrency OR @TodayCurrency IS NULL)
+		) T
 		--	If a few records with different currencies are passed the filters above
 		--	then group them by currency and take only the first record (it's best what possibly to do).
 		GROUP BY Currency
