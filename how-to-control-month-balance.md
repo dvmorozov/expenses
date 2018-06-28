@@ -3,4 +3,4 @@ To get correct reports you must setup month income. Use the "Setup" button to se
 
 ![The month income form with total expenses and balance](https://dvmorozov.github.io/expenses/assets/images/2015-07-05_09h56_00.png)
 
-[Budget management](https://dvmorozov.github.io/expenses/how-to-control-month-budget)
+[Budget management](https://dvmorozov.github.io/expenses/budget-management)
