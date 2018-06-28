@@ -32,4 +32,6 @@ layout: default
 
 ## More info
 
+[Budget management](https://dvmorozov.github.io/expenses/budget-management)
+
 You can find on my [blog](http://scanposts.azurewebsites.net/)
