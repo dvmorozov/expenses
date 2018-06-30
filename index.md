@@ -34,4 +34,6 @@ layout: default
 
 [Budget management](https://dvmorozov.github.io/expenses/budget-management)
 
+[Expense reporting](https://dvmorozov.github.io/expenses/expense-reporting)
+
 You can find on my [blog](http://scanposts.azurewebsites.net/)
