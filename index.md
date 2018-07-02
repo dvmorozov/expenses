@@ -36,4 +36,6 @@ layout: default
 
 [Expense reporting](https://dvmorozov.github.io/expenses/expense-reporting)
 
+[Expense tracking](https://dvmorozov.github.io/expenses/expense-tracking)
+
 You can find on my [blog](http://scanposts.azurewebsites.net/)
