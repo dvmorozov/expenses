@@ -4,7 +4,7 @@ In the main menu select "New expense" and then select the category. If you don't
 
 ![Add new expense category](https://dvmorozov.github.io/expenses/assets/images/2015-09-19_11h59_09.png)
 
-Type category name and, optionally, category month budget.
+Type the category name and optionally category month budget.
 
 After that select expenses from list or add new expense.
 
