@@ -43,5 +43,3 @@ layout: default
 [Client-side data encryption.](https://dvmorozov.github.io/expenses/client-side-data-encryption)
 
 {% include google_ads.html %}
-
-{% include donate.html %}
