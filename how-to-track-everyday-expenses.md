@@ -1,3 +1,7 @@
+---
+layout: default
+--- 
+
 > In the main menu select "New expense" and then select the category. If you don't have any categories yet, press "plus" button at the top of page. 
 
 ## Creating new expense category
