@@ -20,8 +20,6 @@ layout: default
 
 > The application now supports German, French, Spanish, Portugese, Russian.
 
-{% include google_ads.html %}
-
 ## News
 
 {% include twitter.html %}
@@ -43,3 +41,5 @@ layout: default
 [Use different currencies of expenses during the trip.](https://dvmorozov.github.io/expenses/how-to-track-multicurrency-expenses)
 
 [Client-side data encryption.](https://dvmorozov.github.io/expenses/client-side-data-encryption)
+
+{% include google_ads.html %}
