@@ -1,3 +1,7 @@
+---
+layout: default
+--- 
+
 > At this page you can see the report on 10 biggest expense categories for current month. Click "Reports" in the main menu, then "Top 10 Categories".
 
 > The chart shows absolute total values versus category number from the list. You have a choice between pie or bar chart.
