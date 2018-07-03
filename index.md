@@ -38,7 +38,7 @@ layout: default
 
 [Organize your expenses into a few custom categories and get reports for days, months and even years.](https://dvmorozov.github.io/expenses/expense-tracking)
 
-[Upload bills, receipts or any other documents and link them with the expense. Review or download it at any time from any device.](https://dvmorozov.github.io/expenses/uploading-expense-documents)
+[Upload bills, receipts or any other documents and link them with the expense. Review or download it at any time from any device.](https://dvmorozov.github.io/expenses/how-to-associate-bills-and-receipts-with-expense)
 
 [Use different currencies of expenses during the trip.](https://dvmorozov.github.io/expenses/how-to-track-multicurrency-expenses)
 
