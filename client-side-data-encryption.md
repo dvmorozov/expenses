@@ -1,3 +1,6 @@
+---
+layout: default
+---
 > Client-side data encrypting means that your data are encrypted in your browser before sending to the cloud. 
 This guaranteed that your data exist as plain text only until you close the application page in your browser. 
 The password never transmitted to the server and we never ask it. This means that you need to enter your password 
