@@ -1,3 +1,7 @@
+---
+layout: default
+--- 
+
 > To setup budget for category press the button to the left of name in the category list. 
 
 ![The budget setup form for category](https://dvmorozov.github.io/expenses/assets/images/2015-07-05_10h13_10.png)
