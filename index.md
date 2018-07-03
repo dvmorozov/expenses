@@ -42,4 +42,4 @@ layout: default
 
 > [Use different currencies of expenses during the trip.](https://dvmorozov.github.io/expenses/how-to-track-multicurrency-expenses)
 
-> [Client-side data encryption.](https://dvmorozov.github.io/expenses/cleint-side-data-encryption)
+> [Client-side data encryption.](https://dvmorozov.github.io/expenses/client-side-data-encryption)
