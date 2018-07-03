@@ -18,3 +18,5 @@ statistics, totals, estimations and so on.
 {% include video_encrypting.html %}
 
 [How to protect expenses by encryption.](https://dvmorozov.github.io/expenses/how-to-protect-expenses-by-encryption)
+
+{% include google_ads.html %}
