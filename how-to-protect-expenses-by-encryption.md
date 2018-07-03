@@ -1,3 +1,7 @@
+---
+layout: default
+--- 
+
 > Just after you open the application in browser the encryption is disabled. The indicator at the upper left corner shows this by yellow.
 
 ![Status indicator shows that data aren't decrypted/encrypted by yellow](https://dvmorozov.github.io/expenses/assets/images/2015-07-03_10h48_58.png)
