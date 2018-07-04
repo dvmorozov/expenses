@@ -250,6 +250,10 @@ namespace SocialApps.Repositories
         {
             //  For this application it's more convenient to order the list in reverse cost order.
             //  https://www.evernote.com/shard/s132/nl/14501366/49348fc0-3dc6-45cb-8425-6fe72042eac2
+            //  Separate variable is necessary to avoid the error "LINQ to Entities does not recognize 
+            //  the method 'System.DateTime AddMonths(Int32)' method, and this method cannot be translated 
+            //  into a store expression".
+            var dateLast = date.AddMonths(-1);
             List<TodayExpense> expenses =
                 (from exp in _db.Expenses
                  join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
@@ -262,9 +266,12 @@ namespace SocialApps.Repositories
                      // Repeatable expense.
                      ((exp.Monthly != null && (bool)exp.Monthly) &&
                         exp.Date.Day == date.Day &&
-                        //  FirstMonth, Last month are optional.
-                        (exp.FirstMonth == null || date.Month >= ((DateTime)exp.FirstMonth).Month) && 
-                        (exp.LastMonth == null || date.Month <= ((DateTime)exp.LastMonth).Month))
+                        //  FirstMonth, LastMonth are optional.
+                        //  FirstMonth, LastMonth are defined as date of the first day.
+                        (exp.FirstMonth == null || date >= (DateTime)exp.FirstMonth) &&
+                        //  Compare with the first day of next month.
+                        //  https://action.mindjet.com/task/15101539
+                        (exp.LastMonth == null || dateLast < (DateTime)exp.LastMonth))
                  )
                  orderby cat.ID, exp.Currency, exp.Cost descending
                  select new TodayExpense
