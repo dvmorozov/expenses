@@ -132,10 +132,24 @@ namespace SocialApps.Repositories
             //  https://vision.mindjet.com/action/task/14485587
             //  https://action.mindjet.com/task/14665340
             //  https://action.mindjet.com/task/14915101
+            var dateLast = date.AddMonths(-1);
             var expenses =
                (from exp in _db.Operations
                 where (exp.DataOwner == userId) && (exp.Income != null) && ((bool)exp.Income) && 
-                      (exp.Date.Year == date.Year) && (exp.Date.Month == date.Month)
+                (
+                      // Unrepeatable income.
+                      ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                      exp.Date.Month == date.Month && exp.Date.Year == date.Year)) ||
+                      // https://github.com/dvmorozov/expenses/issues/3
+                      // Repeatable income.
+                      (((exp.Monthly != null && (bool)exp.Monthly) &&
+                          exp.Date.Day == date.Day &&
+                          //  FirstMonth, LastMonth are optional.
+                          //  FirstMonth, LastMonth are defined as date of the first day.
+                          (exp.FirstMonth == null || date >= (DateTime)exp.FirstMonth) &&
+                          //  Compare with the first day of next month.
+                          (exp.LastMonth == null || dateLast < (DateTime)exp.LastMonth))
+                )
                 orderby exp.Currency
                 select new TodayExpense
                 {
