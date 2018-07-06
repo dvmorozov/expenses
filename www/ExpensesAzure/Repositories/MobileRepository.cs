@@ -109,13 +109,16 @@ namespace SocialApps.Repositories
                      Currency = g.FirstOrDefault().Currency
                  }).ToList();
 
+            //  Left outer join is implemented.
+            //  https://github.com/dvmorozov/expenses/issues/5
             var result = 
                 (from income in incomes
-                join expense in expenses on income.Currency equals expense.Currency
+                join expense in expenses on income.Currency equals expense.Currency into g
+                from item in g.DefaultIfEmpty()
                 select new MonthBalance
                 {
                     Currency = income.Currency,
-                    SumExpenses = expense.Sum,
+                    SumExpenses = item?.Sum ?? 0,
                     SumIncomes = income.Sum
                 }).ToArray();
 
