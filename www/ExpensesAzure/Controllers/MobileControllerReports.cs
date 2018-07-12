@@ -34,7 +34,12 @@ namespace SocialApps.Controllers
         private CurrencyGroup[] GetCurrencyGroups(List<EstimatedTop10CategoriesForMonthByUser3_Result> allItems)
         {
             return allItems.GroupBy(t => new { GroupId = (int)t.GROUPID1 })
-                .Select(t => new CurrencyGroup { GroupId = t.Key.GroupId, Currency = t.First().Currency.Trim() }).ToArray();
+                .Select(t => new CurrencyGroup {
+                    GroupId = t.Key.GroupId,
+                    //  https://github.com/dvmorozov/expenses/issues/8
+                    //  Currency can be not assigned.
+                    Currency = t.First().Currency != null ? t.First().Currency.Trim() : ""
+                }).ToArray();
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
@@ -110,7 +115,9 @@ namespace SocialApps.Controllers
                 var monthTotalsWithCurrencies = (MonthTotalByUser3_Result[])Session["MonthTotalsWithCurrencies"];
                 var groupCurrency = groupIds.Where(t => t.GroupId == currencyGroupId).First().Currency.Trim();
                 //  Select month total for given currency.
-                var monthTotal = (double)monthTotalsWithCurrencies.Where(t => t.Currency.Trim() == groupCurrency).First().Total;
+                //  https://github.com/dvmorozov/expenses/issues/8
+                //  Currency can be not assigned.
+                var monthTotal = (double)monthTotalsWithCurrencies.Where(t => (t.Currency != null ? t.Currency.Trim() : "") == groupCurrency).First().Total;
                 //  Check that the residue is positive.
                 var residue = Math.Floor(monthTotal) - Math.Floor(top10Total);
                 Debug.Assert(residue >= 0);
