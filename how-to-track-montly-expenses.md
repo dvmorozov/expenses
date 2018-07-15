@@ -8,6 +8,10 @@ layout: default
 
 ![Adding repetitive expense](https://dvmorozov.github.io/expenses/assets/images/2015-07-05_09h33_05.png)
 
+## Look how it works
+
+{% include video_encrypting.html %}
+
 ## How to change monthly expenses
 
 > First of all you must finish currently active monthly expense. To do that open the expense for editing, uncheck the flag "Forever" and select the last month up to which the expense is active. Then you must create new expense from the next month with desired value end duration.
