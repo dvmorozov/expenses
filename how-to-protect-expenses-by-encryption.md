@@ -26,4 +26,8 @@ layout: default
 
 [Client-side data encryption](https://dvmorozov.github.io/expenses/client-side-data-encryption)
 
+## How to encrypt existing categories
+
+{% include video_encrypt_existing_categories.html %}
+
 {% include google_ads.html %}
