@@ -10,7 +10,7 @@ layout: default
 
 ## Look how it works
 
-{% include video_encrypting.html %}
+{% include video_monthly_expenses.html %}
 
 ## How to change monthly expenses
 
