@@ -24,10 +24,10 @@ layout: default
 
 > In principle you can use different passwords for different parts of data but in any time only one password is used. At any moment you see only the part of data which current password unlocks. You are responsible for remembering and keeping in secret the information about which part of data are encrypted by which password.
 
-[Client-side data encryption](https://dvmorozov.github.io/expenses/client-side-data-encryption)
-
 ## How to encrypt existing categories
 
 {% include video_encrypt_existing_categories.html %}
+
+[Client-side data encryption](https://dvmorozov.github.io/expenses/client-side-data-encryption)
 
 {% include google_ads.html %}
