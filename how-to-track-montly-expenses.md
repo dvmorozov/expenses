@@ -4,7 +4,7 @@ layout: default
 
 > There are expenses which are repeated every month. For example, mortgage or loan payments, rents or service tariffs. You can add these expenses only once and they will be taken into account and included into reports every month until termination. 
 
-> For adding repetitive expense you will need to setup the first and the last months and set the "Monthly" flag. If the last month is undefined set the "Forever" flag. You can setup it at any time later. The expence will be associated with current selected date. You will see it in all reports including given month interval.
+> For adding repetitive expense you will need to setup the first and the last months and set the "Monthly" flag. If the last month is undefined set the "Forever" flag. You can setup it at any time later.  You will see it in all reports including those for the current month.
 
 ![Adding repetitive expense](https://dvmorozov.github.io/expenses/assets/images/2015-07-05_09h33_05.png)
 
