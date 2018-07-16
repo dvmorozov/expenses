@@ -16,7 +16,7 @@ layout: default
 
 {% include application.html %}
 
-> You can also use it directly from [your Facebook account](https://apps.facebook.com/xpenses).
+> You can also use it directly from your [Facebook](https://apps.facebook.com/xpenses) account.
 
 > The application now supports German, French, Spanish, Portugese, Russian.
 
@@ -30,16 +30,20 @@ layout: default
 
 ## More info
 
-[Set up month budget for any category and get warning beforehand when predicted total expense exceeds desired budget.](https://dvmorozov.github.io/expenses/budget-management)
+[Set up month budget for any category and get warning beforehand when predicted total expense exceeds desired budget](https://dvmorozov.github.io/expenses/budget-management)
 
-[Discover top 10 most expensive categories for month, review list of expenses for any given day and get reports on dynamic of expenses either overall or by category.](https://dvmorozov.github.io/expenses/expense-reporting)
+[Discover top 10 most expensive categories for month, review list of expenses for any given day and get reports on dynamic of expenses either overall or by category](https://dvmorozov.github.io/expenses/expense-reporting)
 
-[Organize your expenses into a few custom categories and get reports for days, months and even years.](https://dvmorozov.github.io/expenses/expense-tracking)
+[Organize your expenses into a few custom categories and get reports for days, months and even years](https://dvmorozov.github.io/expenses/expense-tracking)
 
-[Upload bills, receipts or any other documents and link them with the expense. Review or download it at any time from any device.](https://dvmorozov.github.io/expenses/how-to-associate-bills-and-receipts-with-expense)
+[Upload bills, receipts or any other documents and link them with the expense. Review or download it at any time from any device](https://dvmorozov.github.io/expenses/how-to-associate-bills-and-receipts-with-expense)
 
-[Use different currencies of expenses during the trip.](https://dvmorozov.github.io/expenses/how-to-track-multicurrency-expenses)
+[Use different currencies of expenses during the trip](https://dvmorozov.github.io/expenses/how-to-track-multicurrency-expenses)
 
-[Client-side data encryption.](https://dvmorozov.github.io/expenses/client-side-data-encryption)
+[Client-side data encryption](https://dvmorozov.github.io/expenses/client-side-data-encryption)
 
 {% include google_ads.html %}
+
+## Blog
+
+[rationalcity.wordpress.com](https://rationalcity.wordpress.com)
