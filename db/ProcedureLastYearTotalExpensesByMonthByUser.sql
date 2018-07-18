@@ -6,8 +6,9 @@ CREATE PROCEDURE [expenses].LastYearTotalExpensesByMonthByUser @LastMonthNumber 
 AS
 BEGIN
 	DECLARE @T TABLE (
-		Y INT NOT NULL, 
-		M INT NOT NULL,
+		--	Must allow NULLs. https://github.com/dvmorozov/expenses/issues/16
+		Y INT, 
+		M INT,
 		Total FLOAT NOT NULL, 
 		Month NVARCHAR(10) NULL
 		)
@@ -22,6 +23,11 @@ GO
 DROP PROCEDURE [expenses].LastYearTotalExpensesByMonthByUser2
 GO
 
+-- ==========================================================================================
+-- Author:		D.V.Morozov
+-- Last modified: 18/07/2018
+-- Description:	Additionally to LastYearTotalExpensesByMonthByUser returns Month as text.
+-- ==========================================================================================
 CREATE PROCEDURE [expenses].LastYearTotalExpensesByMonthByUser2 @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
