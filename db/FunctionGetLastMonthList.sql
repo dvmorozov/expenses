@@ -27,7 +27,6 @@ RETURNS
 )
 AS
 BEGIN
-	-- Fill the table variable with the rows for your result set
 	DECLARE @Now DATE = GETDATE()
 	WHILE @LastMonthNumber > 0
 	BEGIN
