@@ -171,7 +171,7 @@ namespace SocialApps.Controllers
                 var myChart = RenderTrendChart(res, width, height, (int)Session["LastMonthNumber"]);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
-            catch
+            catch (Exception e)
             {
                 return File(Url.Content("~/Content/failure.png"), System.Net.Mime.MediaTypeNames.Application.Octet);
             }
@@ -288,7 +288,7 @@ namespace SocialApps.Controllers
                 var myChart = RenderImportanceChart(res, width, height, (int)Session["Top10Year"], (int)Session["Top10Month"], pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
-            catch
+            catch (Exception e)
             {
                 return File(Url.Content("~/Content/failure.png"), System.Net.Mime.MediaTypeNames.Application.Octet);
             }
