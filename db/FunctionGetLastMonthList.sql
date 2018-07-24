@@ -63,15 +63,21 @@ RETURNS
 )
 AS
 BEGIN
+	-- Using intermediate table variable dramatically increases performance.
+	-- https://github.com/dvmorozov/expenses/issues/25
+	DECLARE @Currencies TABLE
+	(
+		Currency NCHAR(5)
+	)
+	INSERT INTO @Currencies
+	SELECT DISTINCT Currency
+	FROM [expenses].Expenses
+	WHERE DataOwner = @DataOwner
+
 	INSERT INTO @Result
 		SELECT *
 		FROM [expenses].GetLastMonthList(@LastMonthNumber)
-		CROSS JOIN
-		(
-			SELECT DISTINCT Currency
-			FROM [expenses].Expenses
-			WHERE DataOwner = @DataOwner
-		) C
+		CROSS JOIN @Currencies
 	RETURN
 END
 GO

@@ -58,18 +58,24 @@ BEGIN
 			SELECT 
 				Year AS Y, Month AS M, 
 				E1.Currency, 
-				SUM(Cost) AS SingleTotal
+				SingleTotal
 			FROM [expenses].GetLastMonthListWithCurrencies(@LastMonthNumber, @DataOwner) E1
 			LEFT OUTER JOIN
 			(
-				SELECT Cost, Currency, Date
+				--	Grouping inside nested select statement should increase performance.
+				--	https://github.com/dvmorozov/expenses/issues/25
+				SELECT 
+					SUM(Cost) AS SingleTotal, 
+					Currency, 
+					DATEPART(year, Date) AS Y,
+					DATEPART(month, Date) AS M
 				FROM [expenses].Expenses
 				WHERE DataOwner = @DataOwner AND (Monthly IS NULL OR Monthly = 0)
+				GROUP BY DATEPART(year, Date), DATEPART(month, Date), Currency
 			) E2
-			ON Year = DATEPART(year, E2.Date) 
-				AND Month = DATEPART(month, E2.Date) 
-				AND (E1.Currency = E2.Currency)
-			GROUP BY Year, Month, E1.Currency
+			ON E1.Year = E2.Y 
+				AND E1.Month = E2.M
+				AND E1.Currency = E2.Currency
 		) E1
 		FULL OUTER JOIN
 		(
