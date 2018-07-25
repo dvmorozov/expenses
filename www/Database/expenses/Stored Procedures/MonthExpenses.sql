@@ -1,0 +1,1 @@
+﻿create procedure [expenses].MonthExpenses @Year int, @Month int as select sum(Cost) as Total from Expenses where datepart(year, Date)=@Year and datepart(month, Date)=@Month

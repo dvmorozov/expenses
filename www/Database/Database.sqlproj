@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{bc8e7f57-c5cc-4da3-923e-18ce764a8252}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Database</RootNamespace>
+    <AssemblyName>Database</AssemblyName>
+    <ModelCollation>1049,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>Cyrillic_General_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="expenses\" />
+    <Folder Include="expenses\Tables\" />
+    <Folder Include="expenses\Views\" />
+    <Folder Include="expenses\Functions\" />
+    <Folder Include="expenses\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="expenses\Tables\Categories.sql" />
+    <Build Include="expenses\Tables\CategoriesOwnership.sql" />
+    <Build Include="expenses\Tables\Controls.sql" />
+    <Build Include="expenses\Tables\Exchange.sql" />
+    <Build Include="expenses\Tables\Operations.sql" />
+    <Build Include="expenses\Tables\ExpensesCategories.sql" />
+    <Build Include="expenses\Tables\Languages.sql" />
+    <Build Include="expenses\Tables\Strings.sql" />
+    <Build Include="expenses\Tables\Contacts.sql" />
+    <Build Include="expenses\Tables\Links.sql" />
+    <Build Include="expenses\Tables\ExpensesLinks.sql" />
+    <Build Include="expenses\Tables\Month.sql" />
+    <Build Include="expenses\Views\Expenses.sql" />
+    <Build Include="expenses\Views\ExpenseNamesWithCategory.sql" />
+    <Build Include="expenses\Views\ExpenseNames.sql" />
+    <Build Include="expenses\Views\ControlStrings.sql" />
+    <Build Include="expenses\Views\Chronological.sql" />
+    <Build Include="expenses\Functions\GetLastYearTotalExpensesByMonthByUser.sql" />
+    <Build Include="expenses\Functions\GetLastMonthList.sql" />
+    <Build Include="expenses\Functions\GetLastMonthListWithCurrencies.sql" />
+    <Build Include="expenses\Stored Procedures\TodayExpenses.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\TodayExpensesByUser3.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\TodayExpensesSumsByUser.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\GetExpenseNamesWithCategory.sql" />
+    <Build Include="expenses\Stored Procedures\TodayExpensesByUser2.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\TodayExpensesByUser.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\GetCategoryNames.sql" />
+    <Build Include="expenses\Stored Procedures\Top10CategoriesForMonthByUser2.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\Top10CategoriesForMonthByUser.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\UpdateCategoryByUser.sql" />
+    <Build Include="expenses\Stored Procedures\UpdateExpenseByUser.sql" />
+    <Build Include="expenses\Stored Procedures\UpdateExpenseByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\MonthTotalByUser.sql" />
+    <Build Include="expenses\Stored Procedures\MonthTotalByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\MonthTotalByUser3.sql" />
+    <Build Include="expenses\Stored Procedures\TodayAndMonthTotalByUser.sql" />
+    <Build Include="expenses\Stored Procedures\TodayAndMonthTotalByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\LastYearTotalExpensesByMonthByUser.sql" />
+    <Build Include="expenses\Stored Procedures\LastYearTotalExpensesByMonthByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\TodayExpenses2.sql" />
+    <Build Include="expenses\Stored Procedures\Top10CategoriesForMonth.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\MonthExpenses.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="expenses\Stored Procedures\LastYearBalanceByMonthByUser.sql" />
+    <Build Include="expenses\Stored Procedures\TodayTotal.sql" />
+    <Build Include="expenses\Stored Procedures\TodayTotal2.sql" />
+    <Build Include="expenses\Stored Procedures\AddExpense.sql" />
+    <Build Include="expenses\Stored Procedures\AddExpenseByUser.sql" />
+    <Build Include="expenses\Stored Procedures\AddExpenseByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\AddExpenseByUser3.sql" />
+    <Build Include="expenses\Stored Procedures\AddExpenseByUser4.sql" />
+    <Build Include="expenses\Stored Procedures\AddCategoryByUser.sql" />
+    <Build Include="expenses\Stored Procedures\AddMonthBudgetByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\AddMonthBudgetByUser.sql" />
+    <Build Include="expenses\Stored Procedures\AddMonthIncomeByUser.sql" />
+    <Build Include="expenses\Stored Procedures\DeleteExpenseByUser.sql" />
+    <Build Include="expenses\Stored Procedures\DeleteOperationByUser.sql" />
+    <Build Include="expenses\Stored Procedures\EstimatedCategoriesByUser3.sql" />
+    <Build Include="expenses\Stored Procedures\EstimatedCategoriesByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\EstimatedCategoriesByUser.sql" />
+    <Build Include="expenses\Stored Procedures\EstimatedTop10CategoriesForMonthByUser3.sql" />
+    <Build Include="expenses\Stored Procedures\EstimatedTop10CategoriesForMonthByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\EstimatedTop10CategoriesForMonthByUser.sql" />
+    <Build Include="expenses\Stored Procedures\ExpensesByCategoryForMonthByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\ExpensesByCategoryForMonthByUser.sql" />
+    <Build Include="expenses\Stored Procedures\GetCategoryNamesByUser.sql" />
+    <Build Include="expenses\Stored Procedures\GetCategoryNamesByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\GetControlStrings.sql" />
+    <Build Include="expenses\Stored Procedures\GetExpenseNames.sql" />
+    <Build Include="expenses\Stored Procedures\GetExpenseNamesByUser.sql" />
+    <Build Include="expenses\Stored Procedures\GetExpenseNamesWithCategoryByUser.sql" />
+    <Build Include="expenses\Stored Procedures\GetExpenseNamesWithCategoryByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\GetExpenseNamesWithCategoryByUser3.sql" />
+    <Build Include="expenses\Stored Procedures\GetExpenseNamesWithCategoryByUser4.sql" />
+    <Build Include="expenses\Stored Procedures\GetExpenseNamesWithCategoryByUser5.sql" />
+    <Build Include="expenses\Stored Procedures\GetIncomeNamesByUser.sql" />
+    <Build Include="expenses\Stored Procedures\IncomsForMonthByUser.sql" />
+    <Build Include="expenses\Stored Procedures\LastYearTotalExpensesByMonth.sql" />
+    <Build Include="expenses\Stored Procedures\IncomsForMonthByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\IncomsForMonthByUser3.sql" />
+    <Build Include="expenses\Stored Procedures\LastYearCategoryExpensesByMonthByUser.sql" />
+    <Build Include="expenses\Stored Procedures\LastYearCategoryExpensesByMonthByUser2.sql" />
+    <Build Include="expenses\Stored Procedures\LastYearCategoryExpensesByMonth.sql" />
+    <Build Include="expenses\Stored Procedures\MonthBudgetByUser.sql" />
+    <Build Include="expenses\Stored Procedures\MonthIncomeByUser.sql" />
+    <Build Include="expenses\Stored Procedures\RecalcMonthIncome.sql" />
+    <Build Include="expenses\Stored Procedures\ResetMonthIncomeByUser.sql" />
+  </ItemGroup>
+</Project>
