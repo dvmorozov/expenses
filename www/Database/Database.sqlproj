@@ -7,7 +7,7 @@
     <Name>Database</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{bc8e7f57-c5cc-4da3-923e-18ce764a8252}</ProjectGuid>
+    <ProjectGuid>{3396a1a3-076e-4e10-8547-871216c5fbdf}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
@@ -62,6 +62,7 @@
     <Folder Include="expenses\" />
     <Folder Include="expenses\Tables\" />
     <Folder Include="expenses\Views\" />
+    <Folder Include="Security\" />
     <Folder Include="expenses\Functions\" />
     <Folder Include="expenses\Stored Procedures\" />
   </ItemGroup>
@@ -83,6 +84,10 @@
     <Build Include="expenses\Views\ExpenseNames.sql" />
     <Build Include="expenses\Views\ControlStrings.sql" />
     <Build Include="expenses\Views\Chronological.sql" />
+    <Build Include="Security\DataSync_reader.sql" />
+    <Build Include="Security\DataSync_executor.sql" />
+    <Build Include="Security\DataSync_admin.sql" />
+    <Build Include="Security\expenses_app.sql" />
     <Build Include="expenses\Functions\GetLastYearTotalExpensesByMonthByUser.sql" />
     <Build Include="expenses\Functions\GetLastMonthList.sql" />
     <Build Include="expenses\Functions\GetLastMonthListWithCurrencies.sql" />
@@ -178,5 +183,6 @@
     <Build Include="expenses\Stored Procedures\MonthIncomeByUser.sql" />
     <Build Include="expenses\Stored Procedures\RecalcMonthIncome.sql" />
     <Build Include="expenses\Stored Procedures\ResetMonthIncomeByUser.sql" />
+    <Build Include="Security\expenses.sql" />
   </ItemGroup>
 </Project>
