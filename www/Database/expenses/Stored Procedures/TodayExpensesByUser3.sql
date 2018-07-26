@@ -13,7 +13,7 @@ AS
 	FROM [expenses].Expenses e
 	INNER JOIN ExpensesCategories ec
 	ON ec.ExpenseID = e.ID
-	INNER JOIN Categories c
+	INNER JOIN [expenses].Categories c
 	ON ec.CategoryID = c.ID
 	WHERE e.DataOwner = @DataOwner 
 		--	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
@@ -32,4 +32,4 @@ AS
 				)
 			)
 	--	The last expenses first.
-	ORDER BY ID DESC
+	ORDER BY e.ID DESC
