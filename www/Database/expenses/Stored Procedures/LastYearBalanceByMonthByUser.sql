@@ -1,7 +1,4 @@
 ﻿
-DROP PROCEDURE [expenses].LastYearBalanceByMonthByUser
-GO
-
 -- =============================================
 -- Author:		D.V.Morozov
 -- Create date: 08/06/2015
@@ -19,6 +16,7 @@ BEGIN
 		SELECT TOP (@LastMonthNumber) *
 		--	https://github.com/dvmorozov/expenses/issues/17
 		FROM expenses.GetLastYearTotalExpensesByMonthByUser(@LastMonthNumber, @DataOwner) t
+		WHERE Currency IS NOT NULL
 	) t
 	LEFT JOIN Month m
 	ON t.Y = m.Year AND t.M = m.Month AND t.Currency = m.Currency

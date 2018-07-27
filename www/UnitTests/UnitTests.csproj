@@ -59,6 +59,9 @@
     <Compile Include="SqlServerUnitTestLastYearBalanceByMonthByUser.cs">
       <SubType>Designer</SubType>
     </Compile>
+    <Compile Include="SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs">
+      <SubType>Designer</SubType>
+    </Compile>
     <Compile Include="SqlServerUnitTestTodayExpensesByUser3.cs">
       <SubType>Designer</SubType>
     </Compile>
@@ -77,6 +80,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SqlServerUnitTestLastYearBalanceByMonthByUser.resx">
       <DependentUpon>SqlServerUnitTestLastYearBalanceByMonthByUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlServerUnitTestLastYearTotalExpensesByMonthByUser.resx">
+      <DependentUpon>SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SqlServerUnitTestTodayExpensesByUser3.resx">
       <DependentUpon>SqlServerUnitTestTodayExpensesByUser3.cs</DependentUpon>
