@@ -56,6 +56,12 @@
     <Compile Include="SqlServerUnitTestGetLastMonthList.cs">
       <SubType>Designer</SubType>
     </Compile>
+    <Compile Include="SqlServerUnitTestLastYearBalanceByMonthByUser.cs">
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs">
+      <SubType>Designer</SubType>
+    </Compile>
     <Compile Include="SqlServerUnitTestTodayExpensesByUser3.cs">
       <SubType>Designer</SubType>
     </Compile>
@@ -63,12 +69,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlServerUnitTestGetLastMonthList.resx">
       <DependentUpon>SqlServerUnitTestGetLastMonthList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlServerUnitTestLastYearBalanceByMonthByUser.resx">
+      <DependentUpon>SqlServerUnitTestLastYearBalanceByMonthByUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlServerUnitTestLastYearTotalExpensesByMonthByUser.resx">
+      <DependentUpon>SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SqlServerUnitTestTodayExpensesByUser3.resx">
       <DependentUpon>SqlServerUnitTestTodayExpensesByUser3.cs</DependentUpon>
