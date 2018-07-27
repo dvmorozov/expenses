@@ -14,3 +14,4 @@ Web.config
 /www/UnitTests/bin/Debug
 /www/UnitTests/obj/Debug
 /www/Database/bin/Debug
+/www/Database/Database.dbmdl
