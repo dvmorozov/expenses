@@ -35,20 +35,23 @@ namespace UnitTests
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestLastYearTotalExpensesByMonthByUser));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition1;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition2;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition notEmptyResultSetCondition1;
             this.expenses_LastYearTotalExpensesByMonthByUserTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             expenses_LastYearTotalExpensesByMonthByUserTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             rowCountCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             rowCountCondition2 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
+            notEmptyResultSetCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition();
             // 
             // expenses_LastYearTotalExpensesByMonthByUserTest_TestAction
             // 
             expenses_LastYearTotalExpensesByMonthByUserTest_TestAction.Conditions.Add(rowCountCondition1);
             expenses_LastYearTotalExpensesByMonthByUserTest_TestAction.Conditions.Add(rowCountCondition2);
+            expenses_LastYearTotalExpensesByMonthByUserTest_TestAction.Conditions.Add(notEmptyResultSetCondition1);
             resources.ApplyResources(expenses_LastYearTotalExpensesByMonthByUserTest_TestAction, "expenses_LastYearTotalExpensesByMonthByUserTest_TestAction");
             // 
             // rowCountCondition1
             // 
-            rowCountCondition1.Enabled = false;
+            rowCountCondition1.Enabled = true;
             rowCountCondition1.Name = "rowCountCondition1";
             rowCountCondition1.ResultSet = 1;
             rowCountCondition1.RowCount = 60;
@@ -65,6 +68,12 @@ namespace UnitTests
             this.expenses_LastYearTotalExpensesByMonthByUserTestData.PosttestAction = null;
             this.expenses_LastYearTotalExpensesByMonthByUserTestData.PretestAction = null;
             this.expenses_LastYearTotalExpensesByMonthByUserTestData.TestAction = expenses_LastYearTotalExpensesByMonthByUserTest_TestAction;
+            // 
+            // notEmptyResultSetCondition1
+            // 
+            notEmptyResultSetCondition1.Enabled = true;
+            notEmptyResultSetCondition1.Name = "notEmptyResultSetCondition1";
+            notEmptyResultSetCondition1.ResultSet = 3;
         }
 
         #endregion
