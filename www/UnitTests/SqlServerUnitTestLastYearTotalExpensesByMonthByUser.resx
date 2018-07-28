@@ -134,7 +134,7 @@ EXECUTE @RC = [expenses].[LastYearTotalExpensesByMonthByUser] @LastMonthNumber, 
 SELECT * 
 FROM @Result;
 
---	Checks that every pair Y, M is included just one time.
+-- Checks that every pair Y, M is included just one time.
 SELECT C
 FROM 
 (
@@ -143,6 +143,11 @@ FROM
 	GROUP BY Y, M
 ) T
 WHERE C &gt; 1;
+
+-- Checks that rows exist with non-zero balance.
+SELECT *
+FROM @Result
+WHERE Balance &lt;&gt; 0
 </value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
