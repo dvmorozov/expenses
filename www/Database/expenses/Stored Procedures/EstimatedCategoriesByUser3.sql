@@ -77,25 +77,15 @@ AS
 			SELECT SUM(Cost) AS SingleTotal, CatID AS CategoryId
 			FROM CE
 			WHERE 
-				((Monthly IS NULL OR Monthly = 0)
-				AND DATEPART(YEAR, Date) = @Year AND DATEPART(MONTH, Date) = @Month 
+				(
+					(((Monthly IS NULL OR Monthly = 0) 
+						AND DATEPART(YEAR, Date) = @Year AND DATEPART(MONTH, Date) = @Month)
+					OR
+					((Monthly IS NOT NULL AND Monthly = 1)
+						AND @ADate >= FirstMonth AND (@ADate <= LastMonth OR LastMonth IS NULL)))
 				--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-				--	Only given currency taken into account in calculating of the total.
-				AND (Currency = @BudgetCurrency
-				-- If not set the currency is considered as it is set for month.
-				OR Currency IS NULL
-				-- If the budget currency is not set then all expenses are considered as given in the same currency.
-				OR @BudgetCurrency IS NULL))
-				OR 
-				((Monthly IS NOT NULL AND Monthly = 1)
-				AND (@ADate >= FirstMonth AND (@ADate <= LastMonth OR LastMonth IS NULL))
-				--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-				--	Only given currency taken into account in calculating of the total.
-				AND (Currency = @BudgetCurrency
-				-- If not set the currency is considered as it is set for month.
-				OR Currency IS NULL
-				-- If the budget currency is not set then all expenses are considered as given in the same currency.
-				OR @BudgetCurrency IS NULL)
+				--	Only budget currency taken into account in calculating of totals.
+				AND (Currency = @BudgetCurrency OR (Currency IS NULL AND @BudgetCurrency IS NULL))
 				)
 			GROUP BY CatID
 		) E1
