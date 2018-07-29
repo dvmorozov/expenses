@@ -9,3 +9,9 @@
 Web.Debug.config
 Web.Release.config
 Web.config
+/www/Database/Import Schema Logs
+/www/Database/obj/Debug
+/www/UnitTests/bin/Debug
+/www/UnitTests/obj/Debug
+/www/Database/bin/Debug
+/www/Database/Database.dbmdl
