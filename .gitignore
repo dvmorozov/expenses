@@ -15,3 +15,7 @@ Web.config
 /www/UnitTests/obj/Debug
 /www/Database/bin/Debug
 /www/Database/Database.dbmdl
+/www/Database/bin/Release
+/www/Database/obj/Release
+/www/UnitTests/bin/Release
+/www/UnitTests/obj/Release
