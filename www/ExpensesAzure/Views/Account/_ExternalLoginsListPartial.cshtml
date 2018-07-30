@@ -1,33 +1,36 @@
 ﻿@model SocialApps.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>@Html.Raw(Resources.Resources.AccountLoginWith)</h4>
-@{
-    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
-    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
-    {
-        @Html.AntiForgeryToken()
-        <div id="socialLoginList">
-            <p>
-                @foreach (AuthenticationDescription p in loginProviders)
-				{
-					<button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@Html.Raw(Resources.Resources.AccountLoginWith + " " + p.Caption)">
-						@*https://www.evernote.com/shard/s132/nl/14501366/c9e1c66a-3731-43ef-80a1-0990ba45642b*@
-						@switch (@p.AuthenticationType.ToLower())
-						{
-							case ("google"): @Html.Raw("<img src=\"/Content/google.png\"/>") break;
-							case ("microsoft"): @Html.Raw("<img src=\"/Content/windows.png\"/>") break;
-							case ("twitter"): @Html.Raw("<img src=\"/Content/twitter.png\"/>") break;
-							case ("facebook"): @Html.Raw("<img src=\"/Content/facebook.png\"/>") break;
-							case ("linkedin"): @Html.Raw("<img src=\"/Content/linkedin.png\"/>") break;
-							case ("yahoo"): @Html.Raw("<img src=\"/Content/yahoo.png\"/>") break;
-							default:
-							@p.AuthenticationType
-																						   break;
-						}
-					</button>
-				}
-            </p>
-        </div>
-    }
-}
+@*https://www.evernote.com/shard/s132/nl/14501366/c9e1c66a-3731-43ef-80a1-0990ba45642b*@
+
+@*
+		<h4>@Html.Raw(Resources.Resources.AccountLoginWith)</h4>
+		@{
+			var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+			using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+			{
+				@Html.AntiForgeryToken()
+				<div id="socialLoginList">
+					<p>
+							@foreach (AuthenticationDescription p in loginProviders)
+							{
+								<button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@Html.Raw(Resources.Resources.AccountLoginWith + " " + p.Caption)">
+									@switch (@p.AuthenticationType.ToLower())
+									{
+										case ("google"): @Html.Raw("<img src=\"/Content/google.png\"/>") break;
+										case ("microsoft"): @Html.Raw("<img src=\"/Content/windows.png\"/>") break;
+										case ("twitter"): @Html.Raw("<img src=\"/Content/twitter.png\"/>") break;
+										case ("facebook"): @Html.Raw("<img src=\"/Content/facebook.png\"/>") break;
+										case ("linkedin"): @Html.Raw("<img src=\"/Content/linkedin.png\"/>") break;
+										case ("yahoo"): @Html.Raw("<img src=\"/Content/yahoo.png\"/>") break;
+										default:
+										@p.AuthenticationType
+																									   break;
+									}
+								</button>
+							}
+				</p>
+			</div>
+		}
+	}
+*@

@@ -81,7 +81,6 @@ namespace SocialApps.Repositories
         {
             //  https://action.mindjet.com/task/14886358
 #if DEBUG
-            var credentials = new StorageCredentials();
             var configuration = ConfigurationManager.AppSettings["StorageConnectionString"];
             var _storageAccount = CloudStorageAccount.Parse(configuration);
 #else

@@ -8,6 +8,8 @@ using Owin;
 using Owin.Security.Providers.Yahoo;
 using Owin.Security.Providers.LinkedIn;
 using SocialApps.Models;
+using Microsoft.Azure;
+using SocialApps.Repositories;
 
 namespace SocialApps
 {
@@ -47,36 +49,32 @@ namespace SocialApps
             // Точно так же действует параметр RememberMe при входе.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            // Раскомментируйте приведенные далее строки, чтобы включить вход с помощью сторонних поставщиков входа
             app.UseMicrosoftAccountAuthentication(
-                clientId: "000000004414CB41",
-                clientSecret: "2jCGjD9qBSKRDNqz-fPzz-nlesfzPz0M");
+                clientId: ConfigurationManagerAdapter.GetSetting("Microsoft.clientId"),
+                clientSecret: ConfigurationManagerAdapter.GetSetting("Microsoft.clientSecret"));
 
             app.UseTwitterAuthentication(
-               consumerKey: "33XcEz3Yq1UQaQOyT2FCxnMpM",
-               consumerSecret: "Acn03sLewO0cvQy6cXn2ZneE1DvQ4aGZU2eYDbhY6nquF9RwF6");
+               consumerKey: ConfigurationManagerAdapter.GetSetting("Twitter.consumerKey"),
+               consumerSecret: ConfigurationManagerAdapter.GetSetting("Twitter.consumerSecret"));
 
             app.UseFacebookAuthentication(
-               appId: "1580602192213180",
-               appSecret: "55136442251f33df6e4739256123c288");
+               appId: ConfigurationManagerAdapter.GetSetting("Facebook.appId"),
+               appSecret: ConfigurationManagerAdapter.GetSetting("Facebook.appSecret"));
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "163635128807-dt2m86u271tdgfumnna3svuv54bt6j0c.apps.googleusercontent.com",
-                ClientSecret = "LfQtkUzSiDL_RYbvWt73SIBa"
+                ClientId = ConfigurationManagerAdapter.GetSetting("Google.ClientId"),
+                ClientSecret = ConfigurationManagerAdapter.GetSetting("Google.ClientSecret")
             });
 
-            /*
             //  https://www.evernote.com/shard/s132/nl/14501366/c928f0f7-ada3-48c8-bc82-7721f081e12c
             app.UseYahooAuthentication(
-                "dj0yJmk9Z2lDS2FvYVFieXREJmQ9WVdrOWFIb3dSRmRaTXpnbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1jOA--", 
-                "cce7af2f4fa02b5cd80d3134398b4832dc07535c");
-
+                consumerKey: ConfigurationManagerAdapter.GetSetting("Yahoo.consumerKey"), 
+                consumerSecret: ConfigurationManagerAdapter.GetSetting("Yahoo.consumerSecret"));
 
             app.UseLinkedInAuthentication(
-                "75wumudbpro6a2", 
-                "a96067df-6d96-4904-b2e4-a3f5de080f60");
-             */
+                clientId: ConfigurationManagerAdapter.GetSetting("LinkedIn.clientId"), 
+                clientSecret: ConfigurationManagerAdapter.GetSetting("LinkedIn.clientSecret"));
         }
     }
 }
