@@ -30,24 +30,6 @@ namespace UnitTests
         }
 
         [TestMethod()]
-        public void SqlTestGetLastMonthList()
-        {
-            SqlDatabaseTestActions testActions = this.SqlTest1Data;
-            // Execute the pre-test script
-            // 
-            System.Diagnostics.Trace.WriteLineIf((testActions.PretestAction != null), "Executing pre-test script...");
-            SqlExecutionResult[] pretestResults = TestService.Execute(this.PrivilegedContext, this.PrivilegedContext, testActions.PretestAction);
-            // Execute the test script
-            // 
-            System.Diagnostics.Trace.WriteLineIf((testActions.TestAction != null), "Executing test script...");
-            SqlExecutionResult[] testResults = TestService.Execute(this.ExecutionContext, this.PrivilegedContext, testActions.TestAction);
-            // Execute the post-test script
-            // 
-            System.Diagnostics.Trace.WriteLineIf((testActions.PosttestAction != null), "Executing post-test script...");
-            SqlExecutionResult[] posttestResults = TestService.Execute(this.PrivilegedContext, this.PrivilegedContext, testActions.PosttestAction);
-        }
-
-        [TestMethod()]
         public void expenses_GetLastMonthListTest()
         {
             SqlDatabaseTestActions testActions = this.expenses_GetLastMonthListTestData;
@@ -85,12 +67,14 @@ namespace UnitTests
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition1;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_GetLastMonthListTest_TestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.ExpectedSchemaCondition expectedSchemaCondition1;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition emptyResultSetCondition1;
             this.SqlTest1Data = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             this.expenses_GetLastMonthListTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             SqlTest1_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             rowCountCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
             expenses_GetLastMonthListTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             expectedSchemaCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.ExpectedSchemaCondition();
+            emptyResultSetCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition();
             // 
             // SqlTest1_TestAction
             // 
@@ -107,6 +91,7 @@ namespace UnitTests
             // expenses_GetLastMonthListTest_TestAction
             // 
             expenses_GetLastMonthListTest_TestAction.Conditions.Add(expectedSchemaCondition1);
+            expenses_GetLastMonthListTest_TestAction.Conditions.Add(emptyResultSetCondition1);
             resources.ApplyResources(expenses_GetLastMonthListTest_TestAction, "expenses_GetLastMonthListTest_TestAction");
             // 
             // expectedSchemaCondition1
@@ -115,6 +100,12 @@ namespace UnitTests
             expectedSchemaCondition1.Name = "expectedSchemaCondition1";
             resources.ApplyResources(expectedSchemaCondition1, "expectedSchemaCondition1");
             expectedSchemaCondition1.Verbose = false;
+            // 
+            // emptyResultSetCondition1
+            // 
+            emptyResultSetCondition1.Enabled = true;
+            emptyResultSetCondition1.Name = "emptyResultSetCondition1";
+            emptyResultSetCondition1.ResultSet = 1;
             // 
             // SqlTest1Data
             // 

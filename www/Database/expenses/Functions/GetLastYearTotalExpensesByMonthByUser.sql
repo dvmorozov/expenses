@@ -49,7 +49,7 @@ BEGIN
 				Year AS Y, Month AS M, 
 				E1.Currency, 
 				SingleTotal
-			FROM [expenses].GetLastMonthListWithCurrencies(@LastMonthNumber, @DataOwner) E1
+			FROM [expenses].GetLastMonthListWithCurrencies(@LastMonthNumber, @DataOwner, DEFAULT) E1
 			LEFT OUTER JOIN
 			(
 				SELECT 
@@ -69,7 +69,7 @@ BEGIN
 		(
 			--	Selects montly expenses.
 			SELECT Year AS Y, Month AS M, SUM(Cost) AS MonthlyTotal, E1.Currency
-			FROM [expenses].GetLastMonthListWithCurrencies(@LastMonthNumber, @DataOwner) E1
+			FROM [expenses].GetLastMonthListWithCurrencies(@LastMonthNumber, @DataOwner, DEFAULT) E1
 			LEFT JOIN
 			(
 				SELECT Cost, FirstMonth, LastMonth, Currency
