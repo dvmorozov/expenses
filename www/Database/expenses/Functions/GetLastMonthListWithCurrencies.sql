@@ -9,7 +9,8 @@
 CREATE FUNCTION expenses.GetLastMonthListWithCurrencies
 (
 	@LastMonthNumber INT,
-	@DataOwner UNIQUEIDENTIFIER
+	@DataOwner UNIQUEIDENTIFIER,
+	@StartingDate DATE = NULL
 )
 RETURNS 
 @ResuLt TABLE 
@@ -20,6 +21,9 @@ RETURNS
 )
 AS
 BEGIN
+	DECLARE @End DATE = COALESCE(@StartingDate, GETDATE())
+	DECLARE @Start DATE = DATEADD(mm, -1 * @LastMonthNumber, @End)
+
 	DECLARE @Currencies TABLE
 	(
 		Currency NCHAR(5)
@@ -27,11 +31,11 @@ BEGIN
 	INSERT INTO @Currencies
 	SELECT DISTINCT Currency
 	FROM [expenses].Expenses
-	WHERE DataOwner = @DataOwner
+	WHERE DataOwner = @DataOwner AND Date > @Start AND Date <= @End
 
 	INSERT INTO @Result
 		SELECT *
-		FROM [expenses].GetLastMonthList(@LastMonthNumber)
+		FROM [expenses].GetLastMonthList(@LastMonthNumber, @StartingDate)
 		CROSS JOIN @Currencies
 	RETURN
 END

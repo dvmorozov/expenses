@@ -7,7 +7,8 @@
 
 CREATE FUNCTION expenses.GetLastMonthList
 (
-	@LastMonthNumber INT
+	@LastMonthNumber INT,
+	@StartingDate DATE = NULL
 )
 RETURNS 
 @MonthList TABLE 
@@ -17,7 +18,8 @@ RETURNS
 )
 AS
 BEGIN
-	DECLARE @Now DATE = GETDATE()
+	DECLARE @Now DATE = COALESCE(@StartingDate, GETDATE())
+
 	WHILE @LastMonthNumber > 0
 	BEGIN
 		SET @LastMonthNumber = @LastMonthNumber - 1
