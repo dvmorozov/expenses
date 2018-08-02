@@ -185,5 +185,7 @@
     <Build Include="expenses\Stored Procedures\ResetMonthIncomeByUser.sql" />
     <Build Include="Security\expenses.sql" />
     <Build Include="expenses\Functions\GetEstimatedCategoriesByUser.sql" />
+    <Build Include="expenses\Stored Procedures\Procedure1.sql" />
+    <Build Include="expenses\Stored Procedures\EstimatedCategoriesByUser4.sql" />
   </ItemGroup>
 </Project>
