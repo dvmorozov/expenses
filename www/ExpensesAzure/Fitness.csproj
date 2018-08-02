@@ -232,16 +232,28 @@
     <Compile Include="Models\Categories.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CategoriesOwnership.cs" />
-    <Compile Include="Models\Contacts.cs" />
-    <Compile Include="Models\Controls.cs" />
+    <Compile Include="Models\CategoriesOwnership.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Contacts.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Controls.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataModels.cs" />
     <Compile Include="Models\EstimatedCategoriesByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EstimatedCategoriesByUser4_Result.cs" />
-    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser3_Result.cs" />
-    <Compile Include="Models\Exchange.cs" />
+    <Compile Include="Models\EstimatedCategoriesByUser4_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser3_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Exchange.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Expenses.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -276,8 +288,12 @@
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\IncomsForMonthByUser3_Result.cs" />
-    <Compile Include="Models\Languages.cs" />
+    <Compile Include="Models\IncomsForMonthByUser3_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Languages.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LastYearBalanceByMonthByUser_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
@@ -291,16 +307,24 @@
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Month.cs" />
+    <Compile Include="Models\Month.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MonthBudgetByUser_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MonthTotalByUser3_Result.cs" />
+    <Compile Include="Models\MonthTotalByUser3_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Operations.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Strings.cs" />
-    <Compile Include="Models\TodayAndMonthTotalByUser2_Result.cs" />
+    <Compile Include="Models\Strings.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TodayAndMonthTotalByUser2_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TodayExpensesByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>

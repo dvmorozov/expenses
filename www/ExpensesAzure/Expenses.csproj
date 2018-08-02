@@ -289,9 +289,9 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Expenses1.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ExpensesByCategoryForMonthByUser2_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
