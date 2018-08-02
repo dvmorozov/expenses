@@ -266,6 +266,9 @@
     <Compile Include="Models\EstimatedCategoriesByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EstimatedCategoriesByUser4_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser3_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
@@ -273,22 +276,22 @@
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Expenses.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Expenses.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Expenses.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Expenses.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Expenses.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Expenses1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Expenses.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\ExpensesByCategoryForMonthByUser2_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
@@ -369,18 +372,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="googlee97ea6870408ad0c.html" />
-    <Content Include="Scripts\AddExpense1.js" />
-    <Content Include="Scripts\AddExpense2.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config" />
-    <EntityDeploy Include="Models\Expenses.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Expenses.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <Content Include="Models\Expenses.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Expenses.edmx</DependentUpon>
       <LastGenOutput>Expenses.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Expenses.edmx.diagram">
@@ -388,9 +381,13 @@
     </Content>
     <Content Include="Models\Expenses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Expenses.edmx</DependentUpon>
       <LastGenOutput>Expenses1.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AddExpense1.js" />
+    <Content Include="Scripts\AddExpense2.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -540,6 +537,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\Expenses.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Expenses.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
