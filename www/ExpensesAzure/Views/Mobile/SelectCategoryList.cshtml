@@ -74,7 +74,9 @@
 								@Html.Raw(cat.Limit != null ? Math.Floor((float)cat.Limit).ToString(CultureInfo.InvariantCulture) : "NA")
 							</div>
 							<div style="font-size: xx-small; text-align: right; font-style: italic;">
-								@Html.Raw(cat.Total != null ? Math.Floor((float)cat.Total).ToString(CultureInfo.InvariantCulture) : "0")
+								@Html.Raw(
+									(cat.Total != null ? Math.Floor((float)cat.Total).ToString(CultureInfo.InvariantCulture) : "0") +
+									(cat.Currency != string.Empty ? " " + cat.Currency : ""))
 							</div>
 						</td>
 					</tr>
