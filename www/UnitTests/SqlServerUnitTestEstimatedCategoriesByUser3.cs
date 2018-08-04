@@ -39,30 +39,21 @@ namespace UnitTests
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_EstimatedCategoriesByUser3Test_TestAction;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestEstimatedCategoriesByUser3));
-            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition emptyResultSetCondition1;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.ScalarValueCondition scalarValueCondition1;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition notEmptyResultSetCondition1;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition emptyResultSetCondition1;
             this.expenses_EstimatedCategoriesByUser3TestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             expenses_EstimatedCategoriesByUser3Test_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
-            emptyResultSetCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition();
             scalarValueCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.ScalarValueCondition();
-            // 
-            // expenses_EstimatedCategoriesByUser3TestData
-            // 
-            this.expenses_EstimatedCategoriesByUser3TestData.PosttestAction = null;
-            this.expenses_EstimatedCategoriesByUser3TestData.PretestAction = null;
-            this.expenses_EstimatedCategoriesByUser3TestData.TestAction = expenses_EstimatedCategoriesByUser3Test_TestAction;
+            notEmptyResultSetCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition();
+            emptyResultSetCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition();
             // 
             // expenses_EstimatedCategoriesByUser3Test_TestAction
             // 
             expenses_EstimatedCategoriesByUser3Test_TestAction.Conditions.Add(scalarValueCondition1);
+            expenses_EstimatedCategoriesByUser3Test_TestAction.Conditions.Add(notEmptyResultSetCondition1);
             expenses_EstimatedCategoriesByUser3Test_TestAction.Conditions.Add(emptyResultSetCondition1);
             resources.ApplyResources(expenses_EstimatedCategoriesByUser3Test_TestAction, "expenses_EstimatedCategoriesByUser3Test_TestAction");
-            // 
-            // emptyResultSetCondition1
-            // 
-            emptyResultSetCondition1.Enabled = true;
-            emptyResultSetCondition1.Name = "emptyResultSetCondition1";
-            emptyResultSetCondition1.ResultSet = 2;
             // 
             // scalarValueCondition1
             // 
@@ -73,6 +64,24 @@ namespace UnitTests
             scalarValueCondition1.NullExpected = true;
             scalarValueCondition1.ResultSet = 1;
             scalarValueCondition1.RowNumber = 1;
+            // 
+            // expenses_EstimatedCategoriesByUser3TestData
+            // 
+            this.expenses_EstimatedCategoriesByUser3TestData.PosttestAction = null;
+            this.expenses_EstimatedCategoriesByUser3TestData.PretestAction = null;
+            this.expenses_EstimatedCategoriesByUser3TestData.TestAction = expenses_EstimatedCategoriesByUser3Test_TestAction;
+            // 
+            // notEmptyResultSetCondition1
+            // 
+            notEmptyResultSetCondition1.Enabled = true;
+            notEmptyResultSetCondition1.Name = "notEmptyResultSetCondition1";
+            notEmptyResultSetCondition1.ResultSet = 2;
+            // 
+            // emptyResultSetCondition1
+            // 
+            emptyResultSetCondition1.Enabled = true;
+            emptyResultSetCondition1.Name = "emptyResultSetCondition1";
+            emptyResultSetCondition1.ResultSet = 3;
         }
 
         #endregion

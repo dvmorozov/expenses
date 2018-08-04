@@ -117,36 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="expenses_EstimatedCategoriesByUser3Test_TestAction.SqlScript" xml:space="preserve">
-    <value>-- database unit test for expenses.EstimatedCategoriesByUser3
+  <data name="expenses_EstimatedCategoriesByUser4Test_TestAction.SqlScript" xml:space="preserve">
+    <value>-- database unit test for expenses.EstimatedCategoriesByUser4
 DECLARE @RC AS INT, @Year AS INT, @Month AS INT, @Day AS INT, @DataOwner AS UNIQUEIDENTIFIER, @ShortList AS BIT;
 
 SELECT @RC = 0,
        @Year = 2018,
-       @Month = 6,
+       @Month = 7,
        @Day = 30,
        @DataOwner = 'd94f9786-01f3-4b22-b612-285f82a85093',
        @ShortList = 0;
 
-DECLARE @Result TABLE (NAME NVARCHAR(MAX), Limit NVARCHAR(MAX), ID INT, Total NVARCHAR(MAX), Estimation NVARCHAR(MAX), EncryptedName NVARCHAR(MAX));
-
---	Checks that budget currency is NULL for this date.
-SELECT TOP 1 Currency
-FROM [expenses].Month
-WHERE Year = @Year AND Month = @Month AND DataOwner = @DataOwner
+DECLARE @Result TABLE (NAME NVARCHAR(MAX), Limit NVARCHAR(MAX), ID INT, Total NVARCHAR(MAX), Estimation NVARCHAR(MAX), EncryptedName NVARCHAR(MAX), Currency NCHAR(5));
 
 INSERT INTO @Result
-EXECUTE @RC = [expenses].[EstimatedCategoriesByUser3] @Year, @Month, @Day, @DataOwner, @ShortList;
+EXECUTE @RC = [expenses].[EstimatedCategoriesByUser4] @Year, @Month, @Day, @DataOwner, @ShortList;
 
--- Returned set contains rows related with the first currency found
--- even when budget currency was not set up.
+-- 1. Checks that the recordset has data.
 SELECT * FROM @Result
-WHERE Total IS NOT NULL
 
--- Checks that all ids have assigned values.
+-- 2. Checks that all ids have assigned values.
 SELECT * FROM @Result
 WHERE ID IS NULL
-</value>
+
+-- 3. Checks that currency can be NULL only if Total is NULL
+-- (that means that no expenses were made with such category).
+SELECT * FROM @Result
+WHERE Currency IS NULL AND Total IS NOT NULL
+
+SELECT @RC = 0,
+       @Year = 2018,
+       @Month = 8,
+       @Day = 4,
+       @DataOwner = 'd94f9786-01f3-4b22-b612-285f82a85093',
+       @ShortList = 0;
+
+DELETE FROM @Result
+WHERE 1=1
+
+INSERT INTO @Result
+EXECUTE @RC = [expenses].[EstimatedCategoriesByUser4] @Year, @Month, @Day, @DataOwner, @ShortList;
+
+-- 4. Checks that a few categories have expenses with associated currency.
+SELECT * FROM @Result
+WHERE Currency IS NOT NULL AND Total IS NOT NULL
+
+-- 5. Checks that total is returned correctly for particular category.
+SELECT * FROM @Result
+WHERE ID = 15 AND Total IS NOT NULL
+
+DELETE FROM @Result
+WHERE 1=1;
+
+-- 6. Checks that when a few currencies were used during the month, 
+-- when budget currency was not set up, returned set contains only
+-- unique group identifiers.
+SELECT @RC = 0,
+       @Year = 2018,
+       @Month = 5,
+       @Day = 4,
+       @DataOwner = 'd94f9786-01f3-4b22-b612-285f82a85093',
+       @ShortList = 0;
+
+INSERT INTO @Result
+EXECUTE @RC = [expenses].[EstimatedCategoriesByUser4] @Year, @Month, @Day, @DataOwner, @ShortList;
+
+SELECT C
+FROM
+(
+	SELECT COUNT(ID) AS C 
+	FROM @Result
+	GROUP BY ID
+) T
+WHERE C &gt; 1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

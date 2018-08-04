@@ -45,10 +45,11 @@ BEGIN
 
 	--	Date to start from.
 	DECLARE @DateFrom DATETIME
-	--	Selects for last half a year.
-	SET @DateFrom = DATEADD(month, -6, GETDATE());
+	--	Selects for last half a year from given date.
+	SET @DateFrom = DATEADD(month, -6, @ADate);
 
-	WITH CE AS
+	--	Selects categories having expenses for given period of time.
+	WITH CategoriesExpenses AS
 	(
 		SELECT 
 			e.ID AS ExpID, c.ID AS CatID, e.Date AS Date, e.Cost AS Cost, c.Name AS CatName, 
@@ -64,9 +65,17 @@ BEGIN
 		ON ec.ExpenseID = e.ID
 		WHERE c.DataOwner = @DataOwner AND
 		(
-			(e.ID IS NULL) OR (@ShortList = 0) OR 
-			((e.Date > @DateFrom OR (e.Monthly IS NOT NULL AND e.Monthly = 1 AND 
-			(e.LastMonth IS NULL OR e.LastMonth > @DateFrom))) AND e.DataOwner = @DataOwner)
+			--	Selects categories for all the time.
+			(@ShortList = 0) OR 
+			--	Selects categories for last period of time.
+			(
+				--	Selects one-time expenses.
+				(e.Date > @DateFrom AND (e.Monthly IS NULL OR e.Monthly = 0))
+				OR 
+				--	Selects montly expenses which are still actual for given period of time.
+				(e.Monthly IS NOT NULL AND e.Monthly = 1 AND 
+				(e.LastMonth IS NULL OR e.LastMonth > @DateFrom))
+			)
 		)
 	)
 	INSERT @returntable
@@ -84,40 +93,57 @@ BEGIN
 		CC.EncryptedName,
 		TT.Currency
 	FROM [expenses].CATEGORIES AS CC 
-	-- Selects active categories for given range.
+	-- Selects active categories for given range
+	-- (includes categories even they don't have related expenses).
 	JOIN 
 	(
 		SELECT DISTINCT CatID AS ID
-		FROM CE
+		FROM CategoriesExpenses
 	) AS LastCategories
 	ON LastCategories.ID = CC.ID
 	LEFT JOIN 
 	(
-		--	Calculates totals by categories for given month.
-		--	Not all categories can be present.
-		--	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
-		SELECT E1.SingleTotal TOTAL, 
-			E1.CategoryId AS CATEGORYID,
-			E1.Currency
+		-- Selects only the first group, preferably meeting budget currency.
+		SELECT *
 		FROM
 		(
-			SELECT SUM(Cost) AS SingleTotal, CatID AS CategoryId, Currency
-			FROM CE
-			WHERE 
-				(
-					(((Monthly IS NULL OR Monthly = 0) 
-						AND DATEPART(YEAR, Date) = @Year AND DATEPART(MONTH, Date) = @Month)
-					OR
-					((Monthly IS NOT NULL AND Monthly = 1)
-						AND @ADate >= FirstMonth AND (@ADate <= LastMonth OR LastMonth IS NULL)))
+			--	Calculates totals by categories for given month.
+			--	Not all categories can be present.
+			--	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
+			SELECT E1.SingleTotal TOTAL, 
+				E1.CategoryId AS CATEGORYID,
+				E1.Currency,
+				DENSE_RANK() OVER (PARTITION BY CategoryId ORDER BY MeetBudget DESC, Currency) AS GroupNumber
+			FROM
+			(
 				--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-				--	Only budget currency taken into account in calculating of totals.
-				AND (Currency = @BudgetCurrency OR (Currency IS NULL AND @BudgetCurrency IS NULL))
-				)
-			GROUP BY CatID, Currency
-		) E1
+				--	Selects the first total by currency, meeting budget currency if possible.
+				SELECT
+					SUM(Cost) AS SingleTotal, CatID AS CategoryId, Currency,
+					CASE WHEN Currency = @BudgetCurrency THEN 1 ELSE 0 END AS MeetBudget
+				FROM CategoriesExpenses
+				WHERE 
+					(
+						(
+							--	Selects one-time expenses for given month.
+							(
+								(Monthly IS NULL OR Monthly = 0) 
+									AND DATEPART(YEAR, Date) = @Year AND DATEPART(MONTH, Date) = @Month
+							)
+							OR
+							(
+								--	Selects monthly expenses for given month.
+								Monthly IS NOT NULL AND Monthly = 1
+									AND (@ADate >= FirstMonth)
+									AND (@ADate <= LastMonth OR LastMonth IS NULL)
+							)
+						)
+					)
+				GROUP BY CatID, Currency
+			) E1
+		) G
+		WHERE G.GroupNumber = 1
 	) AS TT ON CC.ID=TT.CATEGORYID 
 	WHERE CC.DataOwner = @DataOwner
-
 	RETURN
 END

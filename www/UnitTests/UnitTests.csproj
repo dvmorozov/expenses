@@ -56,6 +56,9 @@
     <Compile Include="SqlServerUnitTestEstimatedCategoriesByUser3.cs">
       <SubType>Designer</SubType>
     </Compile>
+    <Compile Include="SqlServerUnitTestEstimatedCategoriesByUser4.cs">
+      <SubType>Designer</SubType>
+    </Compile>
     <Compile Include="SqlServerUnitTestGetLastMonthList.cs">
       <SubType>Designer</SubType>
     </Compile>
@@ -83,6 +86,9 @@
   <ItemGroup>
     <EmbeddedResource Include="SqlServerUnitTestEstimatedCategoriesByUser3.resx">
       <DependentUpon>SqlServerUnitTestEstimatedCategoriesByUser3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlServerUnitTestEstimatedCategoriesByUser4.resx">
+      <DependentUpon>SqlServerUnitTestEstimatedCategoriesByUser4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SqlServerUnitTestGetLastMonthList.resx">
       <DependentUpon>SqlServerUnitTestGetLastMonthList.cs</DependentUpon>
