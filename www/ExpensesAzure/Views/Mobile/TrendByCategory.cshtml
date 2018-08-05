@@ -30,8 +30,8 @@
 								<span class="ellipsis" id="CategoryName">
 									@{
 										//	https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
-										var categoryName = (Session["SelectedCategory"] != null) ? ((EstimatedCategoriesByUser3_Result)Session["SelectedCategory"]).NAME.Trim() : (string)ViewBag.Title;
-										var encryptedCategoryName = (Session["SelectedCategory"] != null) ? ((EstimatedCategoriesByUser3_Result)Session["SelectedCategory"]).EncryptedName : string.Empty;
+										var categoryName = (Session["SelectedCategory"] != null) ? ((EstimatedCategoriesByUser4_Result)Session["SelectedCategory"]).NAME.Trim() : (string)ViewBag.Title;
+										var encryptedCategoryName = (Session["SelectedCategory"] != null) ? ((EstimatedCategoriesByUser4_Result)Session["SelectedCategory"]).EncryptedName : string.Empty;
 										@Html.Raw(AntiXssEncoder.HtmlEncode(categoryName, false))
 										<script>
 											(function () { decryptData('CategoryName', '@Html.Raw(encryptedCategoryName)') })();

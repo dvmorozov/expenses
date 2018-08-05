@@ -1,11 +1,11 @@
 ﻿
 -- ==========================================================================================
 -- Author:		D.V.Morozov
--- Create date: 07/12/2015
--- Description:	https://action.mindjet.com/task/14479694
+-- Create date: 02/08/2018
+-- Description:	https://github.com/dvmorozov/expenses/issues/38
 -- ==========================================================================================
 
-CREATE PROCEDURE [expenses].EstimatedCategoriesByUser3 @Year INT, @Month INT, @Day INT, @DataOwner UNIQUEIDENTIFIER, @ShortList BIT
+CREATE PROCEDURE [expenses].EstimatedCategoriesByUser4 @Year INT, @Month INT, @Day INT, @DataOwner UNIQUEIDENTIFIER, @ShortList BIT
 AS 
 BEGIN
 	SELECT
@@ -14,6 +14,7 @@ BEGIN
 		CategoryID AS ID,
 		CategoryTotal AS Total,
 		Estimation,
-		EncryptedName
+		EncryptedName,
+		Currency
 	FROM [expenses].GetEstimatedCategoriesByUser(@Year, @Month, @Day, @DataOwner, @ShortList)
 END

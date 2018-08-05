@@ -524,6 +524,38 @@ public partial class ExpensesEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MonthTotalByUser3_Result>("MonthTotalByUser3", todayParameter, dataOwnerParameter);
     }
 
+
+    public virtual ObjectResult<EstimatedCategoriesByUser4_Result> EstimatedCategoriesByUser4(Nullable<int> year, Nullable<int> month, Nullable<int> day, Nullable<System.Guid> dataOwner, Nullable<bool> shortList)
+    {
+
+        var yearParameter = year.HasValue ?
+            new ObjectParameter("Year", year) :
+            new ObjectParameter("Year", typeof(int));
+
+
+        var monthParameter = month.HasValue ?
+            new ObjectParameter("Month", month) :
+            new ObjectParameter("Month", typeof(int));
+
+
+        var dayParameter = day.HasValue ?
+            new ObjectParameter("Day", day) :
+            new ObjectParameter("Day", typeof(int));
+
+
+        var dataOwnerParameter = dataOwner.HasValue ?
+            new ObjectParameter("DataOwner", dataOwner) :
+            new ObjectParameter("DataOwner", typeof(System.Guid));
+
+
+        var shortListParameter = shortList.HasValue ?
+            new ObjectParameter("ShortList", shortList) :
+            new ObjectParameter("ShortList", typeof(bool));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EstimatedCategoriesByUser4_Result>("EstimatedCategoriesByUser4", yearParameter, monthParameter, dayParameter, dataOwnerParameter, shortListParameter);
+    }
+
 }
 
 }

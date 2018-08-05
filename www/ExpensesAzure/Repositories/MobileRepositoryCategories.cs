@@ -5,18 +5,27 @@ using SocialApps.Models;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
 using System.Globalization;
-using System.Resources;
 
 namespace SocialApps.Repositories
 {
     public partial class MobileRepository
     {
         //  Cached category data.
-        private class SelectedEstimatedCategories
+        private class SelectedEstimatedCategories1
+        {
+            //  Fields are initialized to avoid warnings. Really they are filled during deserialization.
+            public DateTime Date = DateTime.Now;
+            public bool ShortList = false;
+            public EstimatedCategoriesByUser3_Result[] List = null;
+        }
+
+        //  The second version of cached data.
+        //  https://github.com/dvmorozov/expenses/issues/38
+        private class SelectedEstimatedCategories2
         {
             public DateTime Date;
             public bool ShortList;
-            public EstimatedCategoriesByUser3_Result[] List = null;
+            public EstimatedCategoriesByUser4_Result[] List = null;
         }
 
         private const string SelectEstimatedCategoriesPrefix = "SelectEstimatedCategories";
@@ -27,9 +36,9 @@ namespace SocialApps.Repositories
         }
 
         //  Return cached categories.
-        public EstimatedCategoriesByUser3_Result[] GetCategories()
+        public EstimatedCategoriesByUser4_Result[] GetCategories()
         {
-            return ((SelectedEstimatedCategories)_session[SelectEstimatedCategoriesPrefix]).List;
+            return ((SelectedEstimatedCategories2)_session[SelectEstimatedCategoriesPrefix]).List;
         }
 
         //  https://action.mindjet.com/task/14509395
@@ -45,35 +54,60 @@ namespace SocialApps.Repositories
             }
         }
 
-        public EstimatedCategoriesByUser3_Result[] SelectEstimatedCategories(DateTime date, Guid userId, bool? shortList)
+        public EstimatedCategoriesByUser4_Result[] SelectEstimatedCategories(DateTime date, Guid userId, bool? shortList)
         {
             bool _shortList = (shortList != null && (bool)shortList);
 
             //  Check if data are already in session. Neglects possible date changing.
             if (_session[SelectEstimatedCategoriesPrefix] != null &&
-                ((SelectedEstimatedCategories)_session[SelectEstimatedCategoriesPrefix]).ShortList == _shortList)
-                return ((SelectedEstimatedCategories)_session[SelectEstimatedCategoriesPrefix]).List;
+                ((SelectedEstimatedCategories2)_session[SelectEstimatedCategoriesPrefix]).ShortList == _shortList)
+                return ((SelectedEstimatedCategories2)_session[SelectEstimatedCategoriesPrefix]).List;
 
             var fileName = SelectEstimatedCategoriesPrefix + "_" + date.Year + "_" + date.Month + "_" + date.Day + "_" + _shortList;
 
-            string json;
-            if (!DownloadText(userId, out json, fileName))
+            if (!DownloadText(userId, out string json, fileName))
             {
                 //  Remove all possibly existing old files.
                 DeleteCachedCategories(userId);
 
                 //  https://action.mindjet.com/task/144796941
-                var categoryList = _db.EstimatedCategoriesByUser3(date.Year, date.Month, date.Day, userId, shortList != null && (bool)shortList).ToArray();
+                var categoryList = _db.EstimatedCategoriesByUser4(date.Year, date.Month, date.Day, userId, shortList != null && (bool)shortList).ToArray();
 
                 //  https://action.mindjet.com/task/14509395
                 //  Converting to JSON.
-                json = JsonConvert.SerializeObject(new SelectedEstimatedCategories { Date = date, ShortList = _shortList, List = categoryList });
+                json = JsonConvert.SerializeObject(new SelectedEstimatedCategories2 { Date = date, ShortList = _shortList, List = categoryList });
                 UploadText(userId, json, fileName);
             }
 
             //  Cache data in session.
-            _session[SelectEstimatedCategoriesPrefix] = JsonConvert.DeserializeObject<SelectedEstimatedCategories>(json);
-            return ((SelectedEstimatedCategories)_session[SelectEstimatedCategoriesPrefix]).List;
+            try
+            {
+                _session[SelectEstimatedCategoriesPrefix] = JsonConvert.DeserializeObject<SelectedEstimatedCategories2>(json);
+            }
+            catch {
+                //  Conversion from structure of type 1 to structure of type 2.
+                var v1Cache = JsonConvert.DeserializeObject<SelectedEstimatedCategories1>(json);
+                var v2List = (
+                    from v1Item in v1Cache.List
+                    select new EstimatedCategoriesByUser4_Result
+                    {
+                        Currency = null,
+                        EncryptedName = v1Item.EncryptedName,
+                        Estimation = v1Item.Estimation,
+                        ID = v1Item.ID,
+                        Limit = v1Item.Limit,
+                        NAME = v1Item.NAME,
+                        Total = v1Item.Total
+                    }).ToArray();
+
+                _session[SelectEstimatedCategoriesPrefix] = new SelectedEstimatedCategories2
+                {
+                    Date = v1Cache.Date,
+                    ShortList = v1Cache.ShortList,
+                    List = v2List
+                };
+            }
+            return ((SelectedEstimatedCategories2)_session[SelectEstimatedCategoriesPrefix]).List;
         }
 
         public int? NewCategory(string name, double? limit, Guid userId, string encryptedName)

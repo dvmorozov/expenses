@@ -127,7 +127,7 @@
           <Property Name="Text" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ExpensesProd_2018-04-05T06-29Z.expenses.Expenses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Expenses">
           <Key>
             <PropertyRef Name="ID" />
@@ -253,6 +253,13 @@ warning 6002: The table/view 'ExpensesProd_2018-04-05T06-29Z.expenses.Expenses' 
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
         <Function Name="EstimatedCategoriesByUser3" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+          <Parameter Name="Day" Type="int" Mode="In" />
+          <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="ShortList" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="EstimatedCategoriesByUser4" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="Year" Type="int" Mode="In" />
           <Parameter Name="Month" Type="int" Mode="In" />
           <Parameter Name="Day" Type="int" Mode="In" />
@@ -537,6 +544,13 @@ warning 6002: The table/view 'ExpensesProd_2018-04-05T06-29Z.expenses.Expenses' 
             <End Role="Languages" EntitySet="Languages" />
             <End Role="Strings" EntitySet="Strings" />
           </AssociationSet>
+          <FunctionImport Name="EstimatedCategoriesByUser4" ReturnType="Collection(ExpensesModel.EstimatedCategoriesByUser4_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="Day" Mode="In" Type="Int32" />
+            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
+            <Parameter Name="ShortList" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Categories">
           <Key>
@@ -856,6 +870,15 @@ warning 6002: The table/view 'ExpensesProd_2018-04-05T06-29Z.expenses.Expenses' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="EstimatedCategoriesByUser4_Result">
+          <Property Type="String" Name="NAME" Nullable="true" MaxLength="100" />
+          <Property Type="Double" Name="Limit" Nullable="true" />
+          <Property Type="Int32" Name="ID" Nullable="true" />
+          <Property Type="Double" Name="Total" Nullable="true" />
+          <Property Type="String" Name="Estimation" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="EncryptedName" Nullable="true" />
+          <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1133,6 +1156,19 @@ warning 6002: The table/view 'ExpensesProd_2018-04-05T06-29Z.expenses.Expenses' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="EstimatedCategoriesByUser4" FunctionName="Хранилище ExpensesModel.EstimatedCategoriesByUser4">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExpensesModel.EstimatedCategoriesByUser4_Result">
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="Limit" ColumnName="Limit" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Estimation" ColumnName="Estimation" />
+                <ScalarProperty Name="EncryptedName" ColumnName="EncryptedName" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

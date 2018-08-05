@@ -214,7 +214,7 @@ namespace SocialApps.Controllers
             {
                 var res = (List<LastYearCategoryExpensesByMonthByUser_Result>)Session["LastYearByCategoryExpensesResult"];
                 //  Gets chart object.
-                var myChart = RenderTrendByCategoryChart(res, width, height, (int)Session["LastMonthNumber"], ((EstimatedCategoriesByUser3_Result)Session["SelectedCategory"]).NAME);
+                var myChart = RenderTrendByCategoryChart(res, width, height, (int)Session["LastMonthNumber"], ((EstimatedCategoriesByUser4_Result)Session["SelectedCategory"]).NAME);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
             catch
