@@ -171,6 +171,8 @@ namespace SocialApps.Models
     {
         public short Importance { get; set; }
         public double Sum { get; set; }
+        //  https://github.com/dvmorozov/expenses/issues/10
+        public string Currency { get; set; }
     }
 
     //  https://action.mindjet.com/task/14915101
