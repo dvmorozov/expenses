@@ -279,13 +279,13 @@ namespace SocialApps.Controllers
 
         //  https://www.evernote.com/shard/s132/nl/14501366/6ad181b9-a410-4aab-b47a-7ea111aefb04
         //  Renders and returns chart image.
-        public FileResult GetImportanceChartContentWh(int width, int height, bool? pie)
+        public FileResult GetImportanceChartContentWh(int currencyGroupId, int width, int height, bool? pie)
         {
             try
             {
                 var res = (List<MonthImportance>)Session["ImportanceResult"];
                 //  Gets chart object.
-                var myChart = RenderImportanceChart(res, width, height, (int)Session["Top10Year"], (int)Session["Top10Month"], pie);
+                var myChart = RenderImportanceChart(currencyGroupId, res, width, height, (int)Session["Top10Year"], (int)Session["Top10Month"], pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
             catch
@@ -295,7 +295,7 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/6ad181b9-a410-4aab-b47a-7ea111aefb04
-        private Chart RenderImportanceChart(List<MonthImportance> items, int width, int height, int year, int month, bool? pie)
+        private Chart RenderImportanceChart(int currencyGroupId, List<MonthImportance> items, int width, int height, int year, int month, bool? pie)
         {
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
