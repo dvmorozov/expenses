@@ -221,9 +221,10 @@ namespace SocialApps.Repositories
                 group monthImportance by new { monthImportance.Currency, monthImportance.Importance } into g
                 select new MonthImportance
                 {
+                    //GROUPID1 =
                     Sum = g.Sum(t => t.Sum),
                     Importance = g.FirstOrDefault().Importance,
-                    Currency = g.FirstOrDefault().Currency
+                    Currency = g.FirstOrDefault().Currency,
                 }
             ).ToList();
         }
