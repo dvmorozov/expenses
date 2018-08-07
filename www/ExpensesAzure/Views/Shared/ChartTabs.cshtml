@@ -27,7 +27,7 @@
 									<script>
 										imageURL.push({
 											pie: true,
-											url: '@Url.Action("GetTop10ChartContentWh", "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
+											url: '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
 											diagramId: '@Html.Raw(diagramId)',
 											diagramContainerId: '@Html.Raw(diagramContainerId)'
 										});
