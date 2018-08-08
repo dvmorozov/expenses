@@ -31,15 +31,31 @@ namespace SocialApps.Controllers
         }
 
         //  https://action.mindjet.com/task/14919145
-        private CurrencyGroup[] GetCurrencyGroups(List<EstimatedTop10CategoriesForMonthByUser3_Result> allItems)
+        private CurrencyGroup[] GetCurrencyGroups<T>(IEnumerable<T> allItems)
         {
-            return allItems.GroupBy(t => new { GroupId = (int)t.GROUPID1 })
+            //  Uses reflection to get data from objects of template parameter type.
+            return allItems.GroupBy(t => new { GroupId = (int)t.GetType().GetProperty("GROUPID1").GetValue(t) })
                 .Select(t => new CurrencyGroup {
                     GroupId = t.Key.GroupId,
                     //  https://github.com/dvmorozov/expenses/issues/8
                     //  Currency can be not assigned.
-                    Currency = t.First().Currency != null ? t.First().Currency.Trim() : ""
+                    Currency = t.GetType().GetProperty("Currency").GetValue(t.First()) != null ?
+                        ((string)t.GetType().GetProperty("Currency").GetValue(t.First())).Trim() : ""
                 }).ToArray();
+        }
+
+        //  https://github.com/dvmorozov/expenses/issues/10
+        private IEnumerable<T> FilterItemsByGroupId<T>(IEnumerable<T> allItems, int groupId)
+        {
+            //  Group ids are extracted.
+            var groupIds = GetCurrencyGroups<T>(allItems);
+            Debug.Assert(groupIds.Count() >= 1);
+
+            //  Select items of given currency group.
+            var items = allItems.Where(t => (int)t.GetType().GetProperty("GROUPID1").GetValue(t) == groupId);
+
+
+            return allItems;
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
@@ -50,12 +66,7 @@ namespace SocialApps.Controllers
             var year = (int)Session["Top10Year"];
             var month = (int)Session["Top10Month"];
 
-            //  Group ids are extracted.
-            var groupIds = GetCurrencyGroups(allItems);
-            Debug.Assert(groupIds.Count() >= 1);
-
-            //  Select items of given currency group.
-            var items = allItems.Where(t => (int)t.GROUPID1 == currencyGroupId);
+            var items = FilterItemsByGroupId<EstimatedTop10CategoriesForMonthByUser3_Result>(allItems, currencyGroupId);
 
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
@@ -355,7 +366,7 @@ namespace SocialApps.Controllers
             catch (Exception e)
             {
                 Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "Top10"));
+                return View("Error", new HandleErrorInfo(e, "Mobile", "Importance"));
             }
         }
 

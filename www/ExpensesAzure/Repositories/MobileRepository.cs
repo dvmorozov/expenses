@@ -200,7 +200,7 @@ namespace SocialApps.Repositories
         //  https://github.com/dvmorozov/expenses/issues/10
         public List<MonthImportance> GetMonthImportances(Guid userId, DateTime now)
         {
-            return (
+            var query =
                 from monthImportance in
                 (
                     from exp in _db.Expenses
@@ -221,12 +221,19 @@ namespace SocialApps.Repositories
                 group monthImportance by new { monthImportance.Currency, monthImportance.Importance } into g
                 select new MonthImportance
                 {
-                    //GROUPID1 =
                     Sum = g.Sum(t => t.Sum),
                     Importance = g.FirstOrDefault().Importance,
-                    Currency = g.FirstOrDefault().Currency,
-                }
-            ).ToList();
+                    Currency = g.FirstOrDefault().Currency
+                };
+
+            //  Initializes group numbers.
+            int i = 0;
+            foreach (var g in query)
+            {
+                g.GROUPID1 = i++;
+            }
+
+            return query.ToList();
         }
 
         public void Dispose()
