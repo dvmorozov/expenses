@@ -33,40 +33,40 @@ namespace SocialApps.Controllers
         //  https://action.mindjet.com/task/14919145
         private CurrencyGroup[] GetCurrencyGroups<T>(IEnumerable<T> allItems)
         {
+#if DEBUG
+            foreach (var i in allItems)
+                Debug.Assert(i.GetType().GetProperty("GROUPID1").GetValue(i) != null);
+#endif
             //  Uses reflection to get data from objects of template parameter type.
-            return allItems.GroupBy(t => new { GroupId = (int)t.GetType().GetProperty("GROUPID1").GetValue(t) })
-                .Select(t => new CurrencyGroup {
-                    GroupId = t.Key.GroupId,
-                    //  https://github.com/dvmorozov/expenses/issues/8
-                    //  Currency can be not assigned.
-                    Currency = t.GetType().GetProperty("Currency").GetValue(t.First()) != null ?
-                        ((string)t.GetType().GetProperty("Currency").GetValue(t.First())).Trim() : ""
-                }).ToArray();
+            return allItems.GroupBy(item => new
+            {
+                GroupId = (long)item.GetType().GetProperty("GROUPID1").GetValue(item)
+            })
+            .Select(group => new CurrencyGroup
+            {
+                GroupId = group.Key.GroupId,
+                //  https://github.com/dvmorozov/expenses/issues/10
+                //  Selects the first item from each group.
+                Currency = group.First().GetType().GetProperty("Currency").GetValue(group.First()) != null ?
+                   (string)group.First().GetType().GetProperty("Currency").GetValue(group.First()) : ""
+            }).ToArray();
         }
 
         //  https://github.com/dvmorozov/expenses/issues/10
         private IEnumerable<T> FilterItemsByGroupId<T>(IEnumerable<T> allItems, int groupId)
         {
-            //  Group ids are extracted.
-            var groupIds = GetCurrencyGroups<T>(allItems);
-            Debug.Assert(groupIds.Count() >= 1);
-
             //  Select items of given currency group.
-            var items = allItems.Where(t => (int)t.GetType().GetProperty("GROUPID1").GetValue(t) == groupId);
-
-
-            return allItems;
+            return allItems.Where(t => (long)t.GetType().GetProperty("GROUPID1").GetValue(t) == groupId);
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
         private Chart RenderTop10Chart(int currencyGroupId, int width, int height, bool? pie)
         {
             var allItems = (List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"];
+            var items = FilterItemsByGroupId(allItems, currencyGroupId);
 
             var year = (int)Session["Top10Year"];
             var month = (int)Session["Top10Month"];
-
-            var items = FilterItemsByGroupId<EstimatedTop10CategoriesForMonthByUser3_Result>(allItems, currencyGroupId);
 
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
@@ -124,7 +124,13 @@ namespace SocialApps.Controllers
                 }
 
                 var monthTotalsWithCurrencies = (MonthTotalByUser3_Result[])Session["MonthTotalsWithCurrencies"];
+
+                //  Gets currency name for given currency group id.
+                //  Group ids are extracted.
+                var groupIds = GetCurrencyGroups(allItems);
+                Debug.Assert(groupIds.Count() >= 1);
                 var groupCurrency = groupIds.Where(t => t.GroupId == currencyGroupId).First().Currency.Trim();
+
                 //  Select month total for given currency.
                 //  https://github.com/dvmorozov/expenses/issues/8
                 //  Currency can be not assigned.
@@ -294,20 +300,22 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var res = (List<MonthImportance>)Session["ImportanceResult"];
                 //  Gets chart object.
-                var myChart = RenderImportanceChart(currencyGroupId, res, width, height, (int)Session["Top10Year"], (int)Session["Top10Month"], pie);
+                var myChart = RenderImportanceChart(currencyGroupId, width, height, (int)Session["Top10Year"], (int)Session["Top10Month"], pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
-            catch
+            catch(Exception e)
             {
                 return File(Url.Content("~/Content/failure.png"), System.Net.Mime.MediaTypeNames.Application.Octet);
             }
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/6ad181b9-a410-4aab-b47a-7ea111aefb04
-        private Chart RenderImportanceChart(int currencyGroupId, List<MonthImportance> items, int width, int height, int year, int month, bool? pie)
+        private Chart RenderImportanceChart(int currencyGroupId, int width, int height, int year, int month, bool? pie)
         {
+            var allItems = (List<MonthImportance>)Session["ImportanceResult"];
+            var items = FilterItemsByGroupId(allItems, currencyGroupId);
+
             var dt = new DateTime(year, month, 1);
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
             //  Chart header was hidden.
@@ -352,7 +360,11 @@ namespace SocialApps.Controllers
 
                 Session["Top10Month"] = now.Month;
                 Session["Top10Year"] = now.Year;
-                Session["ImportanceResult"] = _repository.GetMonthImportances(userId, now);
+
+                var allItems = _repository.GetMonthImportances(userId, now);
+                Session["ImportanceResult"] = allItems;
+
+                ViewBag.CurrencyGroups = GetCurrencyGroups(allItems);
 
                 var totals = _repository.GetTodayAndMonthTotals(userId, now); 
                 //  https://action.mindjet.com/task/14672437
