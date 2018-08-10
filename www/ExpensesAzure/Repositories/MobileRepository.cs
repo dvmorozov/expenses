@@ -223,17 +223,36 @@ namespace SocialApps.Repositories
                 {
                     Sum = g.Sum(t => t.Sum),
                     Importance = g.FirstOrDefault().Importance,
-                    Currency = g.FirstOrDefault().Currency
+                    Currency = g.FirstOrDefault().Currency != null ? g.FirstOrDefault().Currency.Trim() : ""
                 };
 
+            //  Selects different currencies.
+            var currencies =
+                (
+                from g in query
+                group g by new { g.Currency } into gc
+                select new CurrencyGroup {
+                    Currency = gc.FirstOrDefault().Currency
+                }).ToArray();
+
             //  Initializes group numbers.
-            int i = 0;
-            foreach (var g in query)
-            {
-                g.GROUPID1 = i++;
+            long i = 0;
+            foreach (var c in currencies)
+                c.GroupId = i++;
+
+            //  Copies group identifier into resulting set.
+            var result = query.ToList();
+            foreach (var item in result) {
+                foreach (var c in currencies) {
+                    if (c.Currency == item.Currency)
+                    {
+                        item.GROUPID1 = c.GroupId;
+                        break;
+                    }
+                }
             }
 
-            return query.ToList();
+            return result;
         }
 
         public void Dispose()
