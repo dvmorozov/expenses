@@ -304,7 +304,7 @@ namespace SocialApps.Controllers
                 var myChart = RenderImportanceChart(currencyGroupId, width, height, (int)Session["Top10Year"], (int)Session["Top10Month"], pie);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
-            catch(Exception e)
+            catch
             {
                 return File(Url.Content("~/Content/failure.png"), System.Net.Mime.MediaTypeNames.Application.Octet);
             }

@@ -1,6 +1,12 @@
 ﻿
 @using SocialApps.Models
 
+<script type="text/javascript">
+	@*	Constructing array of data which are used to build graphs.
+		Variable must have the same name as on other pages. *@
+	var imageURL = [];
+</script>
+
 <div class="tab-content">
 	@{
 		var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
