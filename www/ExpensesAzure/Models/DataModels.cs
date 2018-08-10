@@ -171,6 +171,10 @@ namespace SocialApps.Models
     {
         public short Importance { get; set; }
         public double Sum { get; set; }
+        //  https://github.com/dvmorozov/expenses/issues/10
+        public string Currency { get; set; }
+        //  Integer indentifier of currency group (to reuse ChartTabs).
+        public long GROUPID1 { get; set; }
     }
 
     //  https://action.mindjet.com/task/14915101
@@ -311,7 +315,7 @@ namespace SocialApps.Models
     //  https://action.mindjet.com/task/14919145
     public class CurrencyGroup
     {
-        public int GroupId { get; set; }
+        public long GroupId { get; set; }
         public string Currency { get; set; }
     }
 }

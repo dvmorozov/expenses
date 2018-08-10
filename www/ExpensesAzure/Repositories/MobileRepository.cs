@@ -196,41 +196,63 @@ namespace SocialApps.Repositories
                 _db.ResetMonthIncomeByUser((int)year, (int)month, income, userId);
         }
 
+        //  Returns groups for all currencies in sinle unsorted list.
+        //  https://github.com/dvmorozov/expenses/issues/10
         public List<MonthImportance> GetMonthImportances(Guid userId, DateTime now)
         {
-            return (
-            from groups in
+            var query =
+                from monthImportance in
                 (
-                    from exp in
-                    (
-                        from exp in _db.Expenses
-                        where (exp.DataOwner == userId) &&
-                            (
-                                ((exp.Monthly == null || !(bool)exp.Monthly) &&
-                                exp.Date.Month == now.Month && exp.Date.Year == now.Year) ||
-                                ((exp.Monthly != null && (bool)exp.Monthly) &&
-                                now >= exp.FirstMonth && (exp.LastMonth == null || now <= exp.LastMonth))
-                            )
-                        select new MonthImportance
-                        {
-                            Sum = exp.Cost != null ? (double)exp.Cost : 0.0,
-                            Importance = exp.Importance != null ? (short)exp.Importance : (short)ExpenseImportance.Necessary
-                        }
-                    )
-                    group exp by exp.Importance into g
+                    from exp in _db.Expenses
+                    where (exp.DataOwner == userId) &&
+                        (
+                            ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                            exp.Date.Month == now.Month && exp.Date.Year == now.Year) ||
+                            ((exp.Monthly != null && (bool)exp.Monthly) &&
+                            now >= exp.FirstMonth && (exp.LastMonth == null || now <= exp.LastMonth))
+                        )
                     select new MonthImportance
                     {
-                        Sum = g.Sum(t => t.Sum),
-                        Importance = g.FirstOrDefault().Importance
+                        Sum = exp.Cost != null ? (double)exp.Cost : 0.0,
+                        Importance = exp.Importance != null ? (short)exp.Importance : (short)ExpenseImportance.Necessary,
+                        Currency = exp.Currency
                     }
                 )
-            orderby groups.Importance descending
-            select new MonthImportance
-            {
-                Sum = groups.Sum,
-                Importance = groups.Importance
+                group monthImportance by new { monthImportance.Currency, monthImportance.Importance } into g
+                select new MonthImportance
+                {
+                    Sum = g.Sum(t => t.Sum),
+                    Importance = g.FirstOrDefault().Importance,
+                    Currency = g.FirstOrDefault().Currency != null ? g.FirstOrDefault().Currency.Trim() : ""
+                };
+
+            //  Selects different currencies.
+            var currencies =
+                (
+                from g in query
+                group g by new { g.Currency } into gc
+                select new CurrencyGroup {
+                    Currency = gc.FirstOrDefault().Currency
+                }).ToArray();
+
+            //  Initializes group numbers.
+            long i = 0;
+            foreach (var c in currencies)
+                c.GroupId = i++;
+
+            //  Copies group identifier into resulting set.
+            var result = query.ToList();
+            foreach (var item in result) {
+                foreach (var c in currencies) {
+                    if (c.Currency == item.Currency)
+                    {
+                        item.GROUPID1 = c.GroupId;
+                        break;
+                    }
+                }
             }
-            ).ToList();
+
+            return result;
         }
 
         public void Dispose()

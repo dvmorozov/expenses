@@ -2,17 +2,11 @@
 @using System.Globalization
 @using SocialApps.Models
 @using SocialApps.Repositories
-
 @{
-	var dt = new DateTime((int) Session["Top10Year"], (int) Session["Top10Month"], 1);
+	var dt = new DateTime((int)Session["Top10Year"], (int)Session["Top10Month"], 1);
 	ViewBag.Title = Resources.Resources.ImportanceReportTitle + " " + dt.ToString("MMM yyyy");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
-
-<script type="text/javascript">
-	//  Constructing basic URL which is used from updateDiagram.
-	var imageURL = '@Url.Action("GetImportanceChartContentWh", "Mobile", new { timestamp = DateTime.Now.Ticks })';
-</script>
 
 @* ReSharper disable UnknownCssClass *@
 @using (Html.BeginForm("Importance", "Mobile"))
@@ -43,7 +37,7 @@
 						<td style="width: 1%;">
 							@{
 								<span class="badge pull-right" style="margin: 8px 0;">@Html.Raw(@*dt.ToString("MMM yyyy")*@dt.ToString("MMM") + " | " + (int)ViewBag.MonthTotal)</span>
-							 }
+							}
 						</td>
 					</tr>
 				</tbody>
@@ -52,99 +46,122 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-9">
+					@* Add tab headers. *@
 					@{
-						var list = (List<MonthImportance>)Session["ImportanceResult"];
-						if (list.Count() != 0)
-						{
-							<table class="table">
-								<tbody>
-									<tr>
-										<th>#</th>
-										<th style="width: 100%;">@Html.Raw(Resources.Resources.Importance)</th>
-										<th>@Html.Raw(Resources.Resources.Spent)</th>
-									</tr>
+						var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
+						var tableTabPrefix = "table_tab_";
+						var chartTabPrefix = "chart_tab_";
+						ViewBag.TabPrefix = tableTabPrefix;
+					}
 
-									@for (var index = 0; index < list.Count(); index++)
-									{
-										var cat = list[index];
+					@Html.Partial("CurrencyTabs")
 
-										@* https://www.evernote.com/shard/s132/nl/14501366/a6faca57-602d-44d8-ba4a-94ce5054a642 *@
-										<tr class="trlist" onclick="window.location.href = '@Url.Action("ExpensesByImportance", "Mobile", new { importance = cat.Importance })';">
-											<td>
-												@Html.Raw((index + 1).ToString(CultureInfo.InvariantCulture))
-											</td>
-											<td>
+					@* Add tab content. *@
+					<div class="tab-content">
+						@{
+							if (currencyGroups.Count() != 0)
+							{
+								for (var i = 0; i < currencyGroups.Count(); i++)
+								{
+									var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
+									var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
+									var tableTabId = tableTabPrefix + currencyGroups[i].GroupId.ToString();
+
+									<div class="@Html.Raw(tabClass)" id="@Html.Raw(tableTabId)" style="margin-top: 8px;">
+										<div style="display: inline-block; margin-top: 8px;">
+											<div class="panel-body" id="@Html.Raw(tableContainerId)">
 												@{
-													var importance = Resources.Resources.Necessary;
-													switch((ExpenseImportance)cat.Importance)
+													var list = ((List<MonthImportance>)Session["ImportanceResult"]).Where(t => t.GROUPID1 == currencyGroups[i].GroupId).ToList();
+													if (list.Count() != 0)
 													{
-														case ExpenseImportance.Liability:
-															importance = Resources.Resources.Liability;
-															break;
-															
-														case ExpenseImportance.Asset:
-															importance = Resources.Resources.Asset;
-															break;
-															
-														case ExpenseImportance.Necessary:
-															importance = Resources.Resources.Necessary;
-															break;
-															
-														case ExpenseImportance.Pleasure:
-															importance = Resources.Resources.Pleasure;
-															break;
-															
-														case ExpenseImportance.Unnecessary:
-															importance = Resources.Resources.Unnecessary;
-															break;
+														<table class="table">
+															<tbody>
+																<tr>
+																	<th>#</th>
+																	<th style="width: 100%;">@Html.Raw(Resources.Resources.Importance)</th>
+																	<th>@Html.Raw(Resources.Resources.Spent)</th>
+																</tr>
+																@for (var index = 0; index < list.Count(); index++)
+																{
+																	var cat = list[index];
+
+																	@* https://www.evernote.com/shard/s132/nl/14501366/a6faca57-602d-44d8-ba4a-94ce5054a642 *@
+																	<tr class="trlist" onclick="window.location.href = '@Url.Action("ExpensesByImportance", "Mobile", new { importance = cat.Importance })';">
+																		<td>
+																			@Html.Raw((index + 1).ToString(CultureInfo.InvariantCulture))
+																		</td>
+																		<td>
+																			@{
+																				var importance = Resources.Resources.Necessary;
+																				switch ((ExpenseImportance)cat.Importance)
+																				{
+																					case ExpenseImportance.Liability:
+																						importance = Resources.Resources.Liability;
+																						break;
+
+																					case ExpenseImportance.Asset:
+																						importance = Resources.Resources.Asset;
+																						break;
+
+																					case ExpenseImportance.Necessary:
+																						importance = Resources.Resources.Necessary;
+																						break;
+
+																					case ExpenseImportance.Pleasure:
+																						importance = Resources.Resources.Pleasure;
+																						break;
+
+																					case ExpenseImportance.Unnecessary:
+																						importance = Resources.Resources.Unnecessary;
+																						break;
+																				}
+																			}
+																			@Html.Raw(importance)
+																		</td>
+																		<td>
+																			@Html.Raw(Math.Floor(cat.Sum).ToString(CultureInfo.InvariantCulture))
+																		</td>
+																	</tr>
+																}
+															</tbody>
+														</table>
 													}
 												}
-
-												@Html.Raw(importance)
-											</td>
-											<td>
-												@Html.Raw(Math.Floor(cat.Sum).ToString(CultureInfo.InvariantCulture))
-											</td>
-										</tr>
-									}
-								</tbody>
-							</table>
+											</div>
+										</div>
+									</div>
+								}
+							}
+							else
+							{
+								<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
+								<br />
+							}
 						}
-						else
-						{
-							<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
-							<br />
-						}
-					}
+					</div>
 				</div>
+
 				<div class="col-md-3">
 					<div class="panel panel-default">
 						<div class="panel-heading">@Html.Raw(ViewBag.Title)</div>
-						<div class="panel-body" id="diagram_container">
-							<img id="diagram" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
+						@* Add tab headers. *@
+						@{
+							ViewBag.TabPrefix = chartTabPrefix;
+							ViewBag.ChartActionName = "GetImportanceChartContentWh";
+						}
+						@Html.Partial("CurrencyTabs")
+						@Html.Partial("ChartTabs")
 
-							<div class="month_calendar"></div>
+						<div class="panel-body">
+							<div class="month_calendar">
+							</div>
+							<div>
+								<button type="submit" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Refresh)">
+									<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+								</button>
+								<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="warning"></span>
+							</div>
 						</div>
-					</div>
-					<div>
-						<table>
-							<tbody>
-								<tr>
-									<td>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default" onclick="updateDiagram(false);">@Html.Raw(Resources.Resources.Bar)</button>
-											<button type="button" class="btn btn-default" onclick="updateDiagram(true);">@Html.Raw(Resources.Resources.Pie)</button>
-										</div>
-										<button type="submit" class="btn btn-default tooltipButton" aria-label="@Html.Raw(Resources.Resources.Refresh)" data-toggle="tooltip" data-placement="top" title="@Html.Raw(Resources.Resources.Refresh)">
-											<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-										</button>
-									</td>
-									<td>
-										<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="warning"></span>
-									</td>
-								</tr>
-							</tbody>
-						</table>
 					</div>
 				</div>
 			</div>
@@ -154,5 +171,5 @@
 			@Html.Partial("BottomHomeButton")
 		</div>
 	</div>
-@* ReSharper restore UnknownCssClass *@
+	@* ReSharper restore UnknownCssClass *@
 }

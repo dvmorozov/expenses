@@ -9,12 +9,6 @@
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
-<script type="text/javascript">
-	@*	Constructing array of data which are used to build graphs.
-		Variable must have the same name as on other pages. *@
-	var imageURL = [];
-</script>
-
 @* ReSharper disable UnknownCssClass *@
 @using (Html.BeginForm("Top10", "Mobile"))
 {
@@ -170,63 +164,17 @@
 						}
 					</div>
 				</div>
+
 				<div class="col-md-3">
 					<div class="panel panel-default">
 						<div class="panel-heading">@Html.Raw(ViewBag.Title)</div>
 						@* Add tab headers. *@
 						@{
 							ViewBag.TabPrefix = chartTabPrefix;
+							ViewBag.ChartActionName = "GetTop10ChartContentWh";
 						}
 						@Html.Partial("CurrencyTabs")
-
-						@* Add tab content. *@
-						<div class="tab-content">
-							@{
-								for (var i = 0; i < currencyGroups.Count(); i++)
-								{
-									var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
-									var diagramId = "diagram_" + currencyGroups[i].GroupId.ToString();
-									var diagramContainerId = "diagram_container_" + currencyGroups[i].GroupId.ToString();
-									var chartTabId = chartTabPrefix + currencyGroups[i].GroupId.ToString();
-
-									<div class="@Html.Raw(tabClass)" id="@Html.Raw(chartTabId)" style="margin-top: 8px;">
-										<div style="display: inline-block; margin-top: 8px;">
-											<div class="panel-body" id="@Html.Raw(diagramContainerId)">
-												<img id="@Html.Raw(diagramId)" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
-											</div>
-										</div>
-										<div class="panel-body">
-											<table>
-												<tbody>
-													<tr>
-														<td>
-															<script>
-																	imageURL.push({
-																		pie: true,
-																		url: '@Url.Action("GetTop10ChartContentWh", "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
-																		diagramId: '@Html.Raw(diagramId)',
-																		diagramContainerId: '@Html.Raw(diagramContainerId)'
-																	});
-															</script>
-															<div class="btn-group">
-																@* Timestamp parameter is added to overcome image caching. *@
-																<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
-																	@Html.Raw(Resources.Resources.Bar)
-																</button>
-																<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action("GetTop10ChartContentWh", "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
-																	@Html.Raw(Resources.Resources.Pie)
-																</button>
-															</div>
-														</td>
-														<td></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								}
-							}
-						</div>
+						@Html.Partial("ChartTabs")
 
 						<div class="panel-body">
 							<div class="month_calendar">
