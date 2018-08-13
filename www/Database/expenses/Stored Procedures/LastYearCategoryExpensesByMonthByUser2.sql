@@ -1,69 +1,17 @@
 ﻿
-CREATE PROCEDURE [expenses].LastYearCategoryExpensesByMonthByUser2 @CategoryID INT, @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
+-- ==========================================================================================
+-- Author:		D.V.Morozov
+-- Last modified: 13/08/2018
+-- Description:	For compatibility returns the first part of dataset corresponding to 
+--				the first non-NULL currency. 
+--				https://github.com/dvmorozov/expenses/issues/54
+-- ==========================================================================================
+
+CREATE PROCEDURE [expenses].[LastYearCategoryExpensesByMonthByUser2] @CategoryID INT, @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
-	--	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
-	SELECT Y, M, COALESCE(SingleTotal, 0) + COALESCE(MonthlyTotal, 0) AS Total, 
-		CAST(Y AS VARCHAR) + '/' + 
-		CASE WHEN LEN(CAST(M AS VARCHAR)) < 2 THEN '0' + CAST(M AS VARCHAR)
-		ELSE CAST(M AS VARCHAR) END AS Month
-	FROM
-	(
-		SELECT E1.Y, E1.M, E1.Total AS SingleTotal, SUM(E2.Cost) AS MonthlyTotal FROM
-		(
-				SELECT TOP(@LastMonthNumber) 
-					SUM(Cost) AS Total,
-					DATEPART(year, Date) AS Y, DATEPART(month, Date) AS M,
-					DATEFROMPARTS(DATEPART(year, Date), DATEPART(month, Date), 1) AS CurMonth
-				FROM [expenses].Expenses e
-					JOIN ExpensesCategories ec
-					ON ec.ExpenseID = e.ID AND ec.CategoryID = @CategoryID
-				WHERE DataOwner = @DataOwner AND Monthly IS NULL OR Monthly = 0
-					--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-					--	Only given currency taken into account in calculating of the total.
-					AND (Currency = (
-							SELECT TOP 1 Currency
-							FROM [expenses].Month
-							WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
-						)
-					-- If not set the currency is considered as it is set for month.
-					OR Currency IS NULL
-					-- If the budget currency is not set then all expenses are considered as given in the same currency.
-					OR (
-							SELECT TOP 1 Currency
-							FROM [expenses].Month
-							WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
-						) IS NULL)
-				GROUP BY DATEPART(year, Date), DATEPART(month, Date)
-				--	Сортировка д. б. здесь, чтобы создать правильный рейтинг TOP.
-				ORDER BY Y DESC, M DESC
-		) E1
-		FULL OUTER JOIN
-		(
-			SELECT Cost, FirstMonth, LastMonth,
-				DATEPART(year, Date) AS Y, DATEPART(month, Date) AS M
-			FROM [expenses].Expenses e
-				JOIN ExpensesCategories ec
-				ON ec.ExpenseID = e.ID AND ec.CategoryID = @CategoryID
-			WHERE DataOwner = @DataOwner AND Monthly IS NOT NULL AND Monthly = 1
-				--	https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
-				--	Only given currency taken into account in calculating of the total.
-				AND (Currency = (
-						SELECT TOP 1 Currency
-						FROM [expenses].Month
-						WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
-					)
-				-- If not set the currency is considered as it is set for month.
-				OR Currency IS NULL
-				-- If the budget currency is not set then all expenses are considered as given in the same currency.
-				OR (
-						SELECT TOP 1 Currency
-						FROM [expenses].Month
-						WHERE Year = DATEPART(year, Date) AND Month = DATEPART(month, Date) AND DataOwner = @DataOwner
-					) IS NULL)
-		) E2
-		ON E1.CurMonth >= E2.FirstMonth AND (E1.CurMonth <= E2.LastMonth OR E2.LastMonth IS NULL)
-		GROUP BY E1.Y, E1.M, E1.Total
-	)
-	AS T
+	SELECT TOP (@LastMonthNumber)
+		Y, M, Total, Month
+	FROM [expenses].[GetLastYearCategoryExpensesByMonthByUser](@LastMonthNumber, @DataOwner, @CategoryId)
+	WHERE Currency IS NOT NULL
 END
