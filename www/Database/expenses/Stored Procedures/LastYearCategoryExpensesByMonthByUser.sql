@@ -1,16 +1,16 @@
 ﻿
-CREATE PROCEDURE [expenses].LastYearCategoryExpensesByMonthByUser @CategoryID INT, @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
+-- ==========================================================================================
+-- Author:		D.V.Morozov
+-- Last modified: 14/08/2018
+-- Description:	For compatibility returns the first part of dataset corresponding to 
+--				the first non-NULL currency. 
+--				https://github.com/dvmorozov/expenses/issues/54
+-- ==========================================================================================
+CREATE PROCEDURE [expenses].[LastYearCategoryExpensesByMonthByUser] @CategoryID INT, @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
-	DECLARE @T TABLE (
-		Y INT NOT NULL, 
-		M INT NOT NULL,
-		Total FLOAT NOT NULL, 
-		Month NVARCHAR(10) NULL
-		)
-
-	INSERT INTO @T EXEC [expenses].LastYearCategoryExpensesByMonthByUser2 @CategoryID, @LastMonthNumber, @DataOwner
-
-	SELECT Y, M, Total
-	FROM @T
+	SELECT TOP (@LastMonthNumber)
+		Y, M, Total
+	FROM [expenses].[GetLastYearCategoryExpensesByMonthByUser](@LastMonthNumber, @DataOwner, @CategoryId)
+	WHERE Currency IS NOT NULL
 END

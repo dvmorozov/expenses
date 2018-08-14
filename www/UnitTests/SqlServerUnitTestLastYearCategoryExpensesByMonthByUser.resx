@@ -121,15 +121,20 @@
     <value>-- database unit test for expenses.LastYearCategoryExpensesByMonthByUser
 DECLARE @RC AS INT, @CategoryID AS INT, @LastMonthNumber AS INT, @DataOwner AS UNIQUEIDENTIFIER;
 
+DECLARE @Result TABLE (Y INT, M INT, Total REAL);
+
 SELECT @RC = 0,
        @CategoryID = 14,
        @LastMonthNumber = 12,
        @DataOwner = 'd94f9786-01f3-4b22-b612-285f82a85093';
 
+INSERT INTO @Result
 EXECUTE @RC = [expenses].[LastYearCategoryExpensesByMonthByUser] @CategoryID, @LastMonthNumber, @DataOwner;
 
-SELECT @RC AS RC;
-
+-- Checks that all months and years have non-NULL values.
+SELECT * 
+FROM @Result
+WHERE Y IS NULL OR M IS NULL
 </value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

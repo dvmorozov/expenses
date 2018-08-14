@@ -39,10 +39,15 @@ namespace UnitTests
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestLastYearCategoryExpensesByMonthByUser));
-            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition notEmptyResultSetCondition1;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition emptyResultSetCondition1;
             this.expenses_LastYearCategoryExpensesByMonthByUserTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
-            notEmptyResultSetCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition();
+            emptyResultSetCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition();
+            // 
+            // expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction
+            // 
+            expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction.Conditions.Add(emptyResultSetCondition1);
+            resources.ApplyResources(expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction, "expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction");
             // 
             // expenses_LastYearCategoryExpensesByMonthByUserTestData
             // 
@@ -50,16 +55,11 @@ namespace UnitTests
             this.expenses_LastYearCategoryExpensesByMonthByUserTestData.PretestAction = null;
             this.expenses_LastYearCategoryExpensesByMonthByUserTestData.TestAction = expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction;
             // 
-            // expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction
+            // emptyResultSetCondition1
             // 
-            expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction.Conditions.Add(notEmptyResultSetCondition1);
-            resources.ApplyResources(expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction, "expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction");
-            // 
-            // notEmptyResultSetCondition1
-            // 
-            notEmptyResultSetCondition1.Enabled = true;
-            notEmptyResultSetCondition1.Name = "notEmptyResultSetCondition1";
-            notEmptyResultSetCondition1.ResultSet = 1;
+            emptyResultSetCondition1.Enabled = true;
+            emptyResultSetCondition1.Name = "emptyResultSetCondition1";
+            emptyResultSetCondition1.ResultSet = 1;
         }
 
         #endregion
