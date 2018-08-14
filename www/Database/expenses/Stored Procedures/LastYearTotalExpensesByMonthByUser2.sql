@@ -11,6 +11,6 @@
 CREATE PROCEDURE [expenses].LastYearTotalExpensesByMonthByUser2 @LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
-	SELECT *
+	SELECT Y, M, Total, Month, Currency
 	FROM expenses.GetLastYearTotalExpensesByMonthByUser(@LastMonthNumber, @DataOwner)
 END

@@ -121,7 +121,7 @@
     <value>-- database unit test for expenses.LastYearTotalExpensesByMonthByUser
 DECLARE @RC AS INT, @LastMonthNumber AS INT, @DataOwner AS UNIQUEIDENTIFIER;
 
-DECLARE @Result TABLE (Y INT, M INT, Balance REAL);
+DECLARE @Result TABLE (Y INT, M INT, Total REAL);
 
 SELECT @RC = 0,
        @LastMonthNumber = 60,
@@ -147,7 +147,7 @@ WHERE C &gt; 1;
 -- Checks that rows exist with non-zero balance.
 SELECT *
 FROM @Result
-WHERE Balance &lt;&gt; 0
+WHERE Total &lt;&gt; 0
 </value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

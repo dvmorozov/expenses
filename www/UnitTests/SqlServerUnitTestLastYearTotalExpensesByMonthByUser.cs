@@ -63,17 +63,17 @@ namespace UnitTests
             rowCountCondition2.ResultSet = 2;
             rowCountCondition2.RowCount = 0;
             // 
-            // expenses_LastYearTotalExpensesByMonthByUserTestData
-            // 
-            this.expenses_LastYearTotalExpensesByMonthByUserTestData.PosttestAction = null;
-            this.expenses_LastYearTotalExpensesByMonthByUserTestData.PretestAction = null;
-            this.expenses_LastYearTotalExpensesByMonthByUserTestData.TestAction = expenses_LastYearTotalExpensesByMonthByUserTest_TestAction;
-            // 
             // notEmptyResultSetCondition1
             // 
             notEmptyResultSetCondition1.Enabled = true;
             notEmptyResultSetCondition1.Name = "notEmptyResultSetCondition1";
             notEmptyResultSetCondition1.ResultSet = 3;
+            // 
+            // expenses_LastYearTotalExpensesByMonthByUserTestData
+            // 
+            this.expenses_LastYearTotalExpensesByMonthByUserTestData.PosttestAction = null;
+            this.expenses_LastYearTotalExpensesByMonthByUserTestData.PretestAction = null;
+            this.expenses_LastYearTotalExpensesByMonthByUserTestData.TestAction = expenses_LastYearTotalExpensesByMonthByUserTest_TestAction;
         }
 
         #endregion
