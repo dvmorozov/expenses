@@ -187,5 +187,6 @@
     <Build Include="expenses\Functions\GetEstimatedCategoriesByUser.sql" />
     <Build Include="expenses\Stored Procedures\EstimatedCategoriesByUser4.sql" />
     <Build Include="expenses\Functions\GetLastYearCategoryExpensesByMonthByUser.sql" />
+    <Build Include="expenses\Functions\GetLastYearBalanceByMonthByUser.sql" />
   </ItemGroup>
 </Project>
