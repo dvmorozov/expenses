@@ -14,14 +14,14 @@ namespace SocialApps.Models
 
 using System;
     
-public partial class LastYearBalanceByMonthByUser_Result
+public partial class LastYearBalanceByMonthByUser2_Result
 {
 
     public Nullable<int> Y { get; set; }
 
     public Nullable<int> M { get; set; }
 
-    public Nullable<double> Balance { get; set; }
+    public Nullable<float> Balance { get; set; }
 
 }
 

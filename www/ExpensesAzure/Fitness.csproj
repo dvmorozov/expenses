@@ -294,7 +294,7 @@
     <Compile Include="Models\Languages.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LastYearBalanceByMonthByUser_Result.cs">
+    <Compile Include="Models\LastYearBalanceByMonthByUser2_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LastYearCategoryExpensesByMonthByUser_Result.cs">

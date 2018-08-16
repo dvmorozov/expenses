@@ -37,5 +37,6 @@ BEGIN
 		LEFT JOIN [expenses].Month m
 		ON t.Y = m.Year AND t.M = m.Month AND t.Currency = m.Currency
 	) t
+	ORDER BY Currency, Y, M
 	RETURN
 END

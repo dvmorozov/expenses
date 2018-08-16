@@ -293,7 +293,7 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           <Parameter Name="Day" Type="int" Mode="In" />
           <Parameter Name="ShortList" Type="bit" Mode="In" />
         </Function>
-        <Function Name="LastYearBalanceByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
+        <Function Name="LastYearBalanceByMonthByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="LastMonthNumber" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
@@ -453,10 +453,6 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
             <Parameter Name="LastMonthNumber" Mode="In" Type="Int32" />
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
           </FunctionImport>
-          <FunctionImport Name="LastYearBalanceByMonthByUser" ReturnType="Collection(ExpensesModel.LastYearBalanceByMonthByUser_Result)">
-            <Parameter Name="LastMonthNumber" Mode="In" Type="Int32" />
-            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
-          </FunctionImport>
           <FunctionImport Name="AddMonthBudgetByUser2">
             <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="Month" Mode="In" Type="Int32" />
@@ -551,6 +547,10 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
             <Parameter Name="ShortList" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="LastYearBalanceByMonthByUser2" ReturnType="Collection(ExpensesModel.LastYearBalanceByMonthByUser2_Result)">
+            <Parameter Name="LastMonthNumber" Mode="In" Type="Int32" />
+            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Categories">
           <Key>
@@ -577,11 +577,6 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           <Property Type="Int32" Name="Y" Nullable="true" />
           <Property Type="Int32" Name="M" Nullable="true" />
           <Property Type="Double" Name="Total" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="LastYearBalanceByMonthByUser_Result">
-          <Property Type="Int32" Name="Y" Nullable="true" />
-          <Property Type="Int32" Name="M" Nullable="true" />
-          <Property Type="Double" Name="Balance" Nullable="true" />
         </ComplexType>
         <ComplexType Name="TodayExpensesByUser3_Result">
           <Property Type="DateTime" Name="Date" Nullable="false" Precision="23" />
@@ -879,6 +874,11 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           <Property Type="String" Name="EncryptedName" Nullable="true" />
           <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
         </ComplexType>
+        <ComplexType Name="LastYearBalanceByMonthByUser2_Result">
+          <Property Type="Int32" Name="Y" Nullable="true" />
+          <Property Type="Int32" Name="M" Nullable="true" />
+          <Property Type="Single" Name="Balance" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -926,15 +926,6 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
                 <ScalarProperty Name="Y" ColumnName="Y" />
                 <ScalarProperty Name="M" ColumnName="M" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="LastYearBalanceByMonthByUser" FunctionName="Хранилище ExpensesModel.LastYearBalanceByMonthByUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExpensesModel.LastYearBalanceByMonthByUser_Result">
-                <ScalarProperty Name="Y" ColumnName="Y" />
-                <ScalarProperty Name="M" ColumnName="M" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1166,6 +1157,15 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
                 <ScalarProperty Name="Estimation" ColumnName="Estimation" />
                 <ScalarProperty Name="EncryptedName" ColumnName="EncryptedName" />
                 <ScalarProperty Name="Currency" ColumnName="Currency" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LastYearBalanceByMonthByUser2" FunctionName="Хранилище ExpensesModel.LastYearBalanceByMonthByUser2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExpensesModel.LastYearBalanceByMonthByUser2_Result">
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="M" ColumnName="M" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -280,23 +280,6 @@ public partial class ExpensesEntities : DbContext
     }
 
 
-    public virtual ObjectResult<LastYearBalanceByMonthByUser_Result> LastYearBalanceByMonthByUser(Nullable<int> lastMonthNumber, Nullable<System.Guid> dataOwner)
-    {
-
-        var lastMonthNumberParameter = lastMonthNumber.HasValue ?
-            new ObjectParameter("LastMonthNumber", lastMonthNumber) :
-            new ObjectParameter("LastMonthNumber", typeof(int));
-
-
-        var dataOwnerParameter = dataOwner.HasValue ?
-            new ObjectParameter("DataOwner", dataOwner) :
-            new ObjectParameter("DataOwner", typeof(System.Guid));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LastYearBalanceByMonthByUser_Result>("LastYearBalanceByMonthByUser", lastMonthNumberParameter, dataOwnerParameter);
-    }
-
-
     public virtual int AddMonthBudgetByUser2(Nullable<int> year, Nullable<int> month, Nullable<decimal> budget, Nullable<System.Guid> dataOwner, string currency)
     {
 
@@ -554,6 +537,23 @@ public partial class ExpensesEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EstimatedCategoriesByUser4_Result>("EstimatedCategoriesByUser4", yearParameter, monthParameter, dayParameter, dataOwnerParameter, shortListParameter);
+    }
+
+
+    public virtual ObjectResult<LastYearBalanceByMonthByUser2_Result> LastYearBalanceByMonthByUser2(Nullable<int> lastMonthNumber, Nullable<System.Guid> dataOwner)
+    {
+
+        var lastMonthNumberParameter = lastMonthNumber.HasValue ?
+            new ObjectParameter("LastMonthNumber", lastMonthNumber) :
+            new ObjectParameter("LastMonthNumber", typeof(int));
+
+
+        var dataOwnerParameter = dataOwner.HasValue ?
+            new ObjectParameter("DataOwner", dataOwner) :
+            new ObjectParameter("DataOwner", typeof(System.Guid));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LastYearBalanceByMonthByUser2_Result>("LastYearBalanceByMonthByUser2", lastMonthNumberParameter, dataOwnerParameter);
     }
 
 }

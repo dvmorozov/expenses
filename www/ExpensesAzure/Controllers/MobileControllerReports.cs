@@ -452,7 +452,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var res = (List<LastYearBalanceByMonthByUser_Result>)Session["LastYearBalanceResult"];
+                var res = (List<LastYearBalanceByMonthByUser2_Result>)Session["LastYearBalanceResult"];
                 //  Gets chart object.
                 var myChart = RenderBalanceChart(res, width, height, (int)Session["LastMonthNumber"]);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
@@ -464,7 +464,7 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def
-        private static Chart RenderBalanceChart(List<LastYearBalanceByMonthByUser_Result> items, int width, int height, int lastMonthNumber)
+        private static Chart RenderBalanceChart(List<LastYearBalanceByMonthByUser2_Result> items, int width, int height, int lastMonthNumber)
         {
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
             //  Chart header was hidden.
