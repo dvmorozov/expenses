@@ -51,9 +51,22 @@ namespace SocialApps.Repositories
             return _db.LastYearTotalExpensesByMonthByUser(lastMonthNumber, userId).ToList();
         }
 
-        public List<LastYearBalanceByMonthByUser2_Result> GetLastYearBalanceByMonth(Guid userId, int lastMonthNumber)
+        public List<LastYearBalanceByMonthByUser> GetLastYearBalanceByMonth(Guid userId, int lastMonthNumber)
         {
-            return _db.LastYearBalanceByMonthByUser2(lastMonthNumber, userId).ToList();
+            //  https://github.com/dvmorozov/expenses/issues/23
+            //  Original structure doesn't contain groud identifier i.e. should be extended.
+            var extendedList = (
+               from v1Item in _db.LastYearBalanceByMonthByUser2(lastMonthNumber, userId).ToList()
+               select new LastYearBalanceByMonthByUser
+               {
+                   M = v1Item.M,
+                   Y = v1Item.Y,
+                   Balance = v1Item.Balance,
+                   Currency = v1Item.Currency,
+                   GROUPID1 = 0
+               }).ToList();
+
+            return CreateCurrencyGroupId(extendedList);
         }
 
         public List<LastYearCategoryExpensesByMonthByUser_Result> GetLastYearCategoryExpensesByMonth(Guid userId, int categoryId, int lmn)
@@ -196,6 +209,48 @@ namespace SocialApps.Repositories
                 _db.ResetMonthIncomeByUser((int)year, (int)month, income, userId);
         }
 
+        public static string GetCurrency<a, T>(IGrouping<a, T> o)
+        {
+            return o.First().GetType().GetProperty("Currency").GetValue(o.First()) != null ?
+           (string)o.First().GetType().GetProperty("Currency").GetValue(o.First()) : "";
+        }
+
+        public static string GetCurrency<T>(T o)
+        {
+            return (string)o.GetType().GetProperty("Currency").GetValue(o);
+        }
+
+        private List<T> CreateCurrencyGroupId<T>(List<T> query)
+        {
+            //  Selects different currencies.
+            var currencies =
+                (
+                from g in query
+                group g by new { Currency = GetCurrency(g) } into gc
+                select new CurrencyGroup { Currency = GetCurrency(gc) }
+                ).ToArray();
+
+            //  Initializes group numbers.
+            long i = 0;
+            foreach (var c in currencies)
+                c.GroupId = i++;
+
+            //  Copies group identifier into resulting set.
+            var result = query.ToList();
+            foreach (var item in result)
+            {
+                foreach (var c in currencies)
+                {
+                    if (c.Currency == GetCurrency(item))
+                    {
+                        item.GetType().GetProperty("GROUPID1").SetValue(item, c.GroupId);
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+
         //  Returns groups for all currencies in sinle unsorted list.
         //  https://github.com/dvmorozov/expenses/issues/10
         public List<MonthImportance> GetMonthImportances(Guid userId, DateTime now)
@@ -226,33 +281,8 @@ namespace SocialApps.Repositories
                     Currency = g.FirstOrDefault().Currency != null ? g.FirstOrDefault().Currency.Trim() : ""
                 };
 
-            //  Selects different currencies.
-            var currencies =
-                (
-                from g in query
-                group g by new { g.Currency } into gc
-                select new CurrencyGroup {
-                    Currency = gc.FirstOrDefault().Currency
-                }).ToArray();
 
-            //  Initializes group numbers.
-            long i = 0;
-            foreach (var c in currencies)
-                c.GroupId = i++;
-
-            //  Copies group identifier into resulting set.
-            var result = query.ToList();
-            foreach (var item in result) {
-                foreach (var c in currencies) {
-                    if (c.Currency == item.Currency)
-                    {
-                        item.GROUPID1 = c.GroupId;
-                        break;
-                    }
-                }
-            }
-
-            return result;
+            return CreateCurrencyGroupId(query.ToList());
         }
 
         public void Dispose()

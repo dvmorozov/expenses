@@ -9,6 +9,6 @@ CREATE PROCEDURE [expenses].[LastYearBalanceByMonthByUser2]
 	@LastMonthNumber INT, @DataOwner UNIQUEIDENTIFIER
 AS
 BEGIN
-	SELECT Y, M, Balance
+	SELECT Y, M, Balance, Currency
 	FROM [expenses].[GetLastYearBalanceByMonthByUser](@LastMonthNumber, @DataOwner)
 END

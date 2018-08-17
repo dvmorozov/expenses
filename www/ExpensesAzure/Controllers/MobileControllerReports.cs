@@ -30,6 +30,7 @@ namespace SocialApps.Controllers
             }
         }
 
+
         //  https://action.mindjet.com/task/14919145
         private CurrencyGroup[] GetCurrencyGroups<T>(IEnumerable<T> allItems)
         {
@@ -47,8 +48,7 @@ namespace SocialApps.Controllers
                 GroupId = group.Key.GroupId,
                 //  https://github.com/dvmorozov/expenses/issues/10
                 //  Selects the first item from each group.
-                Currency = group.First().GetType().GetProperty("Currency").GetValue(group.First()) != null ?
-                   (string)group.First().GetType().GetProperty("Currency").GetValue(group.First()) : ""
+                Currency = MobileRepository.GetCurrency(group)
             }).ToArray();
         }
 
@@ -465,7 +465,7 @@ namespace SocialApps.Controllers
         //  https://www.evernote.com/shard/s132/nl/14501366/47e64199-5c58-43a1-9d0d-9d3081811def
         private Chart RenderBalanceChart(int currencyGroupId, int width, int height, int lastMonthNumber)
         {
-            var allItems = (List<LastYearBalanceByMonthByUser2_Result>)Session["LastYearBalanceResult"];
+            var allItems = (List<LastYearBalanceByMonthByUser>)Session["LastYearBalanceResult"];
             var items = FilterItemsByGroupId(allItems, currencyGroupId);
 
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc

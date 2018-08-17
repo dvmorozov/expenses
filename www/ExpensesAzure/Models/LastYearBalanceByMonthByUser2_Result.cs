@@ -23,6 +23,8 @@ public partial class LastYearBalanceByMonthByUser2_Result
 
     public Nullable<float> Balance { get; set; }
 
+    public string Currency { get; set; }
+
 }
 
 }

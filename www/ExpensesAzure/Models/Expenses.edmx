@@ -878,6 +878,7 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           <Property Type="Int32" Name="Y" Nullable="true" />
           <Property Type="Int32" Name="M" Nullable="true" />
           <Property Type="Single" Name="Balance" Nullable="true" />
+          <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1166,6 +1167,7 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
                 <ScalarProperty Name="Y" ColumnName="Y" />
                 <ScalarProperty Name="M" ColumnName="M" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
