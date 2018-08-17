@@ -91,8 +91,8 @@
 													});
 													</script>
 
-													<div class="panel-body" id="diagram_container">
-														<img id="diagram" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
+													<div class="panel-body" id="@Html.Raw(diagramContainerId)">
+														<img id="@Html.Raw(diagramId)" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
 													</div>
 												}
 											}
