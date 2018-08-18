@@ -177,6 +177,18 @@ namespace SocialApps.Models
         public long GROUPID1 { get; set; }
     }
 
+    //  https://github.com/dvmorozov/expenses/issues/23
+    //  Original structure doesn't contain groud identifier i.e. should be extended.
+    public class LastYearBalanceByMonthByUser
+    {
+        public int? Y { get; set; }
+        public int? M { get; set; }
+        public double? Balance { get; set; }
+        public string Currency { get; set; }
+        //  Integer indentifier of currency group (to reuse CurrencyTabs).
+        public long GROUPID1 { get; set; }
+    }
+
     //  https://action.mindjet.com/task/14915101
     public class MonthCurrency
     {
