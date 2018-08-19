@@ -210,13 +210,13 @@ namespace SocialApps.Models
         private string _Name;
 
         public string Name { 
-            get { return _Name != null ? _Name.Trim() : null; }
+            get { return _Name?.Trim(); }
             set { _Name = value; }
         }
         public Nullable<int> Id { get; set; }
         //  https://www.evernote.com/shard/s132/nl/14501366/dcdd71da-7c07-42d8-9055-5f69fa04bc4f
         public string EncryptedName { 
-            get { return _EncryptedName != null ? _EncryptedName.Trim() : null; }
+            get { return _EncryptedName?.Trim(); }
             set { _EncryptedName = value; } 
         }
         public Nullable<int> Count { get; set; }

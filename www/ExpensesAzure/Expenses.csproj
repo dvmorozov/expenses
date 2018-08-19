@@ -288,6 +288,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Models\Expenses1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ExpensesByCategoryForMonthByUser2_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
@@ -316,7 +321,7 @@
     <Compile Include="Models\LastYearCategoryExpensesByMonthByUser_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LastYearTotalExpensesByMonthByUser_Result.cs">
+    <Compile Include="Models\LastYearTotalExpensesByMonthByUser2_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Links.cs">

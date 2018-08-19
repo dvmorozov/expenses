@@ -183,7 +183,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var res = (List<LastYearTotalExpensesByMonthByUser_Result>)Session["LastYearTotalExpensesResult"];
+                var res = (List<LastYearTotalExpensesByMonthByUser2_Result>)Session["LastYearTotalExpensesResult"];
                 //  Gets chart object.
                 var myChart = RenderTrendChart(res, width, height, (int)Session["LastMonthNumber"]);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
@@ -195,7 +195,7 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
-        private static Chart RenderTrendChart(List<LastYearTotalExpensesByMonthByUser_Result> items, int width, int height, int lastMonthNumber)
+        private static Chart RenderTrendChart(List<LastYearTotalExpensesByMonthByUser2_Result> items, int width, int height, int lastMonthNumber)
         {
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
             //  Chart header was hidden.

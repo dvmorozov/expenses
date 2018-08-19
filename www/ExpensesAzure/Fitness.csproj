@@ -294,10 +294,13 @@
     <Compile Include="Models\Languages.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LastYearBalanceByMonthByUser2_Result.cs">
+      <DependentUpon>Expenses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LastYearCategoryExpensesByMonthByUser_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LastYearTotalExpensesByMonthByUser_Result.cs">
+    <Compile Include="Models\LastYearTotalExpensesByMonthByUser2_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Links.cs">
