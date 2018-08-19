@@ -7,14 +7,15 @@
 		for (var i = 0; i < currencyGroups.Count(); i++)
 		{
 			var tabId = ViewBag.TabPrefix + currencyGroups[i].GroupId.ToString();
+			var currency = currencyGroups[i].Currency.Trim() == "" ? "Undefined" : currencyGroups[i].Currency.Trim();
 
 			if (i == 0)
 			{
-				@Html.Raw("<li role=\"presentation\" class=\"active\"><a href=\"#" + tabId + "\" data-toggle=\"tab\">" + currencyGroups[i].Currency + "</a></li>")
+				@Html.Raw("<li role=\"presentation\" class=\"active\"><a href=\"#" + tabId + "\" data-toggle=\"tab\">" + currency + "</a></li>")
 			}
 			else
 			{
-				@Html.Raw("<li role=\"presentation\"><a href=\"#" + tabId + "\" data-toggle=\"tab\">" + currencyGroups[i].Currency + "</a></li>")
+				@Html.Raw("<li role=\"presentation\"><a href=\"#" + tabId + "\" data-toggle=\"tab\">" + currency + "</a></li>")
 			}
 		}
 	}

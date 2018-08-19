@@ -179,13 +179,12 @@ namespace SocialApps.Controllers
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
         //  Renders and returns chart image.
-        public FileResult GetTrendChartContentWh(int width, int height)
+        public FileResult GetTrendChartContentWh(int currencyGroupId, int width, int height)
         {
             try
             {
-                var res = (List<LastYearTotalExpensesByMonthByUser_Result>)Session["LastYearTotalExpensesResult"];
                 //  Gets chart object.
-                var myChart = RenderTrendChart(res, width, height, (int)Session["LastMonthNumber"]);
+                var myChart = RenderTrendChart(currencyGroupId, width, height, (int)Session["LastMonthNumber"]);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
             }
             catch
@@ -195,8 +194,11 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
-        private static Chart RenderTrendChart(List<LastYearTotalExpensesByMonthByUser_Result> items, int width, int height, int lastMonthNumber)
+        private Chart RenderTrendChart(int currencyGroupId, int width, int height, int lastMonthNumber)
         {
+            var allItems = (List<LastYearTotalExpensesByMonthByUser>)Session["LastYearTotalExpensesResult"];
+            var items = FilterItemsByGroupId(allItems, currencyGroupId);
+
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
             //  Chart header was hidden.
             var chart = new Chart(width, height, theme: ChartTheme.Vanilla);
@@ -205,21 +207,12 @@ namespace SocialApps.Controllers
             var xValue = items.Select(t => ((int)t.Y).ToString() + "/" + ((int)t.M).ToString("D2")).ToList();
             var yValues = items.Select(t => t.Total).ToList();
 
-            /*
-            var toAdd = 5 - lastMonthNumber % 5;
-            for (var i = 0; i < toAdd; i++)
-            {
-                xValue.Add("");
-                yValues.Add(0.0);
-            }
-            */
-
             chart.AddSeries("Totals", lastMonthNumber > 24 ? "Area" : "Column",
-                    //  Must be string to provide desired chart rendering.
-                    //xValue: new List<string>{index.ToString(CultureInfo.InvariantCulture)}, xField: "Position",
-                    xValue: xValue, xField: "Month",
-                    yValues: yValues, yFields: "Total"
-                    );
+                //  Must be string to provide desired chart rendering.
+                //xValue: new List<string>{index.ToString(CultureInfo.InvariantCulture)}, xField: "Position",
+                xValue: xValue, xField: "Month",
+                yValues: yValues, yFields: "Total"
+                );
             return chart;
         }
 
@@ -387,7 +380,10 @@ namespace SocialApps.Controllers
         {
             try
             {
-                Session["LastYearTotalExpensesResult"] = _repository.GetLastYearTotalExpensesByMonth(GetUserId(), lastMonthNumber);
+                var allItems = _repository.GetLastYearTotalExpensesByMonth(GetUserId(), lastMonthNumber);
+                ViewBag.CurrencyGroups = GetCurrencyGroups(allItems);
+
+                Session["LastYearTotalExpensesResult"] = allItems;
                 Session["LastMonthNumber"] = lastMonthNumber;
                 return View("Trend");
             }
@@ -479,9 +475,9 @@ namespace SocialApps.Controllers
             chart.AddSeries("Balance", lastMonthNumber > 24 ? "Line" : "Column",
                 //  Must be string to provide desired chart rendering.
                 //xValue: new List<string>{index.ToString(CultureInfo.InvariantCulture)}, xField: "Position",
-                    xValue: xValue, xField: "Month",
-                    yValues: yValues, yFields: "Balance"
-                    );
+                xValue: xValue, xField: "Month",
+                yValues: yValues, yFields: "Balance"
+                );
             return chart;
         }
 

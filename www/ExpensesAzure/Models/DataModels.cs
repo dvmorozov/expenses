@@ -189,6 +189,19 @@ namespace SocialApps.Models
         public long GROUPID1 { get; set; }
     }
 
+    //  https://github.com/dvmorozov/expenses/issues/23
+    //  Original structure doesn't contain groud identifier i.e. should be extended.
+    public partial class LastYearTotalExpensesByMonthByUser
+    {
+        public int Y { get; set; }
+        public int M { get; set; }
+        public double Total { get; set; }
+        public string Month { get; set; }
+        public string Currency { get; set; }
+        //  Integer indentifier of currency group (to reuse CurrencyTabs).
+        public long GROUPID1 { get; set; }
+    }
+
     //  https://action.mindjet.com/task/14915101
     public class MonthCurrency
     {
@@ -210,13 +223,13 @@ namespace SocialApps.Models
         private string _Name;
 
         public string Name { 
-            get { return _Name != null ? _Name.Trim() : null; }
+            get { return _Name?.Trim(); }
             set { _Name = value; }
         }
         public Nullable<int> Id { get; set; }
         //  https://www.evernote.com/shard/s132/nl/14501366/dcdd71da-7c07-42d8-9055-5f69fa04bc4f
         public string EncryptedName { 
-            get { return _EncryptedName != null ? _EncryptedName.Trim() : null; }
+            get { return _EncryptedName?.Trim(); }
             set { _EncryptedName = value; } 
         }
         public Nullable<int> Count { get; set; }

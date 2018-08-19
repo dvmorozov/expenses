@@ -46,9 +46,23 @@ namespace SocialApps.Repositories
             return _db.EstimatedTop10CategoriesForMonthByUser3(now.Year, now.Month, now.Day, userId).ToList();
         }
 
-        public List<LastYearTotalExpensesByMonthByUser_Result> GetLastYearTotalExpensesByMonth(Guid userId, int lastMonthNumber)
+        public List<LastYearTotalExpensesByMonthByUser> GetLastYearTotalExpensesByMonth(Guid userId, int lastMonthNumber)
         {
-            return _db.LastYearTotalExpensesByMonthByUser(lastMonthNumber, userId).ToList();
+            //  https://github.com/dvmorozov/expenses/issues/23
+            //  Original structure doesn't contain groud identifier i.e. should be extended.
+            var extendedList = (
+               from v1Item in _db.LastYearTotalExpensesByMonthByUser2(lastMonthNumber, userId).ToList()
+               select new LastYearTotalExpensesByMonthByUser
+               {
+                    M = v1Item.M,
+                    Y = v1Item.Y,
+                    Total = v1Item.Total,
+                    Currency = v1Item.Currency,
+                    Month = v1Item.Month,
+                    GROUPID1 = 0
+               }).ToList();
+
+            return CreateCurrencyGroupId(extendedList);
         }
 
         public List<LastYearBalanceByMonthByUser> GetLastYearBalanceByMonth(Guid userId, int lastMonthNumber)
