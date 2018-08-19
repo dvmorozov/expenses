@@ -1,14 +1,15 @@
 ﻿@*https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7*@
+@using SocialApps.Models
 @{
-	ViewBag.Title = Resources.Resources.ReportTrendOverall;
+	ViewBag.Title = Resources.Resources.BalanceTitle;
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
 <script type="text/javascript">
-	//  Constructing basic URL which is used from updateDiagram.
-	var imageURL = '@Url.Action("GetTrendChartContentWh", "Mobile")';
+	@*	Constructing array of data which are used to build graphs.
+		Variable must have the same name as on other pages. *@
+	var imageURL = [];
 </script>
-
 @* ReSharper disable UnknownCssClass *@
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -49,10 +50,61 @@
 		</div>
 		<div style="text-align: center;">
 			<div class="panel panel-default" style="display: inline;">
-				<div class="panel-heading">@Html.Raw(string.Format(Resources.Resources.TotalsByMonth, (int)Session["LastMonthNumber"] / 12))</div>
-				<div class="panel-body" id="diagram_container">
-					<img id="diagram" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
+
+				@* Add tab headers. *@
+				@{
+					var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
+					var tableTabPrefix = "table_tab_";
+					var chartTabPrefix = "chart_tab_";
+					ViewBag.TabPrefix = tableTabPrefix;
+					ViewBag.ChartActionName = "GetTrendChartContentWh";
+				}
+
+				@Html.Partial("CurrencyTabs")
+
+				@* Add tab content. *@
+				<div class="tab-content">
+					<div class="panel-heading">@Html.Raw(string.Format(Resources.Resources.TotalsByMonth, (int)Session["LastMonthNumber"] / 12))</div>
+					@{
+						if (currencyGroups.Count() != 0)
+						{
+							for (var i = 0; i < currencyGroups.Count(); i++)
+							{
+								var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
+								var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
+								var tableTabId = tableTabPrefix + currencyGroups[i].GroupId.ToString();
+								var diagramId = "diagram_" + currencyGroups[i].GroupId.ToString();
+								var diagramContainerId = "diagram_container_" + currencyGroups[i].GroupId.ToString();
+
+								<div class="@Html.Raw(tabClass)" id="@Html.Raw(tableTabId)" style="margin-top: 8px;">
+									<div style="margin-top: 8px;">
+										<div class="panel-body" id="@Html.Raw(tableContainerId)">
+											@{
+												var list = ((List<LastYearTotalExpensesByMonthByUser>)Session["LastYearTotalExpensesResult"]).Where(t => t.GROUPID1 == currencyGroups[i].GroupId).ToList();
+												if (list.Count() != 0)
+												{
+													<script>
+													imageURL.push({
+														pie: true,
+														url: '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
+														diagramId: '@Html.Raw(diagramId)',
+														diagramContainerId: '@Html.Raw(diagramContainerId)'
+													});
+													</script>
+
+													<div class="panel-body" id="@Html.Raw(diagramContainerId)">
+														<img id="@Html.Raw(diagramId)" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
+													</div>
+												}
+											}
+										</div>
+									</div>
+								</div>
+							}
+						}
+					}
 				</div>
+				@* ReSharper restore UnknownCssClass *@
 			</div>
 		</div>
 	</div>
@@ -61,4 +113,3 @@
 		@Html.Partial("BottomHomeButton")
 	</div>
 </div>
-@* ReSharper restore UnknownCssClass *@
