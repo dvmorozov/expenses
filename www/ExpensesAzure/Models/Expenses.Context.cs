@@ -241,28 +241,6 @@ public partial class ExpensesEntities : DbContext
     }
 
 
-    public virtual ObjectResult<LastYearCategoryExpensesByMonthByUser_Result> LastYearCategoryExpensesByMonthByUser(Nullable<int> categoryID, Nullable<int> lastMonthNumber, Nullable<System.Guid> dataOwner)
-    {
-
-        var categoryIDParameter = categoryID.HasValue ?
-            new ObjectParameter("CategoryID", categoryID) :
-            new ObjectParameter("CategoryID", typeof(int));
-
-
-        var lastMonthNumberParameter = lastMonthNumber.HasValue ?
-            new ObjectParameter("LastMonthNumber", lastMonthNumber) :
-            new ObjectParameter("LastMonthNumber", typeof(int));
-
-
-        var dataOwnerParameter = dataOwner.HasValue ?
-            new ObjectParameter("DataOwner", dataOwner) :
-            new ObjectParameter("DataOwner", typeof(System.Guid));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LastYearCategoryExpensesByMonthByUser_Result>("LastYearCategoryExpensesByMonthByUser", categoryIDParameter, lastMonthNumberParameter, dataOwnerParameter);
-    }
-
-
     public virtual int AddMonthBudgetByUser2(Nullable<int> year, Nullable<int> month, Nullable<decimal> budget, Nullable<System.Guid> dataOwner, string currency)
     {
 
@@ -554,6 +532,28 @@ public partial class ExpensesEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LastYearTotalExpensesByMonthByUser2_Result>("LastYearTotalExpensesByMonthByUser2", lastMonthNumberParameter, dataOwnerParameter);
+    }
+
+
+    public virtual ObjectResult<LastYearCategoryExpensesByMonthByUser2_Result> LastYearCategoryExpensesByMonthByUser2(Nullable<int> categoryID, Nullable<int> lastMonthNumber, Nullable<System.Guid> dataOwner)
+    {
+
+        var categoryIDParameter = categoryID.HasValue ?
+            new ObjectParameter("CategoryID", categoryID) :
+            new ObjectParameter("CategoryID", typeof(int));
+
+
+        var lastMonthNumberParameter = lastMonthNumber.HasValue ?
+            new ObjectParameter("LastMonthNumber", lastMonthNumber) :
+            new ObjectParameter("LastMonthNumber", typeof(int));
+
+
+        var dataOwnerParameter = dataOwner.HasValue ?
+            new ObjectParameter("DataOwner", dataOwner) :
+            new ObjectParameter("DataOwner", typeof(System.Guid));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LastYearCategoryExpensesByMonthByUser2_Result>("LastYearCategoryExpensesByMonthByUser2", categoryIDParameter, lastMonthNumberParameter, dataOwnerParameter);
     }
 
 }
