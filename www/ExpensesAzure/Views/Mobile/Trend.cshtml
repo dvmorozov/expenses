@@ -48,8 +48,8 @@
 				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 120 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year10)" onclick="window.location.href='@Url.Action("Trend", "Mobile", new {lastMonthNumber = 120})';">@Html.Raw(Resources.Resources.Year10Short)</button>
 			</div>
 		</div>
-		<div style="text-align: center;">
-			<div class="panel panel-default" style="display: inline;">
+		<div style="text-align: center; margin-top: 16px;">
+			<div class="panel panel-default">
 
 				@* Add tab headers. *@
 				@{

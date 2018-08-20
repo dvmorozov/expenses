@@ -222,7 +222,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                var res = (List<LastYearCategoryExpensesByMonthByUser_Result>)Session["LastYearByCategoryExpensesResult"];
+                var res = (List<LastYearCategoryExpensesByMonthByUser>)Session["LastYearByCategoryExpensesResult"];
                 //  Gets chart object.
                 var myChart = RenderTrendByCategoryChart(res, width, height, (int)Session["LastMonthNumber"], ((EstimatedCategoriesByUser4_Result)Session["SelectedCategory"]).NAME);
                 return File(myChart.GetBytes(), System.Net.Mime.MediaTypeNames.Application.Octet, _seqNum++ + ".jpg");
@@ -234,7 +234,7 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
-        private static Chart RenderTrendByCategoryChart(List<LastYearCategoryExpensesByMonthByUser_Result> items, int width, int height, int lastMonthNumber, string category)
+        private static Chart RenderTrendByCategoryChart(List<LastYearCategoryExpensesByMonthByUser> items, int width, int height, int lastMonthNumber, string category)
         {
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
             //  Chart header was hidden.
@@ -431,8 +431,10 @@ namespace SocialApps.Controllers
                 if (categoryId == null)
                     return RedirectToAction("TrendByCategory", new {lastMonthNumber = lmn});
 
-                Session["LastYearByCategoryExpensesResult"] = _repository.GetLastYearCategoryExpensesByMonth(GetUserId(), (int)categoryId, (int)lmn);
-                
+                var allItems = _repository.GetLastYearCategoryExpensesByMonth(GetUserId(), (int)categoryId, (int)lmn);
+                ViewBag.CurrencyGroups = GetCurrencyGroups(allItems);
+                Session["LastYearByCategoryExpensesResult"] = allItems;
+
                 return View("TrendByCategory");
             }
             catch (Exception e)

@@ -1,18 +1,15 @@
-﻿@using System.Globalization
-@using System.Web.Security.AntiXss
+﻿@*https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7*@
 @using SocialApps.Models
-
-@*https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7*@
 @{
-	ViewBag.Title = Resources.Resources.ReportTrendByCategory;
+	ViewBag.Title = Resources.Resources.BalanceTitle;
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
 <script type="text/javascript">
-	//  Constructing basic URL which is used from updateDiagram.
-	var imageURL = '@Url.Action("GetTrendByCategoryChartContentWh", "Mobile")';
+	@*	Constructing array of data which are used to build graphs.
+		Variable must have the same name as on other pages. *@
+	var imageURL = [];
 </script>
-
 @* ReSharper disable UnknownCssClass *@
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -27,23 +24,15 @@
 					<td>
 						<div id="ellipsisOwner">
 							<div class="ellipsisInner" id="ellipsisInner">
-								<span class="ellipsis" id="CategoryName">
-									@{
-										//	https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
-										var categoryName = (Session["SelectedCategory"] != null) ? ((EstimatedCategoriesByUser4_Result)Session["SelectedCategory"]).NAME.Trim() : (string)ViewBag.Title;
-										var encryptedCategoryName = (Session["SelectedCategory"] != null) ? ((EstimatedCategoriesByUser4_Result)Session["SelectedCategory"]).EncryptedName : string.Empty;
-										@Html.Raw(AntiXssEncoder.HtmlEncode(categoryName, false))
-										<script>
-											(function () { decryptData('CategoryName', '@Html.Raw(encryptedCategoryName)') })();
-										</script>
-									}
+								<span class="ellipsis">
+									@Html.Raw(ViewBag.Title)
 								</span>
 							</div>
 						</div>
 					</td>
 					<td style="width: 1%;">
 						@{
-							<span class="badge pull-right" style="margin: 8px 0;">@Html.Raw(string.Format(Resources.Resources.LastYears, Session["LastMonthNumber"] != null ? ((int)Session["LastMonthNumber"] / 12).ToString(CultureInfo.InvariantCulture) : "?"))</span>
+							<span class="badge pull-right" style="margin: 8px 0;">@Html.Raw(string.Format(Resources.Resources.LastYears, (int)Session["LastMonthNumber"] / 12))</span>
 						 }
 					</td>
 				</tr>
@@ -51,6 +40,7 @@
 		</table>
 	</div>
 	<div class="panel-body">
+		<div>
 		<div class="btn-group">
 			@* These methods use the previously selected category. To select another category user must return to the menu page.*@
 			<button type="button" class="@Html.Raw((int)(Session["LastMonthNumber"] ?? 0) == 12 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year1)" onclick="window.location.href='@Url.Action("TrendByCategoryF", "Mobile", new {lastMonthNumber = 12})';">@Html.Raw(Resources.Resources.Year1Short)</button>
@@ -58,23 +48,63 @@
 			<button type="button" class="@Html.Raw((int)(Session["LastMonthNumber"] ?? 0) == 60 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year5)" onclick="window.location.href='@Url.Action("TrendByCategoryF", "Mobile", new {lastMonthNumber = 60})';">@Html.Raw(Resources.Resources.Year5Short)</button>
 			<button type="button" class="@Html.Raw((int)(Session["LastMonthNumber"] ?? 0) == 120 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year10)" onclick="window.location.href='@Url.Action("TrendByCategoryF", "Mobile", new {lastMonthNumber = 120})';">@Html.Raw(Resources.Resources.Year10Short)</button>
 		</div>
-		<div style="text-align: center;">
-			<div class="panel panel-default" style="display: inline;">
-				<div class="panel-heading">
-					<span id="CategoryName2">
+		<div style="text-align: center; margin-top: 16px;">
+			<div class="panel panel-default">
+
+				@* Add tab headers. *@
 						@{
-							//	https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
-							@Html.Raw(AntiXssEncoder.HtmlEncode(categoryName, false))
-							<script>
-								(function () { decryptData('CategoryName2', '@Html.Raw(encryptedCategoryName)') })();
-							</script>
+					var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
+					var tableTabPrefix = "table_tab_";
+					var chartTabPrefix = "chart_tab_";
+					ViewBag.TabPrefix = tableTabPrefix;
+					ViewBag.ChartActionName = "GetTrendByCategoryChartContentWh";
+				}
+
+				@Html.Partial("CurrencyTabs")
+
+				@* Add tab content. *@
+				<div class="tab-content">
+					<div class="panel-heading">@Html.Raw(string.Format(Resources.Resources.TotalsByMonth, (int)Session["LastMonthNumber"] / 12))</div>
+					@{
+						if (currencyGroups.Count() != 0)
+						{
+							for (var i = 0; i < currencyGroups.Count(); i++)
+							{
+								var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
+								var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
+								var tableTabId = tableTabPrefix + currencyGroups[i].GroupId.ToString();
+								var diagramId = "diagram_" + currencyGroups[i].GroupId.ToString();
+								var diagramContainerId = "diagram_container_" + currencyGroups[i].GroupId.ToString();
+
+								<div class="@Html.Raw(tabClass)" id="@Html.Raw(tableTabId)" style="margin-top: 8px;">
+									<div style="margin-top: 8px;">
+										<div class="panel-body" id="@Html.Raw(tableContainerId)">
+											@{
+												var list = ((List<LastYearCategoryExpensesByMonthByUser>)Session["LastYearByCategoryExpensesResult"]).Where(t => t.GROUPID1 == currencyGroups[i].GroupId).ToList();
+												if (list.Count() != 0)
+												{
+													<script>
+													imageURL.push({
+														pie: true,
+														url: '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
+														diagramId: '@Html.Raw(diagramId)',
+														diagramContainerId: '@Html.Raw(diagramContainerId)'
+													});
+													</script>
+
+													<div class="panel-body" id="@Html.Raw(diagramContainerId)">
+														<img id="@Html.Raw(diagramId)" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
+													</div>
+												}
+											}
+										</div>
+									</div>
+								</div>
+							}
 						}
-					</span>
-					@Html.Raw(string.Format(Resources.Resources.TotalsByMonth, (int)Session["LastMonthNumber"] / 12))
+					}
 				</div>
-				<div class="panel-body" id="diagram_container">
-					<img id="diagram" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
-				</div>
+				@* ReSharper restore UnknownCssClass *@
 			</div>
 		</div>
 	</div>
@@ -83,4 +113,3 @@
 		@Html.Partial("BottomHomeButton")
 	</div>
 </div>
-@* ReSharper restore UnknownCssClass *@

@@ -83,9 +83,23 @@ namespace SocialApps.Repositories
             return CreateCurrencyGroupId(extendedList);
         }
 
-        public List<LastYearCategoryExpensesByMonthByUser_Result> GetLastYearCategoryExpensesByMonth(Guid userId, int categoryId, int lmn)
+        public List<LastYearCategoryExpensesByMonthByUser> GetLastYearCategoryExpensesByMonth(Guid userId, int categoryId, int lmn)
         {
-            return _db.LastYearCategoryExpensesByMonthByUser(categoryId, lmn, userId).ToList();
+            //  https://github.com/dvmorozov/expenses/issues/23
+            //  Original structure doesn't contain groud identifier i.e. should be extended.
+            var extendedList = (
+               from v1Item in _db.LastYearCategoryExpensesByMonthByUser2(categoryId, lmn, userId).ToList()
+                select new LastYearCategoryExpensesByMonthByUser
+                {
+                   M = v1Item.M,
+                   Y = v1Item.Y,
+                   Total = v1Item.Total,
+                   Month = v1Item.Month,
+                   Currency = v1Item.Currency,
+                   GROUPID1 = 0
+                }).ToList();
+
+            return CreateCurrencyGroupId(extendedList);
         }
 
         public void AddMonthBudget(int year, int month, decimal budget, Guid userId, string currency)

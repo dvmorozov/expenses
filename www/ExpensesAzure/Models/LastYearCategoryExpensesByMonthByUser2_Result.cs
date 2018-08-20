@@ -14,14 +14,18 @@ namespace SocialApps.Models
 
 using System;
     
-public partial class LastYearCategoryExpensesByMonthByUser_Result
+public partial class LastYearCategoryExpensesByMonthByUser2_Result
 {
 
-    public Nullable<int> Y { get; set; }
+    public int Y { get; set; }
 
-    public Nullable<int> M { get; set; }
+    public int M { get; set; }
 
-    public Nullable<double> Total { get; set; }
+    public double Total { get; set; }
+
+    public string Month { get; set; }
+
+    public string Currency { get; set; }
 
 }
 

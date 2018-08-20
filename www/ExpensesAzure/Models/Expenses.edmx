@@ -297,7 +297,7 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           <Parameter Name="LastMonthNumber" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
         </Function>
-        <Function Name="LastYearCategoryExpensesByMonthByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
+        <Function Name="LastYearCategoryExpensesByMonthByUser2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="expenses">
           <Parameter Name="CategoryID" Type="int" Mode="In" />
           <Parameter Name="LastMonthNumber" Type="int" Mode="In" />
           <Parameter Name="DataOwner" Type="uniqueidentifier" Mode="In" />
@@ -444,11 +444,6 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
             <Parameter Name="EncryptedName" Mode="In" Type="String" />
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
           </FunctionImport>
-          <FunctionImport Name="LastYearCategoryExpensesByMonthByUser" ReturnType="Collection(ExpensesModel.LastYearCategoryExpensesByMonthByUser_Result)">
-            <Parameter Name="CategoryID" Mode="In" Type="Int32" />
-            <Parameter Name="LastMonthNumber" Mode="In" Type="Int32" />
-            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
-          </FunctionImport>
           <FunctionImport Name="AddMonthBudgetByUser2">
             <Parameter Name="Year" Mode="In" Type="Int32" />
             <Parameter Name="Month" Mode="In" Type="Int32" />
@@ -551,6 +546,11 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
             <Parameter Name="LastMonthNumber" Mode="In" Type="Int32" />
             <Parameter Name="DataOwner" Mode="In" Type="Guid" />
           </FunctionImport>
+          <FunctionImport Name="LastYearCategoryExpensesByMonthByUser2" ReturnType="Collection(ExpensesModel.LastYearCategoryExpensesByMonthByUser2_Result)">
+            <Parameter Name="CategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="LastMonthNumber" Mode="In" Type="Int32" />
+            <Parameter Name="DataOwner" Mode="In" Type="Guid" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Categories">
           <Key>
@@ -567,11 +567,6 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           <Property Type="String" Name="NAME" Nullable="true" MaxLength="50" />
           <Property Type="Double" Name="TOTAL" Nullable="true" />
           <Property Type="String" Name="EncryptedName" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="LastYearCategoryExpensesByMonthByUser_Result">
-          <Property Type="Int32" Name="Y" Nullable="true" />
-          <Property Type="Int32" Name="M" Nullable="true" />
-          <Property Type="Double" Name="Total" Nullable="true" />
         </ComplexType>
         <ComplexType Name="TodayExpensesByUser3_Result">
           <Property Type="DateTime" Name="Date" Nullable="false" Precision="23" />
@@ -882,6 +877,13 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           <Property Type="String" Name="Month" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
         </ComplexType>
+        <ComplexType Name="LastYearCategoryExpensesByMonthByUser2_Result">
+          <Property Type="Int32" Name="Y" Nullable="false" />
+          <Property Type="Int32" Name="M" Nullable="false" />
+          <Property Type="Double" Name="Total" Nullable="false" />
+          <Property Type="String" Name="Month" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Currency" Nullable="true" MaxLength="5" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -914,15 +916,6 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateExpenseByUser" FunctionName="Хранилище ExpensesModel.UpdateExpenseByUser" />
           <FunctionImportMapping FunctionImportName="UpdateCategoryByUser" FunctionName="Хранилище ExpensesModel.UpdateCategoryByUser" />
-          <FunctionImportMapping FunctionImportName="LastYearCategoryExpensesByMonthByUser" FunctionName="Хранилище ExpensesModel.LastYearCategoryExpensesByMonthByUser">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExpensesModel.LastYearCategoryExpensesByMonthByUser_Result">
-                <ScalarProperty Name="Y" ColumnName="Y" />
-                <ScalarProperty Name="M" ColumnName="M" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="AddMonthBudgetByUser2" FunctionName="Хранилище ExpensesModel.AddMonthBudgetByUser2" />
           <FunctionImportMapping FunctionImportName="MonthBudgetByUser" FunctionName="Хранилище ExpensesModel.MonthBudgetByUser">
             <ResultMapping>
@@ -1167,6 +1160,17 @@ warning 6002: The table/view 'ExpensesProd.expenses.Expenses' does not have a pr
           <FunctionImportMapping FunctionImportName="LastYearTotalExpensesByMonthByUser2" FunctionName="Хранилище ExpensesModel.LastYearTotalExpensesByMonthByUser2">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ExpensesModel.LastYearTotalExpensesByMonthByUser2_Result">
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="M" ColumnName="M" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LastYearCategoryExpensesByMonthByUser2" FunctionName="Хранилище ExpensesModel.LastYearCategoryExpensesByMonthByUser2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExpensesModel.LastYearCategoryExpensesByMonthByUser2_Result">
                 <ScalarProperty Name="Y" ColumnName="Y" />
                 <ScalarProperty Name="M" ColumnName="M" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
