@@ -76,78 +76,14 @@ namespace SocialApps.Controllers
             //var xValue = items.Select(t => t.NAME).ToList();
             var yValues = items.Select(t => t.TOTAL).ToList();
 
-            //  Attempt to create different colors. It works but looks poorly.
-            //  Saved for possible subsequent improvement.
-            /*
-            var positions = new int[items.Count()];
-
-            for (var j = 0; j < positions.Count(); j++)
-                positions[j] = j + 1;
-
-            var legendName = Guid.NewGuid().ToString();
-            chart.AddLegend("Legend", legendName);
-            
-            for (var index = 0; index < xValue.Count(); index++)
-            {
-                var name = xValue[index];
-                //var total = yValues[index] ?? 0.0;
-
-                var curValues = new List<double?>(yValues);
-                for (var j = 0; j < curValues.Count; j++)
-                {
-                    if (j != index)
-                        curValues[j] = 0.0;
-                }
-
-                chart.AddSeries(name, "Column", markerStep: xValue.Count(), legend: legendName,
-                        //  Must be string to provide desired chart rendering.
-                        //xValue: new List<string>{index.ToString(CultureInfo.InvariantCulture)}, xField: "Position",
-                        //xValue: xValue, xField: "Name",
-                        xValue: positions, xField: "Positions",
-                        //yValues: new List<double> { total }, yFields: "Total"
-                        yValues: curValues, yFields: "Total"
-                        );
-            }
-            */
-
             if ((pie ?? false) && Session["MonthTotal"] != null)
             {
                 var positions = new List<string>();
-                //  Total value for selected "top 10" categories.
-                var top10Total = 0.0;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/a632edc9-5b3d-4f06-90e1-1e32683bc071
                 for (var j = 0; j < yValues.Count(); j++)
-                {
                     positions.Add((j + 1).ToString());
-                    top10Total += (double)yValues[j];
-                }
 
-                var monthTotalsWithCurrencies = (MonthTotalByUser3_Result[])Session["MonthTotalsWithCurrencies"];
-
-                //  Gets currency name for given currency group id.
-                //  Group ids are extracted.
-                var groupIds = GetCurrencyGroups(allItems);
-                Debug.Assert(groupIds.Count() >= 1);
-                var groupCurrency = groupIds.Where(t => t.GroupId == currencyGroupId).First().Currency.Trim();
-
-                //  Select month total for given currency.
-                //  https://github.com/dvmorozov/expenses/issues/8
-                //  Currency can be not assigned.
-                var monthTotal = (double)monthTotalsWithCurrencies.Where(t => (t.Currency != null ? t.Currency.Trim() : "") == groupCurrency).First().Total;
-                //  Check that the residue is positive.
-                var residue = Math.Floor(monthTotal) - Math.Floor(top10Total);
-                Debug.Assert(residue >= 0);
-                if (residue > 0)
-                {
-                    //  https://www.evernote.com/shard/s132/nl/14501366/41e0b392-d4cb-4843-bf6d-2dea63b9c42f
-                    //  https://action.mindjet.com/task/15016557
-                    //  Looks better without word.
-                    positions.Add(/*"Others"*/"");
-                    //  Add complementary value by subtracting total of "top 10" for given currency.
-                    yValues.Add(monthTotal - top10Total);
-                    Debug.Assert(positions.Count() == yValues.Count());
-                }
                 chart.AddSeries("Top 10 cat.", "Pie",   // markerStep: 1, 
                                                         //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                                                         //  This gives more convenient chart representation.
@@ -263,7 +199,7 @@ namespace SocialApps.Controllers
                 Session["Top10Month"] = now.Month;
                 Session["Top10Year"] = now.Year;
                 //  Caching repository data.
-                var allItems = _repository.GetTop10Categories(userId, now);
+                var allItems = _repository.GetTop10CategoriesWithResidue(userId, now);
                 Session["Top10CategoriesResult"] = allItems;
 
                 //  https://action.mindjet.com/task/14919145

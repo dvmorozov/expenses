@@ -356,4 +356,14 @@ namespace SocialApps.Models
         public long GroupId { get; set; }
         public string Currency { get; set; }
     }
+
+    //  https://github.com/dvmorozov/expenses/issues/21
+    public class CurrencySum
+    {
+        public double Sum { get; set; }
+        public double Residue { get; set; }
+        public string Currency { get; set; }
+        public long GROUPID1 { get; set; }
+        public long GROUPID2 { get; set; }
+    }
 }
