@@ -76,40 +76,6 @@ namespace SocialApps.Controllers
             //var xValue = items.Select(t => t.NAME).ToList();
             var yValues = items.Select(t => t.TOTAL).ToList();
 
-            //  Attempt to create different colors. It works but looks poorly.
-            //  Saved for possible subsequent improvement.
-            /*
-            var positions = new int[items.Count()];
-
-            for (var j = 0; j < positions.Count(); j++)
-                positions[j] = j + 1;
-
-            var legendName = Guid.NewGuid().ToString();
-            chart.AddLegend("Legend", legendName);
-            
-            for (var index = 0; index < xValue.Count(); index++)
-            {
-                var name = xValue[index];
-                //var total = yValues[index] ?? 0.0;
-
-                var curValues = new List<double?>(yValues);
-                for (var j = 0; j < curValues.Count; j++)
-                {
-                    if (j != index)
-                        curValues[j] = 0.0;
-                }
-
-                chart.AddSeries(name, "Column", markerStep: xValue.Count(), legend: legendName,
-                        //  Must be string to provide desired chart rendering.
-                        //xValue: new List<string>{index.ToString(CultureInfo.InvariantCulture)}, xField: "Position",
-                        //xValue: xValue, xField: "Name",
-                        xValue: positions, xField: "Positions",
-                        //yValues: new List<double> { total }, yFields: "Total"
-                        yValues: curValues, yFields: "Total"
-                        );
-            }
-            */
-
             if ((pie ?? false) && Session["MonthTotal"] != null)
             {
                 var positions = new List<string>();
@@ -263,7 +229,7 @@ namespace SocialApps.Controllers
                 Session["Top10Month"] = now.Month;
                 Session["Top10Year"] = now.Year;
                 //  Caching repository data.
-                var allItems = _repository.GetTop10Categories(userId, now);
+                var allItems = _repository.GetTop10CategoriesWithResidue(userId, now);
                 Session["Top10CategoriesResult"] = allItems;
 
                 //  https://action.mindjet.com/task/14919145

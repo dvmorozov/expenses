@@ -61,10 +61,11 @@ namespace SocialApps.Repositories
                 select new CurrencySum
                 {
                     Currency = GetCurrency(g),
-                    Residue = monthTotalsWithCurrencies.Where(t => GetCurrency(t) == GetCurrency(g)).First().Total ?? 0 - 
-                        g.Sum(t => t.TOTAL) ?? 0, 
+                    Residue = (monthTotalsWithCurrencies.Where(t => GetCurrency(t) == GetCurrency(g)).First().Total ?? 0) - 
+                        (g.Sum(t => t.TOTAL) ?? 0), 
                     Sum = g.Sum(t => t.TOTAL) ?? 0,
-                    GROUPID1 = g.FirstOrDefault().GROUPID1 ?? 0
+                    GROUPID1 = g.FirstOrDefault().GROUPID1 ?? 0,
+                    GROUPID2 = g.FirstOrDefault().GROUPID2 ?? 0
                 }
                 );
 
@@ -78,6 +79,7 @@ namespace SocialApps.Repositories
                         NAME = "Residue",
                         TOTAL = g.Residue,
                         GROUPID1 = g.GROUPID1,
+                        GROUPID2 = g.GROUPID2,
                         ID = -1
                     }
                 );

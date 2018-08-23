@@ -364,5 +364,6 @@ namespace SocialApps.Models
         public double Residue { get; set; }
         public string Currency { get; set; }
         public long GROUPID1 { get; set; }
+        public long GROUPID2 { get; set; }
     }
 }
