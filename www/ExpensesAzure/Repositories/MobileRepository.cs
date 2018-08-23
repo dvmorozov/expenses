@@ -65,23 +65,25 @@ namespace SocialApps.Repositories
                         (g.Sum(t => t.TOTAL) ?? 0), 
                     Sum = g.Sum(t => t.TOTAL) ?? 0,
                     GROUPID1 = g.FirstOrDefault().GROUPID1 ?? 0,
-                    GROUPID2 = g.FirstOrDefault().GROUPID2 ?? 0
+                    //  This is used as index of row.
+                    GROUPID2 = (g.Max(t => t.GROUPID2) ?? 0) + 1
                 }
                 );
 
             //  Add items having residues.
             foreach (var g in currencyGroups)
             {
-                allItems.Add(
-                    new EstimatedTop10CategoriesForMonthByUser3_Result
-                    {
-                        Currency = g.Currency,
-                        NAME = "Residue",
-                        TOTAL = g.Residue,
-                        GROUPID1 = g.GROUPID1,
-                        GROUPID2 = g.GROUPID2,
-                        ID = -1
-                    }
+                if (g.Residue > 0)
+                    allItems.Add(
+                        new EstimatedTop10CategoriesForMonthByUser3_Result
+                        {
+                            Currency = g.Currency,
+                            NAME = "Residue",
+                            TOTAL = g.Residue,
+                            GROUPID1 = g.GROUPID1,
+                            GROUPID2 = g.GROUPID2,
+                            ID = -1
+                        }
                 );
             }
 
