@@ -46,6 +46,46 @@ namespace SocialApps.Repositories
             return _db.EstimatedTop10CategoriesForMonthByUser3(now.Year, now.Month, now.Day, userId).ToList();
         }
 
+        //  Adds to each currency group special row containing residue not covered by any group (supplementing to total).
+        //  https://github.com/dvmorozov/expenses/issues/21
+        public List<EstimatedTop10CategoriesForMonthByUser3_Result> GetTop10CategoriesWithResidue(Guid userId, DateTime now)
+        {
+            var allItems = GetTop10Categories(userId, now);
+            //  https://action.mindjet.com/task/14919145
+            var monthTotalsWithCurrencies = GetMonthTotalsWithCurrencies(userId, now.Year, now.Month);
+
+            var currencyGroups =
+                (
+                from i in allItems
+                group i by new { Currency = GetCurrency(i) } into g
+                select new CurrencySum
+                {
+                    Currency = GetCurrency(g),
+                    Residue = monthTotalsWithCurrencies.Where(t => GetCurrency(t) == GetCurrency(g)).First().Total ?? 0 - 
+                        g.Sum(t => t.TOTAL) ?? 0, 
+                    Sum = g.Sum(t => t.TOTAL) ?? 0,
+                    GROUPID1 = g.FirstOrDefault().GROUPID1 ?? 0
+                }
+                );
+
+            //  Add items having residues.
+            foreach (var g in currencyGroups)
+            {
+                allItems.Add(
+                    new EstimatedTop10CategoriesForMonthByUser3_Result
+                    {
+                        Currency = g.Currency,
+                        NAME = "Residue",
+                        TOTAL = g.Residue,
+                        GROUPID1 = g.GROUPID1,
+                        ID = -1
+                    }
+                );
+            }
+
+            return allItems;
+        }
+
         public List<LastYearTotalExpensesByMonthByUser> GetLastYearTotalExpensesByMonth(Guid userId, int lastMonthNumber)
         {
             //  https://github.com/dvmorozov/expenses/issues/23
@@ -239,13 +279,12 @@ namespace SocialApps.Repositories
 
         public static string GetCurrency<a, T>(IGrouping<a, T> o)
         {
-            return o.First().GetType().GetProperty("Currency").GetValue(o.First()) != null ?
-           (string)o.First().GetType().GetProperty("Currency").GetValue(o.First()) : "";
+            return ((string)o.First().GetType().GetProperty("Currency").GetValue(o.First())).Trim() ?? "";
         }
 
         public static string GetCurrency<T>(T o)
         {
-            return (string)o.GetType().GetProperty("Currency").GetValue(o);
+            return ((string)o.GetType().GetProperty("Currency").GetValue(o)).Trim() ?? "";
         }
 
         private List<T> CreateCurrencyGroupId<T>(List<T> query)
