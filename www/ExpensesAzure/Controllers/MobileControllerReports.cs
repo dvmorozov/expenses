@@ -14,6 +14,19 @@ namespace SocialApps.Controllers
     {
         private static int _seqNum;
 
+        public ActionResult Reports()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "Reports"));
+            }
+        }
+
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
         //  Renders and returns chart image.
         public FileResult GetTop10ChartContentWh(int currencyGroupId, int width, int height, bool? pie)
@@ -308,6 +321,29 @@ namespace SocialApps.Controllers
             {
                 Application_Error(e);
                 return View("Error", new HandleErrorInfo(e, "Mobile", "Importance"));
+            }
+        }
+
+        //  https://www.evernote.com/shard/s132/nl/14501366/a6faca57-602d-44d8-ba4a-94ce5054a642
+        public ActionResult ExpensesByImportance(int importance)
+        {
+            try
+            {
+                //  https://www.evernote.com/shard/s132/nl/14501366/990cdfaa-11f8-4d6c-b83a-c139f78bdc53
+                var date = (Session["Top10Month"] != null && Session["Top10Year"] != null) ? new DateTime((int)Session["Top10Year"], (int)Session["Top10Month"], 1) : DateTime.Now;
+
+                var expensesList = _repository.GetExpensesByImportance(GetUserId(), date, importance);
+                ViewBag.Year = date.Year;
+                ViewBag.Month = date.Month;
+                ViewBag.ExpenseIds = expensesList;
+                //  https://www.evernote.com/shard/s132/nl/14501366/626c4826-6474-433a-aa7e-1f626f2f29d0
+                ViewBag.ExpenseTotal = expensesList.Sum(t => t.Cost);
+                return View("ExpensesByCategory");
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "ExpensesByCategory"));
             }
         }
 
