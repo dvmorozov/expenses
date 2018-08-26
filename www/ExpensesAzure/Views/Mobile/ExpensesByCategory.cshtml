@@ -74,29 +74,29 @@
 								switch ((short)item.Importance)
 								{
 									case 5:
-										rowClass = string.Empty;
+										rowClass = "primary";
 										break;
 
 									case 4:
-										rowClass = "class=\"success\"";
+										rowClass = "success";
 										break;
 
 									case 3:
-										rowClass = "class=\"info\"";
+										rowClass = "info";
 										break;
 
 									case 2:
-										rowClass = "class=\"warning\"";
+										rowClass = "warning";
 										break;
 
 									case 1:
-										rowClass = "class=\"danger\"";
+										rowClass = "danger";
 										break;
 								}
 							}
 
 							@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-							<tr @Html.Raw(rowClass) id="@Html.Raw("tr" + expenseId)">
+							<tr @Html.Raw(rowClass != string.Empty ? "class=\"" + rowClass + "\"" : "") id="@Html.Raw("tr" + expenseId)">
 								<td>
 									@Html.Raw(item.Date.ToString("dd MMM yyyy"))
 								</td>

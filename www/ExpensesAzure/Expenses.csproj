@@ -358,7 +358,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\facebook.png" />
     <Content Include="Content\google.png" />
     <Content Include="Content\linkedin.png" />
