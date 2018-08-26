@@ -71,3 +71,9 @@ textarea {
 .panel-primary {
     min-width: 278px;
  }
+
+/* Table style not provided by Bootstrap v3.3.5 was added to get consistency with styles of accordion panels. */
+/* https://github.com/dvmorozov/expenses/issues/20 */
+.table > tbody > tr.primary > td, .table > tbody > tr.primary > th, .table > tbody > tr > td.primary, .table > tbody > tr > th.primary, .table > tfoot > tr.primary > td, .table > tfoot > tr.primary > th, .table > tfoot > tr > td.primary, .table > tfoot > tr > th.primary, .table > thead > tr.primary > td, .table > thead > tr.primary > th, .table > thead > tr > td.primary, .table > thead > tr > th.primary {
+    background-color: #337ab7;
+}
