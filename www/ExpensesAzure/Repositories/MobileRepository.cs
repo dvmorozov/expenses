@@ -60,7 +60,7 @@ namespace SocialApps.Repositories
                 group i by new { Currency = GetCurrency(i) } into g
                 select new CurrencySum
                 {
-                    Currency = GetCurrency(g),
+                    Currency = g.Key.Currency,
                     Residue = (monthTotalsWithCurrencies.Where(t => GetCurrency(t) == GetCurrency(g)).First().Total ?? 0) - 
                         (g.Sum(t => t.TOTAL) ?? 0), 
                     Sum = g.Sum(t => t.TOTAL) ?? 0,
