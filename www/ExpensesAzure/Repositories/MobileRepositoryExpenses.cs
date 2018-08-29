@@ -386,6 +386,36 @@ namespace SocialApps.Repositories
             return expenses;
         }
 
+        //  Returns all expenses not included in the given array of categories.
+        //  https://github.com/dvmorozov/expenses/issues/22
+        public TodayExpense[] GetExpensesExceptCategory(Guid userId, DateTime date, int[] categoryIds)
+        {
+            var expenses =
+               (from exp in _db.Expenses
+                join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
+                join cat in _db.Categories on expCat.CategoryID equals cat.ID
+                where (exp.DataOwner == userId) && (!categoryIds.Contains(cat.ID)) &&
+                (
+                    ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                    exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||
+                    ((exp.Monthly != null && (bool)exp.Monthly) &&
+                    date >= exp.FirstMonth && (exp.LastMonth == null || date <= exp.LastMonth))
+                )
+                orderby exp.Date
+                select new TodayExpense
+                {
+                    Name = exp.Name,
+                    Cost = exp.Cost,
+                    ExpenseEncryptedName = exp.EncryptedName,
+                    Date = exp.Date,
+                    Importance = (ExpenseImportance?)exp.Importance,
+                    Rating = exp.Rating,
+                    Currency = exp.Currency
+                }).ToArray();
+
+            return expenses;
+        }
+
         //  https://action.mindjet.com/task/14896530
         public TodayExpense[] GetExpensesByName(Guid userId, int expenseId)
         {

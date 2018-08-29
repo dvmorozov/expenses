@@ -1033,7 +1033,12 @@ namespace SocialApps.Controllers
                 //  https://www.evernote.com/shard/s132/nl/14501366/990cdfaa-11f8-4d6c-b83a-c139f78bdc53
                 var date = (Session["Top10Month"] != null && Session["Top10Year"] != null) ? new DateTime((int)Session["Top10Year"],  (int)Session["Top10Month"], 1) : DateTime.Now;
 
-                var expensesList = _repository.GetExpensesByCategory(GetUserId(), date, categoryId);
+                var expensesList = categoryId != -1 ? 
+                    //  Gets expenses for given category.
+                    _repository.GetExpensesByCategory(GetUserId(), date, categoryId) :
+                    //  https://github.com/dvmorozov/expenses/issues/22
+                    //  Gets all other expenses except those covered by "top 10" categories.
+                    _repository.GetExpensesExceptCategory(GetUserId(), date, ((List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"]).Select(t => t.ID).ToArray());
                 ViewBag.Year = date.Year;
                 ViewBag.Month = date.Month;
                 ViewBag.ExpenseIds = expensesList;
