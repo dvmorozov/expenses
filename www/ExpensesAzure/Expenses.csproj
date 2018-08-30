@@ -248,6 +248,8 @@
     <Compile Include="Controllers\MobileControllerReportsBalance.cs" />
     <Compile Include="Controllers\MobileControllerReportsImportance.cs" />
     <Compile Include="Controllers\MobileControllerReportsTop10.cs" />
+    <Compile Include="Controllers\MobileControllerReportsTrend.cs" />
+    <Compile Include="Controllers\MobileControllerReportsTrendByCategory.cs" />
     <Compile Include="Controllers\PersonalizedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
