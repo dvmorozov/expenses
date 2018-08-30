@@ -245,7 +245,7 @@
     <Compile Include="Controllers\MobileControllerDocuments.cs" />
     <Compile Include="Controllers\MobileControllerIncome.cs" />
     <Compile Include="Controllers\MobileControllerReports.cs" />
-    <Compile Include="Controllers\MobilieControllerTop10.cs" />
+    <Compile Include="Controllers\MobileControllerTop10.cs" />
     <Compile Include="Controllers\PersonalizedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
