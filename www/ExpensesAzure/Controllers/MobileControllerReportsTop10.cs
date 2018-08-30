@@ -5,7 +5,6 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Diagnostics;
 using SocialApps.Models;
-using SocialApps.Repositories;
 
 namespace SocialApps.Controllers
 {
