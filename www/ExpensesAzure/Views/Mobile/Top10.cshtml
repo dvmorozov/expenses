@@ -115,7 +115,9 @@
 																	var categoryId = "CategoryName" + (categorySeqNum++).ToString();
 
 																	@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-																	<tr class="trlist" onclick="window.location.href = '@Url.Action("ExpensesByCategory", "Mobile", new { categoryId = cat.ID })';" id="@Html.Raw("tr" + categoryId)">
+																	<tr class="trlist" onclick="window.location.href = '@Url.Action("ExpensesByCategory", "Mobile", new { categoryId = cat.ID, currency = currencyGroups[i].Currency })';"
+																		id="@Html.Raw("tr" + categoryId)">
+
 																		<td>
 																			@Html.Raw(((int)cat.GROUPID2).ToString(CultureInfo.InvariantCulture))
 																		</td>
