@@ -389,13 +389,13 @@ namespace SocialApps.Repositories
 
         //  Returns all expenses not included in the given array of categories.
         //  https://github.com/dvmorozov/expenses/issues/22
-        public TodayExpense[] GetExpensesExceptCategory(Guid userId, DateTime date, int[] categoryIds)
+        public TodayExpense[] GetExpensesExceptCategory(Guid userId, DateTime date, int[] categoryIds, string currency)
         {
             var expenses =
                (from exp in _db.Expenses
                 join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
                 join cat in _db.Categories on expCat.CategoryID equals cat.ID
-                where (exp.DataOwner == userId) && (!categoryIds.Contains(cat.ID)) &&
+                where (exp.DataOwner == userId) && (!categoryIds.Contains(cat.ID)) && (exp.Currency.Trim() == currency.Trim()) &&
                 (
                     ((exp.Monthly == null || !(bool)exp.Monthly) &&
                     exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||

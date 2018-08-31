@@ -1026,21 +1026,22 @@ namespace SocialApps.Controllers
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/751d5935-68c5-42be-8f12-c5ab2315da02
-        public ActionResult ExpensesByCategory(int categoryId)
+        public ActionResult ExpensesByCategory(int categoryId, string currency)
         {
             try
             {
                 //  https://www.evernote.com/shard/s132/nl/14501366/990cdfaa-11f8-4d6c-b83a-c139f78bdc53
-                var date = (Session["Top10Month"] != null && Session["Top10Year"] != null) ? new DateTime((int)Session["Top10Year"],  (int)Session["Top10Month"], 1) : DateTime.Now;
-                var category = ((List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"]).Where(t => t.ID == categoryId).First();
+                var date = (Session["Top10Month"] != null && Session["Top10Year"] != null) ? 
+                    new DateTime((int)Session["Top10Year"],  (int)Session["Top10Month"], 1) : DateTime.Now;
 
                 var expensesList = categoryId != -1 ? 
                     //  Gets expenses for given category.
-                    _repository.GetExpensesByCategory(GetUserId(), date, categoryId, category.Currency) :
+                    _repository.GetExpensesByCategory(GetUserId(), date, categoryId, currency) :
                     //  https://github.com/dvmorozov/expenses/issues/22
                     //  Gets all other expenses except those covered by "top 10" categories.
                     _repository.GetExpensesExceptCategory(GetUserId(), date, 
-                        ((List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"]).Select(t => t.ID).ToArray());
+                        ((List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"]).Select(t => t.ID).ToArray(), currency);
+
                 ViewBag.Year = date.Year;
                 ViewBag.Month = date.Month;
                 ViewBag.ExpenseIds = expensesList;
