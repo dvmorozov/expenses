@@ -355,16 +355,17 @@ namespace SocialApps.Repositories
             return expenses;
         }
 
-        public TodayExpense[] GetExpensesByCategory(Guid userId, DateTime date, int categoryId)
+        public TodayExpense[] GetExpensesByCategory(Guid userId, DateTime date, int categoryId, string currency)
         {
             //  https://www.evernote.com/shard/s132/nl/14501366/efb1faa9-2d68-4d40-b7e3-3eb9a0b2c1fe
             //  https://www.evernote.com/shard/s132/nl/14501366/d2c71f03-0b70-441f-bd16-9587f82850ae
             //  https://www.evernote.com/shard/s132/nl/14501366/c03c9b9e-5375-4177-bac3-f7e9e50c3d12
+            //  https://github.com/dvmorozov/expenses/issues/71
             var expenses =
                (from exp in _db.Expenses
                 join expCat in _db.ExpensesCategories on exp.ID equals expCat.ExpenseID
                 join cat in _db.Categories on expCat.CategoryID equals cat.ID
-                where (exp.DataOwner == userId) && (cat.ID == categoryId) &&
+                where (exp.DataOwner == userId) && (cat.ID == categoryId) && (exp.Currency.Trim() == currency.Trim()) &&
                 (
                     ((exp.Monthly == null || !(bool)exp.Monthly) &&
                     exp.Date.Month == date.Month && exp.Date.Year == date.Year) ||
