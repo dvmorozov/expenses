@@ -9,6 +9,12 @@
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
+<script type="text/javascript">
+	@*	Constructing array of data which are used to build graphs.
+		Variable must have the same name as on other pages. *@
+	var imageURL = [];
+</script>
+
 @* ReSharper disable UnknownCssClass *@
 @using (Html.BeginForm("Top10", "Mobile"))
 {
@@ -47,34 +53,39 @@
 			</table>
 		</div>
 		<div class="panel-body">
+			@* Add tab headers. *@
+			@{
+				var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
+				var tableTabPrefix = "table_tab_";
+				var chartTabPrefix = "chart_tab_";
+				ViewBag.TabPrefix = tableTabPrefix;
+				ViewBag.ChartActionName = "GetTop10ChartContentWh";
+			}
+
+			@Html.Partial("CurrencyTabs")
+
 			<div class="row">
-				<div class="col-md-9">
-					@* Add tab headers. *@
-					@{
-						var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
-						var tableTabPrefix = "table_tab_";
-						var chartTabPrefix = "chart_tab_";
-						ViewBag.TabPrefix = tableTabPrefix;
-					}
-
-					@Html.Partial("CurrencyTabs")
-
-					@* Add tab content. *@
-					<div class="tab-content">
-						@{ //	Category id must be unique among all groups.
-							//	https://action.mindjet.com/task/14945733
-							var categorySeqNum = 0;
-							if (currencyGroups.Count() != 0)
+				@* Add tab content. *@
+				<div class="tab-content">
+					@{ //	Category id must be unique among all groups.
+						//	https://action.mindjet.com/task/14945733
+						var categorySeqNum = 0;
+						if (currencyGroups.Count() != 0)
+						{
+							for (var i = 0; i < currencyGroups.Count(); i++)
 							{
-								for (var i = 0; i < currencyGroups.Count(); i++)
-								{
-									var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
-									var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
-									var tableTabId = tableTabPrefix + currencyGroups[i].GroupId.ToString();
+								var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
+								var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
+								var diagramId = "diagram_" + currencyGroups[i].GroupId.ToString();
+								var diagramContainerId = "diagram_container_" + currencyGroups[i].GroupId.ToString();
+								var tableTabId = tableTabPrefix + currencyGroups[i].GroupId.ToString();
+								var chartTabId = chartTabPrefix + currencyGroups[i].GroupId.ToString();
 
-									<div class="@Html.Raw(tabClass)" id="@Html.Raw(tableTabId)" style="margin-top: 8px;">
-										<div style="display: inline-block; margin-top: 8px;">
-											<div class="panel-body" id="@Html.Raw(tableContainerId)">
+
+								<div class="@Html.Raw(tabClass)" id="@Html.Raw(tableTabId)">
+									<div style="display: inline-block;">
+										<div id="@Html.Raw(tableContainerId)">
+											<div class="col-md-9">
 												@{ var list = ((List<EstimatedTop10CategoriesForMonthByUser3_Result>)Session["Top10CategoriesResult"]).Where(t => t.GROUPID1 == currencyGroups[i].GroupId).ToList();
 													if (list.Count() != 0)
 													{
@@ -129,8 +140,8 @@
 																			@if (cat.EncryptedName != null && cat.EncryptedName != string.Empty)
 																			{
 																				<script>
-																				@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
-																				(function () { decryptListData('@Html.Raw(categoryId)', '@Html.Raw(cat.EncryptedName)') })();
+																@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
+																(function () { decryptListData('@Html.Raw(categoryId)', '@Html.Raw(cat.EncryptedName)') })();
 																				</script>
 																			}
 
@@ -151,48 +162,78 @@
 																	</tr>
 																}
 															</tbody>
-														</table>}
-
+														</table>
+													}
 												}
+											</div>
+
+											<div class="col-md-3">
+												<div id="@Html.Raw(chartTabId)" style="margin-top: 8px;">
+													<div style="display: inline-block; margin-top: 8px;">
+														<div class="panel-body" id="@Html.Raw(diagramContainerId)">
+															<img id="@Html.Raw(diagramId)" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
+														</div>
+													</div>
+													<div class="panel-body">
+														<table>
+															<tbody>
+																<tr>
+																	<td>
+																		<script>
+										imageURL.push({
+											pie: true,
+											url: '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
+											diagramId: '@Html.Raw(diagramId)',
+											diagramContainerId: '@Html.Raw(diagramContainerId)'
+										});
+																		</script>
+																		<div class="btn-group">
+																			@* Timestamp parameter is added to overcome image caching. *@
+																			<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
+																				@Html.Raw(Resources.Resources.Bar)
+																			</button>
+																			<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
+																				@Html.Raw(Resources.Resources.Pie)
+																			</button>
+																		</div>
+																	</td>
+																	<td></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+
 											</div>
 										</div>
 									</div>
-								}
+								</div>
 							}
-							else
-							{
-								<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
-								<br /> }
 						}
-					</div>
+						else
+						{
+							<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
+							<br />
+						}
+					}
 				</div>
 
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-heading">@Html.Raw(ViewBag.Title)</div>
-						@* Add tab headers. *@
-						@{
-							ViewBag.TabPrefix = chartTabPrefix;
-							ViewBag.ChartActionName = "GetTop10ChartContentWh";
-						}
-						@Html.Partial("CurrencyTabs")
-						@Html.Partial("ChartTabs")
+				<div style="margin-left: 16px;">
+					<div class="month_calendar">
+					</div>
 
-						<div class="panel-body">
-							<div class="month_calendar">
-							</div>
-							<div>
-								<button type="submit" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Refresh)">
-									<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-								</button>
-								<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="warning"></span>
-							</div>
-						</div>
+					<div>
+						<button type="submit" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Refresh)">
+							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+						</button>
+						<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="warning"></span>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		@Html.Partial("Tags")
+
 		<div class="panel-footer">
 			@Html.Partial("BottomHomeButton")
 		</div>
