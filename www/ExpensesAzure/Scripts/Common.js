@@ -199,11 +199,14 @@ function initDatePicker() {
 			setInputValue(document.getElementById("Month"), newMonth);
 			setInputValue(document.getElementById("Year"), newYear);
 
-			var el = document.getElementById("warning");
+			//  https://github.com/dvmorozov/expenses/issues/65
+			//	Must look inside parent element because there can be multiple elements
+			//	with the same id on tabs corresponding to different currencies.
+			var el = $(this).parent().find("#warning")
 			if (el) {
-				el.style.visibility = "visible";
 				var date = months[newMonth - 1]  + ' ' + newYear;
-				el.innerHTML = date;
+				el.html(date);
+				el.css("visibility", "visible");
 				updateParentHeight();
 			}
 		}
