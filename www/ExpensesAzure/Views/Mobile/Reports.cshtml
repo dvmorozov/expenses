@@ -2,7 +2,6 @@
 	ViewBag.Title = Resources.Resources.ReportsTitle;
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
-
 @* ReSharper disable UnknownCssClass *@
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -23,8 +22,7 @@
 							</div>
 						</div>
 					</td>
-					<td style="width: 1%;">
-					</td>
+					<td style="width: 1%;"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -38,6 +36,11 @@
 			<li role="presentation">@Html.ActionLink(Resources.Resources.ReportTrendByCategory, "TrendByCategory", "Mobile", new { lastMonthNumber = 12 }, null)</li>
 		</ul>
 	</div>
+
+	<div class="panel-footer">
+		@Html.Partial("BottomHomeButton")
+	</div>
+
 	@Html.Partial("Tags")
 </div>
 @* ReSharper restore UnknownCssClass *@
