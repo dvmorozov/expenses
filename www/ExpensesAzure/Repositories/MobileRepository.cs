@@ -283,12 +283,12 @@ namespace SocialApps.Repositories
 
         public static string GetCurrency<a, T>(IGrouping<a, T> o)
         {
-            return ((string)o.First().GetType().GetProperty("Currency").GetValue(o.First())).Trim() ?? "";
+            return ((string)o.First().GetType().GetProperty("Currency").GetValue(o.First()))?.Trim() ?? "";
         }
 
         public static string GetCurrency<T>(T o)
         {
-            return ((string)o.GetType().GetProperty("Currency").GetValue(o)).Trim() ?? "";
+            return ((string)o.GetType().GetProperty("Currency").GetValue(o))?.Trim() ?? "";
         }
 
         private List<T> CreateCurrencyGroupId<T>(List<T> query)
