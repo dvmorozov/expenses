@@ -69,7 +69,7 @@ BEGIN
 			) E2
 			ON E1.Year = E2.Y 
 				AND E1.Month = E2.M
-				AND E1.Currency = E2.Currency
+				AND (E1.Currency = E2.Currency OR (E1.Currency IS NULL AND E2.Currency IS NULL))
 		) E1
 		FULL OUTER JOIN
 		(
@@ -86,10 +86,11 @@ BEGIN
 			) E2
 			ON DATEFROMPARTS(Year, Month, 1) >= E2.FirstMonth 
 				AND (DATEFROMPARTS(Year, Month, 1) <= E2.LastMonth OR E2.LastMonth IS NULL) 
-				AND (E1.Currency = E2.Currency)
+				AND (E1.Currency = E2.Currency OR (E1.Currency IS NULL AND E2.Currency IS NULL))
 			GROUP BY Year, Month, E1.Currency
 		) E2
-		ON E1.Y = E2.Y AND E1.M = E2.M AND (E1.Currency = E2.Currency OR E1.Currency IS NULL AND E2.Currency IS NULL)
+		ON E1.Y = E2.Y AND E1.M = E2.M 
+		   AND (E1.Currency = E2.Currency OR (E1.Currency IS NULL AND E2.Currency IS NULL))
 	)
 	AS T
 	ORDER BY Currency, Y, M
