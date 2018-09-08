@@ -8,6 +8,12 @@
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
+<script type="text/javascript">
+	@*	Constructing array of data which are used to build graphs.
+		Variable must have the same name as on other pages. *@
+	var imageURL = [];
+</script>
+
 @* ReSharper disable UnknownCssClass *@
 @using (Html.BeginForm("Importance", "Mobile"))
 {
@@ -43,33 +49,40 @@
 				</tbody>
 			</table>
 		</div>
+
 		<div class="panel-body">
+			@* Add tab headers. *@
+			@{
+				var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
+				var tableTabPrefix = "table_tab_";
+				var chartTabPrefix = "chart_tab_";
+				ViewBag.TabPrefix = tableTabPrefix;
+				ViewBag.ChartActionName = "GetImportanceChartContentWh";
+			}
+
+			@Html.Partial("CurrencyTabs")
+
 			<div class="row">
-				<div class="col-md-9">
-					@* Add tab headers. *@
+				@* Add tab content. *@
+				<div class="tab-content">
 					@{
-						var currencyGroups = (CurrencyGroup[])ViewBag.CurrencyGroups;
-						var tableTabPrefix = "table_tab_";
-						var chartTabPrefix = "chart_tab_";
-						ViewBag.TabPrefix = tableTabPrefix;
-					}
-
-					@Html.Partial("CurrencyTabs")
-
-					@* Add tab content. *@
-					<div class="tab-content">
-						@{
-							if (currencyGroups.Count() != 0)
+						var categorySeqNum = 0;
+						if (currencyGroups.Count() != 0)
+						{
+							for (var i = 0; i < currencyGroups.Count(); i++)
 							{
-								for (var i = 0; i < currencyGroups.Count(); i++)
-								{
-									var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
-									var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
-									var tableTabId = tableTabPrefix + currencyGroups[i].GroupId.ToString();
+								var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
+								var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
+								var tableTabId = tableTabPrefix + currencyGroups[i].GroupId.ToString();
+								ViewBag.DiagramId = "diagram_" + currencyGroups[i].GroupId.ToString();
+								ViewBag.DiagramContainerId = "diagram_container_" + currencyGroups[i].GroupId.ToString();
+								ViewBag.ChartTabId = chartTabPrefix + currencyGroups[i].GroupId.ToString();
+								ViewBag.CurrencyGroupId = currencyGroups[i].GroupId;
 
-									<div class="@Html.Raw(tabClass)" id="@Html.Raw(tableTabId)" style="margin-top: 8px;">
-										<div style="display: inline-block; margin-top: 8px;">
-											<div class="panel-body" id="@Html.Raw(tableContainerId)">
+								<div class="@Html.Raw(tabClass)" id="@Html.Raw(tableTabId)" style="margin-top: 8px;">
+									<div style="display: inline-block; margin-top: 8px;">
+										<div class="panel-body" id="@Html.Raw(tableContainerId)">
+											<div class="col-md-9">
 												@{
 													var list = ((List<MonthImportance>)Session["ImportanceResult"]).Where(t => t.GROUPID1 == currencyGroups[i].GroupId).ToList();
 													if (list.Count() != 0)
@@ -128,48 +141,29 @@
 													}
 												}
 											</div>
+											<div class="col-md-3">
+												@Html.Partial("ChartColumn")
+											</div>
 										</div>
 									</div>
-								}
-							}
-							else
-							{
-								<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
-								<br />
+								</div>
 							}
 						}
-					</div>
-				</div>
-
-				<div class="col-md-3">
-					<div class="panel panel-default">
-						<div class="panel-heading">@Html.Raw(ViewBag.Title)</div>
-						@* Add tab headers. *@
-						@{
-							ViewBag.TabPrefix = chartTabPrefix;
-							ViewBag.ChartActionName = "GetImportanceChartContentWh";
+						else
+						{
+							<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
+							<br />
 						}
-						@Html.Partial("CurrencyTabs")
-						@Html.Partial("ChartTabs")
-
-						<div class="panel-body">
-							<div class="month_calendar">
-							</div>
-							<div>
-								<button type="submit" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Refresh)">
-									<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-								</button>
-								<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="warning"></span>
-							</div>
-						</div>
-					</div>
+					}
 				</div>
 			</div>
 		</div>
-		@Html.Partial("Tags")
+
 		<div class="panel-footer">
 			@Html.Partial("BottomHomeButton")
 		</div>
+
+		@Html.Partial("Tags")
 	</div>
 	@* ReSharper restore UnknownCssClass *@
 }

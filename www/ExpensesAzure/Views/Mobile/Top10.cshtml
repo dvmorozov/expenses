@@ -52,6 +52,7 @@
 				</tbody>
 			</table>
 		</div>
+
 		<div class="panel-body">
 			@* Add tab headers. *@
 			@{
@@ -76,11 +77,11 @@
 							{
 								var tabClass = (i == 0) ? "tab-pane fade in active" : "tab-pane fade";
 								var tableContainerId = "table_container_" + currencyGroups[i].GroupId.ToString();
-								var diagramId = "diagram_" + currencyGroups[i].GroupId.ToString();
-								var diagramContainerId = "diagram_container_" + currencyGroups[i].GroupId.ToString();
 								var tableTabId = tableTabPrefix + currencyGroups[i].GroupId.ToString();
-								var chartTabId = chartTabPrefix + currencyGroups[i].GroupId.ToString();
-
+								ViewBag.DiagramId = "diagram_" + currencyGroups[i].GroupId.ToString();
+								ViewBag.DiagramContainerId = "diagram_container_" + currencyGroups[i].GroupId.ToString();
+								ViewBag.ChartTabId = chartTabPrefix + currencyGroups[i].GroupId.ToString();
+								ViewBag.CurrencyGroupId = currencyGroups[i].GroupId;
 
 								<div class="@Html.Raw(tabClass)" id="@Html.Raw(tableTabId)">
 									<div style="display: inline-block;">
@@ -168,44 +169,7 @@
 											</div>
 
 											<div class="col-md-3">
-												<div id="@Html.Raw(chartTabId)" style="margin-top: 8px;">
-													<div style="display: inline-block; margin-top: 8px;">
-														<div class="panel-body" id="@Html.Raw(diagramContainerId)">
-															<img id="@Html.Raw(diagramId)" src="" alt="@Html.Raw(ViewBag.Title)" onload="updateParentHeight();" />
-														</div>
-													</div>
-													<div class="panel-body">
-														<script>
-															imageURL.push({
-																pie: true,
-																url: '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })',
-																diagramId: '@Html.Raw(diagramId)',
-																diagramContainerId: '@Html.Raw(diagramContainerId)'
-															});
-														</script>
-														<div class="btn-group">
-															@* Timestamp parameter is added to overcome image caching. *@
-															<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
-																@Html.Raw(Resources.Resources.Bar)
-															</button>
-															<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = currencyGroups[i].GroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
-																@Html.Raw(Resources.Resources.Pie)
-															</button>
-														</div>
-													</div>
-												</div>
-
-												<div style="margin-left: 16px;">
-													<div class="month_calendar">
-													</div>
-
-													<div>
-														<button type="submit" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Refresh)">
-															<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-														</button>
-														<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="warning"></span>
-													</div>
-												</div>
+												@Html.Partial("ChartColumn")
 											</div>
 										</div>
 									</div>
