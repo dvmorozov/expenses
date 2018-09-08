@@ -496,7 +496,7 @@
     <Content Include="Views\Shared\ExpenseName.cshtml" />
     <Content Include="Views\Mobile\ExpensesByName.cshtml" />
     <Content Include="Views\Shared\CurrencyTabs.cshtml" />
-    <Content Include="Views\Shared\ChartTabs.cshtml" />
+    <Content Include="Views\Shared\ChartColumn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

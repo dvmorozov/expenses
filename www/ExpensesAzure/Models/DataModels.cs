@@ -173,7 +173,7 @@ namespace SocialApps.Models
         public double Sum { get; set; }
         //  https://github.com/dvmorozov/expenses/issues/10
         public string Currency { get; set; }
-        //  Integer indentifier of currency group (to reuse ChartTabs).
+        //  Integer indentifier of currency group (to reuse ChartColumn).
         public long GROUPID1 { get; set; }
     }
 
