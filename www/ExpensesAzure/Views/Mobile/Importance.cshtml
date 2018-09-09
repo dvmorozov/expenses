@@ -42,7 +42,9 @@
 						</td>
 						<td style="width: 1%;">
 							@{
-								<span class="badge pull-right" style="margin: 8px 0;">@Html.Raw(@*dt.ToString("MMM yyyy")*@dt.ToString("MMM") + " | " + (int)ViewBag.MonthTotal)</span>
+								<span class="badge pull-right" style="margin: 8px 0;">
+									@Html.Raw(@*dt.ToString("MMM yyyy")*@dt.ToString("MMM") + " | " + (int)ViewBag.MonthTotal)
+								</span>
 							}
 						</td>
 					</tr>

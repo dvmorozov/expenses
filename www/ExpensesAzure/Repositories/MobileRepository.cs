@@ -327,32 +327,42 @@ namespace SocialApps.Repositories
         public List<MonthImportance> GetMonthImportances(Guid userId, DateTime now)
         {
             var query =
-                from monthImportance in
+                from sorted in
                 (
-                    from exp in _db.Expenses
-                    where (exp.DataOwner == userId) &&
-                        (
-                            ((exp.Monthly == null || !(bool)exp.Monthly) &&
-                            exp.Date.Month == now.Month && exp.Date.Year == now.Year) ||
-                            ((exp.Monthly != null && (bool)exp.Monthly) &&
-                            now >= exp.FirstMonth && (exp.LastMonth == null || now <= exp.LastMonth))
-                        )
+                    from monthImportance in
+                    (
+                        from exp in _db.Expenses
+                        where (exp.DataOwner == userId) &&
+                            (
+                                ((exp.Monthly == null || !(bool)exp.Monthly) &&
+                                exp.Date.Month == now.Month && exp.Date.Year == now.Year) ||
+                                ((exp.Monthly != null && (bool)exp.Monthly) &&
+                                now >= exp.FirstMonth && (exp.LastMonth == null || now <= exp.LastMonth))
+                            )
+                        select new MonthImportance
+                        {
+                            Sum = exp.Cost != null ? (double)exp.Cost : 0.0,
+                            Importance = exp.Importance != null ? (short)exp.Importance : (short)ExpenseImportance.Necessary,
+                            Currency = exp.Currency
+                        }
+                    )
+                    group monthImportance by new { monthImportance.Currency, monthImportance.Importance } into g
                     select new MonthImportance
                     {
-                        Sum = exp.Cost != null ? (double)exp.Cost : 0.0,
-                        Importance = exp.Importance != null ? (short)exp.Importance : (short)ExpenseImportance.Necessary,
-                        Currency = exp.Currency
+                        Sum = g.Sum(t => t.Sum),
+                        Importance = g.FirstOrDefault().Importance,
+                        Currency = g.FirstOrDefault().Currency != null ? g.FirstOrDefault().Currency.Trim() : ""
                     }
-                )
-                group monthImportance by new { monthImportance.Currency, monthImportance.Importance } into g
-                select new MonthImportance
-                {
-                    Sum = g.Sum(t => t.Sum),
-                    Importance = g.FirstOrDefault().Importance,
-                    Currency = g.FirstOrDefault().Currency != null ? g.FirstOrDefault().Currency.Trim() : ""
-                };
-
-
+            )
+            //  https://github.com/dvmorozov/expenses/issues/84
+            orderby sorted.Importance descending
+            select
+            new MonthImportance
+            {
+                Sum = sorted.Sum,
+                Importance = sorted.Importance,
+                Currency = sorted.Currency
+            };
             return CreateCurrencyGroupId(query.ToList());
         }
 
