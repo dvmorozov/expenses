@@ -38,12 +38,12 @@ namespace SocialApps.Controllers
             //  Chart header was hidden.
             var chart = new Chart(width, height, theme: ChartTheme.Vanilla);
             //  Proper ordering is already done in the controller.
-            var xValue = items.Select(t => ((ExpenseImportance)t.Importance).ToString()).ToList();
+            var xValue = items.Select(t => ImportanceToString(t.Importance)).ToList();
             var yValues = items.Select(t => t.Sum).ToList();
 
             if ((pie ?? false) && Session["MonthTotal"] != null)
             {
-                chart.AddSeries("Importance", "Pie",  // markerStep: 1, 
+                chart.AddSeries("Importance", "Pie",  //  markerStep: 1, 
                                                       //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                                                       //  This gives more convenient chart representation.
                     xValue: xValue, xField: "Importance",
@@ -55,8 +55,8 @@ namespace SocialApps.Controllers
             {
                 chart.AddSeries("Importance", "Column",  // markerStep: 1, 
                                                          //  Must be string to provide desired chart rendering.
-                                                         //xValue: new List<string>{index.ToString(CultureInfo.InvariantCulture)}, xField: "Position",
-                                                         //xValue: xValue, xField: "Name",
+                                                         //  xValue: new List<string>{index.ToString(CultureInfo.InvariantCulture)}, xField: "Position",
+                                                         //  xValue: xValue, xField: "Name",
                                                          //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                                                          //  This gives more convenient chart representation.
                     xValue: xValue, xField: "Importance",

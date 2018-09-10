@@ -264,20 +264,34 @@ namespace SocialApps.Controllers
             }
         }
 
-        //  Убрал дробные из сумм, чтобы не переносилась строка на узком экране.
-        /*
-                private static string DayTotalToString(DateTime date, double? dayTotal)
-                {
-                    return date.ToString("dd") + " | " + Math.Truncate(dayTotal ?? 0);
-                }
-        */
+        //  https://github.com/dvmorozov/expenses/issues/86
+        public static string ImportanceToString(short i)
+        {
+            var result = Resources.Resources.Necessary;
+            switch ((ExpenseImportance)i)
+            {
+            case ExpenseImportance.Liability:
+                result = Resources.Resources.Liability;
+                break;
 
-        /*
-                private static string MonthTotalToString(DateTime date, double? monthTotal)
-                {
-                    return date.ToString("MMM") + " | " + Math.Truncate(monthTotal ?? 0);
-                }
-        */
+            case ExpenseImportance.Asset:
+                result = Resources.Resources.Asset;
+                break;
+
+            case ExpenseImportance.Necessary:
+                result = Resources.Resources.Necessary;
+                break;
+
+            case ExpenseImportance.Pleasure:
+                result = Resources.Resources.Pleasure;
+                break;
+
+            case ExpenseImportance.Unnecessary:
+                result = Resources.Resources.Unnecessary;
+                break;
+            }
+            return result;
+        }
 
         //  https://action.mindjet.com/task/14672437
         public static string TotalsToString(int? day, int? month, int? year, double? dayTotal, double? monthTotal, string todayCurrency, string monthCurrency)
