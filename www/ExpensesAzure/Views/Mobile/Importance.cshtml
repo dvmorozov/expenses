@@ -1,7 +1,7 @@
 ﻿@*https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7*@
 @using System.Globalization
 @using SocialApps.Models
-@using SocialApps.Repositories
+@using SocialApps.Controllers
 @{
 	var dt = new DateTime((int)Session["Top10Year"], (int)Session["Top10Month"], 1);
 	ViewBag.Title = Resources.Resources.ImportanceReportTitle + " " + dt.ToString("MMM yyyy");
@@ -106,32 +106,7 @@
 																			@Html.Raw((index + 1).ToString(CultureInfo.InvariantCulture))
 																		</td>
 																		<td>
-																			@{
-																				var importance = Resources.Resources.Necessary;
-																				switch ((ExpenseImportance)cat.Importance)
-																				{
-																					case ExpenseImportance.Liability:
-																						importance = Resources.Resources.Liability;
-																						break;
-
-																					case ExpenseImportance.Asset:
-																						importance = Resources.Resources.Asset;
-																						break;
-
-																					case ExpenseImportance.Necessary:
-																						importance = Resources.Resources.Necessary;
-																						break;
-
-																					case ExpenseImportance.Pleasure:
-																						importance = Resources.Resources.Pleasure;
-																						break;
-
-																					case ExpenseImportance.Unnecessary:
-																						importance = Resources.Resources.Unnecessary;
-																						break;
-																				}
-																			}
-																			@Html.Raw(importance)
+																			@Html.Raw(MobileController.ImportanceToString(cat.Importance))
 																		</td>
 																		<td>
 																			@Html.Raw(Math.Floor(cat.Sum).ToString(CultureInfo.InvariantCulture))

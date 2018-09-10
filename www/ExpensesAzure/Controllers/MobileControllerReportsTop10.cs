@@ -40,7 +40,7 @@ namespace SocialApps.Controllers
             //  https://www.evernote.com/shard/s132/nl/14501366/e0eb1c4e-4561-4da4-ae7c-5c26648ec6fc
             //  Chart header was hidden.
             var chart = new Chart(width, height, theme: ChartTheme.Vanilla);
-            //  Proper ordering is already done in the stored procedure.
+            //  Numbers instead of names.
             //var xValue = items.Select(t => t.NAME).ToList();
             var yValues = items.Select(t => t.TOTAL).ToList();
 
