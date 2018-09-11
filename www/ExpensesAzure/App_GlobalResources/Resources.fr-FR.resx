@@ -642,4 +642,10 @@
   <data name="History" xml:space="preserve">
     <value>Histoire</value>
   </data>
+  <data name="Residue" xml:space="preserve">
+    <value>Résidu</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Indéfini</value>
+  </data>
 </root>

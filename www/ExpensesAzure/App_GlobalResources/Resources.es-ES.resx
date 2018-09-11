@@ -643,4 +643,10 @@ Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</v
   <data name="History" xml:space="preserve">
     <value>Historia</value>
   </data>
+  <data name="Residue" xml:space="preserve">
+    <value>Residuo</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Indefinido</value>
+  </data>
 </root>

@@ -643,4 +643,10 @@ Sie sollten alle Passwörter halten Sie sie zu entschlüsseln wurden. </value>
   <data name="History" xml:space="preserve">
     <value>Geschichte</value>
   </data>
+  <data name="Residue" xml:space="preserve">
+    <value>Rückstand</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Nicht definiert</value>
+  </data>
 </root>
