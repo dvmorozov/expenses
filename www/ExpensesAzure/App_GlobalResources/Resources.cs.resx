@@ -644,4 +644,10 @@ Byste měli mít všechna hesla jste používali k jejich dešifrování.</value
   <data name="History" xml:space="preserve">
     <value>Dějiny</value>
   </data>
+  <data name="Residue" xml:space="preserve">
+    <value>Zbytek</value>
+  </data>
+  <data name="Undefined" xml:space="preserve">
+    <value>Nedefinováno</value>
+  </data>
 </root>
