@@ -38,17 +38,21 @@
 		@Html.Raw(Resources.Resources.AboutYouCanUseTheApp)
 		<ul>
 			<li>
-				@Html.Raw(Resources.Resources.AboutFromMobileDevice)&nbsp;<strong><a href="https://ibuy.townbreath.com" target="_blank">ibuy.townbreath.com</a></strong>
+				@Html.Raw(Resources.Resources.AboutFromMobileDevice)&nbsp;<strong><a href="https://xpnss.azurewebsites.net" target="_blank">xpnss.azurewebsites.net</a></strong>
 			</li>
 			<li>
 				@Html.Raw(Resources.Resources.AboutFromFacebook)&nbsp;<strong><a href="https://apps.facebook.com/xpenses/" title="Expenses at Facebook" target="_blank">apps.facebook.com/xpenses</a></strong>
 			</li>
-			<li>
-				@Html.Raw(Resources.Resources.AboutFromGoogleChrome)&nbsp;<strong><a href="https://chrome.google.com/webstore/search/ibuy" target="_blank">Google Web Store</a></strong>.
-			</li>
 		</ul>
 		<div class="well">
-			Copyright &copy; 2017 Dmitry Morozov&nbsp;<a href="https://ru.linkedin.com/pub/dmitry-morozov/59/90a/794/ru" target="_blank"><img src="/Content/linkedin.png" /></a>&nbsp;<a href="https://www.facebook.com/profile.php?id=100004082021870" target="_blank"><img src="/Content/facebook.png" /></a><br />Rev. 4135<br />Last updated 21 Jan 2017 at 21:29:39
+			Copyright &copy; @Html.Partial("Year") Dmitry Morozov&nbsp;
+			<a href="https://ru.linkedin.com/pub/dmitry-morozov/59/90a/794/ru" target="_blank">
+				<img src="/Content/linkedin.png" />
+			</a>&nbsp;<a href="https://www.facebook.com/profile.php?id=100004082021870" target="_blank">
+				<img src="/Content/facebook.png" />
+			</a>
+			<br />Rev. @Html.Partial("Build")
+			<br />Last updated @Html.Partial("Date")
 		</div>
 	</div>
 	@Html.Partial("Tags")

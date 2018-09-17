@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutForMoreInfo" xml:space="preserve">
-    <value>Pro více informací navštivte aplikační domovské stránce na adrese &lt;strong&gt; &lt;a href="http://townbreath.com" target="_blank"&gt; townbreath.com &lt;/a&gt; &lt;/ strong&gt; nebo
+    <value>Pro více informací navštivte aplikační domovské stránce na adrese &lt;strong&gt; &lt;a href="https://dvmorozov.github.io/expenses/" target="_blank"&gt;GitHub&lt;/a&gt; &lt;/ strong&gt; nebo
 &lt;Strong&gt; &lt;a href="https://www.facebook.com/expensestracking/" target="_blank"&gt; aplikace &lt;/a&gt; &lt;/ strong&gt; na Facebooku.</value>
   </data>
   <data name="AboutFromFacebook" xml:space="preserve">
