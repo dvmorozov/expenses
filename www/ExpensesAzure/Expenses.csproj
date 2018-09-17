@@ -442,7 +442,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Mobile\About.cshtml" />
-    <Content Include="Views\Mobile\AboutTmpl.cshtml" />
     <Content Include="Views\Mobile\AddExpense.cshtml" />
     <Content Include="Views\Mobile\Contribute.cshtml" />
     <Content Include="Views\Mobile\DayExpenses.cshtml" />
@@ -497,6 +496,9 @@
     <Content Include="Views\Mobile\ExpensesByName.cshtml" />
     <Content Include="Views\Shared\CurrencyTabs.cshtml" />
     <Content Include="Views\Shared\ChartColumn.cshtml" />
+    <Content Include="Views\Shared\Build.cshtml" />
+    <Content Include="Views\Shared\Date.cshtml" />
+    <Content Include="Views\Shared\Year.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -603,7 +605,11 @@
 del /Q *.*
 cd "$(ProjectDir)/obj/$(ConfigurationName)"
 del /Q *.*
-exit /B 0</PreBuildEvent>
+
+cd $(ProjectDir)
+_update_version.bat
+exit /B 0
+</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>

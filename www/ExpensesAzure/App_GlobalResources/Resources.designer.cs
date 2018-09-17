@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For more information visit application homepage at &lt;strong&gt;&lt;a href=&quot;http://townbreath.com&quot; target=&quot;_blank&quot;&gt;townbreath.com&lt;/a&gt;&lt;/strong&gt; or
+        ///   Looks up a localized string similar to For more information visit application homepage at &lt;strong&gt;&lt;a href=&quot;https://dvmorozov.github.io/expenses/&quot; target=&quot;_blank&quot;&gt;GitHub&lt;/a&gt;&lt;/strong&gt; or
         ///		&lt;strong&gt;&lt;a href=&quot;https://www.facebook.com/expensestracking/&quot; target=&quot;_blank&quot;&gt;application page&lt;/a&gt;&lt;/strong&gt; at Facebook..
         /// </summary>
         internal static string AboutForMoreInfo {
