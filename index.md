@@ -44,6 +44,8 @@ layout: default
 
 [Client-side data encryption](https://dvmorozov.github.io/expenses/client-side-data-encryption)
 
+[Features](features)
+
 {% include google_ads.html %}
 
 ## Blog
