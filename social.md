@@ -9,3 +9,5 @@
    1. *Joint expenses for project*.
 1. *Manufacturer rating*.
 1. *Commodity rating*.
+
+{% include google_ads.html %}
