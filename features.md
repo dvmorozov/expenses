@@ -3,4 +3,6 @@
 
 [Social](social)
 
+[Project](project)
+
 {% include google_ads.html %}
