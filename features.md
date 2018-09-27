@@ -5,4 +5,6 @@
 
 [Project](project)
 
+[Encrypting](encrypting)
+
 {% include google_ads.html %}
