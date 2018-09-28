@@ -7,4 +7,6 @@
 
 [Encrypting](encrypting)
 
+[Reports](reports)
+
 {% include google_ads.html %}
