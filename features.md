@@ -11,4 +11,6 @@
 
 [Reports](reports)
 
+[Savings](savings)
+
 {% include google_ads.html %}
