@@ -13,4 +13,6 @@
 
 [Savings](savings)
 
+[Budget](budget)
+
 {% include google_ads.html %}
