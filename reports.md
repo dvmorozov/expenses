@@ -8,5 +8,6 @@
 1. Trend by category.
 1. [Reports on year](https://github.com/dvmorozov/expenses/issues/19).
 1. [Grouping by currency](https://github.com/dvmorozov/expenses/issues/23).
+1. *History by category*.
 
 {% include google_ads.html %}
