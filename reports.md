@@ -9,5 +9,6 @@
 1. [Reports on year](https://github.com/dvmorozov/expenses/issues/19).
 1. [Grouping by currency](https://github.com/dvmorozov/expenses/issues/23).
 1. *History by category*.
+1. *History by expense*.
 
 {% include google_ads.html %}
