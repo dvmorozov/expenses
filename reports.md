@@ -11,5 +11,6 @@
 1. *History by category*.
 1. *History by expense*.
 1. *Permanent links to reports*.
+1. *List of active repeated expenses*.
 
 {% include google_ads.html %}
