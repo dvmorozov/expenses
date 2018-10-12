@@ -12,5 +12,6 @@
 1. *History by expense*.
 1. *Permanent links to reports*.
 1. *List of active repeated expenses*.
+1. *Balance report "assets-liabilities"*.
 
 {% include google_ads.html %}
