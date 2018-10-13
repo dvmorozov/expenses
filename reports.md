@@ -1,7 +1,8 @@
 
 ## Reports
 
-1. Top 10.
+1. Top 10 categories.
+1. *All categories*.
 1. Balance.
 1. Importance.
 1. Trend general.
