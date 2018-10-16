@@ -808,7 +808,7 @@ namespace SocialApps.Controllers
                         if (!float.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float l))
                             return RedirectToAction("EditCategory", model);
 
-                        limit = l;
+                        limit = (l == 0.0) ? (float?)null : l;
                     }
 
                     _repository.EditCategory(model.Id, model.Name, GetUserId(), limit, model.EncryptedName);
