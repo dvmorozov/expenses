@@ -1,10 +1,8 @@
 ﻿@model SocialApps.Models.CategoryModel
-
 @{
 	ViewBag.Title = Resources.Resources.EditCategoryTitle;
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
-
 @* ReSharper disable UnknownCssClass *@
 <div class="panel panel-primary">
 	<div class="panel-heading">
@@ -31,7 +29,8 @@
 		</table>
 	</div>
 	<div class="panel-body">
-		@using (Html.BeginForm("EditCategory", "Mobile")) {
+		@using (Html.BeginForm("EditCategory", "Mobile"))
+		{
 			@Html.ValidationSummary(true)
 			@Html.HiddenFor(m => m.Id)
 
@@ -45,7 +44,7 @@
 				@Html.TextBoxFor(m => m.Name)
 				@Html.ValidationMessageFor(m => m.Name)
 				@if (Model.EncryptedName != null && Model.EncryptedName != string.Empty)
-				{ 
+				{
 					<script>
 						(function () { decryptData('Name', '@Html.Raw(Model.EncryptedName)') })();
 					</script>
@@ -60,8 +59,9 @@
 				@Html.ValidationMessageFor(m => m.Limit)
 			</div>
 
-			<br/>
+			<br />
 			<input class="btn btn-default" type="submit" value="@Html.Raw(Resources.Resources.Save)" onclick="encryptData('Name', 'EncryptedName'); document.forms['NewCategory'].submit(); return true;" />
+			<input class="btn" type="submit" value="@Html.Raw(Resources.Resources.Reset)" onclick="encryptData('Name', 'EncryptedName'); $('#Limit').val('0'); document.forms['NewCategory'].submit(); return true;" />
 		}
 	</div>
 </div>
