@@ -14,5 +14,6 @@
 1. *Permanent links to reports*.
 1. *List of active repeated expenses*.
 1. *Balance report "assets-liabilities"*.
+1. *List of expenses should have clickable items leading to corresponding expenses*.
 
 {% include google_ads.html %}
