@@ -24,7 +24,7 @@
 				var selected = items.FirstOrDefault(t => t.Selected);
 				var l = new SelectList(items, "Value", "Text", selected != null ? selected.Value : null);
 					
-				@Html.DropDownList("Importance", l, Resources.Resources.None, new { style = "height: 26px; width: 150px; position: relative; top: 1px;" });
+				@Html.DropDownList("Importance", l, Resources.Resources.None, new { style = "height: 26px; width: 150px;" });
 			}
 		</div>
 	</td>
