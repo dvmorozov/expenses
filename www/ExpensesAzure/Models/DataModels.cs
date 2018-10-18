@@ -348,6 +348,10 @@ namespace SocialApps.Models
         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
         [Display(Name = "Project")]
         public string Project { get; set; }
+
+        //  https://github.com/dvmorozov/expenses/issues/101
+        [Display(Name = "Multiplier")]
+        public int Multiplier { get; set; }
     }
 
     //  https://action.mindjet.com/task/14919145
