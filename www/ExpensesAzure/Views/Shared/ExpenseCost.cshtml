@@ -10,7 +10,8 @@
 		<div class="editor-field btnEditorField" style="padding: 8px;">
 			@Html.TextBoxFor(model => model.Cost, new { style = "vertical-align: middle; width: 100px;" })
 			@*Html.ValidationMessageFor(model => model.Cost)*@
-			@Html.DropDownListFor(model => model.Multiplier, new SelectList(new [] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }));
+			@Html.DropDownListFor(model => model.Multiplier, new SelectList(new [] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }), 
+				Resources.Resources.None, new { style = "height: 26px; width: 40px;" })
 		</div>
 	</td>
 </tr>
