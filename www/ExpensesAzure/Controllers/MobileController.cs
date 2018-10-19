@@ -675,11 +675,7 @@ namespace SocialApps.Controllers
                 FillExpenseLinks("AddExpense");
 
                 return View(
-#if EXPENSES
-                    "AddExpense"
-#elif FITNESS
-                    "AddExpenseFitness"
-#endif
+                    "AddRestOfReceipt"
                     ,
                     new NewExpense
                     {
@@ -691,7 +687,7 @@ namespace SocialApps.Controllers
                         Sec = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Second : -1),
                         //  https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
                         ExpenseId = expenseId,
-                        EncryptedName = expense != null ? expense.EncryptedName : null,
+                        EncryptedName = expense?.EncryptedName,
                         Name = expense != null && expense.Name != null ? expense.Name.Trim() : null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
                         //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
