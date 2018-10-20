@@ -33,6 +33,13 @@
 								<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								</button>
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+									<span class="caret"></span>
+									<span class="sr-only"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateCategories", "Mobile")?categoryList=' + s); });">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
+								</ul>
 							</div>
 						</td>
 						<td>
