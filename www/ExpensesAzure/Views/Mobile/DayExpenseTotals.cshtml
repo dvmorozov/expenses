@@ -3,43 +3,43 @@
 @using SocialApps.Controllers
 @using SocialApps.Models
 @using System.Web.Security.AntiXss
-
 @{
 	ViewBag.Title = Resources.Resources.DayExpensesTitle;
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
-
 @*  https://www.evernote.com/shard/s132/nl/14501366/d03bc138-ab63-470b-8b99-df02ec42f205 *@
 <script type="text/javascript">
 	var encryptedPairs = JSON.parse('@Html.Raw((string)ViewBag.Pairs)');
 </script>
-
 @using (Html.BeginForm("DayExpenseTotals", "Mobile"))
 {
 	@Html.Hidden("Day", (int)Session["Day"])
 	@Html.Hidden("Month", (int)Session["Month"])
 	@Html.Hidden("Year", (int)Session["Year"])
-	
-@* ReSharper disable UnknownCssClass *@
+
+	@* ReSharper disable UnknownCssClass *@
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<table style="width: 100%;">
 				<tbody>
 					<tr>
 						<td style="width: 1%;">
-							<div style="white-space: nowrap;">
+							<div style="white-space: nowrap; display: inline-block;">
 								@Html.Partial("TopLockIcon")
 								@Html.Partial("TopHomeButton")
-								<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-									<span class="caret"></span>
-									<span class="sr-only"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateCategories", "Mobile")?categoryList=' + s); });">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
-								</ul>
+
+								<div class="btn-group">
+									<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									</button>
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+										<span class="sr-only"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateCategories", "Mobile")?categoryList=' + s); });">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
+									</ul>
+								</div>
 							</div>
 						</td>
 						<td>
@@ -62,7 +62,7 @@
 			<div class="row">
 				<div class="col-md-9">
 					@{
-						var expenseList = (TodayExpenseSum[]) ViewBag.TodayExpenses;
+						var expenseList = (TodayExpenseSum[])ViewBag.TodayExpenses;
 					}
 					@if (expenseList.Any())
 					{
@@ -136,5 +136,5 @@
 			</button>
 		</div>
 	</div>
-@* ReSharper restore UnknownCssClass *@
+	@* ReSharper restore UnknownCssClass *@
 }
