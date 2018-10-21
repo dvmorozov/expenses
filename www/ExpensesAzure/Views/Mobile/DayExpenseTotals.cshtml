@@ -36,7 +36,7 @@
 										<span class="sr-only"></span>
 									</button>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateCategories", "Mobile")?categoryList=' + s); });">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
+										<li><a href="#" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile", new { addRestOfReceipt = true })';">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
 									</ul>
 								</div>
 							</div>
