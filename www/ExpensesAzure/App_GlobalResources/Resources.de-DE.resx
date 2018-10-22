@@ -649,4 +649,7 @@ Sie sollten alle Passwörter halten Sie sie zu entschlüsseln wurden. </value>
   <data name="Undefined" xml:space="preserve">
     <value>Nicht definiert</value>
   </data>
+  <data name="AddRestOfReceipt" xml:space="preserve">
+    <value>Fügen Sie den Rest des Belegs hinzu</value>
+  </data>
 </root>

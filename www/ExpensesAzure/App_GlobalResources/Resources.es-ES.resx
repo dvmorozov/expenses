@@ -649,4 +649,7 @@ Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</v
   <data name="Undefined" xml:space="preserve">
     <value>Indefinido</value>
   </data>
+  <data name="AddRestOfReceipt" xml:space="preserve">
+    <value>Añadir resto de recibo</value>
+  </data>
 </root>
