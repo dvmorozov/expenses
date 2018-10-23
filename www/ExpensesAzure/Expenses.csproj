@@ -500,6 +500,7 @@
     <Content Include="Views\Shared\Date.cshtml" />
     <Content Include="Views\Shared\Year.cshtml" />
     <Content Include="Views\Mobile\AddRestOfReceipt.cshtml" />
+    <Content Include="Views\Shared\ExpenseRestOfReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
