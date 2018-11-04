@@ -45,8 +45,9 @@ BEGIN
 
 	--	Date to start from.
 	DECLARE @DateFrom DATETIME
-	--	Selects for last half a year from given date.
-	SET @DateFrom = DATEADD(month, -6, @ADate);
+	--	Selects for last 3 months from given date.
+	--  https://github.com/dvmorozov/expenses/issues/122
+	SET @DateFrom = DATEADD(month, -3, @ADate);
 
 	--	Selects categories having expenses for given period of time.
 	WITH CategoriesExpenses AS
