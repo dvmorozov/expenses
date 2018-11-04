@@ -681,7 +681,7 @@ namespace SocialApps.Controllers
 
                 var clientExpenseDate = Session["ClientExpenseDate"];
 
-                FillExpenseLinks("AddExpense");
+                FillExpenseLinks("AddRestOfReceipt");
 
                 return View(
                     "AddRestOfReceipt"
