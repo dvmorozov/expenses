@@ -30,11 +30,12 @@
 			if (Model != null)
 			{
 				<br/>
-				@Html.Raw("A: " + Model.ActionName)
+				@Html.Raw("Action: " + Model.ActionName)
 				<br/>
-				@Html.Raw("C: " + Model.ControllerName)
+				@Html.Raw("Controller: " + Model.ControllerName)
 				<br/>
-				@Html.Raw("M: " + Model.Exception.Message)
+				@Html.Raw("Message: " + Model.Exception.InnerException != null ?
+					Model.Exception.InnerException.Message : Model.Exception.Message)
 			}
 	</div>
 </div>
