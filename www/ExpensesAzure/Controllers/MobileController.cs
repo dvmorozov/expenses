@@ -499,13 +499,18 @@ namespace SocialApps.Controllers
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        private RedirectToRouteResult RedirectToSelectCategory()
+        {
+            return RedirectToAction("SelectCategory", new { addRestOfReceipt = (bool?)Session["AddRestOfReceipt"] ?? false });
+        }
+
         //  https://action.mindjet.com/task/14479694
         public ActionResult SelectExpense(bool? shortList = false)
         {
             try
             {
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 var cat = (int) Session["CategoryId"];
                 var user = GetUserId();
@@ -574,7 +579,7 @@ namespace SocialApps.Controllers
                     else
                         return RedirectToAction("AddExpense");
                 }
-                return RedirectToAction("SelectCategory");
+                return RedirectToSelectCategory();
             }
             catch (Exception e)
             {
@@ -588,7 +593,7 @@ namespace SocialApps.Controllers
             try
             {
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 if (Session["ExpenseId"] == null)
                     //  https://action.mindjet.com/task/14479694
@@ -657,7 +662,7 @@ namespace SocialApps.Controllers
             try
             {
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToAction("SelectCategory", new { addRestOfReceipt = true });
 
                 if (Session["ExpenseId"] == null)
                     //  https://action.mindjet.com/task/14479694
@@ -738,7 +743,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 if (Session["ExpenseId"] == null)
                     //  https://action.mindjet.com/task/14479694
@@ -792,7 +797,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 if (Session["ExpenseId"] == null)
                     //  https://action.mindjet.com/task/14479694
@@ -946,7 +951,7 @@ namespace SocialApps.Controllers
                     }
 
                     _repository.EditCategory(model.Id, model.Name, GetUserId(), limit, model.EncryptedName);
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
                 }
                 return View();
             }
@@ -962,7 +967,7 @@ namespace SocialApps.Controllers
             try
             {
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 var clientExpenseDate = Session["ClientExpenseDate"];
 
@@ -1012,7 +1017,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("NewExpense");
 
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 var expenseName = HttpUtility.HtmlDecode(name);
                 var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
@@ -1142,7 +1147,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("EditExpense");
 
                 if (Session["ExpenseId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 var expenseName = HttpUtility.HtmlDecode(name);
                 var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
