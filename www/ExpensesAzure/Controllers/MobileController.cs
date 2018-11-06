@@ -499,13 +499,23 @@ namespace SocialApps.Controllers
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        private bool IsRestOfReceipt
+        {
+            get { return (bool?)Session["AddRestOfReceipt"] ?? false; }
+        }
+
+        private RedirectToRouteResult RedirectToSelectCategory()
+        {
+            return RedirectToAction("SelectCategory", new { addRestOfReceipt = IsRestOfReceipt});
+        }
+
         //  https://action.mindjet.com/task/14479694
         public ActionResult SelectExpense(bool? shortList = false)
         {
             try
             {
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 var cat = (int) Session["CategoryId"];
                 var user = GetUserId();
@@ -574,7 +584,7 @@ namespace SocialApps.Controllers
                     else
                         return RedirectToAction("AddExpense");
                 }
-                return RedirectToAction("SelectCategory");
+                return RedirectToSelectCategory();
             }
             catch (Exception e)
             {
@@ -585,10 +595,16 @@ namespace SocialApps.Controllers
 
         public ActionResult AddExpense()
         {
+            var viewName =
+#if EXPENSES
+                IsRestOfReceipt ? "AddRestOfReceipt" : "AddExpense";
+#elif FITNESS
+                "AddExpenseFitness";
+#endif
             try
             {
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 if (Session["ExpenseId"] == null)
                     //  https://action.mindjet.com/task/14479694
@@ -612,15 +628,9 @@ namespace SocialApps.Controllers
 
                 var clientExpenseDate = Session["ClientExpenseDate"];
 
-                FillExpenseLinks("AddExpense");
+                FillExpenseLinks(viewName);
 
-                return View(
-#if EXPENSES
-                    "AddExpense"
-#elif FITNESS
-                    "AddExpenseFitness"
-#endif
-                    , 
+                return View(viewName,
                     new NewExpense {
                         Day = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Day : -1),
                         Month = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Month : -1),
@@ -647,74 +657,14 @@ namespace SocialApps.Controllers
             catch (Exception e)
             {
                 Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "AddExpense"));
+                return View("Error", new HandleErrorInfo(e, "Mobile", viewName));
             }
         }
 
         // https://github.com/dvmorozov/expenses/issues/70
         public ActionResult AddRestOfReceipt()
         {
-            try
-            {
-                if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
-
-                if (Session["ExpenseId"] == null)
-                    //  https://action.mindjet.com/task/14479694
-                    return RedirectToAction("SelectExpense", new { shortList = true });
-
-                var expensesList = (ExpenseNameWithCategory[])Session["GetExpenseNamesResult"];
-                var expenseId = (int)Session["ExpenseId"];
-
-                Expenses expense = null;
-                //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
-                if (expensesList.Count(t => t.Id == expenseId) != 0)
-                {
-                    expense = _repository.GetExpense(GetUserId(), expenseId);
-
-                    //  https://www.evernote.com/shard/s132/nl/14501366/4d030991-c8d8-401a-a1a1-34ebe4b01a05 
-                    if (expense.Monthly ?? false)
-                    {
-                        return RedirectToAction("EditExpense", new { expenseId = expense.ID });
-                    }
-                }
-
-                var clientExpenseDate = Session["ClientExpenseDate"];
-
-                FillExpenseLinks("AddRestOfReceipt");
-
-                return View(
-                    "AddRestOfReceipt"
-                    ,
-                    new NewExpense
-                    {
-                        Day = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Day : -1),
-                        Month = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Month : -1),
-                        Year = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Year : -1),
-                        Hour = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Hour : -1),
-                        Min = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Minute : -1),
-                        Sec = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Second : -1),
-                        //  https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
-                        ExpenseId = expenseId,
-                        EncryptedName = expense?.EncryptedName,
-                        Name = expense != null && expense.Name != null ? expense.Name.Trim() : null,
-                        //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
-                        //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
-                        Importance = expense != null && expense.Importance != null ? expense.Importance : (short)ExpenseImportance.Necessary,
-                        Rating = expense != null && expense.Rating != null ? expense.Rating : null,
-                        //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
-                        //  https://www.evernote.com/shard/s132/nl/14501366/ac86d7cd-401e-4706-80f9-c8eeead71f35
-                        Project = null,
-                        //  https://www.evernote.com/shard/s132/nl/14501366/6b4be0d2-91ab-4213-b5ff-21057fe6462a
-                        Currency = expense != null && expense.Currency != null ? expense.Currency.Trim() : null,
-                        Cost = expense != null ? ((double)expense.Cost).ToString(CultureInfo.InvariantCulture) : null
-                    });
-            }
-            catch (Exception e)
-            {
-                Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "AddExpense"));
-            }
+            return RedirectToAction("AddExpense");
         }
 
         [HttpPost]
@@ -738,7 +688,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 if (Session["ExpenseId"] == null)
                     //  https://action.mindjet.com/task/14479694
@@ -772,7 +722,7 @@ namespace SocialApps.Controllers
 
         [HttpPost]
         //  https://github.com/dvmorozov/expenses/issues/70
-        public ActionResult AddRestOfReceipt(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project, int multiplier)
+        public ActionResult AddRestOfReceipt(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project)
         {
             try
             {
@@ -792,7 +742,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("SelectExpense", new { shortList = true });
 
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 if (Session["ExpenseId"] == null)
                     //  https://action.mindjet.com/task/14479694
@@ -805,9 +755,17 @@ namespace SocialApps.Controllers
 
                 Session["ClientExpenseDate"] = clientExpenseDate;
 
-                //  https://github.com/dvmorozov/expenses/issues/101
-                if (multiplier > 0)
-                    amount = amount * multiplier;
+                //  https://github.com/dvmorozov/expenses/issues/70
+                //  Calculates sum of all expense for given date and selects sum for given currency.
+                var expenseList = _repository.GetDayExpenseTotals(userId, clientExpenseDate);
+                var sums = (from e in expenseList
+                          group e by e.Currency into g
+                          select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
+                var sum = (from s in sums
+                           where (s.Currency == currency)
+                           select new { s.Sum }).First()?.Sum;
+
+                amount = amount - (sum != null ? (double)sum : 0.0);
 
                 _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null,
                     expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
@@ -946,7 +904,7 @@ namespace SocialApps.Controllers
                     }
 
                     _repository.EditCategory(model.Id, model.Name, GetUserId(), limit, model.EncryptedName);
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
                 }
                 return View();
             }
@@ -962,7 +920,7 @@ namespace SocialApps.Controllers
             try
             {
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 var clientExpenseDate = Session["ClientExpenseDate"];
 
@@ -1012,7 +970,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("NewExpense");
 
                 if (Session["CategoryId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 var expenseName = HttpUtility.HtmlDecode(name);
                 var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
@@ -1142,7 +1100,7 @@ namespace SocialApps.Controllers
                     return RedirectToAction("EditExpense");
 
                 if (Session["ExpenseId"] == null)
-                    return RedirectToAction("SelectCategory");
+                    return RedirectToSelectCategory();
 
                 var expenseName = HttpUtility.HtmlDecode(name);
                 var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
