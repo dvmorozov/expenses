@@ -722,7 +722,7 @@ namespace SocialApps.Controllers
 
         [HttpPost]
         //  https://github.com/dvmorozov/expenses/issues/70
-        public ActionResult AddRestOfReceipt(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project, int multiplier)
+        public ActionResult AddRestOfReceipt(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project)
         {
             try
             {
@@ -755,9 +755,17 @@ namespace SocialApps.Controllers
 
                 Session["ClientExpenseDate"] = clientExpenseDate;
 
-                //  https://github.com/dvmorozov/expenses/issues/101
-                if (multiplier > 0)
-                    amount = amount * multiplier;
+                //  https://github.com/dvmorozov/expenses/issues/70
+                //  Calculates sum of all expense for given date and selects sum for given currency.
+                var expenseList = _repository.GetDayExpenseTotals(userId, clientExpenseDate);
+                var sums = (from e in expenseList
+                          group e by e.Currency into g
+                          select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
+                var sum = (from s in sums
+                           where (s.Currency == currency)
+                           select new { s.Sum }).First()?.Sum;
+
+                amount = amount - (sum != null ? (double)sum : 0.0);
 
                 _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null,
                     expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
