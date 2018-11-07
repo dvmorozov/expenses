@@ -664,7 +664,8 @@ namespace SocialApps.Controllers
         // https://github.com/dvmorozov/expenses/issues/70
         public ActionResult AddRestOfReceipt()
         {
-            return RedirectToAction("AddExpense");
+            //  Don't redirect to save correct URL.
+            return AddExpense();
         }
 
         [HttpPost]
@@ -778,7 +779,7 @@ namespace SocialApps.Controllers
             catch (Exception e)
             {
                 Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "AddExpense"));
+                return View("Error", new HandleErrorInfo(e, "Mobile", "AddRestOfReceipt"));
             }
         }
 
