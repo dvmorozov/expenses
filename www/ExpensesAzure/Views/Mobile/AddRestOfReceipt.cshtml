@@ -53,7 +53,7 @@
 
 	<div class="panel-body">
 		<div class="row">
-			@using (Html.BeginForm("AddExpense", "Mobile", FormMethod.Post, new { id = "NewExpense" }))
+			@using (Html.BeginForm("AddRestOfReceipt", "Mobile", FormMethod.Post, new { id = "NewExpense" }))
 			{
 				@Html.ValidationSummary(true)
 				@Html.Hidden("Day", Model.Day)
