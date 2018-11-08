@@ -763,8 +763,8 @@ namespace SocialApps.Controllers
                           group e by e.Currency into g
                           select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
                 var sum = (from s in sums
-                           where (s.Currency == currency)
-                           select new { s.Sum }).First()?.Sum;
+                           where (s.Currency.Trim() == currency.Trim())
+                           select new { s.Sum }).FirstOrDefault()?.Sum;
 
                 amount = amount - (sum != null ? (double)sum : 0.0);
 
