@@ -643,7 +643,7 @@ namespace SocialApps.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddExpense(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project)
+        public ActionResult AddExpense(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project, int multiplier)
         {
             try
             {
@@ -676,7 +676,12 @@ namespace SocialApps.Controllers
 
                 Session["ClientExpenseDate"] = clientExpenseDate;
 
-                _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null, expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
+                //  https://github.com/dvmorozov/expenses/issues/101
+                if (multiplier > 0)
+                    amount = amount * multiplier;
+
+                _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null, 
+                    expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
 
                 DropSessionLinks();
                 
@@ -808,7 +813,7 @@ namespace SocialApps.Controllers
                         if (!float.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float l))
                             return RedirectToAction("EditCategory", model);
 
-                        limit = l;
+                        limit = (l == 0.0) ? (float?)null : l;
                     }
 
                     _repository.EditCategory(model.Id, model.Name, GetUserId(), limit, model.EncryptedName);
