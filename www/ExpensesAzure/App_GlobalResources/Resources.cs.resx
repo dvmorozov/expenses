@@ -650,4 +650,7 @@ Byste měli mít všechna hesla jste používali k jejich dešifrování.</value
   <data name="Undefined" xml:space="preserve">
     <value>Nedefinováno</value>
   </data>
+  <data name="AddRestOfReceipt" xml:space="preserve">
+    <value>Přidejte zbytek potvrzení</value>
+  </data>
 </root>

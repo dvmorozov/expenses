@@ -27,6 +27,8 @@ namespace SocialApps.Repositories
         {
             //  https://action.mindjet.com/task/14889062
             _db = new ExpensesEntities();
+            //  https://github.com/dvmorozov/expenses/issues/122
+            _db.Database.CommandTimeout = 60;
             _session = session;
         }
 

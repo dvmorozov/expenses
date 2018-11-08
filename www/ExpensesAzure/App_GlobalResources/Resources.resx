@@ -650,4 +650,7 @@
   <data name="Undefined" xml:space="preserve">
     <value>Undefined</value>
   </data>
+  <data name="AddRestOfReceipt" xml:space="preserve">
+    <value>Add rest of receipt</value>
+  </data>
 </root>
