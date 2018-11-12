@@ -464,14 +464,6 @@ namespace SocialApps.Controllers
             }
         }
 
-        /*
-        private class Expense
-        {
-            public string name;
-            public long id;
-        }
-        */
-
         //  https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
         public JsonResult ExpenseList()
         {
