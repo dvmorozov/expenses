@@ -422,6 +422,7 @@ namespace SocialApps.Controllers
                     ViewBag.ShortView = true;
                     ViewBag.FullListMethod = "SelectCategoryS";
                 }
+                ViewBag.IsRestOfReceipt = IsRestOfReceipt;
                 return View("SelectCategory");
             }
             catch (Exception e)
@@ -463,14 +464,6 @@ namespace SocialApps.Controllers
                 return View("Error", new HandleErrorInfo(e, "Mobile", "SelectCategoryF"));
             }
         }
-
-        /*
-        private class Expense
-        {
-            public string name;
-            public long id;
-        }
-        */
 
         //  https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
         public JsonResult ExpenseList()
@@ -560,6 +553,7 @@ namespace SocialApps.Controllers
                     ViewBag.ShortView = true;
                     ViewBag.FullListMethod = "SelectExpense";
                 }
+                ViewBag.IsRestOfReceipt = IsRestOfReceipt;
                 return View("SelectExpense");
             }
             catch (Exception e)
