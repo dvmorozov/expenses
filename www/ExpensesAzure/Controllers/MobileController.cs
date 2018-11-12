@@ -422,6 +422,7 @@ namespace SocialApps.Controllers
                     ViewBag.ShortView = true;
                     ViewBag.FullListMethod = "SelectCategoryS";
                 }
+                ViewBag.IsRestOfReceipt = IsRestOfReceipt;
                 return View("SelectCategory");
             }
             catch (Exception e)
@@ -552,6 +553,7 @@ namespace SocialApps.Controllers
                     ViewBag.ShortView = true;
                     ViewBag.FullListMethod = "SelectExpense";
                 }
+                ViewBag.IsRestOfReceipt = IsRestOfReceipt;
                 return View("SelectExpense");
             }
             catch (Exception e)

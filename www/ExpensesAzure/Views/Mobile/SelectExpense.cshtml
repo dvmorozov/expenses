@@ -9,7 +9,7 @@
 
 @*Ширина и высота устанавливаются по контейнеру.*@
 @* ReSharper disable UnknownCssClass *@
-<div class="panel panel-primary" @*style="border: none; /*height: 100%; width: 100%;"*@>
+<div class="@Html.Raw("panel " + ViewBag.IsRestOfReceipt ? "panel-warning" : "panel-primary")">
 	<div class="panel-heading" id="caption">
 		<table style="width: 100%;">
 			<tbody>
