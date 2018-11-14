@@ -662,51 +662,68 @@ namespace SocialApps.Controllers
             return AddExpense();
         }
 
+        //  https://github.com/dvmorozov/expenses/issues/70
+        //  Corrects amount value depending on which entry point is used.
+        private delegate double RecalculateAmount(double amount);
+
+        private ActionResult AddExpenseGeneral(
+            int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project, 
+            RecalculateAmount recalculateAmount
+            )
+        {
+            //  https://www.evernote.com/shard/s132/nl/14501366/e6cd86bb-8a22-4111-8fbb-8610bb35c304
+            if (string.IsNullOrEmpty(cost))
+                //  https://action.mindjet.com/task/14479694
+                return RedirectToAction("SelectExpense", new { shortList = true });
+
+            //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
+            //  Allows both comma and point as decimal separator.
+            cost = cost.Replace(',', '.');
+            //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
+            cost = cost.Replace(" ", string.Empty);
+
+            if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
+                //  https://action.mindjet.com/task/14479694
+                return RedirectToAction("SelectExpense", new { shortList = true });
+
+            if (Session["CategoryId"] == null)
+                return RedirectToSelectCategory();
+
+            if (Session["ExpenseId"] == null)
+                //  https://action.mindjet.com/task/14479694
+                return RedirectToAction("SelectExpense", new { shortList = true });
+
+            var expense = ((ExpenseNameWithCategory[])Session["GetExpenseNamesResult"]).First(t => t.Id == (int)Session["ExpenseId"]);
+            var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
+            var categoryId = (int)Session["CategoryId"];
+            var userId = GetUserId();
+
+            Session["ClientExpenseDate"] = clientExpenseDate;
+
+            amount = recalculateAmount(amount);
+
+            _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null,
+                expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
+
+            DropSessionLinks();
+
+            //  Returns for adding another income.
+            return RedirectToAction("DayExpenseTotals");
+        }
+
         [HttpPost]
         public ActionResult AddExpense(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project, int multiplier)
         {
             try
             {
-                //  https://www.evernote.com/shard/s132/nl/14501366/e6cd86bb-8a22-4111-8fbb-8610bb35c304
-                if (string.IsNullOrEmpty(cost))
-                    //  https://action.mindjet.com/task/14479694
-                    return RedirectToAction("SelectExpense", new { shortList = true });
-
-                //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
-                //  Allows both comma and point as decimal separator.
-                cost = cost.Replace(',', '.');
-                //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
-                cost = cost.Replace(" ", string.Empty);
-
-                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
-                    //  https://action.mindjet.com/task/14479694
-                    return RedirectToAction("SelectExpense", new { shortList = true });
-
-                if (Session["CategoryId"] == null)
-                    return RedirectToSelectCategory();
-
-                if (Session["ExpenseId"] == null)
-                    //  https://action.mindjet.com/task/14479694
-                    return RedirectToAction("SelectExpense", new { shortList = true });
-
-                var expense = ((ExpenseNameWithCategory[])Session["GetExpenseNamesResult"]).First(t => t.Id == (int)Session["ExpenseId"]);
-                var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
-                var categoryId = (int)Session["CategoryId"];
-                var userId = GetUserId();
-
-                Session["ClientExpenseDate"] = clientExpenseDate;
-
-                //  https://github.com/dvmorozov/expenses/issues/101
-                if (multiplier > 0)
-                    amount = amount * multiplier;
-
-                _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null, 
-                    expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
-
-                DropSessionLinks();
-                
-                //  Returns for adding another income.
-                return RedirectToAction("DayExpenseTotals");
+                double RecalculateAmount(double amount)
+                {
+                    //  https://github.com/dvmorozov/expenses/issues/101
+                    if (multiplier > 0)
+                        amount = amount * multiplier;
+                    return amount;
+                }
+                return AddExpenseGeneral(day, month, year, hour, min, sec, cost, currency, note, rating, importance, project, RecalculateAmount);
             }
             catch (Exception e)
             {
@@ -721,54 +738,24 @@ namespace SocialApps.Controllers
         {
             try
             {
-                //  https://www.evernote.com/shard/s132/nl/14501366/e6cd86bb-8a22-4111-8fbb-8610bb35c304
-                if (string.IsNullOrEmpty(cost))
-                    //  https://action.mindjet.com/task/14479694
-                    return RedirectToAction("SelectExpense", new { shortList = true });
+                double RecalculateAmount(double amount)
+                {
+                    var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
+                    var userId = GetUserId();
+                    //  https://github.com/dvmorozov/expenses/issues/70
+                    //  Calculates sum of all expense for given date and selects sum for given currency.
+                    var expenseList = _repository.GetDayExpenseTotals(userId, clientExpenseDate);
+                    var sums = (from e in expenseList
+                                group e by e.Currency into g
+                                select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
+                    var sum = (from s in sums
+                               where (s.Currency.Trim() == currency.Trim())
+                               select new { s.Sum }).FirstOrDefault()?.Sum;
 
-                //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
-                //  Allows both comma and point as decimal separator.
-                cost = cost.Replace(',', '.');
-                //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
-                cost = cost.Replace(" ", string.Empty);
-
-                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
-                    //  https://action.mindjet.com/task/14479694
-                    return RedirectToAction("SelectExpense", new { shortList = true });
-
-                if (Session["CategoryId"] == null)
-                    return RedirectToSelectCategory();
-
-                if (Session["ExpenseId"] == null)
-                    //  https://action.mindjet.com/task/14479694
-                    return RedirectToAction("SelectExpense", new { shortList = true });
-
-                var expense = ((ExpenseNameWithCategory[])Session["GetExpenseNamesResult"]).First(t => t.Id == (int)Session["ExpenseId"]);
-                var clientExpenseDate = new DateTime(year, month, day, hour, min, sec, 0);
-                var categoryId = (int)Session["CategoryId"];
-                var userId = GetUserId();
-
-                Session["ClientExpenseDate"] = clientExpenseDate;
-
-                //  https://github.com/dvmorozov/expenses/issues/70
-                //  Calculates sum of all expense for given date and selects sum for given currency.
-                var expenseList = _repository.GetDayExpenseTotals(userId, clientExpenseDate);
-                var sums = (from e in expenseList
-                          group e by e.Currency into g
-                          select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
-                var sum = (from s in sums
-                           where (s.Currency.Trim() == currency.Trim())
-                           select new { s.Sum }).FirstOrDefault()?.Sum;
-
-                amount = amount - (sum != null ? (double)sum : 0.0);
-
-                _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null,
-                    expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
-
-                DropSessionLinks();
-
-                //  Returns for adding another income.
-                return RedirectToAction("DayExpenseTotals");
+                    amount = amount - (sum != null ? (double)sum : 0.0);
+                    return amount;
+                }
+                return AddExpenseGeneral(day, month, year, hour, min, sec, cost, currency, note, rating, importance, project, RecalculateAmount);
             }
             catch (Exception e)
             {
