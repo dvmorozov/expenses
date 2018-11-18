@@ -25,4 +25,6 @@ layout: default
 
 [Expense tracking](https://dvmorozov.github.io/expenses/expense-tracking)
 
+> By selecting "Add Rest of Receipt" you can record last group of expenses in receipt. Amount will be calculated by subracting sum of all other expenses for the day from given value. 
+
 {% include google_ads.html %}
