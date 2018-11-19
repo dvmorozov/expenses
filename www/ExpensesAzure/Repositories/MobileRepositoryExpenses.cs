@@ -289,8 +289,10 @@ namespace SocialApps.Repositories
                      Importance = (ExpenseImportance?)exp.Importance,
                      //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
                      Project = exp.Project,
-                     // https://action.mindjet.com/task/14893592
-                     CategoryID = cat.ID
+                     //  https://action.mindjet.com/task/14893592
+                     CategoryID = cat.ID,
+                     //  https://github.com/dvmorozov/expenses/issues/124
+                     Monthly = exp.Monthly
                  }).ToList();
 
             //  Must be outside LINQ expression.
@@ -320,7 +322,8 @@ namespace SocialApps.Repositories
                 t.CategoryEncryptedName,
                 t.ExpenseEncryptedName,
                 t.Name,
-                t.Currency
+                t.Currency,
+                t.Monthly
             }).Select(s => new TodayExpenseSum
             {
                 CategoryID = s.Key.CategoryID,
@@ -329,7 +332,9 @@ namespace SocialApps.Repositories
                 CategoryName = s.Key.CategoryName,
                 ExpenseEncryptedName = s.Key.ExpenseEncryptedName,
                 CategoryEncryptedName = s.Key.CategoryEncryptedName,
-                Currency = s.Key.Currency
+                Currency = s.Key.Currency,
+                //  https://github.com/dvmorozov/expenses/issues/124
+                Monthly = s.Key.Monthly
             })
             .OrderBy(t => t.CategoryID)
             .ThenBy(t => t.Currency)
