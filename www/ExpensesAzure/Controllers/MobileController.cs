@@ -746,6 +746,7 @@ namespace SocialApps.Controllers
                     //  Calculates sum of all expense for given date and selects sum for given currency.
                     var expenseList = _repository.GetDayExpenseTotals(userId, clientExpenseDate);
                     var sums = (from e in expenseList
+                                where e.Monthly == false || !(bool)e.Monthly
                                 group e by e.Currency into g
                                 select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
                     var sum = (from s in sums
