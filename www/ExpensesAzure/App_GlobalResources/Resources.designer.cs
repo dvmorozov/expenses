@@ -404,6 +404,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new receipt.
+        /// </summary>
+        internal static string AddReceipt {
+            get {
+                return ResourceManager.GetString("AddReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add rest of receipt.
         /// </summary>
         internal static string AddRestOfReceipt {
