@@ -124,6 +124,7 @@ namespace SocialApps.Models
         public int CategoryID { get; set; }
         //  https://github.com/dvmorozov/expenses/issues/124
         public bool? Monthly { get; set; }
+        public int Id { get; set; }
     }
 
     //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
