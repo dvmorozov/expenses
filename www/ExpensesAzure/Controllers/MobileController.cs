@@ -341,7 +341,7 @@ namespace SocialApps.Controllers
             return date.ToString("MMM yyyy");
         }
 
-        public ActionResult SelectCategory(bool addRestOfReceipt = false)
+        public ActionResult SelectCategory(bool addRestOfReceipt = false, bool addReceipt = false)
         {
             try
             {
