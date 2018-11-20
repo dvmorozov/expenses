@@ -1,0 +1,12 @@
+﻿<div class="btn-group">
+	<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	</button>
+	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+		<span class="caret"></span>
+		<span class="sr-only"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu">
+		<li><a href="#" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile", new { addRestOfReceipt = true })';">@Html.Raw(Resources.Resources.AddRestOfReceipt)</a></li>
+	</ul>
+</div>
