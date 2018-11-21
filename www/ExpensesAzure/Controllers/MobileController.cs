@@ -773,6 +773,7 @@ namespace SocialApps.Controllers
                     amount = amount - (sum != null ? (double)sum : 0.0);
                     //  Resets saved expense id starting receipt.
                     Session["AddReceiptFirstExpenseId"] = null;
+                    Session["AddRestOfReceipt"] = null;
                     Session["AddReceipt"] = null;
                     return amount;
                 }
