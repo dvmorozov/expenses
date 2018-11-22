@@ -1,7 +1,10 @@
 
 ## Attached documents
 
-1. Link to external document.
+1. Uploading, associating with operation, downloading.
+1. Saving URL to external document.
+1. *Copying documents by URL into internal storage*. Implemented at client side.
+1. *Previewing documents in browser*.
 1. *Photo*.
 1. *Permanent link to document*.
 1. *Permanent link to expense*.
