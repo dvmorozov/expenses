@@ -326,8 +326,7 @@ namespace SocialApps.Repositories
                 t.ExpenseEncryptedName,
                 t.Name,
                 t.Currency,
-                t.Monthly,
-                t.Id
+                t.Monthly
             }).Select(s => new TodayExpenseSum
             {
                 CategoryID = s.Key.CategoryID,
@@ -339,7 +338,7 @@ namespace SocialApps.Repositories
                 Currency = s.Key.Currency,
                 //  https://github.com/dvmorozov/expenses/issues/124
                 Monthly = s.Key.Monthly,
-                Id = s.Key.Id
+                MaxExpenseId = s.Max(t => t.ID)
             })
             .OrderBy(t => t.CategoryID)
             .ThenBy(t => t.Currency)
