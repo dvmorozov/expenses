@@ -345,7 +345,7 @@ namespace SocialApps.Controllers
             return date.ToString("MMM yyyy");
         }
 
-        public ActionResult SelectCategory(bool addRestOfReceipt = false, bool addReceipt = false)
+        public ActionResult SelectCategory(bool? addRestOfReceipt, bool? addReceipt)
         {
             try
             {
@@ -353,11 +353,19 @@ namespace SocialApps.Controllers
                 Session["SelectCategoryResult"] = "SelectExpense";
                 //  https://github.com/dvmorozov/expenses/issues/70
                 //  Sets state for subsequent using in SelectExpenseF.
-                Session["AddRestOfReceipt"] = addRestOfReceipt;
+                //  State can be reset only by finishing receipt.
+                if (addRestOfReceipt != null && (bool)addRestOfReceipt)
+                {
+                    Session["AddRestOfReceipt"] = addRestOfReceipt;
+                }
                 //  https://github.com/dvmorozov/expenses/issues/124
-                Session["AddReceipt"] = addReceipt;
-                //  Resets saved id of the first expense in receipt.
-                Session["AddReceiptFirstExpenseId"] = null;
+                //  State can be reset only by finishing receipt.
+                if (addReceipt != null && (bool)addReceipt)
+                {
+                    Session["AddReceipt"] = addReceipt;
+                    //  Resets saved id of the first expense in receipt.
+                    Session["AddReceiptFirstExpenseId"] = null;
+                }
                 //  https://action.mindjet.com/task/14479694
                 //  Redirect to the category selection page.
                 return RedirectToAction("SelectCategoryS", new { shortList = true });
