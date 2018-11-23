@@ -90,7 +90,7 @@ namespace SocialApps.Controllers
                 //  For this application it's more convenient to order the list in reverse cost order.
                 var expenseList = _repository.GetDayExpenseTotals(userId, date);
                 ViewBag.TodayExpenses = expenseList;
-                https://github.com/dvmorozov/expenses/issues/124
+                // https://github.com/dvmorozov/expenses/issues/124
                 ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
@@ -145,7 +145,7 @@ namespace SocialApps.Controllers
 
                 var todayExpenses = _repository.GetDayExpenses(userId, date);
                 ViewBag.TodayExpenses = todayExpenses;
-                https://github.com/dvmorozov/expenses/issues/124
+                //  https://github.com/dvmorozov/expenses/issues/124
                 ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
