@@ -775,7 +775,7 @@ namespace SocialApps.Controllers
                     var sums = (from e in expenseList
                                 where (e.Monthly == false || !(bool)e.Monthly) &&
                                     //  Takes all non repeated expenses for a day or just added after starting new receipt.
-                                    (Session["AddReceiptFirstExpenseId"] != null ? e.Id >= (int)Session["AddReceiptFirstExpenseId"] : true)
+                                    (Session["AddReceiptFirstExpenseId"] != null ? e.MaxExpenseId >= (int)Session["AddReceiptFirstExpenseId"] : true)
                                 group e by e.Currency into g
                                 select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
                     var sum = (from s in sums
