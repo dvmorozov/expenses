@@ -364,7 +364,7 @@ namespace SocialApps.Controllers
                 {
                     Session["AddReceipt"] = addReceipt;
                     //  Resets saved id of the first expense in receipt.
-                    Session["AddReceiptFirstExpenseId"] = null;
+                    Session["AddReceiptExpenseIds"] = null;
                 }
                 //  https://action.mindjet.com/task/14479694
                 //  Redirect to the category selection page.
@@ -729,9 +729,11 @@ namespace SocialApps.Controllers
 
             //  https://github.com/dvmorozov/expenses/issues/124
             if (IsAddReceipt) {
-                //  Saves id. of the first expense in receipt.
-                if (Session["AddReceiptFirstExpenseId"] == null)
-                    Session["AddReceiptFirstExpenseId"] = expenseId;
+                //  Saves identifiers of expenses in receipt.
+                if (Session["AddReceiptExpenseIds"] == null)
+                    Session["AddReceiptExpenseIds"] = new List<int>();
+
+                ((List<int>)Session["AddReceiptExpenseIds"]).Add(expenseId);
             }
 
             //  Returns for adding another income.
@@ -771,11 +773,11 @@ namespace SocialApps.Controllers
                     var userId = GetUserId();
                     //  https://github.com/dvmorozov/expenses/issues/70
                     //  Calculates sum of all expense for given date and selects sum for given currency.
-                    var expenseList = _repository.GetDayExpenseTotals(userId, clientExpenseDate);
+                    var expenseList = _repository.GetDayExpenses(userId, clientExpenseDate);
                     var sums = (from e in expenseList
                                 where (e.Monthly == false || !(bool)e.Monthly) &&
                                     //  Takes all non repeated expenses for a day or just added after starting new receipt.
-                                    (Session["AddReceiptFirstExpenseId"] != null ? e.MaxExpenseId >= (int)Session["AddReceiptFirstExpenseId"] : true)
+                                    (Session["AddReceiptExpenseIds"] != null ? ((List<int>)Session["AddReceiptExpenseIds"]).Contains(e.ID) : true)
                                 group e by e.Currency into g
                                 select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
                     var sum = (from s in sums
@@ -784,7 +786,7 @@ namespace SocialApps.Controllers
 
                     amount = amount - (sum != null ? (double)sum : 0.0);
                     //  Resets saved expense id starting receipt.
-                    Session["AddReceiptFirstExpenseId"] = null;
+                    Session["AddReceiptExpenseIds"] = null;
                     Session["AddRestOfReceipt"] = null;
                     Session["AddReceipt"] = null;
                     return amount;
