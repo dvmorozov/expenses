@@ -653,4 +653,7 @@
   <data name="AddRestOfReceipt" xml:space="preserve">
     <value>Add rest of receipt</value>
   </data>
+  <data name="AddReceipt" xml:space="preserve">
+    <value>Add new receipt</value>
+  </data>
 </root>

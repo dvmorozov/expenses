@@ -651,4 +651,7 @@
   <data name="AddRestOfReceipt" xml:space="preserve">
     <value>Добавить остаток по чеку</value>
   </data>
+  <data name="AddReceipt" xml:space="preserve">
+    <value>Добавить новый чек</value>
+  </data>
 </root>

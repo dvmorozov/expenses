@@ -91,6 +91,14 @@ namespace SocialApps.Models
                     (Currency != null ? " " + Currency : "");
             }
         }
+        public string Name { get; set; }
+        public string CategoryName { get; set; }
+        public string ExpenseEncryptedName { get; set; }
+        public string CategoryEncryptedName { get; set; }
+        //  https://action.mindjet.com/task/14893592
+        public int CategoryID { get; set; }
+        //  https://github.com/dvmorozov/expenses/issues/124
+        public bool? Monthly { get; set; }
     }
 
     public class EstimatedTop10CategoriesForMonthAdapter : TodayExpenseBase
@@ -116,24 +124,19 @@ namespace SocialApps.Models
     //  https://action.mindjet.com/task/14893592
     public class TodayExpenseSum : TodayExpenseBase
     {
-        public string Name { get; set; }
-        public string CategoryName { get; set; }
-        public string ExpenseEncryptedName { get; set; }
-        public string CategoryEncryptedName { get; set; }
-        //  https://action.mindjet.com/task/14893592
-        public int CategoryID { get; set; }
-        //  https://github.com/dvmorozov/expenses/issues/124
-        public bool? Monthly { get; set; }
+         //  Maximum id of expense in the group.
+        public int MaxExpenseId { get; set; }
     }
 
     //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df
-    public class TodayExpense : TodayExpenseSum
+    public class TodayExpense : TodayExpenseBase
     {
         //  TodayExpensesByUser3_Result attributes.
         public DateTime Date { get; set; }
         public string Note { get; set; }
-        public int ID { get; set; }
         public bool HasLinkedDocs { get; set; }
+        //  Expense id.
+        public int ID { get; set; }
         public short? Rating { get; set; }
         public ExpenseImportance? Importance { get; set; }
         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3

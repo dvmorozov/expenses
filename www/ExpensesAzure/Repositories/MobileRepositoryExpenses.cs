@@ -125,7 +125,9 @@ namespace SocialApps.Repositories
             return (p == null || p.Trim() == string.Empty) ? null : p;
         }
 
-        public void AddExpense(DateTime date, string name, double amount, string note, bool? monthly, DateTime? firstMonth, DateTime? lastMonth, string encryptedName, string currency, short? rating, int? categoryId, short? importance, string project, Guid userId, bool? income = null)
+        //  https://github.com/dvmorozov/expenses/issues/124
+        //  Returns id. of new expense.
+        public int AddExpense(DateTime date, string name, double amount, string note, bool? monthly, DateTime? firstMonth, DateTime? lastMonth, string encryptedName, string currency, short? rating, int? categoryId, short? importance, string project, Guid userId, bool? income = null)
         {
             using (var tran = _db.Database.BeginTransaction())
             {
@@ -174,6 +176,7 @@ namespace SocialApps.Repositories
                 tran.Commit();
 
                 SaveExpenseLinks(expenseId);
+                return expenseId;
             }
         }
 
@@ -334,7 +337,8 @@ namespace SocialApps.Repositories
                 CategoryEncryptedName = s.Key.CategoryEncryptedName,
                 Currency = s.Key.Currency,
                 //  https://github.com/dvmorozov/expenses/issues/124
-                Monthly = s.Key.Monthly
+                Monthly = s.Key.Monthly,
+                MaxExpenseId = s.Max(t => t.ID)
             })
             .OrderBy(t => t.CategoryID)
             .ThenBy(t => t.Currency)

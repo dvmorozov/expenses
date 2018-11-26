@@ -90,6 +90,8 @@ namespace SocialApps.Controllers
                 //  For this application it's more convenient to order the list in reverse cost order.
                 var expenseList = _repository.GetDayExpenseTotals(userId, date);
                 ViewBag.TodayExpenses = expenseList;
+                // https://github.com/dvmorozov/expenses/issues/124
+                ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
                 Session["ClientExpenseDate"] = date;
@@ -143,6 +145,8 @@ namespace SocialApps.Controllers
 
                 var todayExpenses = _repository.GetDayExpenses(userId, date);
                 ViewBag.TodayExpenses = todayExpenses;
+                //  https://github.com/dvmorozov/expenses/issues/124
+                ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
                 Session["ClientExpenseDate"] = date;
@@ -341,7 +345,7 @@ namespace SocialApps.Controllers
             return date.ToString("MMM yyyy");
         }
 
-        public ActionResult SelectCategory(bool addRestOfReceipt = false)
+        public ActionResult SelectCategory(bool? addRestOfReceipt, bool? addReceipt)
         {
             try
             {
@@ -349,7 +353,19 @@ namespace SocialApps.Controllers
                 Session["SelectCategoryResult"] = "SelectExpense";
                 //  https://github.com/dvmorozov/expenses/issues/70
                 //  Sets state for subsequent using in SelectExpenseF.
-                Session["AddRestOfReceipt"] = addRestOfReceipt;
+                //  State can be reset only by finishing receipt.
+                if (addRestOfReceipt != null && (bool)addRestOfReceipt)
+                {
+                    Session["AddRestOfReceipt"] = addRestOfReceipt;
+                }
+                //  https://github.com/dvmorozov/expenses/issues/124
+                //  State can be reset only by finishing receipt.
+                if (addReceipt != null && (bool)addReceipt)
+                {
+                    Session["AddReceipt"] = addReceipt;
+                    //  Resets saved id of the first expense in receipt.
+                    Session["AddReceiptExpenseIds"] = null;
+                }
                 //  https://action.mindjet.com/task/14479694
                 //  Redirect to the category selection page.
                 return RedirectToAction("SelectCategoryS", new { shortList = true });
@@ -422,7 +438,7 @@ namespace SocialApps.Controllers
                     ViewBag.ShortView = true;
                     ViewBag.FullListMethod = "SelectCategoryS";
                 }
-                ViewBag.IsRestOfReceipt = IsRestOfReceipt;
+                ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
                 return View("SelectCategory");
             }
             catch (Exception e)
@@ -497,6 +513,11 @@ namespace SocialApps.Controllers
             get { return (bool?)Session["AddRestOfReceipt"] ?? false; }
         }
 
+        private bool IsAddReceipt
+        {
+            get { return (bool?)Session["AddReceipt"] ?? false; }
+        }
+
         private RedirectToRouteResult RedirectToSelectCategory()
         {
             return RedirectToAction("SelectCategory", new { addRestOfReceipt = IsRestOfReceipt});
@@ -553,7 +574,7 @@ namespace SocialApps.Controllers
                     ViewBag.ShortView = true;
                     ViewBag.FullListMethod = "SelectExpense";
                 }
-                ViewBag.IsRestOfReceipt = IsRestOfReceipt;
+                ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
                 return View("SelectExpense");
             }
             catch (Exception e)
@@ -572,8 +593,7 @@ namespace SocialApps.Controllers
                 {
                     Session["ExpenseId"] = expenseId;
                     //  https://github.com/dvmorozov/expenses/issues/70
-                    bool addRestOfReceipt = (bool?)Session["AddRestOfReceipt"] ?? false;
-                    if (addRestOfReceipt)
+                    if (IsRestOfReceipt)
                         return RedirectToAction("AddRestOfReceipt");
                     else
                         return RedirectToAction("AddExpense");
@@ -702,10 +722,19 @@ namespace SocialApps.Controllers
 
             amount = recalculateAmount(amount);
 
-            _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null,
+            var expenseId = _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null,
                 expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
 
             DropSessionLinks();
+
+            //  https://github.com/dvmorozov/expenses/issues/124
+            if (IsAddReceipt) {
+                //  Saves identifiers of expenses in receipt.
+                if (Session["AddReceiptExpenseIds"] == null)
+                    Session["AddReceiptExpenseIds"] = new List<int>();
+
+                ((List<int>)Session["AddReceiptExpenseIds"]).Add(expenseId);
+            }
 
             //  Returns for adding another income.
             return RedirectToAction("DayExpenseTotals");
@@ -744,9 +773,11 @@ namespace SocialApps.Controllers
                     var userId = GetUserId();
                     //  https://github.com/dvmorozov/expenses/issues/70
                     //  Calculates sum of all expense for given date and selects sum for given currency.
-                    var expenseList = _repository.GetDayExpenseTotals(userId, clientExpenseDate);
+                    var expenseList = _repository.GetDayExpenses(userId, clientExpenseDate);
                     var sums = (from e in expenseList
-                                where e.Monthly == false || !(bool)e.Monthly
+                                where (e.Monthly == false || !(bool)e.Monthly) &&
+                                    //  Takes all non repeated expenses for a day or just added after starting new receipt.
+                                    (Session["AddReceiptExpenseIds"] != null ? ((List<int>)Session["AddReceiptExpenseIds"]).Contains(e.ID) : true)
                                 group e by e.Currency into g
                                 select new { Currency = g.Key, Sum = g.Sum(t => t.Cost) }).ToList();
                     var sum = (from s in sums
@@ -754,6 +785,10 @@ namespace SocialApps.Controllers
                                select new { s.Sum }).FirstOrDefault()?.Sum;
 
                     amount = amount - (sum != null ? (double)sum : 0.0);
+                    //  Resets saved expense id starting receipt.
+                    Session["AddReceiptExpenseIds"] = null;
+                    Session["AddRestOfReceipt"] = null;
+                    Session["AddReceipt"] = null;
                     return amount;
                 }
                 return AddExpenseGeneral(day, month, year, hour, min, sec, cost, currency, note, rating, importance, project, RecalculateAmount);
