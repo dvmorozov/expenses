@@ -1404,6 +1404,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel receipt.
+        /// </summary>
+        internal static string ResetReceipt {
+            get {
+                return ResourceManager.GetString("ResetReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Residue.
         /// </summary>
         internal static string Residue {
