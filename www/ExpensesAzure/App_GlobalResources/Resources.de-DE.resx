@@ -655,4 +655,7 @@ Sie sollten alle Passwörter halten Sie sie zu entschlüsseln wurden. </value>
   <data name="AddReceipt" xml:space="preserve">
     <value>Neuen Beleg hinzufügen</value>
   </data>
+  <data name="ResetReceipt" xml:space="preserve">
+    <value>Beleg abbrechen</value>
+  </data>
 </root>

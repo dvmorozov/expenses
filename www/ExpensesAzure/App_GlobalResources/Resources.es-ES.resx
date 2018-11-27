@@ -655,4 +655,7 @@ Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</v
   <data name="AddReceipt" xml:space="preserve">
     <value>Añadir nuevo recibo</value>
   </data>
+  <data name="ResetReceipt" xml:space="preserve">
+    <value>Cancelar recibo</value>
+  </data>
 </root>

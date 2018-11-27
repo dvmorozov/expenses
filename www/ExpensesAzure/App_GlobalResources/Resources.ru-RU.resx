@@ -654,4 +654,7 @@
   <data name="AddReceipt" xml:space="preserve">
     <value>Добавить новый чек</value>
   </data>
+  <data name="ResetReceipt" xml:space="preserve">
+    <value>Отмена ввода чека</value>
+  </data>
 </root>
