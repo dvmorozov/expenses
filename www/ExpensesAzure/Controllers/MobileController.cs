@@ -775,6 +775,7 @@ namespace SocialApps.Controllers
         {
             try
             {
+                ResetReceiptState();
                 return RedirectToAction("DayExpenseTotals");
             }
             catch (Exception e)
