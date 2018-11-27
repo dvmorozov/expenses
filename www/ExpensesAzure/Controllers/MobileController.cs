@@ -761,6 +761,29 @@ namespace SocialApps.Controllers
             }
         }
 
+        //  https://github.com/dvmorozov/expenses/issues/124
+        private void ResetReceiptState()
+        {
+            //  Resets saved expense ids.
+            Session["AddReceiptExpenseIds"] = null;
+            Session["AddRestOfReceipt"] = null;
+            Session["AddReceipt"] = null;
+        }
+
+        //  https://github.com/dvmorozov/expenses/issues/124
+        public ActionResult ResetReceipt()
+        {
+            try
+            {
+                return RedirectToAction("DayExpenseTotals");
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "ResetReceipt"));
+            }
+        }
+
         [HttpPost]
         //  https://github.com/dvmorozov/expenses/issues/70
         public ActionResult AddRestOfReceipt(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project)
@@ -785,10 +808,7 @@ namespace SocialApps.Controllers
                                select new { s.Sum }).FirstOrDefault()?.Sum;
 
                     amount = amount - (sum != null ? (double)sum : 0.0);
-                    //  Resets saved expense id starting receipt.
-                    Session["AddReceiptExpenseIds"] = null;
-                    Session["AddRestOfReceipt"] = null;
-                    Session["AddReceipt"] = null;
+                    ResetReceiptState();
                     return amount;
                 }
                 return AddExpenseGeneral(day, month, year, hour, min, sec, cost, currency, note, rating, importance, project, RecalculateAmount);

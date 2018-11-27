@@ -656,4 +656,7 @@ Byste měli mít všechna hesla jste používali k jejich dešifrování.</value
   <data name="AddReceipt" xml:space="preserve">
     <value>Přidat novu účtenku</value>
   </data>
+  <data name="ResetReceipt" xml:space="preserve">
+    <value>Zrušit účtenku</value>
+  </data>
 </root>
