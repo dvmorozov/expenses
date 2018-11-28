@@ -2,7 +2,6 @@
 @using System.Globalization
 @using System.Web.Security.AntiXss
 @using SocialApps.Models
-
 @{
 	var expenseList = (List<TodayExpense>)ViewBag.TodayExpenses;
 }
@@ -14,6 +13,8 @@
 			var expense = expenseList[i];
 			var expenseId = "ExpenseName" + i.ToString();
 			var categoryId = "CategoryName" + i.ToString();
+			@* https://github.com/dvmorozov/expenses/issues/124 *@
+			var inReceipt = Session["AddReceiptExpenseIds"] != null ? ((List<int>)Session["AddReceiptExpenseIds"]).Contains(expense.ID) : false;
 
 			var panelStyle = "panel-info";
 			if (expense.Importance != null)
@@ -60,6 +61,8 @@
 								</em>
 							</sub>
 						</span>
+						@* https://github.com/dvmorozov/expenses/issues/124 *@
+						@if (inReceipt) { Html.Raw("< span class=\"glyphicon glyphicon-shopping-cart\"></span>"); }
 						@if (expense.ExpenseEncryptedName != null && expense.ExpenseEncryptedName != string.Empty)
 						{
 							<script>
@@ -80,17 +83,14 @@
 						@Html.Raw(expense.Note != null ? AntiXssEncoder.HtmlEncode(expense.Note, false) : "")
 						<br />
 						@Html.Partial("ExpenseRatingStars", expense)
-
 						<div style="text-align: right;">
 							@* https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3 *@
-
 							@if (expense.Project != null && !expense.Project.IsEmpty())
 							{
 								<button type="button" class="btn btn-default" onclick="window.open('@Html.Raw(AntiXssEncoder.HtmlEncode(expense.Project, false))', '_blank');">
 									<span class="glyphicon glyphicon-globe"></span>
 								</button>
 							}
-
 							@if (expense.HasLinkedDocs)
 							{
 								<button type="button" class="btn btn-default" onclick="window.location.href='@Url.Action("DocListByExpense", "Mobile", new { expenseId = expense.ID })';">
