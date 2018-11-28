@@ -62,7 +62,7 @@
 							</sub>
 						</span>
 						@* https://github.com/dvmorozov/expenses/issues/124 *@
-						@if (inReceipt) { Html.Raw("< span class=\"glyphicon glyphicon-shopping-cart\"></span>"); }
+						@if (inReceipt) { <span class="glyphicon glyphicon-shopping-cart"></span> }
 						@if (expense.ExpenseEncryptedName != null && expense.ExpenseEncryptedName != string.Empty)
 						{
 							<script>
