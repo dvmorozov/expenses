@@ -44,26 +44,26 @@ namespace SocialApps.Controllers
                 return View("AddIncome",
                     new NewExpense
                     {
-                        Day = (date != null ? ((DateTime)date).Day : -1),
-                        Month = (date != null ? ((DateTime)date).Month : -1),
-                        Year = (date != null ? ((DateTime)date).Year : -1),
-                        Hour = (date != null ? ((DateTime)date).Hour : -1),
-                        Min = (date != null ? ((DateTime)date).Minute : -1),
-                        Sec = (date != null ? ((DateTime)date).Second : -1),
+                        Day = date.Day,
+                        Month = date.Month,
+                        Year = date.Year,
+                        Hour = date.Hour,
+                        Min = date.Minute,
+                        Sec = date.Second,
                         //  https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
                         ExpenseId = incomeId,
-                        EncryptedName = income != null ? income.EncryptedName : null,
-                        Name = income != null && income.Name != null ? income.Name.Trim() : null,
+                        EncryptedName = income?.EncryptedName,
+                        Name = income?.Name?.Trim(),
                         //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
                         //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
                         Importance = income != null && income.Importance != null ? income.Importance : (short)ExpenseImportance.Necessary,
-                        Rating = income != null && income.Rating != null ? income.Rating : null,
+                        Rating = income?.Rating,
                         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
                         //  https://www.evernote.com/shard/s132/nl/14501366/ac86d7cd-401e-4706-80f9-c8eeead71f35
                         Project = null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/6b4be0d2-91ab-4213-b5ff-21057fe6462a
-                        Currency = income != null && income.Currency != null ? income.Currency.Trim() : null,
-                        Cost = income != null ? ((double)income.Cost).ToString(CultureInfo.InvariantCulture) : null
+                        Currency = income?.Currency?.Trim(),
+                        Cost = income?.Cost?.ToString(CultureInfo.InvariantCulture)
                     });
             }
             catch (Exception e)
