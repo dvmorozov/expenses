@@ -147,9 +147,10 @@ function initDatePicker() {
 	var date = new Date;
 	if (isDefined(dayEl) && isDefined(dayEl.value) &&
 		isDefined(monthEl) && isDefined(monthEl.value) &&
-		isDefined(yearEl) && isDefined(yearEl.value))
-		//	Must be consistent with date format below.
-		date = '' + yearEl.value + '-' + monthEl.value + '-' + dayEl.value;
+		isDefined(yearEl) && isDefined(yearEl.value)) {
+		//	https://github.com/dvmorozov/expenses/issues/114
+		date = new Date(yearEl.value, monthEl.value, dayEl.value);
+	}
 
 	$('.single').pickmeup({
 		flat: true,
