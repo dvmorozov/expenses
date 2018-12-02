@@ -12,9 +12,11 @@ layout: default
 
 {% include video_encrypting.html %}
 
-## [Register and start using](https://xpnss.azurewebsites.net)
+## Register and start using
 
 {% include application.html %}
+
+> [Register and start using](https://xpnss.azurewebsites.net)
 
 > You can also use it directly from your [Facebook](https://apps.facebook.com/xpenses) account.
 
