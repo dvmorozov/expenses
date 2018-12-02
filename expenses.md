@@ -6,7 +6,13 @@
 
 1. [Expense multiplication](https://github.com/dvmorozov/expenses/issues/101).
 
-1. [Calculate expense amount by rest of receipt](https://github.com/dvmorozov/expenses/issues/70).
+1. Daily expenses.
+
+   1. [Calculate expense amount by rest of receipt](https://github.com/dvmorozov/expenses/issues/70).
+
+   1. [Expense must be associated with date otherwise mustn't be added](https://github.com/dvmorozov/expenses/issues/114).
+   
+   1. [Adding expenses from receipt](https://github.com/dvmorozov/expenses/issues/124).
 
 1. [Removing category](https://github.com/dvmorozov/expenses/issues/47).
 
