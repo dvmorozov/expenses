@@ -149,7 +149,7 @@ function initDatePicker() {
 		isDefined(monthEl) && isDefined(monthEl.value) &&
 		isDefined(yearEl) && isDefined(yearEl.value)) {
 		//	https://github.com/dvmorozov/expenses/issues/114
-		selectedDate = new Date(yearEl.value, monthEl.value, dayEl.value);
+		selectedDate = new Date(yearEl.value, monthEl.value - 1, dayEl.value);
 	}
 
 	function displaySelectedDate() {
@@ -159,7 +159,7 @@ function initDatePicker() {
 			//	Text must be universal.
 			//	https://www.evernote.com/shard/s132/nl/14501366/a7c9e99f-13f2-4ae1-b216-00dc674b2d09
 			var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-			var date = '' + selectedDate.getDay() + ' ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear();
+			var date = '' + selectedDate.getDate() + ' ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear();
 			el.innerHTML = date;
 			updateParentHeight();
 		}
@@ -192,7 +192,7 @@ function initDatePicker() {
 		setInputValue(document.getElementById("Min"), 0);
 		setInputValue(document.getElementById("Sec"), 0);
 
-		selectedDate = new Date(newYear, newMonth - 1, newDay - 1);
+		selectedDate = new Date(newYear, newMonth - 1, newDay);
 		displaySelectedDate();
 	});
 
