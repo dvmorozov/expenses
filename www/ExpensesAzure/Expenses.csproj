@@ -293,11 +293,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Models\Expenses1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ExpensesByCategoryForMonthByUser2_Result.cs">
       <DependentUpon>Expenses.tt</DependentUpon>
     </Compile>
@@ -366,8 +361,6 @@
     <Content Include="Content\facebook.png" />
     <Content Include="Content\google.png" />
     <Content Include="Content\linkedin.png" />
-    <Content Include="Content\pickmeup.css" />
-    <Content Include="Content\pickmeup.min.css" />
     <Content Include="Content\twitter.png" />
     <Content Include="Content\windows.png" />
     <Content Include="Content\yahoo.png" />
@@ -404,14 +397,14 @@
     <None Include="Scripts\jquery.linq-vsdoc.js" />
     <Content Include="Scripts\jquery.linq.js" />
     <Content Include="Scripts\jquery.linq.min.js" />
-    <Content Include="Scripts\jquery.pickmeup.js" />
-    <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.min.js" />
+    <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\LogOn.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\pickmeup.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sjcl.js" />
