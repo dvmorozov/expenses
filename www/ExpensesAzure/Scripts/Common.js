@@ -143,51 +143,65 @@ function initDatePicker() {
 	var dayEl = document.getElementById("Day");
 	var monthEl = document.getElementById("Month");
 	var yearEl = document.getElementById("Year");
-
-	var date = new Date;
+	
+	var selectedDate = new Date;
 	if (isDefined(dayEl) && isDefined(dayEl.value) &&
 		isDefined(monthEl) && isDefined(monthEl.value) &&
-		isDefined(yearEl) && isDefined(yearEl.value))
-		//	Must be consistent with date format below.
-		date = '' + yearEl.value + '-' + monthEl.value + '-' + dayEl.value;
+		isDefined(yearEl) && isDefined(yearEl.value)) {
+		//	https://github.com/dvmorozov/expenses/issues/114
+		selectedDate = new Date(yearEl.value, monthEl.value - 1, dayEl.value);
+	}
 
-	$('.single').pickmeup({
-		flat: true,
-		date: date,
-		format: 'Y-m-d',
-		change: function (formattedDate) {
-			var dateparts = formattedDate.split("-");
-			var newDay = dateparts[2];
-			var newMonth = dateparts[1];
-			var newYear = dateparts[0];
-
-			setInputValue(document.getElementById("Day"), newDay);
-			setInputValue(document.getElementById("Month"), newMonth);
-			setInputValue(document.getElementById("Year"), newYear);
-			setInputValue(document.getElementById("Hour"), 0);
-			setInputValue(document.getElementById("Min"), 0);
-			setInputValue(document.getElementById("Sec"), 0);
-
-			var el = document.getElementById("warning");
-			if (el) {
-				el.style.visibility = "visible";
-				//	Text must be universal.
-				//	https://www.evernote.com/shard/s132/nl/14501366/a7c9e99f-13f2-4ae1-b216-00dc674b2d09
-				var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-				var date = '' + newDay + ' ' + months[newMonth - 1]  + ' ' + newYear;
-				el.innerHTML = date;
-				updateParentHeight();
-			}
+	function displaySelectedDate() {
+		var el = document.getElementById("warning");
+		if (el) {
+			el.style.visibility = "visible";
+			//	Text must be universal.
+			//	https://www.evernote.com/shard/s132/nl/14501366/a7c9e99f-13f2-4ae1-b216-00dc674b2d09
+			var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+			var date = '' + selectedDate.getDate() + ' ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear();
+			el.innerHTML = date;
+			updateParentHeight();
 		}
-	});
+	}
+
+	pickmeup('.single', {
+		flat: true,			//	controls visibility
+		format: 'Y-m-d',
+		render: function (date) {
+			if (date == selectedDate) {
+				return { selected: true };
+			}
+			return {};
+		} 
+	})
+	pickmeup('.single').set_date(selectedDate);
 	$('.single').pickmeup_twitter_bootstrap();
+	displaySelectedDate();
+
+	document.getElementsByClassName("single")[0].addEventListener('pickmeup-change', function (e) {
+		var dateparts = e.detail.formatted_date.split("-");
+		var newDay = dateparts[2];
+		var newMonth = dateparts[1];
+		var newYear = dateparts[0];
+
+		setInputValue(document.getElementById("Day"), newDay);
+		setInputValue(document.getElementById("Month"), newMonth);
+		setInputValue(document.getElementById("Year"), newYear);
+		setInputValue(document.getElementById("Hour"), 0);
+		setInputValue(document.getElementById("Min"), 0);
+		setInputValue(document.getElementById("Sec"), 0);
+
+		selectedDate = new Date(newYear, newMonth - 1, newDay);
+		displaySelectedDate();
+	});
 
 	//	https://www.evernote.com/shard/s132/nl/14501366/a7c9e99f-13f2-4ae1-b216-00dc674b2d09
 	var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
-	$('.month_calendar').pickmeup({
+	$('.month_calendar').pickmeup_twitter_bootstrap({
 		flat: true,
-		date: date,
+		date: selectedDate,
 		view: 'months',
 		select_day: false,
 		format: 'Y-m',
@@ -211,12 +225,11 @@ function initDatePicker() {
 			}
 		}
 	});
-	$('.month_calendar').pickmeup_twitter_bootstrap();
 
 	//	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
-	$('.start_month_calendar').pickmeup({
+	$('.start_month_calendar').pickmeup_twitter_bootstrap({
 		flat: true,
-		date: date,
+		date: selectedDate,
 		view: 'months',
 		select_day: false,
 		format: 'Y-m',
@@ -237,11 +250,10 @@ function initDatePicker() {
 			}
 		}
 	});
-	$('.start_month_calendar').pickmeup_twitter_bootstrap();
 
-	$('.end_month_calendar').pickmeup({
+	$('.end_month_calendar').pickmeup_twitter_bootstrap({
 		flat: true,
-		date: date,
+		date: selectedDate,
 		view: 'months',
 		select_day: false,
 		format: 'Y-m',
@@ -262,45 +274,7 @@ function initDatePicker() {
 			}
 		}
 	});
-	$('.end_month_calendar').pickmeup_twitter_bootstrap();
 };
-
-/*
-function fillDateElementsFromDatePicker() {
-	//	Sets the date attributes by current time.
-	var date = new Date();
-	var hour = date.getHours();
-	var min = date.getMinutes();
-	var sec = date.getSeconds();
-	var year = date.getFullYear();
-	var month = date.getMonth() + 1;
-	var day = date.getDate();
-	
-	setInputValue(document.getElementById("Day"), day);
-	setInputValue(document.getElementById("Month"), month);
-	setInputValue(document.getElementById("Year"), year);
-	setInputValue(document.getElementById("Hour"), hour);
-	setInputValue(document.getElementById("Min"), min);
-	setInputValue(document.getElementById("Sec"), sec);
-
-	var dateparts = $('.single').pickmeup('get_date', true).split("-");
-	var newDay = dateparts[2];
-	var newMonth = dateparts[1];
-	var newYear = dateparts[0];
-
-	//	If the user changes data on the calendar
-	//	then uses this data to add the expenses. 
-	//	In this case the time will be filled by zeros.
-	if (day != newDay || month != newMonth || year != newYear) {
-		setInputValue(document.getElementById("Day"), newDay);
-		setInputValue(document.getElementById("Month"), newMonth);
-		setInputValue(document.getElementById("Year"), newYear);
-		setInputValue(document.getElementById("Hour"), 0);
-		setInputValue(document.getElementById("Min"), 0);
-		setInputValue(document.getElementById("Sec"), 0);
-	}
-}
-*/
 
 //	https://action.mindjet.com/task/14919145
 var imageHeight;
