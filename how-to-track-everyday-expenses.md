@@ -27,6 +27,8 @@ layout: default
 
 > ![Adding expenses from receipt](https://dvmorozov.github.io/expenses/assets/images/2018-12-02_19h52_08.png)
 
+> Start new receipt by selecting "Add Receipt" menu and add expenses grouping them by category. 
+
 > By selecting "Add Rest of Receipt" you can record last group of expenses in receipt. Amount will be calculated by subracting sum of all other expenses for the day from given value. 
 
 {% include google_ads.html %}
