@@ -12,7 +12,7 @@ layout: default
 
 {% include video_encrypting.html %}
 
-## Register and start using
+## [Register and start using](https://xpnss.azurewebsites.net)
 
 {% include application.html %}
 
