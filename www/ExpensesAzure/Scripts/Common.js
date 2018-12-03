@@ -143,7 +143,9 @@ function initDatePicker() {
 	var dayEl = document.getElementById("Day");
 	var monthEl = document.getElementById("Month");
 	var yearEl = document.getElementById("Year");
-	
+	//	https://www.evernote.com/shard/s132/nl/14501366/a7c9e99f-13f2-4ae1-b216-00dc674b2d09
+	var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+
 	var selectedDate = new Date;
 	if (isDefined(dayEl) && isDefined(dayEl.value) &&
 		isDefined(monthEl) && isDefined(monthEl.value) &&
@@ -157,47 +159,44 @@ function initDatePicker() {
 		if (el) {
 			el.style.visibility = "visible";
 			//	Text must be universal.
-			//	https://www.evernote.com/shard/s132/nl/14501366/a7c9e99f-13f2-4ae1-b216-00dc674b2d09
-			var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 			var date = '' + selectedDate.getDate() + ' ' + months[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear();
 			el.innerHTML = date;
 			updateParentHeight();
 		}
 	}
 
-	pickmeup('.single', {
-		flat: true,			//	controls visibility
-		format: 'Y-m-d',
-		render: function (date) {
-			if (date == selectedDate) {
-				return { selected: true };
+	if (document.getElementsByClassName("single").length) {
+		pickmeup('.single', {
+			flat: true,			//	controls visibility
+			format: 'Y-m-d',
+			render: function (date) {
+				if (date == selectedDate) {
+					return { selected: true };
+				}
+				return {};
 			}
-			return {};
-		} 
-	})
-	pickmeup('.single').set_date(selectedDate);
-	$('.single').pickmeup_twitter_bootstrap();
-	displaySelectedDate();
-
-	document.getElementsByClassName("single")[0].addEventListener('pickmeup-change', function (e) {
-		var dateparts = e.detail.formatted_date.split("-");
-		var newDay = dateparts[2];
-		var newMonth = dateparts[1];
-		var newYear = dateparts[0];
-
-		setInputValue(document.getElementById("Day"), newDay);
-		setInputValue(document.getElementById("Month"), newMonth);
-		setInputValue(document.getElementById("Year"), newYear);
-		setInputValue(document.getElementById("Hour"), 0);
-		setInputValue(document.getElementById("Min"), 0);
-		setInputValue(document.getElementById("Sec"), 0);
-
-		selectedDate = new Date(newYear, newMonth - 1, newDay);
+		})
+		pickmeup('.single').set_date(selectedDate);
+		$('.single').pickmeup_twitter_bootstrap();
 		displaySelectedDate();
-	});
 
-	//	https://www.evernote.com/shard/s132/nl/14501366/a7c9e99f-13f2-4ae1-b216-00dc674b2d09
-	var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+		document.getElementsByClassName("single")[0].addEventListener('pickmeup-change', function (e) {
+			var dateparts = e.detail.formatted_date.split("-");
+			var newDay = dateparts[2];
+			var newMonth = dateparts[1];
+			var newYear = dateparts[0];
+
+			setInputValue(document.getElementById("Day"), newDay);
+			setInputValue(document.getElementById("Month"), newMonth);
+			setInputValue(document.getElementById("Year"), newYear);
+			setInputValue(document.getElementById("Hour"), 0);
+			setInputValue(document.getElementById("Min"), 0);
+			setInputValue(document.getElementById("Sec"), 0);
+
+			selectedDate = new Date(newYear, newMonth - 1, newDay);
+			displaySelectedDate();
+		});
+	}
 
 	$('.month_calendar').pickmeup_twitter_bootstrap({
 		flat: true,
@@ -225,7 +224,6 @@ function initDatePicker() {
 			}
 		}
 	});
-
 	//	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
 	$('.start_month_calendar').pickmeup_twitter_bootstrap({
 		flat: true,
