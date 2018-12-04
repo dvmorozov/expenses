@@ -198,14 +198,18 @@ function initDatePicker() {
 		});
 	}
 
-	$('.month_calendar').pickmeup_twitter_bootstrap({
-		flat: true,
-		date: selectedDate,
-		view: 'months',
-		select_day: false,
-		format: 'Y-m',
-		change: function (formattedDate) {
-			var dateparts = formattedDate.split("-");
+	if (document.getElementsByClassName("month_calendar").length) {
+		pickmeup('.month_calendar', {
+			flat: true,
+			view: 'months',
+			select_day: false,
+			format: 'Y-m'
+		})
+		pickmeup('.month_calendar').set_date(selectedDate);
+		$('.month_calendar').pickmeup_twitter_bootstrap();
+
+		document.getElementsByClassName("month_calendar")[0].addEventListener('pickmeup-change', function (e) {
+			var dateparts = e.detail.formatted_date.split("-");
 			var newMonth = dateparts[1];
 			var newYear = dateparts[0];
 
@@ -217,61 +221,70 @@ function initDatePicker() {
 			//	with the same id on tabs corresponding to different currencies.
 			var el = $(this).parent().find("#warning")
 			if (el) {
-				var date = months[newMonth - 1]  + ' ' + newYear;
+				var date = months[newMonth - 1] + ' ' + newYear;
 				el.html(date);
 				el.css("visibility", "visible");
 				updateParentHeight();
 			}
-		}
-	});
+		})
+	}
+
 	//	https://www.evernote.com/shard/s132/nl/14501366/67b5959f-63bc-4cd5-af1a-a481a2859c50
-	$('.start_month_calendar').pickmeup_twitter_bootstrap({
-		flat: true,
-		date: selectedDate,
-		view: 'months',
-		select_day: false,
-		format: 'Y-m',
-		change: function (formattedDate) {
-			var dateparts = formattedDate.split("-");
+	if (document.getElementsByClassName("start_month_calendar").length) {
+		pickmeup('.start_month_calendar', {
+			flat: true,
+			view: 'months',
+			select_day: false,
+			format: 'Y-m'
+		})
+		pickmeup('.start_month_calendar').set_date(selectedDate);
+		$('.start_month_calendar').pickmeup_twitter_bootstrap();
+
+		document.getElementsByClassName("start_month_calendar")[0].addEventListener('pickmeup-change', function (e) {
+			var dateparts = e.detail.formatted_date.split("-");
 			var newMonth = dateparts[1];
 			var newYear = dateparts[0];
 
 			setInputValue(document.getElementById("StartMonth"), newMonth);
 			setInputValue(document.getElementById("StartYear"), newYear);
 
-			var el = document.getElementById("start_month");
+			var el = document.getElementById("start_month_calendar");
 			if (el) {
 				el.style.visibility = "visible";
 				var date = months[newMonth - 1] + ' ' + newYear;
 				el.innerHTML = date;
 				updateParentHeight();
 			}
-		}
-	});
+		})
+	}
 
-	$('.end_month_calendar').pickmeup_twitter_bootstrap({
-		flat: true,
-		date: selectedDate,
-		view: 'months',
-		select_day: false,
-		format: 'Y-m',
-		change: function (formattedDate) {
-			var dateparts = formattedDate.split("-");
+	if (document.getElementsByClassName("end_month_calendar").length) {
+		pickmeup('.end_month_calendar', {
+			flat: true,
+			view: 'months',
+			select_day: false,
+			format: 'Y-m'
+		})
+		pickmeup('.end_month_calendar').set_date(selectedDate);
+		$('.end_month_calendar').pickmeup_twitter_bootstrap();
+
+		document.getElementsByClassName("end_month_calendar")[0].addEventListener('pickmeup-change', function (e) {
+			var dateparts = e.detail.formatted_date.split("-");
 			var newMonth = dateparts[1];
 			var newYear = dateparts[0];
 
 			setInputValue(document.getElementById("EndMonth"), newMonth);
 			setInputValue(document.getElementById("EndYear"), newYear);
 
-			var el = document.getElementById("end_month");
+			var el = document.getElementById("end_month_calendar");
 			if (el) {
 				el.style.visibility = "visible";
 				var date = months[newMonth - 1] + ' ' + newYear;
 				el.innerHTML = date;
 				updateParentHeight();
 			}
-		}
-	});
+		})
+	}
 };
 
 //	https://action.mindjet.com/task/14919145
