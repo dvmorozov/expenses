@@ -790,7 +790,7 @@ function showDecryptedList() {
 	var messageEventHandler = function (event) {
 		//	Destination should not be empty string.
 		//	https://github.com/dvmorozov/expenses/issues/81
-		if (isDefined(event.data) && event.data != "") {
+		if (isDefined(event.data) && event.data != "" && event.data != '{"googMsgType":"adpnt"}') {
 			messageDestination = event.data;
 			updateParentHeight();
 		}
