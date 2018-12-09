@@ -169,6 +169,7 @@ function initDatePicker() {
 		pickmeup('.single', {
 			flat: true,			//	controls visibility
 			format: 'Y-m-d',
+			//	https://github.com/dvmorozov/expenses/issues/114
 			render: function (date) {
 				if (date == selectedDate) {
 					return { selected: true };
@@ -198,17 +199,19 @@ function initDatePicker() {
 		});
 	}
 
-	if (document.getElementsByClassName("month_calendar").length) {
-		pickmeup('.month_calendar', {
+	for (var i = 0; i < document.getElementsByClassName("month_calendar").length; i++) {
+		//	https://github.com/dvmorozov/expenses/issues/129
+		var elementId = 'month_calendar_' + i;
+		pickmeup('#' + elementId, {
 			flat: true,
 			view: 'months',
 			select_day: false,
 			format: 'Y-m'
 		})
-		pickmeup('.month_calendar').set_date(selectedDate);
-		$('.month_calendar').pickmeup_twitter_bootstrap();
+		pickmeup('#' + elementId).set_date(selectedDate);
+		$('#' + elementId).pickmeup_twitter_bootstrap();
 
-		document.getElementsByClassName("month_calendar")[0].addEventListener('pickmeup-change', function (e) {
+		document.getElementById(elementId).addEventListener('pickmeup-change', function (e) {
 			var dateparts = e.detail.formatted_date.split("-");
 			var newMonth = dateparts[1];
 			var newYear = dateparts[0];

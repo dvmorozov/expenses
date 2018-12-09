@@ -106,6 +106,7 @@ namespace SocialApps.Controllers
                 if (totals != null)
                     ViewBag.MonthTotal = totals.MonthTotal;
 
+                TempData["MonthCalendarIndex"] = 0;
                 return View("Top10");
             }
             catch (Exception e)

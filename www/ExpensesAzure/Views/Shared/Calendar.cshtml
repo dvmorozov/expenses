@@ -1,7 +1,7 @@
-﻿
-@{
+﻿@{
 	<div style="margin-left: 16px;">
-		<div class="month_calendar">
+		@* https://github.com/dvmorozov/expenses/issues/129 *@
+		<div class="month_calendar" id=@Html.Raw("'month_calendar_" + (int)(TempData["MonthCalendarIndex"] ?? 0) + "'")>
 		</div>
 
 		<div>
@@ -11,4 +11,5 @@
 			<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="warning"></span>
 		</div>
 	</div>
+	TempData["MonthCalendarIndex"] = (int)(TempData["MonthCalendarIndex"] ?? 0) + 1;
 }
