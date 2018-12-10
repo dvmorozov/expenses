@@ -3,7 +3,7 @@
 
 1. Encrypting names of expenses and categories.
 
-1. [Encrypting notes](https://github.com/dvmorozov/expenses/issues/130)
+1. [Encrypting notes](https://github.com/dvmorozov/expenses/issues/130).
 
 1. [Encrypting existing records](https://github.com/dvmorozov/expenses/issues/91).
 
