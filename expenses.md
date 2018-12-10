@@ -2,6 +2,7 @@
 ## Expenses
 
 1. [Purchase list](https://github.com/dvmorozov/expenses/issues/104).
+
    1. *Bottomline (totals) grouped by currency*.
 
 1. [Expense multiplication](https://github.com/dvmorozov/expenses/issues/101).
@@ -23,8 +24,5 @@
    1. [Closing](https://github.com/dvmorozov/expenses/issues/120).
    
    1. [Reminder](https://github.com/dvmorozov/expenses/issues/121).
-   
-   
-
 
 {% include google_ads.html %}
