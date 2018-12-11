@@ -24,9 +24,13 @@
    1. [Closing](https://github.com/dvmorozov/expenses/issues/120).
    
    1. [Reminder](https://github.com/dvmorozov/expenses/issues/121).
+   
+1. Expense attributes.
       
-1. [Removing category](https://github.com/dvmorozov/expenses/issues/47).
+   1. [Removing category](https://github.com/dvmorozov/expenses/issues/47).
 
-1. [Simplify input of date of monthly expense](https://github.com/dvmorozov/expenses/issues/53).      
+   1. [Simplify input of date of monthly expense](https://github.com/dvmorozov/expenses/issues/53).
+   
+   1. *Manufacturer name*.
 
 {% include google_ads.html %}
