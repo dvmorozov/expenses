@@ -20,6 +20,8 @@
    1. [Adding expenses from receipt](https://github.com/dvmorozov/expenses/issues/124).
    
    1. *Highlight in calendar days when expenses of selected type was done*.
+   
+   1. *Bottom line with grouping by currencies*.
 
 1. Monthly expenses.
 
