@@ -18,6 +18,8 @@
    1. [Expense must be associated with date otherwise mustn't be added](https://github.com/dvmorozov/expenses/issues/114).
    
    1. [Adding expenses from receipt](https://github.com/dvmorozov/expenses/issues/124).
+   
+   1. *Highlight in calendar days when expenses of selected type was done*.
 
 1. Monthly expenses.
 
