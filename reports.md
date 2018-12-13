@@ -23,6 +23,8 @@
 
 1. *Permanent links to reports*.
 
+1. *Export to PDF*.
+
 1. *List of active repeated expenses*.
 
 1. *Balance report "assets-liabilities" (Kiyosaki report)*.
