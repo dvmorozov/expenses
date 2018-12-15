@@ -47,8 +47,8 @@
 
 					@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
 					<tr class="trlist" onclick="window.location.href = '@Url.Action("SelectCategoryF", "Mobile", new { categoryIds = cat.ID })';" id="@Html.Raw("tr" + categoryId)">
-						<td style="vertical-align: middle;">
-							<div style="white-space: nowrap; display: inline-block; margin-right: 20px;">
+						<td style="vertical-align: middle; width: 85px;">
+							<div style="white-space: nowrap; display: inline-block;">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default"
 											onclick="window.location.href='@Url.Action("EditCategory", "Mobile", new { categoryId = cat.ID })'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
@@ -64,7 +64,7 @@
 								</div>
 							</div>
 						</td>
-						<td style="width: 100%; vertical-align: middle;">
+						<td style="vertical-align: middle;">
 							<div style="@Html.Raw(ViewBag.CategoryId != null && (int)ViewBag.CategoryId == cat.ID ? "font-size: large;" : "")" id="@Html.Raw(categoryId)" class="@Html.Raw(classId)">
 								@Html.Raw(AntiXssEncoder.HtmlEncode(cat.NAME.Trim(), false))
 							</div>
@@ -81,7 +81,7 @@
 								</div>
 							</div>
 						</td>
-						<td style="vertical-align: middle;">
+						<td style="vertical-align: middle; width: 1%;">
 							<div>
 								@Html.Raw(cat.Limit != null ? Math.Floor((float)cat.Limit).ToString(CultureInfo.InvariantCulture) : "NA")
 							</div>
