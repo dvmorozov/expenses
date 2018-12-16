@@ -48,8 +48,8 @@ layout: default
 
 [Features](features)
 
-{% include google_ads.html %}
-
 ## Blog
 
 [rationalcity.wordpress.com](https://rationalcity.wordpress.com)
+
+{% include google_ads.html %}
