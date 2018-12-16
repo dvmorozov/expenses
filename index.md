@@ -13,6 +13,7 @@ layout: default
 {% include application.html %}
 
 > [Open full-size](https://xpnss.azurewebsites.net)
+
 > [Open from your Facebook account](https://apps.facebook.com/xpenses)
 
 > The application now supports German, French, Spanish, Portugese, Russian.
