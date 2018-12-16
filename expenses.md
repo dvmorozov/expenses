@@ -19,6 +19,10 @@
    
    1. [Adding expenses from receipt](https://github.com/dvmorozov/expenses/issues/124).
    
+   1. [Receipt expenses should be displayed in separate group on the day expense page](https://github.com/dvmorozov/expenses/issues/134).
+   
+   1. *Receipt expenses should be deleted when receipt is deleted*.
+   
    1. *Highlight in calendar days when expenses of selected type was done*.
    
    1. *Bottom line with grouping by currencies*.
