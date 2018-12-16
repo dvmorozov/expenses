@@ -8,10 +8,6 @@ layout: default
 
 > For encryption the opensource library [**SJCL**](https://crypto.stanford.edu/sjcl/) is used developed at Stanford University.
 
-## Look how encryption works
-
-{% include video_encrypting.html %}
-
 ## Start using
 
 {% include application.html %}
@@ -21,6 +17,10 @@ layout: default
 > You can also use it directly from your [Facebook](https://apps.facebook.com/xpenses) account.
 
 > The application now supports German, French, Spanish, Portugese, Russian.
+
+## Look how encryption works
+
+{% include video_encrypting.html %}
 
 ## More info
 
