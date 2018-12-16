@@ -36,7 +36,7 @@ layout: default
 
 [Client-side data encryption](client-side-data-encryption)
 
-[Features in development](features)
+[Features under development](features)
 
 ## Find me on
 
