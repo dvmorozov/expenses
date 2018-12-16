@@ -22,16 +22,6 @@ layout: default
 
 > The application now supports German, French, Spanish, Portugese, Russian.
 
-## News
-
-{% include twitter.html %}
-
-## Find me on
-
-[LinkedIn](https://ru.linkedin.com/pub/dmitry-morozov/59/90a/794)
-
-[Facebook](https://www.facebook.com/profile.php?id=100004082021870)
-
 ## More info
 
 [Set up month budget for any category and get warning beforehand when predicted total expense exceeds desired budget](budget-management)
@@ -47,6 +37,12 @@ layout: default
 [Client-side data encryption](client-side-data-encryption)
 
 [Features](features)
+
+## Find me on
+
+[LinkedIn](https://ru.linkedin.com/pub/dmitry-morozov/59/90a/794)
+
+[Facebook](https://www.facebook.com/profile.php?id=100004082021870)
 
 ## Blog
 
