@@ -1,7 +1,6 @@
 ﻿@using System.Globalization
 @using SocialApps.Models
 @using System.Web.Security.AntiXss
-
 @* ReSharper disable UnknownCssClass *@
 @{
 	var list = (EstimatedCategoriesByUser4_Result[])ViewBag.CategoryIds;
@@ -11,7 +10,9 @@
 		<table class="sorted table">
 			<tbody>
 				<tr>
-					<th></th><th>@Html.Raw(Resources.Resources.Category)</th><th>@Html.Raw(Resources.Resources.Budget)</th>
+					<th></th>
+					<th>@Html.Raw(Resources.Resources.Category)</th>
+					<th>@Html.Raw(Resources.Resources.Budget)</th>
 				</tr>
 				@for (var index = 0; index < list.Count(); index++)
 				{
@@ -54,13 +55,18 @@
 											onclick="window.location.href='@Url.Action("EditCategory", "Mobile", new { categoryId = cat.ID })'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">
 										<span class="glyphicon glyphicon-edit"></span>
 									</button>
-									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-										<span class="caret"></span>
-										<span class="sr-only"></span>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#" onclick="window.location.href='@Url.Action("DeleteCategory", "Mobile", new { categoryId = cat.ID })';">@Html.Raw(Resources.Resources.Delete)</a></li>
-									</ul>
+									@* https://github.com/dvmorozov/expenses/issues/47
+										Only empty category can be deleted. *@
+									@if (cat.Total == null || cat.Total == 0.0)
+									{
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+											<span class="caret"></span>
+											<span class="sr-only"></span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="#" onclick="window.location.href='@Url.Action("DeleteCategory", "Mobile", new { categoryId = cat.ID })';">@Html.Raw(Resources.Resources.Delete)</a></li>
+										</ul>
+									}
 								</div>
 							</div>
 						</td>
@@ -87,8 +93,8 @@
 							</div>
 							<div style="font-size: xx-small; text-align: right; font-style: italic;">
 								@Html.Raw(
-									(cat.Total != null ? Math.Floor((float)cat.Total).ToString(CultureInfo.InvariantCulture) : "0") +
-									(cat.Currency != string.Empty ? " " + cat.Currency : ""))
+										 (cat.Total != null ? Math.Floor((float)cat.Total).ToString(CultureInfo.InvariantCulture) : "0") +
+										 (cat.Currency != string.Empty ? " " + cat.Currency : ""))
 							</div>
 						</td>
 					</tr>
