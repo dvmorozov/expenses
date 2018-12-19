@@ -67,6 +67,13 @@ namespace SocialApps.Repositories
                  select ec
              ).ToList().ForEach(ec => ec.CategoryID = 0);
 
+            _db.Categories.RemoveRange
+            (
+                from c in _db.Categories
+                where c.ID == categoryId && c.DataOwner == userId
+                select c
+            );
+
             _db.SaveChanges();
         }
 
