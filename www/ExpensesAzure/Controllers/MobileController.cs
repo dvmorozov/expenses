@@ -821,139 +821,6 @@ namespace SocialApps.Controllers
             }
         }
 
-        public ActionResult DeleteExpense(int expenseId)
-        {
-            try
-            {
-                var income = _repository.IsIncome(expenseId);
-
-                //  https://action.mindjet.com/task/14509395
-                _repository.DeleteExpense(expenseId, GetUserId());
-
-                var date = DateTime.Now;
-                if (Session["Day"] != null && Session["Month"] != null && Session["Year"] != null)
-                {
-                    var day = (int)Session["Day"];
-                    var month = (int)Session["Month"];
-                    var year = (int)Session["Year"];
-                    date = new DateTime(year, month, day);
-                }
-
-                if (income != null && (bool)income)
-                {
-                    return RedirectToAction("MonthIncome", new { year = date.Year, month = date.Month });
-                }
-                else
-                    return RedirectToAction("DayExpenses", new { date.Day, date.Month, date.Year });
-            }
-            catch (Exception e)
-            {
-                Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "DeleteExpense"));
-            }
-        }
-
-        public ActionResult NewCategory()
-        {
-            try
-            {
-                return View(new CategoryModel());
-            }
-            catch (Exception e)
-            {
-                Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "AddExpense"));
-            }
-        }
-
-        [HttpPost]
-        public ActionResult NewCategory(CategoryModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    double? limit = null;
-                    //  https://www.evernote.com/shard/s132/nl/14501366/e6cd86bb-8a22-4111-8fbb-8610bb35c304
-                    if (model.Limit != null)
-                    {
-                        model.Limit = model.Limit.Replace(',', '.');
-                        //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
-                        model.Limit = model.Limit.Replace(" ", string.Empty);
-
-
-                        if (!double.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double l))
-                            return RedirectToAction("NewCategory");
-                        limit = l;
-                    }
-
-                    if (model.Name.Trim() == string.Empty)
-                        return RedirectToAction("NewCategory");
-
-                    Session["CategoryId"] = _repository.NewCategory(model.Name, limit, GetUserId(), model.EncryptedName != string.Empty ? model.EncryptedName : null);
-
-                    DropSessionLinks();
-
-                    //  https://action.mindjet.com/task/14479694
-                    return RedirectToAction("SelectExpense", new { shortList = true });
-                }
-                return RedirectToAction("NewCategory");
-            }
-            catch (Exception e)
-            {
-                Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "NewCategory"));
-            }
-        }
-
-        public ActionResult EditCategory(int categoryId)
-        {
-            try
-            {
-                return View(_repository.GetCategory(categoryId));
-            }
-            catch (Exception e)
-            {
-                Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "AddExpense"));
-            }
-        }
-
-        [HttpPost]
-        public ActionResult EditCategory(CategoryModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    float? limit = null;
-
-                    //  https://www.evernote.com/shard/s132/nl/14501366/e6cd86bb-8a22-4111-8fbb-8610bb35c304
-                    if (model.Limit != null)
-                    {
-                        model.Limit = model.Limit.Replace(',', '.');
-                        //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
-                        model.Limit = model.Limit.Replace(" ", string.Empty);
-
-
-                        if (!float.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float l))
-                            return RedirectToAction("EditCategory", model);
-
-                        limit = (l == 0.0) ? (float?)null : l;
-                    }
-
-                    _repository.EditCategory(model.Id, model.Name, GetUserId(), limit, model.EncryptedName);
-                    return RedirectToSelectCategory();
-                }
-                return View();
-            }
-            catch (Exception e)
-            {
-                Application_Error(e);
-                return View("Error", new HandleErrorInfo(e, "Mobile", "NewCategory"));
-            }
-        }
-
         public ActionResult NewExpense()
         {
             try
@@ -1170,6 +1037,38 @@ namespace SocialApps.Controllers
             }
         }
 
+        public ActionResult DeleteExpense(int expenseId)
+        {
+            try
+            {
+                var income = _repository.IsIncome(expenseId);
+
+                //  https://action.mindjet.com/task/14509395
+                _repository.DeleteExpense(expenseId, GetUserId());
+
+                var date = DateTime.Now;
+                if (Session["Day"] != null && Session["Month"] != null && Session["Year"] != null)
+                {
+                    var day = (int)Session["Day"];
+                    var month = (int)Session["Month"];
+                    var year = (int)Session["Year"];
+                    date = new DateTime(year, month, day);
+                }
+
+                if (income != null && (bool)income)
+                {
+                    return RedirectToAction("MonthIncome", new { year = date.Year, month = date.Month });
+                }
+                else
+                    return RedirectToAction("DayExpenses", new { date.Day, date.Month, date.Year });
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "DeleteExpense"));
+            }
+        }
+
         //  https://www.evernote.com/shard/s132/nl/14501366/751d5935-68c5-42be-8f12-c5ab2315da02
         public ActionResult ExpensesByCategory(int categoryId, string currency)
         {
@@ -1280,6 +1179,123 @@ namespace SocialApps.Controllers
             {
                 Application_Error(e);
                 return View("Error", new HandleErrorInfo(e, "Mobile", "SelectCurrency"));
+            }
+        }
+
+        public ActionResult NewCategory()
+        {
+            try
+            {
+                return View(new CategoryModel());
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "AddExpense"));
+            }
+        }
+
+        [HttpPost]
+        public ActionResult NewCategory(CategoryModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    double? limit = null;
+                    //  https://www.evernote.com/shard/s132/nl/14501366/e6cd86bb-8a22-4111-8fbb-8610bb35c304
+                    if (model.Limit != null)
+                    {
+                        model.Limit = model.Limit.Replace(',', '.');
+                        //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
+                        model.Limit = model.Limit.Replace(" ", string.Empty);
+
+
+                        if (!double.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double l))
+                            return RedirectToAction("NewCategory");
+                        limit = l;
+                    }
+
+                    if (model.Name.Trim() == string.Empty)
+                        return RedirectToAction("NewCategory");
+
+                    Session["CategoryId"] = _repository.NewCategory(model.Name, limit, GetUserId(), model.EncryptedName != string.Empty ? model.EncryptedName : null);
+
+                    DropSessionLinks();
+
+                    //  https://action.mindjet.com/task/14479694
+                    return RedirectToAction("SelectExpense", new { shortList = true });
+                }
+                return RedirectToAction("NewCategory");
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "NewCategory"));
+            }
+        }
+
+        public ActionResult EditCategory(int categoryId)
+        {
+            try
+            {
+                return View(_repository.GetCategory(categoryId));
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "AddExpense"));
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditCategory(CategoryModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    float? limit = null;
+
+                    //  https://www.evernote.com/shard/s132/nl/14501366/e6cd86bb-8a22-4111-8fbb-8610bb35c304
+                    if (model.Limit != null)
+                    {
+                        model.Limit = model.Limit.Replace(',', '.');
+                        //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
+                        model.Limit = model.Limit.Replace(" ", string.Empty);
+
+
+                        if (!float.TryParse(model.Limit, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float l))
+                            return RedirectToAction("EditCategory", model);
+
+                        limit = (l == 0.0) ? (float?)null : l;
+                    }
+
+                    _repository.EditCategory(model.Id, model.Name, GetUserId(), limit, model.EncryptedName);
+                    return RedirectToSelectCategory();
+                }
+                return View();
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "NewCategory"));
+            }
+        }
+
+        //  https://github.com/dvmorozov/expenses/issues/47
+        public ActionResult DeleteCategory(int categoryId)
+        {
+            try
+            {
+                _repository.DeleteCategory(categoryId, GetUserId());
+
+                return RedirectToSelectCategory();
+            }
+            catch (Exception e)
+            {
+                Application_Error(e);
+                return View("Error", new HandleErrorInfo(e, "Mobile", "DeleteCategory"));
             }
         }
 
