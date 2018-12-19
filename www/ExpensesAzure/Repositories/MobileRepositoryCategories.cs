@@ -55,7 +55,7 @@ namespace SocialApps.Repositories
         }
 
         //  https://github.com/dvmorozov/expenses/issues/47
-        private void DeleteCategory(Guid userId, int categoryId)
+        public void DeleteCategory(int categoryId, Guid userId)
         {
             //  Clean cache.
             DeleteCachedCategories(userId);
