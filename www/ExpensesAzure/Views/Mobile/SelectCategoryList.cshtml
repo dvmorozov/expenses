@@ -64,7 +64,7 @@
 											<span class="sr-only"></span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
-											<li><a href="#" onclick="window.location.href='@Url.Action("DeleteCategory", "Mobile", new { categoryId = cat.ID })';">@Html.Raw(Resources.Resources.Delete)</a></li>
+											<li><a href="#" onclick="window.location.href='@Url.Action("DeleteCategory", "Mobile", new { categoryId = cat.ID })'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">@Html.Raw(Resources.Resources.Delete)</a></li>
 										</ul>
 									}
 								</div>
