@@ -46,12 +46,35 @@ namespace SocialApps.Repositories
         {
             try
             {
-                DeleteBlobs(userId, SelectEstimatedCategoriesPrefix);
                 _session[SelectEstimatedCategoriesPrefix] = null;
+                DeleteBlobs(userId, SelectEstimatedCategoriesPrefix);
             }
             catch
             {
             }
+        }
+
+        //  https://github.com/dvmorozov/expenses/issues/47
+        public void DeleteCategory(int categoryId, Guid userId)
+        {
+            //  Clean cache.
+            DeleteCachedCategories(userId);
+
+            (
+                 from ec in _db.ExpensesCategories
+                 join e in _db.Expenses on ec.ExpenseID equals e.ID
+                 where ec.CategoryID == categoryId && e.DataOwner == userId
+                 select ec
+             ).ToList().ForEach(ec => ec.CategoryID = 0);
+
+            _db.Categories.RemoveRange
+            (
+                from c in _db.Categories
+                where c.ID == categoryId && c.DataOwner == userId
+                select c
+            );
+
+            _db.SaveChanges();
         }
 
         public EstimatedCategoriesByUser4_Result[] SelectEstimatedCategories(DateTime date, Guid userId, bool? shortList)
