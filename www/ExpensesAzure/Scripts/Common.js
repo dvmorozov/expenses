@@ -797,7 +797,7 @@ function showDecryptedList() {
 			messageDestination = event.data;
 			updateParentHeight();
 		}
-		elses
+		else
 			messageDestination = null;
 	};
 	window.addEventListener('message', messageEventHandler, false);
