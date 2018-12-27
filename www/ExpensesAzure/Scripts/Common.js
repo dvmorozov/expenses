@@ -793,10 +793,12 @@ function showDecryptedList() {
 	var messageEventHandler = function (event) {
 		//	Destination should not be empty string.
 		//	https://github.com/dvmorozov/expenses/issues/81
-		if (isDefined(event.data) && event.data != "" && event.data != '{"googMsgType":"adpnt"}') {
+		if (isDefined(event.data) && (event.data.search("http://") != -1 || event.data.search("https://") != -1)) {
 			messageDestination = event.data;
 			updateParentHeight();
 		}
+		else
+			messageDestination = null;
 	};
 	window.addEventListener('message', messageEventHandler, false);
 
