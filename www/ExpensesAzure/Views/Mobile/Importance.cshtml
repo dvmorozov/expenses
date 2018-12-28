@@ -68,7 +68,8 @@
 				@* Add tab content. *@
 				<div class="tab-content">
 					@{
-						var categorySeqNum = 0;
+						@* https://github.com/dvmorozov/expenses/issues/138 *@
+						TempData["MonthCalendarIndex"] = null;
 						if (currencyGroups.Count() != 0)
 						{
 							for (var i = 0; i < currencyGroups.Count(); i++)

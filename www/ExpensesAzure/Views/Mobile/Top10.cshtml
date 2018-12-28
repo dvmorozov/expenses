@@ -71,6 +71,8 @@
 					@{ //	Category id must be unique among all groups.
 						//	https://action.mindjet.com/task/14945733
 						var categorySeqNum = 0;
+						@* https://github.com/dvmorozov/expenses/issues/138 *@
+						TempData["MonthCalendarIndex"] = null;
 						if (currencyGroups.Count() != 0)
 						{
 							for (var i = 0; i < currencyGroups.Count(); i++)
@@ -181,6 +183,8 @@
 							<div style="margin: 16px;">
 								<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
 							</div>
+							@* https://github.com/dvmorozov/expenses/issues/138 *@
+							TempData["MonthCalendarIndex"] = null;
 							@Html.Partial("Calendar")
 						}
 					}
