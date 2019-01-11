@@ -658,4 +658,7 @@ Sie sollten alle Passwörter halten Sie sie zu entschlüsseln wurden. </value>
   <data name="ResetReceipt" xml:space="preserve">
     <value>Beleg abbrechen</value>
   </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Taschenrechner</value>
+  </data>
 </root>

@@ -657,4 +657,7 @@
   <data name="ResetReceipt" xml:space="preserve">
     <value>Cancelar recibo</value>
   </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Calculadora</value>
+  </data>
 </root>

@@ -658,4 +658,7 @@ Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</v
   <data name="ResetReceipt" xml:space="preserve">
     <value>Cancelar recibo</value>
   </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Calculadora</value>
+  </data>
 </root>
