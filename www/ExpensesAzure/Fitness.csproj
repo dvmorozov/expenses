@@ -337,24 +337,18 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\facebook.png" />
     <Content Include="Content\google.png" />
     <Content Include="Content\linkedin.png" />
-    <Content Include="Content\pickmeup.css" />
-    <Content Include="Content\pickmeup.min.css" />
     <Content Include="Content\twitter.png" />
     <Content Include="Content\windows.png" />
     <Content Include="Content\yahoo.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="googlee97ea6870408ad0c.html" />
     <Content Include="Scripts\AddExpense1.js" />
     <Content Include="Scripts\AddExpense2.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config" />
     <EntityDeploy Include="Models\Expenses.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -377,24 +371,13 @@
     <None Include="Properties\PublishProfiles\ftnss - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Common.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.highlight-4.closure.js" />
     <Content Include="Scripts\jquery.highlight-4.js" />
-    <None Include="Scripts\jquery.linq-vsdoc.js" />
-    <Content Include="Scripts\jquery.linq.js" />
-    <Content Include="Scripts\jquery.linq.min.js" />
-    <Content Include="Scripts\jquery.pickmeup.js" />
-    <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.min.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.js" />
     <Content Include="Scripts\LogOn.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\pickmeup.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sjcl.js" />
@@ -411,7 +394,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -484,9 +466,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
