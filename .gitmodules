@@ -1,0 +1,3 @@
+[submodule "www/ExpensesAzure/Scripts/calc"]
+	path = www/ExpensesAzure/Scripts/calc
+	url = https://github.com/javadev/calc

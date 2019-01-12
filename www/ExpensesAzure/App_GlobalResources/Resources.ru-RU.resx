@@ -657,4 +657,7 @@
   <data name="ResetReceipt" xml:space="preserve">
     <value>Отмена ввода чека</value>
   </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Калькулятор</value>
+  </data>
 </root>

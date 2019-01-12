@@ -382,26 +382,13 @@
     </Content>
     <Content Include="Scripts\AddExpense1.js" />
     <Content Include="Scripts\AddExpense2.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Common.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.highlight-4.closure.js" />
     <Content Include="Scripts\jquery.highlight-4.js" />
-    <None Include="Scripts\jquery.linq-vsdoc.js" />
-    <Content Include="Scripts\jquery.linq.js" />
-    <Content Include="Scripts\jquery.linq.min.js" />
     <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\LogOn.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\pickmeup.js" />
@@ -414,7 +401,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -496,6 +482,9 @@
     <Content Include="Views\Shared\ExpenseRestOfReceipt.cshtml" />
     <Content Include="Views\Shared\Calendar.cshtml" />
     <Content Include="Views\Shared\TopAddExpenseButton.cshtml" />
+    <Content Include="Views\Shared\CalculatorButton.cshtml" />
+    <Content Include="Views\Shared\CalculatorDialog.cshtml" />
+    <Content Include="Views\Shared\Calculator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

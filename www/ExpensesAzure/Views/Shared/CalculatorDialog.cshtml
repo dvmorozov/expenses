@@ -1,0 +1,12 @@
+﻿@{
+	<div id="calculatorDialog" title="@Html.Raw(Resources.Resources.Calculator)">
+		@Html.Partial("Calculator")
+	</div>
+	<script>
+	$(function(){
+		$("#calculatorDialog").dialog({
+			autoOpen: false, modal: true, show: "blind", hide: "blind", resizable: false, minWidth: 330
+		});
+	});
+	</script>
+}
