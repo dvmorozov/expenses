@@ -113,6 +113,8 @@
 						<button type="button" class="btn btn-default" aria-label="Add" onclick="document.forms['NewExpense'].submit(); return true;">
 							<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>&nbsp;@Html.Raw(Resources.Resources.Add)
 						</button>
+						@Html.Partial("CalculatorButton")
+						@Html.Partial("CalculatorDialog")
 					</div>
 				</div>
 			}

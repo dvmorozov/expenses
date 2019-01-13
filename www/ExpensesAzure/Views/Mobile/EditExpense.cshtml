@@ -144,6 +144,8 @@
 					<hr />
 					<div>
 						<input class="btn btn-default" type="button" onclick="encryptData('Name', 'EncryptedName'); document.forms['EditExpense'].submit(); return true;" value="@Html.Raw(Resources.Resources.Update)" />
+						@Html.Partial("CalculatorButton")
+						@Html.Partial("CalculatorDialog")
 					</div>
 				</div>
 			}
