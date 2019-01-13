@@ -358,6 +358,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\calculator.png" />
     <Content Include="Content\facebook.png" />
     <Content Include="Content\google.png" />
     <Content Include="Content\linkedin.png" />
