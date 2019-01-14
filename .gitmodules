@@ -1,3 +1,6 @@
 [submodule "www/ExpensesAzure/Scripts/calc"]
 	path = www/ExpensesAzure/Scripts/calc
 	url = https://github.com/javadev/calc
+[submodule "www/ExpensesAzure/Scripts/bootstrap-filestyle"]
+	path = www/ExpensesAzure/Scripts/bootstrap-filestyle
+	url = https://github.com/markusslima/bootstrap-filestyle
