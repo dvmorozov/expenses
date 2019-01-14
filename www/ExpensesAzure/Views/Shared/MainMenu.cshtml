@@ -1,0 +1,79 @@
+﻿<div class="panel-heading">
+	<table style="width: 100%;">
+		<tbody>
+			<tr>
+				<td>
+					@{
+						//	https://www.evernote.com/shard/s132/nl/14501366/14e369f7-348f-4f68-aa65-6a5e7dda1da7
+						if (ViewBag.MonthBudget != null && ViewBag.Estimation != null && ViewBag.MonthTotal != null)
+						{
+							var itemClass = "progress-bar";
+
+							switch ((string)(ViewBag.Estimation).ToLower())
+							{
+								case ("mayexceed"):
+									itemClass = "progress-bar progress-bar-warning";
+									break;
+
+								case ("exceed"):
+									itemClass = "progress-bar progress-bar-danger";
+									break;
+
+								case ("notexceed"):
+									itemClass = "progress-bar progress-bar-success";
+									break;
+							}
+							var percent = Math.Floor((double)ViewBag.MonthBudget) != 0 ? Math.Floor((double)ViewBag.MonthTotal * 100.0 / (double)ViewBag.MonthBudget) : 0;
+
+							<div class="progress" style="margin-bottom: 0;">
+								<div class="@Html.Raw(itemClass)" role="progressbar" aria-valuenow="@Html.Raw(percent)" aria-valuemin="0" aria-valuemax="100" style="width: @Html.Raw(percent < 100 ? percent : 100)%;">
+									@Html.Raw(percent)%
+								</div>
+							</div>
+						}
+						else
+						{
+							<div id="ellipsisOwner">
+								<div class="ellipsisInner" id="ellipsisInner">
+									<span class="ellipsis">
+										@Html.Raw(Resources.Resources.MainMenuTitle)
+									</span>
+								</div>
+							</div>
+						}
+					}
+				</td>
+				<td style="width: 1%;">
+					@if (ViewBag.Month != null && ViewBag.Year != null && ViewBag.MonthTotal != null)
+					{
+						var dt = new DateTime((int)ViewBag.Year, (int)ViewBag.Month, 1);
+						<div style="text-align: center; vertical-align: central;">
+							<span class="badge pull-right" style="margin-left: 8px;">@Html.Raw(@dt.ToString("MMM") + " | " + (int)ViewBag.MonthTotal)</span>
+						</div>
+					}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="panel-body">
+	<ul class="nav nav-pills nav-stacked">
+		<li role="presentation">@Html.ActionLink(Resources.Resources.MainMenuNewExpense, "SelectCategory", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(Resources.Resources.MainMenuDayExpenses, "DayExpenseTotals", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(Resources.Resources.Budget, "MonthBudget", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(Resources.Resources.Income, "MonthIncome", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(Resources.Resources.MainMenuReports, "Reports", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(Resources.Resources.Encryption, "Encryption", "Mobile")</li>
+		<li role="presentation">@Html.Partial("_LogOnPartial")</li>
+		@if (Request.IsAuthenticated)
+		{
+			<li role="presentation">@Html.ActionLink(Resources.Resources.Account, "Index", "Manage")</li>
+		}
+		else
+		{
+			<li role="presentation" style="font-size: large;">@Html.ActionLink(Resources.Resources.SignUp, "Register", "Account")</li>
+		}
+		<li role="presentation">@Html.ActionLink(Resources.Resources.Contribute, "Contribute", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(Resources.Resources.AboutTitle, "About", "Mobile")</li>
+	</ul>
+</div>
