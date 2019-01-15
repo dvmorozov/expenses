@@ -386,6 +386,7 @@
     <Content Include="ApplicationInsights.config" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
+    <Content Include="Scripts\bootstrap-filestyle\src\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\calc\src\main\js\bigdecimal.js" />
     <Content Include="Scripts\calc\src\main\js\calc.css" />
     <Content Include="Scripts\calc\src\main\js\calc.js" />
