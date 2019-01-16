@@ -5,3 +5,6 @@
 [submodule "www/ExpensesAzure/Scripts/filestyle"]
 	path = www/ExpensesAzure/Scripts/filestyle
 	url = https://github.com/markusslima/bootstrap-filestyle
+[submodule "www/ExpensesAzure/Scripts/filestyle"]
+	path = www/ExpensesAzure/Scripts/filestyle
+	url = https://github.com/markusslima/bootstrap-filestyle
