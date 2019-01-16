@@ -390,6 +390,7 @@
     <Content Include="Scripts\calc\src\main\js\calc.css" />
     <Content Include="Scripts\calc\src\main\js\calc.js" />
     <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\filestyle\src\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\jquery.highlight-4.closure.js" />
     <Content Include="Scripts\jquery.highlight-4.js" />
     <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.js" />
