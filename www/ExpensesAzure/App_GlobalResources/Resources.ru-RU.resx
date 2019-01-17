@@ -660,4 +660,7 @@
   <data name="Calculator" xml:space="preserve">
     <value>Калькулятор</value>
   </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Выбрать файл</value>
+  </data>
 </root>

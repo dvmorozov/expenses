@@ -661,4 +661,7 @@ Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</v
   <data name="Calculator" xml:space="preserve">
     <value>Calculadora</value>
   </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Seleccione archivo</value>
+  </data>
 </root>
