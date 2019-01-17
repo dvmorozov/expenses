@@ -661,4 +661,7 @@ Sie sollten alle Passwörter halten Sie sie zu entschlüsseln wurden. </value>
   <data name="Calculator" xml:space="preserve">
     <value>Taschenrechner</value>
   </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Datei aussuchen</value>
+  </data>
 </root>
