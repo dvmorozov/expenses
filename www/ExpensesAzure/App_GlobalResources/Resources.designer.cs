@@ -1494,6 +1494,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select file.
+        /// </summary>
+        internal static string SelectFile {
+            get {
+                return ResourceManager.GetString("SelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incomes.
         /// </summary>
         internal static string SelectIncomeTitle {
