@@ -393,10 +393,8 @@
     <Content Include="Scripts\filestyle\src\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\jquery.highlight-4.closure.js" />
     <Content Include="Scripts\jquery.highlight-4.js" />
-    <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.js" />
     <Content Include="Scripts\LogOn.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\pickmeup.js" />
     <Content Include="Scripts\pickmeup\dist\pickmeup.min.js" />
     <Content Include="Scripts\pickmeup\js\jquery.pickmeup.twitter-bootstrap.js" />
     <Content Include="Scripts\respond.js" />
