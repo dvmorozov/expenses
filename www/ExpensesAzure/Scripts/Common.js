@@ -147,11 +147,17 @@ function initDatePicker() {
 	var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
 	var selectedDate = new Date;
-	if (isDefined(dayEl) && isDefined(dayEl.value) &&
-		isDefined(monthEl) && isDefined(monthEl.value) &&
+	if (isDefined(monthEl) && isDefined(monthEl.value) &&
 		isDefined(yearEl) && isDefined(yearEl.value)) {
-		//	https://github.com/dvmorozov/expenses/issues/114
-		selectedDate = new Date(yearEl.value, monthEl.value - 1, dayEl.value);
+		if (isDefined(dayEl) && isDefined(dayEl.value)) {
+			//	https://github.com/dvmorozov/expenses/issues/114
+			selectedDate = new Date(yearEl.value, monthEl.value - 1, dayEl.value);
+		}
+		else {
+			//	https://github.com/dvmorozov/expenses/issues/144
+			//	For month calendar day is not provided and should be set as the first day of month.
+			selectedDate = new Date(yearEl.value, monthEl.value - 1, 1);
+		}
 	}
 
 	function displaySelectedDate() {
