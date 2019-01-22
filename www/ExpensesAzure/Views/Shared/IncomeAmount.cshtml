@@ -1,0 +1,16 @@
+﻿@model SocialApps.Models.NewExpense
+<tr>
+	<td>
+		<div class="editor-label" style="padding: 8px;">
+			@Html.LabelFor(model => model.Cost, Resources.Resources.Amount)
+		</div>
+	</td>
+	<td>
+		<div style="white-space: nowrap;">
+			<div class="editor-field btnEditorField" style="padding: 8px; display: inline-block;">
+				@Html.TextBoxFor(model => model.Cost, new { style = "vertical-align: middle; width: 100px;" })
+				@*Html.ValidationMessageFor(model => model.Cost)*@
+			</div>
+		</div>
+	</td>
+</tr>
