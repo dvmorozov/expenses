@@ -1,9 +1,8 @@
 ﻿@* https://vision.mindjet.com/action/task/14485587 *@
-@using System.Globalization
 @using System.Web.Security.AntiXss
 @using SocialApps.Models
 @{
-	var expenseList = (List<TodayExpense>)ViewBag.TodayExpenses;
+	var expenseList = (List<TodayExpense>)ViewBag.AccordionExpenses;
 }
 @if (expenseList.Any())
 {
@@ -13,8 +12,6 @@
 			var expense = expenseList[i];
 			var expenseId = "ExpenseName" + i.ToString();
 			var categoryId = "CategoryName" + i.ToString();
-			@* https://github.com/dvmorozov/expenses/issues/124 *@
-			var inReceipt = Session["AddReceiptExpenseIds"] != null ? ((List<int>)Session["AddReceiptExpenseIds"]).Contains(expense.ID) : false;
 
 			var panelStyle = "panel-info";
 			if (expense.Importance != null)
@@ -62,7 +59,8 @@
 							</sub>
 						</span>
 						@* https://github.com/dvmorozov/expenses/issues/124 *@
-						@if (inReceipt) { <span class="glyphicon glyphicon-shopping-cart"></span> }
+						@if (ViewBag.InReceipt)
+						{<span class="glyphicon glyphicon-shopping-cart"></span>}
 						@if (expense.ExpenseEncryptedName != null && expense.ExpenseEncryptedName != string.Empty)
 						{
 							<script>
