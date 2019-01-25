@@ -1,14 +1,10 @@
 ﻿@*https://www.evernote.com/shard/s132/nl/14501366/89c5640f-d270-462e-a494-4db32a6c8c01*@
-@using System.Globalization
 @using SocialApps.Controllers
 @using SocialApps.Models
-@using System.Web.Security.AntiXss
-
 @{
 	ViewBag.Title = Resources.Resources.DayExpensesTitle;
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
-
 @using (Html.BeginForm("DayExpenses", "Mobile"))
 {
 	@Html.Hidden("Day", (int)Session["Day"])
@@ -49,7 +45,38 @@
 				<div class="col-md-9">
 					@if (ViewBag.TodayExpenses != null)
 					{
-						@Html.Partial("ExpenseAccordion")
+						var todayExpenses = (List<TodayExpense>)ViewBag.TodayExpenses;
+						//	https://github.com/dvmorozov/expenses/issues/134
+						//	Receipt expenses if present are displayed at the top of page.
+						var receiptIds = (List<int>)Session["AddReceiptExpenseIds"];
+						if (receiptIds != null)
+						{
+							//	Selects expenses belonging to the receipt.
+							var receiptExpenses = (from expense in todayExpenses
+												   where receiptIds.Contains(expense.ID)
+												   select expense).ToList();
+							ViewBag.AccordionExpenses = receiptExpenses;
+							ViewBag.InReceipt = true;
+							ViewBag.AccordionId = "receiptAccordion";
+							@Html.Partial("ExpenseAccordion")
+
+							<br />
+
+							//	Selects expenses not belonging to the receipt.
+							var otherExpenses = (from expense in todayExpenses
+												 where !receiptIds.Contains(expense.ID)
+												 select expense).ToList();
+							ViewBag.AccordionExpenses = otherExpenses;
+							ViewBag.InReceipt = false;
+							ViewBag.AccordionId = "expenseAccordion";
+							@Html.Partial("ExpenseAccordion")
+						}
+						else
+						{
+							//	If receipt is not defined displays everything in single list.
+							ViewBag.AccordionExpenses = ViewBag.TodayExpenses;
+							@Html.Partial("ExpenseAccordion")
+						}
 					}
 				</div>
 				<div class="col-md-3">
