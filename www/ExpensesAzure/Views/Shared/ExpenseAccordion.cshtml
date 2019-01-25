@@ -6,7 +6,7 @@
 }
 @if (expenseList.Any())
 {
-	<div class="panel-group" id="accordion">
+	<div class="panel-group" id=@Html.Raw(ViewBag.AccordionId != null ? ViewBag.AccordionId : "accordion")>
 		@for (var i = 0; i < expenseList.Count(); i++)
 		{
 			var expense = expenseList[i];

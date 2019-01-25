@@ -57,6 +57,7 @@
 												  select expense;
 							ViewBag.AccordionExpenses = receiptExpenses;
 							ViewBag.InReceipt = true;
+							ViewBag.AccordionId = "receiptAccordion";
 							@Html.Partial("ExpenseAccordion")
 							//	Selects expenses not belonging to the receipt.
 							var otherExpenses = from expense in todayExpenses
@@ -64,6 +65,7 @@
 												select expense;
 							ViewBag.AccordionExpenses = otherExpenses;
 							ViewBag.InReceipt = false;
+							ViewBag.AccordionId = "expenseAccordion";
 							@Html.Partial("ExpenseAccordion")
 						}
 						else
