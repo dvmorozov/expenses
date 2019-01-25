@@ -59,8 +59,10 @@
 							</sub>
 						</span>
 						@* https://github.com/dvmorozov/expenses/issues/124 *@
-						@if (ViewBag.InReceipt)
-						{<span class="glyphicon glyphicon-shopping-cart"></span>}
+						@if (ViewBag.InReceipt ?? false)
+						{
+							<span class="glyphicon glyphicon-shopping-cart"></span>
+						}
 						@if (expense.ExpenseEncryptedName != null && expense.ExpenseEncryptedName != string.Empty)
 						{
 							<script>

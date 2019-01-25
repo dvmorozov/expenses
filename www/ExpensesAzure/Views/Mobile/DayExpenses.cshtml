@@ -52,17 +52,17 @@
 						if (receiptIds != null)
 						{
 							//	Selects expenses belonging to the receipt.
-							var receiptExpenses = from expense in todayExpenses
+							var receiptExpenses = (from expense in todayExpenses
 												  where receiptIds.Contains(expense.ID)
-												  select expense;
+												  select expense).ToList();
 							ViewBag.AccordionExpenses = receiptExpenses;
 							ViewBag.InReceipt = true;
 							ViewBag.AccordionId = "receiptAccordion";
 							@Html.Partial("ExpenseAccordion")
 							//	Selects expenses not belonging to the receipt.
-							var otherExpenses = from expense in todayExpenses
+							var otherExpenses = (from expense in todayExpenses
 												where !receiptIds.Contains(expense.ID)
-												select expense;
+												select expense).ToList();
 							ViewBag.AccordionExpenses = otherExpenses;
 							ViewBag.InReceipt = false;
 							ViewBag.AccordionId = "expenseAccordion";
