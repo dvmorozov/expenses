@@ -24,19 +24,17 @@ layout: default
 
 ## More info
 
-[Set up month budget for any category and get warning beforehand when predicted total expense exceeds desired budget](budget-management)
-
-[Discover top 10 most expensive categories for month, review list of expenses for any given day and get reports on dynamic of expenses either overall or by category](expense-reporting)
-
 [Add expenses, organize them into a few custom categories](expense-tracking)
 
-[Get reports on expenses](expense-reporting)
+[Encrypt expenses](client-side-data-encryption)
+
+[Get reports on expenses, discover top 10 most expensive categories for month, review list of expenses for any given day or get dynamics of expenses overall or by category](expense-reporting)
 
 [Upload bills, receipts or any other documents and link them with the expense, review or download it at any time from any device](how-to-associate-bills-and-receipts-with-expense)
 
 [Use different currencies of expenses during the trip](how-to-track-multicurrency-expenses)
 
-[Client-side data encryption](client-side-data-encryption)
+[Set up month budget for any category and get warning beforehand if predicted total expense exceeds desired budget](budget-management)
 
 [Features under development](features)
 
