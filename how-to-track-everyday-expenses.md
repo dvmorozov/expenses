@@ -31,6 +31,6 @@ layout: default
 
 > By selecting "Add Rest of Receipt" you can record last group of expenses in receipt. Amount will be calculated by subracting sum of all other expenses for the day from given value. 
 
-> To see receipt expenses open detailed view by pressing [](assets/images/2015-09-20_09h20_20.png) button. They are separated from other day expenses and displayed at the top of list.
+> To see receipt expenses open detailed view by pressing ![](assets/images/2015-09-20_09h20_20.png) button. They are separated from other day expenses and displayed at the top of list.
 
 {% include google_ads.html %}
