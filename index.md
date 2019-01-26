@@ -28,7 +28,9 @@ layout: default
 
 [Discover top 10 most expensive categories for month, review list of expenses for any given day and get reports on dynamic of expenses either overall or by category](expense-reporting)
 
-[Organize your expenses into a few custom categories and get reports for days, months and even years](expense-tracking)
+[Add expenses, organize them into a few custom categories](expense-tracking)
+
+[Get reports on expenses](expense-reporting)
 
 [Upload bills, receipts or any other documents and link them with the expense, review or download it at any time from any device](how-to-associate-bills-and-receipts-with-expense)
 
