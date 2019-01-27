@@ -25,7 +25,7 @@ layout: default
 
 [Expense tracking](expense-tracking)
 
-> ![Adding expenses from receipt](assets/images/2018-12-02_19h52_08.png)
+![Adding expenses from receipt](assets/images/2018-12-02_19h52_08.png)
 
 > Start new receipt by selecting "Add Receipt" menu and add expenses grouping them by category. 
 
@@ -35,6 +35,6 @@ layout: default
 
 > For your convenience calculator is always on hand.
 
-> ![Calculator](assets/images/2019-01-27_21h23_46.png)
+![Calculator](assets/images/2019-01-27_21h23_46.png)
 
 {% include google_ads.html %}
