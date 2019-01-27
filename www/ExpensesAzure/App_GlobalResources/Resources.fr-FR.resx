@@ -660,4 +660,7 @@
   <data name="Calculator" xml:space="preserve">
     <value>Calculatrice</value>
   </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Choisir le dossier</value>
+  </data>
 </root>

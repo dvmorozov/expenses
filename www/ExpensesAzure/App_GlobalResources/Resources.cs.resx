@@ -662,4 +662,7 @@ Byste měli mít všechna hesla jste používali k jejich dešifrování.</value
   <data name="Calculator" xml:space="preserve">
     <value>Kalkulačka</value>
   </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Zvolte soubor</value>
+  </data>
 </root>

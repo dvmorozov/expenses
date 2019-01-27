@@ -1,17 +1,20 @@
 ﻿@* https://vision.mindjet.com/action/task/14485587 *@
+@using System.Globalization
 @using System.Web.Security.AntiXss
 @using SocialApps.Models
 @{
-	var expenseList = (List<TodayExpense>)ViewBag.AccordionExpenses;
+	var expenseList = (List<TodayExpense>)ViewBag.TodayExpenses;
 }
 @if (expenseList.Any())
 {
-	<div class="panel-group" id=@Html.Raw(ViewBag.AccordionId != null ? ViewBag.AccordionId : "accordion")>
+	<div class="panel-group" id="accordion">
 		@for (var i = 0; i < expenseList.Count(); i++)
 		{
 			var expense = expenseList[i];
 			var expenseId = "ExpenseName" + i.ToString();
 			var categoryId = "CategoryName" + i.ToString();
+			@* https://github.com/dvmorozov/expenses/issues/124 *@
+			var inReceipt = Session["AddReceiptExpenseIds"] != null ? ((List<int>)Session["AddReceiptExpenseIds"]).Contains(expense.ID) : false;
 
 			var panelStyle = "panel-info";
 			if (expense.Importance != null)
@@ -51,29 +54,18 @@
 						<span class="badge pull-right">
 							@Html.Raw(expense.CostString)
 						</span>
-						<span style="position: absolute; right: 120px;">
+						<span style="position: absolute; right: 130px;">
 							<sub>
-								<em id="@Html.Raw(categoryId)">
-									@Html.Raw(expense.CategoryName != null ? AntiXssEncoder.HtmlEncode(expense.CategoryName, false) : "")
+								<em>
+									@Html.Raw(expense.Date.ToShortDateString())
 								</em>
 							</sub>
 						</span>
-						@* https://github.com/dvmorozov/expenses/issues/124 *@
-						@if (ViewBag.InReceipt ?? false)
-						{
-							<span class="glyphicon glyphicon-shopping-cart"></span>
-						}
 						@if (expense.ExpenseEncryptedName != null && expense.ExpenseEncryptedName != string.Empty)
 						{
 							<script>
 								@* https://www.evernote.com/shard/s132/nl/14501366/f403d09e-519b-4121-b3d8-b38d476fe462 *@
 								(function () { decryptListData('@Html.Raw(expenseId)', '@Html.Raw(expense.ExpenseEncryptedName)') })();
-							</script>
-						}
-						@if (expense.CategoryEncryptedName != null && expense.CategoryEncryptedName != string.Empty)
-						{
-							<script>
-								(function () { decryptData('@Html.Raw(categoryId)', '@Html.Raw(expense.CategoryEncryptedName)') })();
 							</script>
 						}
 					</h4>

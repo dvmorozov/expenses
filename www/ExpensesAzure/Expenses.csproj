@@ -381,8 +381,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Expenses1.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\AddExpense1.js" />
-    <Content Include="Scripts\AddExpense2.js" />
     <Content Include="ApplicationInsights.config" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
@@ -390,14 +388,13 @@
     <Content Include="Scripts\calc\src\main\js\calc.css" />
     <Content Include="Scripts\calc\src\main\js\calc.js" />
     <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\filestyle\src\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\jquery.highlight-4.closure.js" />
     <Content Include="Scripts\jquery.highlight-4.js" />
-    <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.js" />
-    <Content Include="Scripts\LogOn.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\pickmeup.js" />
+    <Content Include="Scripts\pickmeup\dist\pickmeup.min.js" />
+    <Content Include="Scripts\pickmeup\js\jquery.pickmeup.twitter-bootstrap.js" />
     <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sjcl.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -490,6 +487,8 @@
     <Content Include="Views\Shared\CalculatorDialog.cshtml" />
     <Content Include="Views\Shared\Calculator.cshtml" />
     <Content Include="Views\Shared\MainMenu.cshtml" />
+    <Content Include="Views\Shared\IncomeAmount.cshtml" />
+    <Content Include="Views\Mobile\IncomeAccordion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
