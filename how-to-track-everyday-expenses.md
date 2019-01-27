@@ -33,4 +33,8 @@ layout: default
 
 > To see receipt expenses open detailed view by pressing ![](assets/images/2015-09-20_09h20_20.png) button. They are separated from other day expenses and displayed at the top of list.
 
+> For your convenience calculator is always on hand.
+
+> ![Calculator](assets/images/2019-01-27_21h23_46.png)
+
 {% include google_ads.html %}
