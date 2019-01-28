@@ -347,8 +347,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="googlee97ea6870408ad0c.html" />
-    <Content Include="Scripts\AddExpense1.js" />
-    <Content Include="Scripts\AddExpense2.js" />
     <Content Include="ApplicationInsights.config" />
     <EntityDeploy Include="Models\Expenses.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -371,15 +369,17 @@
     <None Include="Properties\PublishProfiles\ftnss - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
+    <Content Include="Scripts\calc\src\main\js\bigdecimal.js" />
+    <Content Include="Scripts\calc\src\main\js\calc.css" />
+    <Content Include="Scripts\calc\src\main\js\calc.js" />
     <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\filestyle\src\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\jquery.highlight-4.closure.js" />
     <Content Include="Scripts\jquery.highlight-4.js" />
-    <Content Include="Scripts\jquery.pickmeup.twitter-bootstrap.js" />
-    <Content Include="Scripts\LogOn.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\pickmeup.js" />
+    <Content Include="Scripts\pickmeup\dist\pickmeup.min.js" />
+    <Content Include="Scripts\pickmeup\js\jquery.pickmeup.twitter-bootstrap.js" />
     <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sjcl.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\ExpenseRatingStars.cshtml" />

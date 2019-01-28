@@ -222,9 +222,8 @@ namespace SocialApps.Controllers
                 var b = budget.Replace(',', '.');
                 //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                 b = b.Replace(" ", string.Empty);
-                decimal dBudget;
 
-                if (!decimal.TryParse(b, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out dBudget))
+                if (!decimal.TryParse(b, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal dBudget))
                     return RedirectToAction("MonthBudget");
 
                 _repository.AddMonthBudget((int)year, (int)month, dBudget, GetUserId(), currency);
@@ -654,7 +653,7 @@ namespace SocialApps.Controllers
                         Sec = (clientExpenseDate != null ? ((DateTime)clientExpenseDate).Second : -1),
                         //  https://www.evernote.com/shard/s132/nl/14501366/4a2b6d8f-5d9c-4ad2-b1c2-7535341c98f4
                         ExpenseId = expenseId,
-                        EncryptedName = expense != null ? expense.EncryptedName : null,
+                        EncryptedName = expense?.EncryptedName,
                         Name = expense != null && expense.Name != null ? expense.Name.Trim() : null,
                         //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
                         //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
@@ -918,11 +917,11 @@ namespace SocialApps.Controllers
                 var expense = _repository.GetIncome(expenseId);
                 //  https://vision.mindjet.com/action/task/14485574
                 if (expense.Income != null && (bool)expense.Income)
-                    return RedirectToAction("EditIncome", new { expenseId = expenseId });
+                    return RedirectToAction("EditIncome", new { expenseId });
 
                 var clientExpenseDate = Session["ClientExpenseDate"] != null ? (DateTime)Session["ClientExpenseDate"] : DateTime.Now;
                 //  https://www.evernote.com/shard/s132/nl/14501366/eb75b683-fead-4822-9d38-17e50ab7de2f
-                FillExpenseLinks("EditExpense", new { expenseId = expenseId });
+                FillExpenseLinks("EditExpense", new { expenseId });
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/d264af15-c0bf-4945-a331-86fcb467b020
                 //  Documents added earlier.
@@ -951,7 +950,7 @@ namespace SocialApps.Controllers
                         Name = expense != null && expense.Name != null ? expense.Name.Trim() : null,
                         Cost = expense != null && expense.Cost != null ? ((double)expense.Cost).ToString(CultureInfo.InvariantCulture) : string.Empty,
                         Currency = expense != null && expense.Currency != null ? expense.Currency.Trim() : null,
-                        EncryptedName = expense != null ? expense.EncryptedName : null,
+                        EncryptedName = expense?.EncryptedName,
                         EndMonth = expense != null && expense.LastMonth != null ? ((DateTime)expense.LastMonth).Month : -1,
                         EndYear = expense != null && expense.LastMonth != null ? ((DateTime)expense.LastMonth).Year : -1,
                         Forever = expense != null && expense.LastMonth == null,
@@ -967,8 +966,8 @@ namespace SocialApps.Controllers
                         Sec = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Second : clientExpenseDate.Second,
 
                         //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
-                        Importance = expense != null ? expense.Importance : null,
-                        Rating = expense != null ? expense.Rating : null,
+                        Importance = expense?.Importance,
+                        Rating = expense?.Rating,
                         Note = expense != null && expense.Note != null ? expense.Note.Trim() : null,
 
                         //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
@@ -995,14 +994,13 @@ namespace SocialApps.Controllers
                 if (cost == null)
                     return RedirectToAction("EditExpense");
 
-                double amount;
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
                 //  Allows both comma and point as decimal separator.
                 cost = cost.Replace(',', '.');
                 //  https://www.evernote.com/shard/s132/nl/14501366/5926d2b0-49b8-4aef-8fb9-1a8e0de14da6
                 cost = cost.Replace(" ", string.Empty);
 
-                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount))
+                if (!double.TryParse(cost, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double amount))
                     return RedirectToAction("EditExpense");
 
                 if (Session["ExpenseId"] == null)
