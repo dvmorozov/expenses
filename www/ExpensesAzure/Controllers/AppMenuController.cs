@@ -12,11 +12,11 @@ namespace SocialApps.Controllers
         {
             try
             {
-                return View();
+                return View("Carousel");
             }
             catch (Exception e)
             {
-                return View("Error", new HandleErrorInfo(e, "Mobile", "Index"));
+                return View("Error", new HandleErrorInfo(e, "Mobile", "Carousel"));
             }
         }
     }

@@ -265,12 +265,12 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Mobile\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutMobile.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Shared\Build.cshtml" />
     <Content Include="Views\Shared\Date.cshtml" />
     <Content Include="Views\Shared\Calculator.cshtml" />
+    <Content Include="Views\Mobile\Carousel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
