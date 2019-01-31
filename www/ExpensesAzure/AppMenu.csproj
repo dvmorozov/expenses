@@ -241,7 +241,6 @@
     <Compile Include="Controllers\AppMenuController.cs" />
     <Compile Include="Controllers\ErrorHandlingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppMenuGlobal.asax" />

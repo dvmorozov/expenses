@@ -8,6 +8,7 @@ namespace SocialApps
     {
         public void Configuration(IAppBuilder app)
         {
+            ConfigureAuth(app);
         }
     }
 }
