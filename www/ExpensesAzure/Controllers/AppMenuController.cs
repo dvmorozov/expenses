@@ -4,9 +4,8 @@ using System.Web.Mvc;
 namespace SocialApps.Controllers
 {
     [Authorize]
-    public partial class MobileController : Controller
+    public partial class MobileController : ErrorHandlingController
     {
-        //  https://www.evernote.com/shard/s132/nl/14501366/c707248c-3cab-47d7-838a-ec2b791e4ea7
         [AllowAnonymous]
         public ActionResult Index()
         {
@@ -16,7 +15,20 @@ namespace SocialApps.Controllers
             }
             catch (Exception e)
             {
-                return View("Error", new HandleErrorInfo(e, "Mobile", "Carousel"));
+                return View("Error", new HandleErrorInfo(e, "Mobile", "Index"));
+            }
+        }
+
+        [AllowAnonymous]
+        public ActionResult Error()
+        {
+            try
+            {
+                return View();
+            }
+            catch
+            {
+                return RedirectToAction("Index");
             }
         }
     }

@@ -201,6 +201,7 @@
     <Compile Include="AppMenuGlobal.asax.cs">
       <DependentUpon>AppMenuGlobal.asax</DependentUpon>
     </Compile>
+    <Compile Include="AppMenuStartup.cs" />
     <Compile Include="App_GlobalResources\Resources.cs.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -241,7 +242,6 @@
     <Compile Include="Controllers\AppMenuController.cs" />
     <Compile Include="Controllers\ErrorHandlingController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppMenuGlobal.asax" />
