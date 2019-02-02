@@ -239,6 +239,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorHandlingController.cs" />
     <Compile Include="Controllers\JsonReturn.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobileController.cs" />
@@ -366,7 +367,6 @@
     <Content Include="Content\windows.png" />
     <Content Include="Content\yahoo.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="googlee97ea6870408ad0c.html" />
@@ -494,9 +494,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

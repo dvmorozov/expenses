@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5F8AD372-CCC9-43DB-BFC5-1945A4F1D1F3}</ProjectGuid>
+    <ProjectGuid>{EC3F9C9E-3BFC-4F68-B0C4-93474B6AC47A}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SocialApps</RootNamespace>
-    <AssemblyName>Fitness</AssemblyName>
+    <AssemblyName>AppMenu</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -31,7 +31,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;FITNESS</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;EXPENSES</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -39,7 +39,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;FITNESS</DefineConstants>
+    <DefineConstants>TRACE;APPMENU</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -85,7 +85,9 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.1.4\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -196,11 +198,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Resources.cs" />
-    <Compile Include="App_GlobalResources\Resources.designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
+    <Compile Include="AppMenuStartup.cs" />
+    <Compile Include="App_GlobalResources\Resources.cs.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.cs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resources.de-DE.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.de-DE.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resources.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resources.es-ES.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.es-ES.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resources.fr-FR.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.fr-FR.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Resources.pt-BR.designer.cs">
       <AutoGen>True</AutoGen>
@@ -212,278 +234,86 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.ru-RU.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppMenuController.cs" />
     <Compile Include="Controllers\ErrorHandlingController.cs" />
-    <Compile Include="Controllers\JsonReturn.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MobileController.cs" />
-    <Compile Include="Controllers\MobileControllerDocuments.cs" />
-    <Compile Include="Controllers\MobileControllerIncome.cs" />
-    <Compile Include="Controllers\MobileControllerReports.cs" />
-    <Compile Include="Controllers\PersonalizedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Categories.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CategoriesOwnership.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Contacts.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Controls.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataModels.cs" />
-    <Compile Include="Models\EstimatedCategoriesByUser3_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EstimatedCategoriesByUser4_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EstimatedTop10CategoriesForMonthByUser3_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Exchange.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Expenses.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Expenses.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Expenses.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Expenses.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Expenses.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Expenses1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ExpensesByCategoryForMonthByUser2_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ExpensesCategories.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ExpensesLinks.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GetExpenseNamesWithCategoryByUser5_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GetIncomeNamesByUser_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\IncomsForMonthByUser3_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Languages.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LastYearBalanceByMonthByUser2_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LastYearCategoryExpensesByMonthByUser2_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LastYearTotalExpensesByMonthByUser2_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Links.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Month.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MonthBudgetByUser_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MonthTotalByUser3_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Operations.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Strings.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TodayAndMonthTotalByUser2_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TodayExpensesByUser3_Result.cs">
-      <DependentUpon>Expenses.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ConfigurationManagerAdapter.cs" />
-    <Compile Include="Repositories\MobileRepository.cs" />
-    <Compile Include="Repositories\MobileRepositoryCategories.cs" />
-    <Compile Include="Repositories\MobileRepositoryDocument.cs" />
-    <Compile Include="Repositories\MobileRepositoryExpenses.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\facebook.png" />
-    <Content Include="Content\google.png" />
-    <Content Include="Content\linkedin.png" />
-    <Content Include="Content\twitter.png" />
-    <Content Include="Content\windows.png" />
-    <Content Include="Content\yahoo.png" />
     <Content Include="favicon.ico" />
-    <Content Include="Global.asax" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
+    <Content Include="Global.asax" />
     <Content Include="googlee97ea6870408ad0c.html" />
     <Content Include="ApplicationInsights.config" />
-    <EntityDeploy Include="Models\Expenses.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Expenses.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Expenses.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Expenses.edmx</DependentUpon>
-      <LastGenOutput>Expenses.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Expenses.edmx.diagram">
-      <DependentUpon>Expenses.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Expenses.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Expenses.edmx</DependentUpon>
-      <LastGenOutput>Expenses1.cs</LastGenOutput>
-    </Content>
-    <None Include="Properties\PublishProfiles\ftnss - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\ftnss - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
     <Content Include="Scripts\calc\src\main\js\bigdecimal.js" />
     <Content Include="Scripts\calc\src\main\js\calc.css" />
     <Content Include="Scripts\calc\src\main\js\calc.js" />
     <Content Include="Scripts\Common.js" />
-    <Content Include="Scripts\filestyle\src\bootstrap-filestyle.min.js" />
     <Content Include="Scripts\jquery.highlight-4.closure.js" />
     <Content Include="Scripts\jquery.highlight-4.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\pickmeup\dist\pickmeup.min.js" />
-    <Content Include="Scripts\pickmeup\js\jquery.pickmeup.twitter-bootstrap.js" />
     <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\sjcl.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Shared\ExpenseRatingStars.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Mobile\About.cshtml" />
-    <Content Include="Views\Mobile\AboutTmpl.cshtml" />
-    <Content Include="Views\Mobile\Contribute.cshtml" />
-    <Content Include="Views\Mobile\DayExpenses.cshtml" />
-    <Content Include="Views\Mobile\Index.cshtml" />
-    <Content Include="Views\Mobile\NewCategory.cshtml" />
-    <Content Include="Views\Mobile\SelectCategory.cshtml" />
-    <Content Include="Views\Mobile\SelectCategoryList.cshtml" />
-    <Content Include="Views\Mobile\SelectExpense.cshtml" />
-    <Content Include="Views\Mobile\Top10.cshtml" />
-    <Content Include="Views\Mobile\Trend.cshtml" />
-    <Content Include="Views\Mobile\TrendByCategory.cshtml" />
     <Content Include="Views\Shared\_LayoutMobile.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
-    <Content Include="Views\Mobile\EditCategory.cshtml" />
-    <Content Include="Views\Mobile\ExpensesByCategory.cshtml" />
-    <Content Include="Views\Mobile\MonthBudget.cshtml" />
-    <Content Include="Views\Mobile\MonthIncome.cshtml" />
-    <Content Include="Views\Mobile\Balance.cshtml" />
-    <Content Include="Views\Mobile\Reports.cshtml" />
-    <Content Include="Views\Mobile\Encryption.cshtml" />
+    <Content Include="Views\Shared\Build.cshtml" />
+    <Content Include="Views\Shared\Date.cshtml" />
+    <Content Include="Views\Shared\Calculator.cshtml" />
+    <Content Include="Views\Mobile\Carousel.cshtml" />
+    <Content Include="Views\Shared\AppMenuError.cshtml" />
     <Content Include="Views\Shared\Tags.cshtml" />
-    <Content Include="Views\Shared\Jumbotron.cshtml" />
-    <Content Include="Views\Shared\JumbotronConfirmationFailed.cshtml" />
-    <Content Include="Views\Shared\TopHomeButton.cshtml" />
-    <Content Include="Views\Shared\BottomHomeButton.cshtml" />
-    <Content Include="Views\Shared\TopLockIcon.cshtml" />
-    <Content Include="Views\Mobile\SelectCurrency.cshtml" />
-    <Content Include="Views\Mobile\DayExpenseTotals.cshtml" />
-    <Content Include="Views\Mobile\DocListByExpense.cshtml" />
-    <Content Include="Views\Shared\UploadExpenseDocsForm.cshtml" />
-    <Content Include="Views\Shared\ExpenseNote.cshtml" />
-    <Content Include="Views\Shared\ExpenseRating.cshtml" />
-    <Content Include="Views\Shared\ExpenseImportance.cshtml" />
-    <Content Include="Views\Mobile\Importance.cshtml" />
-    <Content Include="Views\Shared\ProgressBar.cshtml" />
-    <Content Include="Views\Shared\BottomAddInfo.cshtml" />
-    <Content Include="Views\Shared\ExpenseProject.cshtml" />
-    <Content Include="Views\Shared\FullListButton.cshtml" />
-    <Content Include="Views\Mobile\AddExpenseFitness.cshtml" />
-    <Content Include="Views\Mobile\EditExpenseFitness.cshtml" />
-    <Content Include="Views\Mobile\NewExpenseFitness.cshtml" />
-    <Content Include="Views\Shared\ExpenseCost.cshtml" />
-    <Content Include="Views\Shared\ExpenseCurrency.cshtml" />
-    <Content Include="Views\Shared\ExpenseName.cshtml" />
-    <Content Include="Views\Shared\ExpenseLabel.cshtml" />
-    <Content Include="Views\Shared\ExpenseAccordion.cshtml" />
-    <Content Include="Views\Mobile\ExpensesByName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Resources.resx">
-      <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Resources.designer.cs</LastGenOutput>
     </Content>
+    <Content Include="App_GlobalResources\Resources.de-DE.resx">
+      <SubType>Designer</SubType>
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.de-DE.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Resources.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Resources.fr-FR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.fr-FR.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Resources.pt-BR.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.pt-BR.designer.cs</LastGenOutput>
+    </Content>
     <Content Include="App_GlobalResources\Resources.ru-RU.resx">
-      <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Resources.ru-RU.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Resources.pt-BR.resx">
-      <DependentUpon>Resources.cs</DependentUpon>
+    <Content Include="App_GlobalResources\Resources.cs.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resources.pt-BR.designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.cs.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -543,7 +373,11 @@
 del /Q *.*
 cd "$(ProjectDir)/obj/$(ConfigurationName)"
 del /Q *.*
-exit /B 0</PreBuildEvent>
+
+cd $(ProjectDir)
+_update_version.bat
+exit /B 0
+</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
