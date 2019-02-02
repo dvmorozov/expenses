@@ -1,14 +1,12 @@
 ﻿@model HandleErrorInfo
-
 @{
 	ViewBag.Title = Resources.Resources.Error;
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
-
 @* ReSharper disable UnknownCssClass *@
 <div class="panel panel-primary">
 	<div class="panel-heading">
-        @Html.Raw(ViewBag.Title)
+		@Html.Raw(ViewBag.Title)
 	</div>
 	<div class="panel-body">
 		@Resources.Resources.ErrorSorry
@@ -27,15 +25,15 @@
 		}
 		else
 			if (Model != null)
-			{
-				<br/>
-				@Html.Raw("Action: " + Model.ActionName)
-				<br/>
-				@Html.Raw("Controller: " + Model.ControllerName)
-				<br/>
-				@Html.Raw("Message: " + Model.Exception.InnerException != null ?
-					Model.Exception.InnerException.Message : Model.Exception.Message)
-			}
+		{
+			<br />
+			@Html.Raw("Action: " + Model.ActionName)
+			<br />
+			@Html.Raw("Controller: " + Model.ControllerName)
+			<br />
+			@Html.Raw("Message: " + Model.Exception.InnerException != null ?
+					 Model.Exception.InnerException.Message : Model.Exception.Message)
+		}
 	</div>
 </div>
 @* ReSharper restore UnknownCssClass *@
