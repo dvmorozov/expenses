@@ -19,9 +19,6 @@ namespace SocialApps
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-#if !APPMENU
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-#endif
         }
 
         //  https://www.evernote.com/shard/s132/nl/14501366/83a03e66-6551-43c0-816e-2b32be9640df

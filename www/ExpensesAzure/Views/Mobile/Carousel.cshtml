@@ -1,0 +1,59 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+}
+@* ReSharper disable UnknownCssClass *@
+<div class="panel panel-primary">
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+		</ol>
+
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner" role="listbox">
+			<div class="item active" style="text-align: center;">
+				<div style="min-height: 600px; height: auto; min-width: 600px; display: inline-block;">
+					<script>
+						function resizeIframe(data) {
+							document.getElementById('iframe').style.height = data + 'px';
+						}
+						function sendLocation(){
+							var win = window.frames.expensesFrame;
+							win.postMessage(window.location.origin, 'https://xpnss.azurewebsites.net');
+						};
+						var messageEventHandler = function(event){
+							if(event.origin === 'https://xpnss.azurewebsites.net'){resizeIframe(event.data);}
+						};
+						window.addEventListener('message', messageEventHandler, false);
+					</script>
+
+					<iframe src="https://xpnss.azurewebsites.net" id="iframe" scrolling="no" style="border:none; width: 100%;" name="expensesFrame" onload="sendLocation();"></iframe>
+					</div>
+					<div class="carousel-caption">
+						Expense tracker
+					</div>
+			</div>
+			<div class="item" style="text-align: center;">
+				<div style="min-height: 600px; height: auto; min-width: 600px; display: inline-block;">
+					@Html.Partial("Calculator")
+					<div class="carousel-caption">
+						Calculator
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Controls -->
+		<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+	@Html.Partial("Tags")
+</div>
+@* ReSharper restore UnknownCssClass *@
