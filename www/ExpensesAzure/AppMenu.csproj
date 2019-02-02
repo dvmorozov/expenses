@@ -198,9 +198,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppMenuGlobal.asax.cs">
-      <DependentUpon>AppMenuGlobal.asax</DependentUpon>
-    </Compile>
     <Compile Include="AppMenuStartup.cs" />
     <Compile Include="App_GlobalResources\Resources.cs.designer.cs">
       <AutoGen>True</AutoGen>
@@ -241,13 +238,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AppMenuController.cs" />
     <Compile Include="Controllers\ErrorHandlingController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppMenuGlobal.asax" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />
+    <Content Include="Global.asax" />
     <Content Include="googlee97ea6870408ad0c.html" />
     <Content Include="ApplicationInsights.config" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
@@ -261,7 +261,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -272,6 +271,8 @@
     <Content Include="Views\Shared\Date.cshtml" />
     <Content Include="Views\Shared\Calculator.cshtml" />
     <Content Include="Views\Mobile\Carousel.cshtml" />
+    <Content Include="Views\Shared\AppMenuError.cshtml" />
+    <Content Include="Views\Shared\Tags.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

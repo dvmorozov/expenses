@@ -15,7 +15,7 @@ namespace SocialApps.Controllers
             }
             catch (Exception e)
             {
-                return View("Error", new HandleErrorInfo(e, "Mobile", "Index"));
+                return View("AppMenuError", new HandleErrorInfo(e, "Mobile", "Index"));
             }
         }
 
@@ -24,7 +24,7 @@ namespace SocialApps.Controllers
         {
             try
             {
-                return View();
+                return View("AppMenuError");
             }
             catch
             {
