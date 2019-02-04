@@ -1,9 +1,9 @@
 ﻿@{
-	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
+	Layout = "~/Views/Shared/_LayoutAppMenu.cshtml";
 }
 @* ReSharper disable UnknownCssClass *@
-<div class="panel panel-primary">
-	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+<div class="panel panel-primary full-height">
+	<div id="carousel-example-generic" class="carousel slide full-height" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
 			<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -13,7 +13,7 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div class="item active" style="text-align: center;">
-				<div style="min-height: 600px; height: auto; min-width: 600px; display: inline-block;">
+				<div style="height: 700px; width: 600px; display: inline-block;">
 					<script>
 						function resizeIframe(data) {
 							document.getElementById('iframe').style.height = data + 'px';
@@ -36,7 +36,7 @@
 			</div>
 			<div class="item" style="text-align: center;">
 				<div style="display: inline-block;">
-					<div style="height: 600px; width: 600px; vertical-align: middle; display: table-cell; text-align: center;">
+					<div style="height: 700px; width: 600px; vertical-align: middle; display: table-cell; text-align: center;">
 						@Html.Partial("Calculator")
 						<div class="carousel-caption">
 							Calculator
