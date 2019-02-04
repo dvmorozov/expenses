@@ -33,6 +33,10 @@ textarea {
   width: inherit;  /* Must be !*/
 }
 
+.carousel-caption {
+  color: #337ab7;
+}
+
 .ellipsisInner {
   width: 50px;
   /*
