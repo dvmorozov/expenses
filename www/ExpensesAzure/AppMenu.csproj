@@ -251,6 +251,8 @@
     <Content Include="Global.asax" />
     <Content Include="googlee97ea6870408ad0c.html" />
     <Content Include="ApplicationInsights.config" />
+    <None Include="Properties\PublishProfiles\rationalcity - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\rationalcity - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
     <Content Include="Scripts\calc\src\main\js\bigdecimal.js" />
@@ -274,6 +276,8 @@
     <Content Include="Views\Shared\AppMenuError.cshtml" />
     <Content Include="Views\Shared\Tags.cshtml" />
     <Content Include="Views\Shared\_LayoutAppMenu.cshtml" />
+    <None Include="Properties\PublishProfiles\xpnsstest - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\xpnsstest - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
