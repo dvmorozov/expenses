@@ -465,6 +465,7 @@
     <Content Include="Views\Shared\Date.cshtml" />
     <Content Include="Views\Shared\Year.cshtml" />
     <Content Include="Views\Shared\TopAddExpenseButton.cshtml" />
+    <Content Include="Views\Shared\MainMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
