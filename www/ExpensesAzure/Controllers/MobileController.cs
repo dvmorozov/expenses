@@ -740,15 +740,15 @@ namespace SocialApps.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddExpense(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project, int multiplier)
+        public ActionResult AddExpense(int day, int month, int year, int hour, int min, int sec, string cost, string currency, string note, short? rating, short? importance, string project, int? multiplier)
         {
             try
             {
                 double RecalculateAmount(double amount)
                 {
                     //  https://github.com/dvmorozov/expenses/issues/101
-                    if (multiplier > 0)
-                        amount = amount * multiplier;
+                    if (multiplier != null && multiplier > 0)
+                        amount = amount * (int)multiplier;
                     return amount;
                 }
                 return AddExpenseGeneral(day, month, year, hour, min, sec, cost, currency, note, rating, importance, project, RecalculateAmount);
