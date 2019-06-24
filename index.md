@@ -48,4 +48,8 @@ layout: default
 
 [rationalcity.wordpress.com](https://rationalcity.wordpress.com)
 
+## Other applications
+
+[Demo](https://rationalcity.azurewebsites.net/)
+
 {% include google_ads.html %}
