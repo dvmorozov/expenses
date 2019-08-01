@@ -132,6 +132,36 @@ namespace SocialApps.Controllers
             }
         }
 
+        private ActionResult ShowDayExpenses()
+        {
+            if (!((bool?)Session["DayExpensesFullList"] ?? false))
+            {
+                //  Short list mode.
+                return RedirectToAction("DayExpenseTotals");
+            }
+            else
+            {
+                //  Full list mode.
+                return RedirectToAction("DayExpenses");
+            }
+        }
+
+        //  https://github.com/dvmorozov/expenses/issues/149
+        public ActionResult SwitchDayExpensesMode()
+        {
+            if (!((bool?)Session["DayExpensesFullList"] ?? false))
+            {
+                //  Short list mode.
+                Session["DayExpensesFullList"] = true;
+            }
+            else
+            {
+                //  Full list mode.
+                Session["DayExpensesFullList"] = false;
+            }
+            return ShowDayExpenses();
+        }
+
         //  https://www.evernote.com/shard/s132/nl/14501366/89c5640f-d270-462e-a494-4db32a6c8c01
         public ActionResult DayExpenses(int? day, int? month, int? year)
         {
@@ -736,7 +766,7 @@ namespace SocialApps.Controllers
             }
 
             //  Returns for adding another income.
-            return RedirectToAction("DayExpenseTotals");
+            return ShowDayExpenses();
         }
 
         [HttpPost]
@@ -775,7 +805,7 @@ namespace SocialApps.Controllers
             try
             {
                 ResetReceiptState();
-                return RedirectToAction("DayExpenseTotals");
+                return ShowDayExpenses();
             }
             catch (Exception e)
             {
@@ -898,7 +928,7 @@ namespace SocialApps.Controllers
                 _repository.NewExpense(clientExpenseDate, name, amount, note, monthly, firstMonth, lastMonth, encryptedName, currency, rating, categoryId, importance, project, userId);
 
                 //  Returns for adding another income.
-                return RedirectToAction("DayExpenseTotals");
+                return ShowDayExpenses();
             }
             catch (Exception e)
             {
