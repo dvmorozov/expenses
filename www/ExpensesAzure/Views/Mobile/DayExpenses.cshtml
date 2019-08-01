@@ -97,6 +97,9 @@
 											<button type="submit" class="btn btn-default tooltipButton" aria-label="@Html.Raw(Resources.Resources.Refresh)" data-toggle="tooltip" data-placement="top" title="@Html.Raw(Resources.Resources.Refresh)">
 												<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 											</button>
+											<button type="button" class="btn btn-default tooltipButton" aria-label="@Html.Raw(Resources.Resources.Details)" onclick="window.location.href='@Url.Action("SwitchDayExpensesMode", "Mobile")';" data-toggle="tooltip" data-placement="top" title="@Html.Raw(Resources.Resources.Details)">
+												<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+											</button>
 										</td>
 										<td style="text-align: left;">
 											<span class="label label-info" style="margin-left: 8px; visibility: hidden" id="warning"></span>
