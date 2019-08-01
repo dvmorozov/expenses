@@ -132,7 +132,7 @@ namespace SocialApps.Controllers
             }
         }
 
-        private ActionResult ShowDayExpenses()
+        public ActionResult ShowDayExpenses()
         {
             if (!((bool?)Session["DayExpensesFullList"] ?? false))
             {
