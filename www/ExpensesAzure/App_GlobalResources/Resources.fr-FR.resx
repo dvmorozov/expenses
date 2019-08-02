@@ -663,4 +663,7 @@
   <data name="SelectFile" xml:space="preserve">
     <value>Choisir le dossier</value>
   </data>
+  <data name="Brief" xml:space="preserve">
+    <value>Brièvement</value>
+  </data>
 </root>

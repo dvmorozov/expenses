@@ -367,7 +367,6 @@
     <Content Include="Content\windows.png" />
     <Content Include="Content\yahoo.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="googlee97ea6870408ad0c.html" />
@@ -383,8 +382,6 @@
       <LastGenOutput>Expenses1.cs</LastGenOutput>
     </Content>
     <Content Include="ApplicationInsights.config" />
-    <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
     <Content Include="Scripts\calc\src\main\js\bigdecimal.js" />
     <Content Include="Scripts\calc\src\main\js\calc.css" />
     <Content Include="Scripts\calc\src\main\js\calc.js" />
@@ -493,11 +490,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="fonts\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

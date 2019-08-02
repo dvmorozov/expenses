@@ -664,4 +664,7 @@ Sie sollten alle Passwörter halten Sie sie zu entschlüsseln wurden. </value>
   <data name="SelectFile" xml:space="preserve">
     <value>Datei aussuchen</value>
   </data>
+  <data name="Brief" xml:space="preserve">
+    <value>Kurz</value>
+  </data>
 </root>
