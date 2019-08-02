@@ -485,6 +485,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Briefly.
+        /// </summary>
+        internal static string Brief {
+            get {
+                return ResourceManager.GetString("Brief", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Budget.
         /// </summary>
         internal static string Budget {
@@ -584,7 +593,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Details.
+        ///   Looks up a localized string similar to In details.
         /// </summary>
         internal static string Details {
             get {

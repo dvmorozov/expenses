@@ -132,9 +132,16 @@ namespace SocialApps.Controllers
             }
         }
 
+        private bool IsDayExpensesFullList()
+        {
+            return (bool?)Session["DayExpensesFullList"] ?? false;
+        }
+
         public ActionResult ShowDayExpenses()
         {
-            if (!((bool?)Session["DayExpensesFullList"] ?? false))
+            var isDayExpensesFullList = IsDayExpensesFullList();
+            ViewBag.IsDayExpensesFullList = isDayExpensesFullList;
+            if (!isDayExpensesFullList)
             {
                 //  Short list mode.
                 return RedirectToAction("DayExpenseTotals");
@@ -149,7 +156,7 @@ namespace SocialApps.Controllers
         //  https://github.com/dvmorozov/expenses/issues/149
         public ActionResult SwitchDayExpensesMode()
         {
-            if (!((bool?)Session["DayExpensesFullList"] ?? false))
+            if (!IsDayExpensesFullList())
             {
                 //  Short list mode.
                 Session["DayExpensesFullList"] = true;
