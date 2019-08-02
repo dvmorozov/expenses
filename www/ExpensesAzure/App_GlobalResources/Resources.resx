@@ -191,7 +191,7 @@
     <value>Decrypting</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Details</value>
+    <value>In details</value>
   </data>
   <data name="DiscardPassword" xml:space="preserve">
     <value>Discard Password</value>
@@ -667,5 +667,8 @@
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
+  </data>
+  <data name="Brief" xml:space="preserve">
+    <value>Briefly</value>
   </data>
 </root>

@@ -664,4 +664,7 @@ Debe mantener todas las contraseñas que estaba usando para descifrar ellos .</v
   <data name="SelectFile" xml:space="preserve">
     <value>Seleccione archivo</value>
   </data>
+  <data name="Brief" xml:space="preserve">
+    <value>Brevemente</value>
+  </data>
 </root>

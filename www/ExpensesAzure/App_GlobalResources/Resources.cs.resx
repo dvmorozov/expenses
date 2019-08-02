@@ -665,4 +665,7 @@ Byste měli mít všechna hesla jste používali k jejich dešifrování.</value
   <data name="SelectFile" xml:space="preserve">
     <value>Zvolte soubor</value>
   </data>
+  <data name="Brief" xml:space="preserve">
+    <value>Krátce</value>
+  </data>
 </root>
