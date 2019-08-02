@@ -92,6 +92,7 @@ namespace SocialApps.Controllers
                 ViewBag.TodayExpenses = expenseList;
                 // https://github.com/dvmorozov/expenses/issues/124
                 ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
+                ViewBag.IsDayExpensesFullList = IsDayExpensesFullList();
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
                 Session["ClientExpenseDate"] = date;
@@ -141,7 +142,6 @@ namespace SocialApps.Controllers
         public ActionResult ShowDayExpenses()
         {
             var isDayExpensesFullList = IsDayExpensesFullList();
-            ViewBag.IsDayExpensesFullList = isDayExpensesFullList;
             if (!isDayExpensesFullList)
             {
                 //  Short list mode.
@@ -185,6 +185,7 @@ namespace SocialApps.Controllers
                 ViewBag.TodayExpenses = todayExpenses;
                 //  https://github.com/dvmorozov/expenses/issues/124
                 ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
+                ViewBag.IsDayExpensesFullList = IsDayExpensesFullList();
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
                 Session["ClientExpenseDate"] = date;
