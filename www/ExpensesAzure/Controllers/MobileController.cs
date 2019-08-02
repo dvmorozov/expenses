@@ -134,7 +134,8 @@ namespace SocialApps.Controllers
 
         private bool IsDayExpensesFullList()
         {
-            return ((bool?)Session["DayExpensesFullList"] ?? false);
+            bool? fullList = Session["DayExpensesFullList"] as bool?;
+            return (fullList ?? false);
         }
 
         public ActionResult ShowDayExpenses()
