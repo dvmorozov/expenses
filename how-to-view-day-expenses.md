@@ -2,7 +2,7 @@
 layout: default
 --- 
 
-> In the main meny select "Day expenses". At this page you can see the list of expenses summarized by expense name for the given day. To switch between detailed and short views press the button ![Detailed expense list](https://dvmorozov.github.io/expenses/assets/images/2015-09-20_09h20_20.png) .
+> In the main meny select "Day expenses". At this page you can see list of expenses summarized by expense name for the given day. To switch between detailed and short views press the button ![Detailed expense list](https://dvmorozov.github.io/expenses/assets/images/2015-09-20_09h20_20.png) .
 
 ![Day expenses grouped by expense type](https://dvmorozov.github.io/expenses/assets/images/2015-10-22_15h59_35.png)
 
