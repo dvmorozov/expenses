@@ -30,9 +30,9 @@ layout: default
 
 [Get reports on expenses, discover top 10 most expensive categories for month, review list of expenses for any given day or get dynamics of expenses overall or by category](expense-reporting)
 
-[Upload bills, receipts or any other documents and link them with the expense, review or download it at any time from any device](how-to-associate-bills-and-receipts-with-expense)
+[Upload bills, receipts or any other documents and link them with the expense, review or download it](how-to-associate-bills-and-receipts-with-expense)
 
-[Use different currencies of expenses during the trip](how-to-track-multicurrency-expenses)
+[Use different currencies of expenses during trip](how-to-track-multicurrency-expenses)
 
 [Set up month budget for any category and get warning beforehand if predicted total expense exceeds desired budget](budget-management)
 
