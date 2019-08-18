@@ -588,15 +588,8 @@
   </Target>
   <Import Project="..\packages\Microsoft.ApplicationInsights.Agent.Intercept.0.14.0-build08008\build\Microsoft.ApplicationInsights.Agent.Intercept.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.Agent.Intercept.0.14.0-build08008\build\Microsoft.ApplicationInsights.Agent.Intercept.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>cd "$(TargetDir)"
-del /Q *.*
-cd "$(ProjectDir)/obj/$(ConfigurationName)"
-del /Q *.*
-
-cd $(ProjectDir)
-_update_version.bat
-exit /B 0
-</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>

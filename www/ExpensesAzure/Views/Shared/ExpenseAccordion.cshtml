@@ -10,8 +10,11 @@
 		@for (var i = 0; i < expenseList.Count(); i++)
 		{
 			var expense = expenseList[i];
-			var expenseId = "ExpenseName" + i.ToString();
-			var categoryId = "CategoryName" + i.ToString();
+			//	Global expense index unique among all items in all groups.
+			//	https://github.com/dvmorozov/expenses/issues/167
+			var expenseId = "ExpenseName" + ((int?)Session["UniqueExpenseIndex"] ?? 0).ToString();
+			var categoryId = "CategoryName" + ((int?)Session["UniqueExpenseIndex"] ?? 0).ToString();
+			Session["UniqueExpenseIndex"] = ((int?)Session["UniqueExpenseIndex"] ?? 0) + 1;
 
 			var panelStyle = "panel-info";
 			if (expense.Importance != null)

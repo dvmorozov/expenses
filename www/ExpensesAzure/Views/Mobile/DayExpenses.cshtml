@@ -44,40 +44,44 @@
 			<div class="row">
 				<div class="col-md-9">
 					@if (ViewBag.TodayExpenses != null)
-					{
-						var todayExpenses = (List<TodayExpense>)ViewBag.TodayExpenses;
-						//	https://github.com/dvmorozov/expenses/issues/134
-						//	Receipt expenses if present are displayed at the top of page.
-						var receiptIds = (List<int>)Session["AddReceiptExpenseIds"];
-						if (receiptIds != null)
 						{
-							//	Selects expenses belonging to the receipt.
-							var receiptExpenses = (from expense in todayExpenses
-												   where receiptIds.Contains(expense.ID)
-												   select expense).ToList();
-							ViewBag.AccordionExpenses = receiptExpenses;
-							ViewBag.InReceipt = true;
-							ViewBag.AccordionId = "receiptAccordion";
-							@Html.Partial("ExpenseAccordion")
+							var todayExpenses = (List<TodayExpense>)ViewBag.TodayExpenses;
+							//	https://github.com/dvmorozov/expenses/issues/134
+							//	Global expense index unique among all items in all groups.
+							//	It is used inside "ExpenseAccordion" view.
+							//	https://github.com/dvmorozov/expenses/issues/167
+							Session["UniqueExpenseIndex"] = 0;
+							//	Receipt expenses if present are displayed at the top of page.
+							var receiptIds = (List<int>)Session["AddReceiptExpenseIds"];
+							if (receiptIds != null)
+							{
+								//	Selects expenses belonging to the receipt.
+								var receiptExpenses = (from expense in todayExpenses
+														where receiptIds.Contains(expense.ID)
+														select expense).ToList();
+								ViewBag.AccordionExpenses = receiptExpenses;
+								ViewBag.InReceipt = true;
+								ViewBag.AccordionId = "receiptAccordion";
+								@Html.Partial("ExpenseAccordion")
 
-							<br />
+								<br />
 
-							//	Selects expenses not belonging to the receipt.
-							var otherExpenses = (from expense in todayExpenses
-												 where !receiptIds.Contains(expense.ID)
-												 select expense).ToList();
-							ViewBag.AccordionExpenses = otherExpenses;
-							ViewBag.InReceipt = false;
-							ViewBag.AccordionId = "expenseAccordion";
-							@Html.Partial("ExpenseAccordion")
+								//	Selects expenses not belonging to the receipt.
+								var otherExpenses = (from expense in todayExpenses
+														where !receiptIds.Contains(expense.ID)
+														select expense).ToList();
+								ViewBag.AccordionExpenses = otherExpenses;
+								ViewBag.InReceipt = false;
+								ViewBag.AccordionId = "expenseAccordion";
+								@Html.Partial("ExpenseAccordion")
+							}
+							else
+							{
+								//	If receipt is not defined displays everything in single list.
+								ViewBag.AccordionExpenses = ViewBag.TodayExpenses;
+								@Html.Partial("ExpenseAccordion")
+							}
 						}
-						else
-						{
-							//	If receipt is not defined displays everything in single list.
-							ViewBag.AccordionExpenses = ViewBag.TodayExpenses;
-							@Html.Partial("ExpenseAccordion")
-						}
-					}
 				</div>
 				<div class="col-md-3">
 					<div>
