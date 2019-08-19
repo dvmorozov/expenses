@@ -902,7 +902,8 @@ namespace SocialApps.Controllers
             {
                 //  https://www.evernote.com/shard/s132/nl/14501366/e6cd86bb-8a22-4111-8fbb-8610bb35c304
                 //  https://www.evernote.com/shard/s132/nl/14501366/10e01660-9dd4-4f59-90d4-5f52009ffdb9
-                if (string.IsNullOrEmpty(cost) || string.IsNullOrEmpty(name))
+                //  https://github.com/dvmorozov/expenses/issues/125
+                if (string.IsNullOrEmpty(cost.Trim()) || string.IsNullOrEmpty(name.Trim()))
                     return RedirectToAction("NewExpense");
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/9f1ae7a1-a257-4f6b-9af0-292da085ec15
