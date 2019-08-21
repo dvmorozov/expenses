@@ -52,6 +52,7 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MobileControllerTests.cs" />
     <Compile Include="SqlDatabaseSetup.cs" />
     <Compile Include="SqlServerUnitTestEstimatedCategoriesByUser3.cs">
       <SubType>Designer</SubType>
@@ -121,6 +122,12 @@
       <HintPath>$(SSDTUnitTestPath)\Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExpensesAzure\Expenses.csproj">
+      <Project>{004A2A51-D041-44C7-AA86-AC04F5D32376}</Project>
+      <Name>Expenses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
