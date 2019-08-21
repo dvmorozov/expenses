@@ -332,6 +332,39 @@ namespace SocialApps.Models
             ExpenseId = -1;
         }
 
+        //  Testable constructor.
+        //  https://github.com/dvmorozov/expenses/issues/148
+        public NewExpense(int expenseId, Operations expense, DateTime clientExpenseDate)
+        {
+            //  https://www.evernote.com/shard/s132/nl/14501366/a951297a-cff1-42d4-9e29-0a6654b8730c
+            ExpenseId = expenseId;
+            Name = expense != null && expense.Name != null ? expense.Name.Trim() : null;
+            Cost = expense != null && expense.Cost != null ? ((double)expense.Cost).ToString(CultureInfo.InvariantCulture) : string.Empty;
+            Currency = expense != null && expense.Currency != null ? expense.Currency.Trim() : null;
+            EncryptedName = expense?.EncryptedName;
+            EndMonth = expense != null && expense.LastMonth != null ? ((DateTime)expense.LastMonth).Month : -1;
+            EndYear = expense != null && expense.LastMonth != null ? ((DateTime)expense.LastMonth).Year : -1;
+            Forever = expense != null && expense.LastMonth == null;
+            Monthly = expense != null && expense.Monthly != null ? (bool)expense.Monthly : false;
+            StartMonth = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Month : -1;
+            StartYear = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Year : -1;
+
+            Day = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Day : clientExpenseDate.Day;
+            Month = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Month : clientExpenseDate.Month;
+            Year = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Year : clientExpenseDate.Year;
+            Hour = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Hour : clientExpenseDate.Hour;
+            Min = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Minute : clientExpenseDate.Minute;
+            Sec = expense != null && expense.FirstMonth != null ? ((DateTime)expense.FirstMonth).Second : clientExpenseDate.Second;
+
+            //  https://www.evernote.com/shard/s132/nl/14501366/a499d49f-68c6-4370-941d-f4beb5c87c74
+            Importance = expense?.Importance;
+            Rating = expense?.Rating;
+            Note = expense != null && expense.Note != null ? expense.Note.Trim() : null;
+
+            //  https://www.evernote.com/shard/s132/nl/14501366/333c0ad2-6962-4de1-93c1-591aa92bbcb3
+            Project = expense != null && expense.Project != null ? expense.Project.Trim() : null;
+        }
+
         //  https://www.evernote.com/shard/s132/nl/14501366/5b6f473a-b5ec-4a62-adf2-17362aea5d81
         [Display(Name = "Currency")]
         public string Currency { get; set; }
