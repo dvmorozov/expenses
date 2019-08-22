@@ -368,12 +368,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.Agent.Intercept.0.14.0-build08008\build\Microsoft.ApplicationInsights.Agent.Intercept.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ApplicationInsights.Agent.Intercept.0.14.0-build08008\build\Microsoft.ApplicationInsights.Agent.Intercept.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>cd "$(TargetDir)"
-del /Q *.*
-cd "$(ProjectDir)/obj/$(ConfigurationName)"
-del /Q *.*
-
-cd $(ProjectDir)
+    <PreBuildEvent>cd $(ProjectDir)
 _update_version.bat
 exit /B 0
 </PreBuildEvent>
