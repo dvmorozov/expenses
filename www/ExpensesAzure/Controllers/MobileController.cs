@@ -761,7 +761,9 @@ namespace SocialApps.Controllers
 
             amount = recalculateAmount(amount);
 
-            var expenseId = _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, false, null, null,
+            //  https://github.com/dvmorozov/expenses/issues/148
+            //  Value of "Monthly" flag is set to NULL by default.
+            var expenseId = _repository.AddExpense(clientExpenseDate, expense.Name, amount, note, null, null, null,
                 expense.EncryptedName, currency, rating, categoryId, importance, project, userId);
 
             DropSessionLinks();
