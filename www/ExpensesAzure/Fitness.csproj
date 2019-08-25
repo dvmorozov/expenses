@@ -499,11 +499,6 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Resources.designer.cs</LastGenOutput>
     </Content>
-    <Content Include="App_GlobalResources\Resources.ru-RU.resx">
-      <DependentUpon>Resources.cs</DependentUpon>
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resources.ru-RU1.designer.cs</LastGenOutput>
-    </Content>
     <Content Include="App_GlobalResources\Resources.pt-BR.resx">
       <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
