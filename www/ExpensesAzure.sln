@@ -15,6 +15,9 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{3396A1A3-076E-4E10-8547-871216C5FBDF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMenu", "ExpensesAzure\AppMenu.csproj", "{EC3F9C9E-3BFC-4F68-B0C4-93474B6AC47A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{004A2A51-D041-44C7-AA86-AC04F5D32376} = {004A2A51-D041-44C7-AA86-AC04F5D32376}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
