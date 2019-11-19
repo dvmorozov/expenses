@@ -42,8 +42,4 @@ layout: default
 
 {% include twitter.html %}
 
-## Blog
-
-[rationalcity.wordpress.com](https://rationalcity.wordpress.com)
-
 {% include google_ads.html %}
