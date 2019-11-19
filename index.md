@@ -16,7 +16,7 @@ layout: default
 
 > [Open from your Facebook account](https://apps.facebook.com/xpenses)
 
-> The application now supports German, French, Spanish, Portugese, Russian.
+> The application now supports Czech, French, German, Portugese, Russian, Spanish.
 
 ## Look how encryption works
 
