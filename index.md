@@ -38,12 +38,6 @@ layout: default
 
 [Features under development](features)
 
-## Find me on
-
-[LinkedIn](https://ru.linkedin.com/pub/dmitry-morozov/59/90a/794)
-
-[Facebook](https://www.facebook.com/profile.php?id=100004082021870)
-
 ## News
 
 {% include twitter.html %}
@@ -51,9 +45,5 @@ layout: default
 ## Blog
 
 [rationalcity.wordpress.com](https://rationalcity.wordpress.com)
-
-## Other applications
-
-[Demo](https://rationalcity.azurewebsites.net/)
 
 {% include google_ads.html %}
