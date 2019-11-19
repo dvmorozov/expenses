@@ -38,8 +38,4 @@ layout: default
 
 [Features under development](features)
 
-## News
-
-{% include twitter.html %}
-
 {% include google_ads.html %}
