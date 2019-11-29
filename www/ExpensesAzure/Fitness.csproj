@@ -241,9 +241,9 @@
     <Compile Include="Controllers\ErrorHandlingController.cs" />
     <Compile Include="Controllers\JsonReturn.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\MobileControllerDocuments.cs" />
-    <Compile Include="Controllers\MobileControllerIncome.cs" />
+    <Compile Include="Controllers\MobileControllerExpenses.cs" />
+    <Compile Include="Controllers\MobileControllerIncomes.cs" />
     <Compile Include="Controllers\MobileControllerReports.cs" />
     <Compile Include="Controllers\PersonalizedController.cs" />
     <Compile Include="Global.asax.cs">
@@ -575,10 +575,11 @@
   </Target>
   <Import Project="..\packages\Microsoft.ApplicationInsights.Agent.Intercept.0.14.0-build08008\build\Microsoft.ApplicationInsights.Agent.Intercept.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.Agent.Intercept.0.14.0-build08008\build\Microsoft.ApplicationInsights.Agent.Intercept.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>cd $(ProjectDir)
+    <PreBuildEvent>cd $(TargetDir)
+del /Q *
+cd $(ProjectDir)
 _update_version.bat
-exit /B 0
-</PreBuildEvent>
+exit /B 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
