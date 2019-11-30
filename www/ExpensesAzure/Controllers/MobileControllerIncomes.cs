@@ -120,7 +120,9 @@ namespace SocialApps.Controllers
                 var date = new DateTime(year, month, day, hour, min, sec, 0);
                 SetClientIncomeDate(date);
 
-                _repository.AddExpense(date, income.Name, amount, note, false, null, null, income.EncryptedName, currency, null, null, null, project, GetUserId(), true);
+                //  https://github.com/dvmorozov/expenses/issues/148
+                //  Value of "Monthly" flag is set to NULL by default.
+                _repository.AddExpense(date, income.Name, amount, note, null, null, null, income.EncryptedName, currency, null, null, null, project, GetUserId(), true);
 
                 DropSessionLinks();
 

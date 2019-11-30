@@ -228,8 +228,8 @@
       <DependentUpon>Resources.pt-BR.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Resources.ru-RU.designer.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>Resources.ru-RU.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -241,9 +241,9 @@
     <Compile Include="Controllers\ErrorHandlingController.cs" />
     <Compile Include="Controllers\JsonReturn.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\MobileControllerDocuments.cs" />
-    <Compile Include="Controllers\MobileControllerIncome.cs" />
+    <Compile Include="Controllers\MobileControllerExpenses.cs" />
+    <Compile Include="Controllers\MobileControllerIncomes.cs" />
     <Compile Include="Controllers\MobileControllerReports.cs" />
     <Compile Include="Controllers\PersonalizedController.cs" />
     <Compile Include="Global.asax.cs">
@@ -509,38 +509,25 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_GlobalResources\Resources.ru-RU.resx">
+    <Content Include="App_GlobalResources\Resources.cs.resx">
       <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resources.ru-RU.designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.cs.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Resources.fr-FR.resx">
-      <DependentUpon>Resources.cs</DependentUpon>
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resources.fr-FR.designer.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Resources.es-ES.resx">
-      <DependentUpon>Resources.cs</DependentUpon>
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resources.es-ES.designer.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_GlobalResources\Resources.de-DE.resx">
       <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Resources.de-DE.designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Resources.cs.resx">
+    <Content Include="App_GlobalResources\Resources.es-ES.resx">
       <DependentUpon>Resources.cs</DependentUpon>
       <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resources.cs.designer.cs</LastGenOutput>
+      <LastGenOutput>Resources.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Resources.fr-FR.resx">
+      <DependentUpon>Resources.cs</DependentUpon>
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.fr-FR.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>
@@ -573,11 +560,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
   <Import Project="..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.16-beta\build\portable-net45+win8+wpa81\Microsoft.Diagnostics.Tracing.EventSource.Redist.targets" Condition="Exists('..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.16-beta\build\portable-net45+win8+wpa81\Microsoft.Diagnostics.Tracing.EventSource.Redist.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -593,8 +575,11 @@
   </Target>
   <Import Project="..\packages\Microsoft.ApplicationInsights.Agent.Intercept.0.14.0-build08008\build\Microsoft.ApplicationInsights.Agent.Intercept.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.Agent.Intercept.0.14.0-build08008\build\Microsoft.ApplicationInsights.Agent.Intercept.targets')" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>cd $(TargetDir)
+del /Q *
+cd $(ProjectDir)
+_update_version.bat
+exit /B 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
