@@ -253,7 +253,8 @@ namespace SocialApps.Models
         public Nullable<int> Count { get; set; }
     }
 
-
+    //  This structure is used only in transferring data to views not to database.
+    //  It should have defined value of Monthly attribute (see https://github.com/dvmorozov/expenses/issues/148).
     public class NewExpense
     {
         [Required]
