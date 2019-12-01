@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SqlUnitTests
 {
     [TestClass()]
-    public class SqlServerUnitTestEstimatedCategoriesByUser3 : SqlDatabaseTestClass
+    public class EstimatedCategoriesByUser3 : SqlDatabaseTestClass
     {
 
-        public SqlServerUnitTestEstimatedCategoriesByUser3()
+        public EstimatedCategoriesByUser3()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace SqlUnitTests
         private void InitializeComponent()
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_EstimatedCategoriesByUser3Test_TestAction;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestEstimatedCategoriesByUser3));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EstimatedCategoriesByUser3));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.ScalarValueCondition scalarValueCondition1;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition notEmptyResultSetCondition1;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition emptyResultSetCondition1;

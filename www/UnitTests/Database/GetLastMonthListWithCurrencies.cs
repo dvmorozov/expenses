@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SqlUnitTests
 {
     [TestClass()]
-    public class SqlServerUnitTestGetLastMonthListWithCurrencies : SqlDatabaseTestClass
+    public class GetLastMonthListWithCurrencies : SqlDatabaseTestClass
     {
 
-        public SqlServerUnitTestGetLastMonthListWithCurrencies()
+        public GetLastMonthListWithCurrencies()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace SqlUnitTests
         private void InitializeComponent()
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_GetLastMonthListWithCurrenciesTest_TestAction;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestGetLastMonthListWithCurrencies));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GetLastMonthListWithCurrencies));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition1;
             this.expenses_GetLastMonthListWithCurrenciesTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             expenses_GetLastMonthListWithCurrenciesTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();

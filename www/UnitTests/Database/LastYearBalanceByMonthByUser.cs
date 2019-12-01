@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SqlUnitTests
 {
     [TestClass()]
-    public class SqlServerUnitTestLastYearTotalExpensesByMonthByUser : SqlDatabaseTestClass
+    public class LastYearBalanceByMonthByUser : SqlDatabaseTestClass
     {
 
-        public SqlServerUnitTestLastYearTotalExpensesByMonthByUser()
+        public LastYearBalanceByMonthByUser()
         {
             InitializeComponent();
         }
@@ -31,23 +31,26 @@ namespace SqlUnitTests
         /// </summary>
         private void InitializeComponent()
         {
-            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_LastYearTotalExpensesByMonthByUserTest_TestAction;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestLastYearTotalExpensesByMonthByUser));
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_LastYearBalanceByMonthByUserTest_TestAction;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LastYearBalanceByMonthByUser));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition1;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_LastYearBalanceByMonthByUserTest1_TestAction;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition inconclusiveCondition2;
+            Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_LastYearBalanceByMonthByUserTest_PosttestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition2;
-            Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition notEmptyResultSetCondition1;
-            this.expenses_LastYearTotalExpensesByMonthByUserTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
-            expenses_LastYearTotalExpensesByMonthByUserTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
+            this.expenses_LastYearBalanceByMonthByUserTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
+            expenses_LastYearBalanceByMonthByUserTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             rowCountCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
+            expenses_LastYearBalanceByMonthByUserTest1_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
+            inconclusiveCondition2 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.InconclusiveCondition();
+            expenses_LastYearBalanceByMonthByUserTest_PosttestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
             rowCountCondition2 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition();
-            notEmptyResultSetCondition1 = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition();
             // 
-            // expenses_LastYearTotalExpensesByMonthByUserTest_TestAction
+            // expenses_LastYearBalanceByMonthByUserTest_TestAction
             // 
-            expenses_LastYearTotalExpensesByMonthByUserTest_TestAction.Conditions.Add(rowCountCondition1);
-            expenses_LastYearTotalExpensesByMonthByUserTest_TestAction.Conditions.Add(rowCountCondition2);
-            expenses_LastYearTotalExpensesByMonthByUserTest_TestAction.Conditions.Add(notEmptyResultSetCondition1);
-            resources.ApplyResources(expenses_LastYearTotalExpensesByMonthByUserTest_TestAction, "expenses_LastYearTotalExpensesByMonthByUserTest_TestAction");
+            expenses_LastYearBalanceByMonthByUserTest_TestAction.Conditions.Add(rowCountCondition1);
+            expenses_LastYearBalanceByMonthByUserTest_TestAction.Conditions.Add(rowCountCondition2);
+            resources.ApplyResources(expenses_LastYearBalanceByMonthByUserTest_TestAction, "expenses_LastYearBalanceByMonthByUserTest_TestAction");
             // 
             // rowCountCondition1
             // 
@@ -56,24 +59,32 @@ namespace SqlUnitTests
             rowCountCondition1.ResultSet = 1;
             rowCountCondition1.RowCount = 60;
             // 
+            // expenses_LastYearBalanceByMonthByUserTest1_TestAction
+            // 
+            expenses_LastYearBalanceByMonthByUserTest1_TestAction.Conditions.Add(inconclusiveCondition2);
+            resources.ApplyResources(expenses_LastYearBalanceByMonthByUserTest1_TestAction, "expenses_LastYearBalanceByMonthByUserTest1_TestAction");
+            // 
+            // inconclusiveCondition2
+            // 
+            inconclusiveCondition2.Enabled = true;
+            inconclusiveCondition2.Name = "inconclusiveCondition2";
+            // 
+            // expenses_LastYearBalanceByMonthByUserTest_PosttestAction
+            // 
+            resources.ApplyResources(expenses_LastYearBalanceByMonthByUserTest_PosttestAction, "expenses_LastYearBalanceByMonthByUserTest_PosttestAction");
+            // 
+            // expenses_LastYearBalanceByMonthByUserTestData
+            // 
+            this.expenses_LastYearBalanceByMonthByUserTestData.PosttestAction = expenses_LastYearBalanceByMonthByUserTest_PosttestAction;
+            this.expenses_LastYearBalanceByMonthByUserTestData.PretestAction = null;
+            this.expenses_LastYearBalanceByMonthByUserTestData.TestAction = expenses_LastYearBalanceByMonthByUserTest_TestAction;
+            // 
             // rowCountCondition2
             // 
             rowCountCondition2.Enabled = true;
             rowCountCondition2.Name = "rowCountCondition2";
             rowCountCondition2.ResultSet = 2;
             rowCountCondition2.RowCount = 0;
-            // 
-            // notEmptyResultSetCondition1
-            // 
-            notEmptyResultSetCondition1.Enabled = true;
-            notEmptyResultSetCondition1.Name = "notEmptyResultSetCondition1";
-            notEmptyResultSetCondition1.ResultSet = 3;
-            // 
-            // expenses_LastYearTotalExpensesByMonthByUserTestData
-            // 
-            this.expenses_LastYearTotalExpensesByMonthByUserTestData.PosttestAction = null;
-            this.expenses_LastYearTotalExpensesByMonthByUserTestData.PretestAction = null;
-            this.expenses_LastYearTotalExpensesByMonthByUserTestData.TestAction = expenses_LastYearTotalExpensesByMonthByUserTest_TestAction;
         }
 
         #endregion
@@ -94,9 +105,9 @@ namespace SqlUnitTests
         #endregion
 
         [TestMethod()]
-        public void expenses_LastYearTotalExpensesByMonthByUserTest()
+        public void expenses_LastYearBalanceByMonthByUserTest()
         {
-            SqlDatabaseTestActions testActions = this.expenses_LastYearTotalExpensesByMonthByUserTestData;
+            SqlDatabaseTestActions testActions = this.expenses_LastYearBalanceByMonthByUserTestData;
             // Execute the pre-test script
             // 
             System.Diagnostics.Trace.WriteLineIf((testActions.PretestAction != null), "Executing pre-test script...");
@@ -116,6 +127,7 @@ namespace SqlUnitTests
                 SqlExecutionResult[] posttestResults = TestService.Execute(this.PrivilegedContext, this.PrivilegedContext, testActions.PosttestAction);
             }
         }
-        private SqlDatabaseTestActions expenses_LastYearTotalExpensesByMonthByUserTestData;
+
+        private SqlDatabaseTestActions expenses_LastYearBalanceByMonthByUserTestData;
     }
 }

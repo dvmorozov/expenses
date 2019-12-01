@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SqlUnitTests
 {
     [TestClass()]
-    public class SqlServerUnitTestGetLastMonthList : SqlDatabaseTestClass
+    public class GetLastMonthList : SqlDatabaseTestClass
     {
 
-        public SqlServerUnitTestGetLastMonthList()
+        public GetLastMonthList()
         {
             InitializeComponent();
         }
@@ -57,7 +57,7 @@ namespace SqlUnitTests
         private void InitializeComponent()
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction SqlTest1_TestAction;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestGetLastMonthList));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GetLastMonthList));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition1;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_GetLastMonthListTest_TestAction;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.ExpectedSchemaCondition expectedSchemaCondition1;

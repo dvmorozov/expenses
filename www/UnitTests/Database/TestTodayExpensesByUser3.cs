@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SqlUnitTests
 {
     [TestClass()]
-    public class SqlServerUnitTestTodayExpensesByUser3 : SqlDatabaseTestClass
+    public class TodayExpensesByUser3 : SqlDatabaseTestClass
     {
 
-        public SqlServerUnitTestTodayExpensesByUser3()
+        public TodayExpensesByUser3()
         {
             InitializeComponent();
         }
@@ -51,7 +51,7 @@ namespace SqlUnitTests
         private void InitializeComponent()
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction SqlTest1_TestAction;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestTodayExpensesByUser3));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TodayExpensesByUser3));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition1;
             this.SqlTest1Data = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             SqlTest1_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();

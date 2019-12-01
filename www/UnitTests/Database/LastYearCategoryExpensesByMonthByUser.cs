@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SqlUnitTests
 {
     [TestClass()]
-    public class SqlServerUnitTestLastYearCategoryExpensesByMonthByUser : SqlDatabaseTestClass
+    public class LastYearCategoryExpensesByMonthByUser : SqlDatabaseTestClass
     {
 
-        public SqlServerUnitTestLastYearCategoryExpensesByMonthByUser()
+        public LastYearCategoryExpensesByMonthByUser()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace SqlUnitTests
         private void InitializeComponent()
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestLastYearCategoryExpensesByMonthByUser));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LastYearCategoryExpensesByMonthByUser));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition emptyResultSetCondition1;
             this.expenses_LastYearCategoryExpensesByMonthByUserTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();
