@@ -53,29 +53,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\MobileControllerTests.cs" />
+    <Compile Include="Database\CurrencyCount.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Database\SqlDatabaseSetup.cs" />
-    <Compile Include="Database\SqlServerUnitTestEstimatedCategoriesByUser3.cs">
+    <Compile Include="Database\EstimatedCategoriesByUser3.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Database\SqlServerUnitTestEstimatedCategoriesByUser4.cs">
+    <Compile Include="Database\EstimatedCategoriesByUser4.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Database\SqlServerUnitTestGetLastMonthList.cs">
+    <Compile Include="Database\GetLastMonthList.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Database\SqlServerUnitTestGetLastMonthListWithCurrencies.cs">
+    <Compile Include="Database\GetLastMonthListWithCurrencies.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Database\SqlServerUnitTestLastYearBalanceByMonthByUser.cs">
+    <Compile Include="Database\LastYearBalanceByMonthByUser.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Database\SqlServerUnitTestLastYearCategoryExpensesByMonthByUser.cs">
+    <Compile Include="Database\LastYearCategoryExpensesByMonthByUser.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Database\SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs">
+    <Compile Include="Database\LastYearTotalExpensesByMonthByUser.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="Database\SqlServerUnitTestTodayExpensesByUser3.cs">
+    <Compile Include="Database\TestTodayExpensesByUser3.cs">
       <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,29 +90,32 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Database\SqlServerUnitTestEstimatedCategoriesByUser3.resx">
-      <DependentUpon>SqlServerUnitTestEstimatedCategoriesByUser3.cs</DependentUpon>
+    <EmbeddedResource Include="Database\CurrencyCount.resx">
+      <DependentUpon>CurrencyCount.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Database\SqlServerUnitTestEstimatedCategoriesByUser4.resx">
-      <DependentUpon>SqlServerUnitTestEstimatedCategoriesByUser4.cs</DependentUpon>
+    <EmbeddedResource Include="Database\EstimatedCategoriesByUser3.resx">
+      <DependentUpon>EstimatedCategoriesByUser3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Database\SqlServerUnitTestGetLastMonthList.resx">
-      <DependentUpon>SqlServerUnitTestGetLastMonthList.cs</DependentUpon>
+    <EmbeddedResource Include="Database\EstimatedCategoriesByUser4.resx">
+      <DependentUpon>EstimatedCategoriesByUser4.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Database\SqlServerUnitTestGetLastMonthListWithCurrencies.resx">
-      <DependentUpon>SqlServerUnitTestGetLastMonthListWithCurrencies.cs</DependentUpon>
+    <EmbeddedResource Include="Database\GetLastMonthList.resx">
+      <DependentUpon>GetLastMonthList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Database\SqlServerUnitTestLastYearBalanceByMonthByUser.resx">
-      <DependentUpon>SqlServerUnitTestLastYearBalanceByMonthByUser.cs</DependentUpon>
+    <EmbeddedResource Include="Database\GetLastMonthListWithCurrencies.resx">
+      <DependentUpon>GetLastMonthListWithCurrencies.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Database\SqlServerUnitTestLastYearCategoryExpensesByMonthByUser.resx">
-      <DependentUpon>SqlServerUnitTestLastYearCategoryExpensesByMonthByUser.cs</DependentUpon>
+    <EmbeddedResource Include="Database\LastYearBalanceByMonthByUser.resx">
+      <DependentUpon>LastYearBalanceByMonthByUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Database\SqlServerUnitTestLastYearTotalExpensesByMonthByUser.resx">
-      <DependentUpon>SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs</DependentUpon>
+    <EmbeddedResource Include="Database\LastYearCategoryExpensesByMonthByUser.resx">
+      <DependentUpon>LastYearCategoryExpensesByMonthByUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Database\SqlServerUnitTestTodayExpensesByUser3.resx">
-      <DependentUpon>SqlServerUnitTestTodayExpensesByUser3.cs</DependentUpon>
+    <EmbeddedResource Include="Database\LastYearTotalExpensesByMonthByUser.resx">
+      <DependentUpon>LastYearTotalExpensesByMonthByUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\TestTodayExpensesByUser3.resx">
+      <DependentUpon>TestTodayExpensesByUser3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup Condition="$(VisualStudioVersion) == '15.0'">

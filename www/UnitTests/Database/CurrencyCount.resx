@@ -131,7 +131,7 @@ SET @NotEmptyCount = (SELECT COUNT(*) FROM expenses.Operations WHERE Len(Currenc
 
 SET @TotalCount = @TotalCount - @NullCount - @NotEmptyCount
 
--- Checks that result is zero (resulting set should be empty).
+-- Checks that number of records having empty string in Currency field is zero (resulting set should be empty).
 SELECT @TotalCount
 WHERE @TotalCount &lt;&gt; 0</value>
   </data>
