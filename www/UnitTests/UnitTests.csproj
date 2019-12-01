@@ -53,29 +53,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\MobileControllerTests.cs" />
-    <Compile Include="SqlDatabaseSetup.cs" />
-    <Compile Include="SqlServerUnitTestEstimatedCategoriesByUser3.cs">
+    <Compile Include="Database\SqlDatabaseSetup.cs" />
+    <Compile Include="Database\SqlServerUnitTestEstimatedCategoriesByUser3.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="SqlServerUnitTestEstimatedCategoriesByUser4.cs">
+    <Compile Include="Database\SqlServerUnitTestEstimatedCategoriesByUser4.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="SqlServerUnitTestGetLastMonthList.cs">
+    <Compile Include="Database\SqlServerUnitTestGetLastMonthList.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="SqlServerUnitTestGetLastMonthListWithCurrencies.cs">
+    <Compile Include="Database\SqlServerUnitTestGetLastMonthListWithCurrencies.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="SqlServerUnitTestLastYearBalanceByMonthByUser.cs">
+    <Compile Include="Database\SqlServerUnitTestLastYearBalanceByMonthByUser.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="SqlServerUnitTestLastYearCategoryExpensesByMonthByUser.cs">
+    <Compile Include="Database\SqlServerUnitTestLastYearCategoryExpensesByMonthByUser.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs">
+    <Compile Include="Database\SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs">
       <SubType>Designer</SubType>
     </Compile>
-    <Compile Include="SqlServerUnitTestTodayExpensesByUser3.cs">
+    <Compile Include="Database\SqlServerUnitTestTodayExpensesByUser3.cs">
       <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,28 +87,28 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlServerUnitTestEstimatedCategoriesByUser3.resx">
+    <EmbeddedResource Include="Database\SqlServerUnitTestEstimatedCategoriesByUser3.resx">
       <DependentUpon>SqlServerUnitTestEstimatedCategoriesByUser3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SqlServerUnitTestEstimatedCategoriesByUser4.resx">
+    <EmbeddedResource Include="Database\SqlServerUnitTestEstimatedCategoriesByUser4.resx">
       <DependentUpon>SqlServerUnitTestEstimatedCategoriesByUser4.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SqlServerUnitTestGetLastMonthList.resx">
+    <EmbeddedResource Include="Database\SqlServerUnitTestGetLastMonthList.resx">
       <DependentUpon>SqlServerUnitTestGetLastMonthList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SqlServerUnitTestGetLastMonthListWithCurrencies.resx">
+    <EmbeddedResource Include="Database\SqlServerUnitTestGetLastMonthListWithCurrencies.resx">
       <DependentUpon>SqlServerUnitTestGetLastMonthListWithCurrencies.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SqlServerUnitTestLastYearBalanceByMonthByUser.resx">
+    <EmbeddedResource Include="Database\SqlServerUnitTestLastYearBalanceByMonthByUser.resx">
       <DependentUpon>SqlServerUnitTestLastYearBalanceByMonthByUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SqlServerUnitTestLastYearCategoryExpensesByMonthByUser.resx">
+    <EmbeddedResource Include="Database\SqlServerUnitTestLastYearCategoryExpensesByMonthByUser.resx">
       <DependentUpon>SqlServerUnitTestLastYearCategoryExpensesByMonthByUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SqlServerUnitTestLastYearTotalExpensesByMonthByUser.resx">
+    <EmbeddedResource Include="Database\SqlServerUnitTestLastYearTotalExpensesByMonthByUser.resx">
       <DependentUpon>SqlServerUnitTestLastYearTotalExpensesByMonthByUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SqlServerUnitTestTodayExpensesByUser3.resx">
+    <EmbeddedResource Include="Database\SqlServerUnitTestTodayExpensesByUser3.resx">
       <DependentUpon>SqlServerUnitTestTodayExpensesByUser3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

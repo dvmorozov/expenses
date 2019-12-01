@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Text;
-using Microsoft.Data.Tools.Schema.Sql.UnitTesting;
-using Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions;
+﻿using Microsoft.Data.Tools.Schema.Sql.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace SqlUnitTests
 {
     [TestClass()]
     public class SqlServerUnitTestEstimatedCategoriesByUser3 : SqlDatabaseTestClass

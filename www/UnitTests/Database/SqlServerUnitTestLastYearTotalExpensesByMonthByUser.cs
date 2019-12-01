@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.Tools.Schema.Sql.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace SqlUnitTests
 {
     [TestClass()]
     public class SqlServerUnitTestLastYearTotalExpensesByMonthByUser : SqlDatabaseTestClass
