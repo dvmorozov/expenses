@@ -9,6 +9,10 @@ Personal expense tracking application built with ASP.NET and hosted on Azure.
 
 [Bootstrap Filestyle](https://github.com/markusslima/bootstrap-filestyle)
 
+### To reinstall all packages use
+
+> Update-Package -reinstall
+
 ## More info
 
 [Features](https://dvmorozov.github.io/expenses/features)
