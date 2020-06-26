@@ -386,10 +386,7 @@
       <DependentUpon>Expenses.edmx</DependentUpon>
       <LastGenOutput>Expenses1.cs</LastGenOutput>
     </Content>
-    <None Include="Properties\PublishProfiles\ftnss - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ftnss - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\xpnss - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
     <Content Include="Scripts\calc\src\main\js\bigdecimal.js" />
     <Content Include="Scripts\calc\src\main\js\calc.css" />
     <Content Include="Scripts\calc\src\main\js\calc.js" />
@@ -486,6 +483,7 @@
     <Content Include="Views\Shared\Year.cshtml" />
     <Content Include="Views\Shared\TopAddExpenseButton.cshtml" />
     <Content Include="Views\Shared\MainMenu.cshtml" />
+    <None Include="Properties\PublishProfiles\xpnss - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

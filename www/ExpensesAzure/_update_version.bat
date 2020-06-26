@@ -1,6 +1,6 @@
 @set _date=%date%
 @set _time=%time:~0,8%
-@set _year=%_date:~10,4%
+@set _year=%_date:~6,4%
 
 @rem reads build number from file
 @set /p _build=< build 

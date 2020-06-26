@@ -19,3 +19,4 @@ Web.config
 /www/Database/obj/Release
 /www/UnitTests/bin/Release
 /www/UnitTests/obj/Release
+/www/UpgradeLog.htm
