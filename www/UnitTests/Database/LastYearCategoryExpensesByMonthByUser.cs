@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Text;
-using Microsoft.Data.Tools.Schema.Sql.UnitTesting;
-using Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions;
+﻿using Microsoft.Data.Tools.Schema.Sql.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace SqlUnitTests
 {
     [TestClass()]
-    public class SqlServerUnitTestLastYearCategoryExpensesByMonthByUser : SqlDatabaseTestClass
+    public class LastYearCategoryExpensesByMonthByUser : SqlDatabaseTestClass
     {
 
-        public SqlServerUnitTestLastYearCategoryExpensesByMonthByUser()
+        public LastYearCategoryExpensesByMonthByUser()
         {
             InitializeComponent();
         }
@@ -38,7 +32,7 @@ namespace UnitTests
         private void InitializeComponent()
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestLastYearCategoryExpensesByMonthByUser));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LastYearCategoryExpensesByMonthByUser));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.EmptyResultSetCondition emptyResultSetCondition1;
             this.expenses_LastYearCategoryExpensesByMonthByUserTestData = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestActions();
             expenses_LastYearCategoryExpensesByMonthByUserTest_TestAction = new Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction();

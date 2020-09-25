@@ -1,13 +1,13 @@
 ﻿using Microsoft.Data.Tools.Schema.Sql.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace SqlUnitTests
 {
     [TestClass()]
-    public class SqlServerUnitTestLastYearTotalExpensesByMonthByUser : SqlDatabaseTestClass
+    public class LastYearTotalExpensesByMonthByUser : SqlDatabaseTestClass
     {
 
-        public SqlServerUnitTestLastYearTotalExpensesByMonthByUser()
+        public LastYearTotalExpensesByMonthByUser()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace UnitTests
         private void InitializeComponent()
         {
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.SqlDatabaseTestAction expenses_LastYearTotalExpensesByMonthByUserTest_TestAction;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SqlServerUnitTestLastYearTotalExpensesByMonthByUser));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LastYearTotalExpensesByMonthByUser));
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition1;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.RowCountCondition rowCountCondition2;
             Microsoft.Data.Tools.Schema.Sql.UnitTesting.Conditions.NotEmptyResultSetCondition notEmptyResultSetCondition1;

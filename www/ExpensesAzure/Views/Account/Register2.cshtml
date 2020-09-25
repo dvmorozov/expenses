@@ -1,45 +1,45 @@
 ﻿@model SocialApps.Models.RegisterViewModel
 @{
 	ViewBag.Title = Resources.Resources.Registration;
-    Layout = "~/Views/Shared/_LayoutMobile.cshtml";    
+	Layout = "~/Views/Shared/_LayoutMobile.cshtml";    
 }
 
 @* ReSharper disable UnknownCssClass *@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.AntiForgeryToken()
-    <h4>@Html.Raw(Resources.Resources.AccountSignUp)</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, Resources.Resources.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, Resources.Resources.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, Resources.Resources.AccountConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+	@Html.AntiForgeryToken()
+	<h4>@Html.Raw(Resources.Resources.AccountSignUp)</h4>
+	<hr />
+	@Html.ValidationSummary("", new { @class = "text-danger" })
+	<div class="form-group">
+		@Html.LabelFor(m => m.Email, Resources.Resources.Email, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.Password, Resources.Resources.Password, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(m => m.ConfirmPassword, Resources.Resources.AccountConfirmPassword, new { @class = "col-md-2 control-label" })
+		<div class="col-md-10">
+			@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
 			<input type="submit" class="btn btn-default" value="@Html.Raw(Resources.Resources.Register)" />
-        </div>
-    </div>
+		</div>
+	</div>
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+	@Scripts.Render("~/bundles/jqueryval")
 }
 
-@Html.Partial("Tags")
+@Html.Partial("Advertising")
 <br/>
 @* ReSharper restore UnknownCssClass *@
