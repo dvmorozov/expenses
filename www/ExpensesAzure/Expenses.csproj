@@ -441,7 +441,7 @@
     <Content Include="Views\Mobile\Balance.cshtml" />
     <Content Include="Views\Mobile\Reports.cshtml" />
     <Content Include="Views\Mobile\Encryption.cshtml" />
-    <Content Include="Views\Shared\Tags.cshtml" />
+    <Content Include="Views\Shared\Advertising.cshtml" />
     <Content Include="Views\Shared\Jumbotron.cshtml" />
     <Content Include="Views\Shared\JumbotronConfirmationFailed.cshtml" />
     <Content Include="Views\Shared\TopHomeButton.cshtml" />
