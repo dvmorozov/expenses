@@ -22,14 +22,7 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         private void DeleteCachedExpenses(Guid userId, int catId)
         {
-            try
-            {
-                DeleteBlobs(userId, SelectExpensesPrefix + "_" + catId);
-                _session[SelectExpensesPrefix] = null;
-            }
-            catch
-            {
-            }
+            _session[SelectExpensesPrefix] = null;
         }
 
         //  https://action.mindjet.com/task/14509395
@@ -43,31 +36,14 @@ namespace SocialApps.Repositories
                 ((SelectedExpenses)_session[SelectExpensesPrefix]).CatId == catId)
                 return ((SelectedExpenses)_session[SelectExpensesPrefix]).List;
 
-            var fileName = SelectExpensesPrefix + "_" + catId + "_" + date.Year + "_" + date.Month + "_" + date.Day + "_" + _shortList;
-
             string json;
-            if (!DownloadText(userId, out json, fileName))
-            {
-                //  Removes all possibly existing old files.
-                DeleteCachedExpenses(userId, catId);
+            //  Removes all possibly existing old files.
+            DeleteCachedExpenses(userId, catId);
 
-                //  https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
-                var expensesList =
-                (_shortList ?
-                (
-                    from exp in
-                        //  https://action.mindjet.com/task/14479694
-                        _db.GetExpenseNamesWithCategoryByUser5(catId, userId, date.Year, date.Month, date.Day, shortList)
-                    select new ExpenseNameWithCategory
-                    {
-                        Count = 1, //exp.Count,
-                        EncryptedName = exp.EncryptedName,
-                        Name = exp.Name,
-                        Id = exp.Id
-                    }
-                )
-                :
-                (
+            //  https://www.evernote.com/shard/s132/nl/14501366/43810bf8-aeab-4801-af55-e61f344f548f
+            var expensesList =
+            (_shortList ?
+            (
                 from exp in
                     //  https://action.mindjet.com/task/14479694
                     _db.GetExpenseNamesWithCategoryByUser5(catId, userId, date.Year, date.Month, date.Day, shortList)
@@ -78,13 +54,24 @@ namespace SocialApps.Repositories
                     Name = exp.Name,
                     Id = exp.Id
                 }
-                )).ToArray();
-
-                //  https://action.mindjet.com/task/14509395
-                //  Converting to JSON.
-                json = JsonConvert.SerializeObject(new SelectedExpenses { Date = date, ShortList = _shortList, List = expensesList, CatId = catId });
-                UploadText(userId, json, fileName);
+            )
+            :
+            (
+            from exp in
+                //  https://action.mindjet.com/task/14479694
+                _db.GetExpenseNamesWithCategoryByUser5(catId, userId, date.Year, date.Month, date.Day, shortList)
+            select new ExpenseNameWithCategory
+            {
+                Count = 1, //exp.Count,
+                EncryptedName = exp.EncryptedName,
+                Name = exp.Name,
+                Id = exp.Id
             }
+            )).ToArray();
+
+            //  https://action.mindjet.com/task/14509395
+            //  Converting to JSON.
+            json = JsonConvert.SerializeObject(new SelectedExpenses { Date = date, ShortList = _shortList, List = expensesList, CatId = catId });
 
             //  Cache data in session.
             _session[SelectExpensesPrefix] = JsonConvert.DeserializeObject<SelectedExpenses>(json);

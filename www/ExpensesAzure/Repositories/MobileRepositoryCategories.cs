@@ -44,14 +44,7 @@ namespace SocialApps.Repositories
         //  https://action.mindjet.com/task/14509395
         private void DeleteCachedCategories(Guid userId)
         {
-            try
-            {
-                _session[SelectEstimatedCategoriesPrefix] = null;
-                DeleteBlobs(userId, SelectEstimatedCategoriesPrefix);
-            }
-            catch
-            {
-            }
+            _session[SelectEstimatedCategoriesPrefix] = null;
         }
 
         //  https://github.com/dvmorozov/expenses/issues/47
@@ -86,21 +79,12 @@ namespace SocialApps.Repositories
                 ((SelectedEstimatedCategories2)_session[SelectEstimatedCategoriesPrefix]).ShortList == _shortList)
                 return ((SelectedEstimatedCategories2)_session[SelectEstimatedCategoriesPrefix]).List;
 
-            var fileName = SelectEstimatedCategoriesPrefix + "_" + date.Year + "_" + date.Month + "_" + date.Day + "_" + _shortList;
+            //  https://action.mindjet.com/task/144796941
+            EstimatedCategoriesByUser4_Result[] categoryList = _db.EstimatedCategoriesByUser4(date.Year, date.Month, date.Day, userId, shortList != null && (bool)shortList).ToArray();
 
-            if (!DownloadText(userId, out string json, fileName))
-            {
-                //  Remove all possibly existing old files.
-                DeleteCachedCategories(userId);
-
-                //  https://action.mindjet.com/task/144796941
-                var categoryList = _db.EstimatedCategoriesByUser4(date.Year, date.Month, date.Day, userId, shortList != null && (bool)shortList).ToArray();
-
-                //  https://action.mindjet.com/task/14509395
-                //  Converting to JSON.
-                json = JsonConvert.SerializeObject(new SelectedEstimatedCategories2 { Date = date, ShortList = _shortList, List = categoryList });
-                UploadText(userId, json, fileName);
-            }
+            //  https://action.mindjet.com/task/14509395
+            //  Converting to JSON.
+            string json = JsonConvert.SerializeObject(new SelectedEstimatedCategories2 { Date = date, ShortList = _shortList, List = categoryList });
 
             //  Cache data in session.
             try
