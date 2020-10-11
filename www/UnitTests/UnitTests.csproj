@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="Controllers\MobileControllerTests.cs" />
     <Compile Include="Database\CurrencyCount.cs">
-      <SubType>Component</SubType>
+      <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Database\SqlDatabaseSetup.cs" />
     <Compile Include="Database\EstimatedCategoriesByUser3.cs">
