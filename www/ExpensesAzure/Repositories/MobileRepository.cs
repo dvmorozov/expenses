@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace SocialApps.Repositories
 {
@@ -48,6 +49,13 @@ namespace SocialApps.Repositories
             return _db.EstimatedTop10CategoriesForMonthByUser3(now.Year, now.Month, now.Day, userId).ToList();
         }
 
+        private string GetLocalizedResourceString(string resourceName)
+        {
+            var rm = Resources.Resources.ResourceManager;
+            var userCulture = new CultureInfo(CultureInfo.CurrentUICulture.TextInfo.CultureName);
+            return rm.GetString(resourceName, userCulture);
+        }
+
         //  Adds to each currency group special row containing residue not covered by any group (supplementing to total).
         //  https://github.com/dvmorozov/expenses/issues/21
         public List<EstimatedTop10CategoriesForMonthByUser3_Result> GetTop10CategoriesWithResidue(Guid userId, DateTime now)
@@ -72,7 +80,7 @@ namespace SocialApps.Repositories
                 }
                 );
 
-            //  Add items having residues.
+            //  Add items representing residues.
             foreach (var g in currencyGroups)
             {
                 if (g.Residue > 0)
@@ -80,7 +88,7 @@ namespace SocialApps.Repositories
                         new EstimatedTop10CategoriesForMonthByUser3_Result
                         {
                             Currency = g.Currency,
-                            NAME = Resources.Resources.Residue,
+                            NAME = GetLocalizedResourceString(Resources.Resources.Residue),
                             TOTAL = g.Residue,
                             GROUPID1 = g.GROUPID1,
                             GROUPID2 = g.GROUPID2,
