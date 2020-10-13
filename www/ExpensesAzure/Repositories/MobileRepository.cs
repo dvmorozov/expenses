@@ -51,9 +51,9 @@ namespace SocialApps.Repositories
 
         private string GetLocalizedResourceString(string resourceName)
         {
-            var rm = Resources.Resources.ResourceManager;
+            var resourceManager = Resources.Resources.ResourceManager;
             var userCulture = new CultureInfo(CultureInfo.CurrentUICulture.TextInfo.CultureName);
-            return rm.GetString(resourceName, userCulture);
+            return resourceManager.GetString(resourceName, userCulture);
         }
 
         //  Adds to each currency group special row containing residue not covered by any group (supplementing to total).
