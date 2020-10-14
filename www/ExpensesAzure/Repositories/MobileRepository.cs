@@ -49,7 +49,7 @@ namespace SocialApps.Repositories
             return _db.EstimatedTop10CategoriesForMonthByUser3(now.Year, now.Month, now.Day, userId).ToList();
         }
 
-        public string GetLocalizedResourceString(string resourceName)
+        public static string GetLocalizedResourceString(string resourceName)
         {
             var resourceManager = Resources.Resources.ResourceManager;
             var userCulture = new CultureInfo(CultureInfo.CurrentUICulture.TextInfo.CultureName);

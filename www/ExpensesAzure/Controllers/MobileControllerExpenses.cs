@@ -77,6 +77,12 @@ namespace SocialApps.Controllers
             }
         }
 
+        private string GetExpenseListTitle()
+        {
+            return IsDayExpensesFullList() ?
+                MobileRepository.GetLocalizedResourceString("Brief") : MobileRepository.GetLocalizedResourceString("Details");
+        }
+
         //  https://www.evernote.com/shard/s132/nl/14501366/3db6842f-dd5c-49e0-8536-e637ea009cd5
         public ActionResult DayExpenseTotals(int? day, int? month, int? year)
         {
@@ -93,7 +99,7 @@ namespace SocialApps.Controllers
                 // https://github.com/dvmorozov/expenses/issues/124
                 ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
                 // https://github.com/dvmorozov/expenses/issues/149
-                ViewBag.DayExpensesFullListTitle = IsDayExpensesFullList() ? Resources.Resources.Brief : Resources.Resources.Details;
+                ViewBag.DayExpensesFullListTitle = GetExpenseListTitle();
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
                 Session["ClientExpenseDate"] = date;
@@ -186,7 +192,7 @@ namespace SocialApps.Controllers
                 //  https://github.com/dvmorozov/expenses/issues/124
                 ViewBag.AddReceipt = IsRestOfReceipt || IsAddReceipt;
                 //  https://github.com/dvmorozov/expenses/issues/149
-                ViewBag.DayExpensesFullListTitle = IsDayExpensesFullList() ? Resources.Resources.Brief : Resources.Resources.Details;
+                ViewBag.DayExpensesFullListTitle = GetExpenseListTitle();
 
                 //  https://www.evernote.com/shard/s132/nl/14501366/cadee374-b60a-451f-bed5-d9237644dac3
                 Session["ClientExpenseDate"] = date;
@@ -308,29 +314,29 @@ namespace SocialApps.Controllers
         }
 
         //  https://github.com/dvmorozov/expenses/issues/86
-        public static string ImportanceToString(short i)
+        private string GetImportanceString(short i)
         {
-            var result = Resources.Resources.Necessary;
+            var result = MobileRepository.GetLocalizedResourceString("Necessary");
             switch ((ExpenseImportance)i)
             {
             case ExpenseImportance.Liability:
-                result = Resources.Resources.Liability;
+                result = MobileRepository.GetLocalizedResourceString("Liability");
                 break;
 
             case ExpenseImportance.Asset:
-                result = Resources.Resources.Asset;
+                result = MobileRepository.GetLocalizedResourceString("Asset");
                 break;
 
             case ExpenseImportance.Necessary:
-                result = Resources.Resources.Necessary;
+                result = MobileRepository.GetLocalizedResourceString("Necessary");
                 break;
 
             case ExpenseImportance.Pleasure:
-                result = Resources.Resources.Pleasure;
+                result = MobileRepository.GetLocalizedResourceString("Pleasure");
                 break;
 
             case ExpenseImportance.Unnecessary:
-                result = Resources.Resources.Unnecessary;
+                result = MobileRepository.GetLocalizedResourceString("Unnecessary");
                 break;
             }
             return result;
