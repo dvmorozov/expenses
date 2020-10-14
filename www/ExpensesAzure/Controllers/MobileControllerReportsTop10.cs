@@ -81,6 +81,13 @@ namespace SocialApps.Controllers
             return chart;
         }
 
+        private void SetReportTitle()
+        {
+            var dt = new DateTime((int)Session["Top10Year"], (int)Session["Top10Month"], 1);
+            var title = _repository.GetLocalizedResourceString("ReportTop10Of");
+            ViewBag.Title = title + " " + dt.ToString("MMM yyyy");
+        }
+
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
         public ActionResult Top10(int? year, int? month)
         {
@@ -107,6 +114,9 @@ namespace SocialApps.Controllers
                     ViewBag.MonthTotal = totals.MonthTotal;
 
                 TempData["MonthCalendarIndex"] = 0;
+
+                SetReportTitle();
+
                 return View("Top10");
             }
             catch (Exception e)

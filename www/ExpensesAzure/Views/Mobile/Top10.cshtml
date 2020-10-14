@@ -5,7 +5,6 @@
 
 @{
 	var dt = new DateTime((int)Session["Top10Year"], (int)Session["Top10Month"], 1);
-	ViewBag.Title = Resources.Resources.ReportTop10Of + " " + dt.ToString("MMM yyyy");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
