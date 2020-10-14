@@ -1,6 +1,6 @@
 ﻿@model SocialApps.Models.ExternalLoginConfirmationViewModel
 @{
-    ViewBag.Title = Resources.Resources.Registration;
+    ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Registration");
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -11,7 +11,7 @@
             <tbody>
                 <tr>
                     <td>
-						@Html.Partial("TopHomeButton")
+                        @Html.Partial("TopHomeButton")
                     </td>
                     <td style="width: 100%; text-align: center;">
                         @Html.Raw(ViewBag.Title)
@@ -21,16 +21,16 @@
         </table>
     </div>
     <div class="panel-body">
-        <h3>@Html.Raw(string.Format(Resources.Resources.AccountConnectWithYour, ViewBag.LoginProvider))</h3>
+        <h3>@Html.Raw(string.Format(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountConnectWithYour"), ViewBag.LoginProvider))</h3>
 
         @using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
 
-            <h4>@Html.Raw(Resources.Resources.AccountConnectionForm)</h4>
+            <h4>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountConnectionForm"))</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <p class="text-info">@Html.Raw(Resources.Resources.AccountYouSuccessfullyPassed)</p>
+            <p class="text-info">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountYouSuccessfullyPassed"))</p>
             <div class="form-group">
                 @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-					<input type="submit" class="btn btn-default" value="@Html.Raw(Resources.Resources.Registration)" />
+                    <input type="submit" class="btn btn-default" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Registration"))" />
                 </div>
             </div>
         }
@@ -51,7 +51,7 @@
     </div>
     <div class="panel-footer">
         <div class="btn-group" role="group">
-			@Html.Partial("BottomHomeButton")
+            @Html.Partial("BottomHomeButton")
         </div>
     </div>
 </div>
