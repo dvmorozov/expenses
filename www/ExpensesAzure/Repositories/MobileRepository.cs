@@ -88,7 +88,7 @@ namespace SocialApps.Repositories
                         new EstimatedTop10CategoriesForMonthByUser3_Result
                         {
                             Currency = g.Currency,
-                            NAME = GetLocalizedResourceString(Resources.Resources.Residue),
+                            NAME = GetLocalizedResourceString("Residue"),
                             TOTAL = g.Residue,
                             GROUPID1 = g.GROUPID1,
                             GROUPID2 = g.GROUPID2,

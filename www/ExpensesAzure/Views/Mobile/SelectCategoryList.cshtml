@@ -11,8 +11,8 @@
 			<tbody>
 				<tr>
 					<th></th>
-					<th>@Html.Raw(Resources.Resources.Category)</th>
-					<th>@Html.Raw(Resources.Resources.Budget)</th>
+					<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Category"))</th>
+					<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Budget"))</th>
 				</tr>
 				@for (var index = 0; index < list.Count(); index++)
 				{
@@ -64,7 +64,7 @@
 											<span class="sr-only"></span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
-											<li><a href="#" onclick="window.location.href='@Url.Action("DeleteCategory", "Mobile", new { categoryId = cat.ID })'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">@Html.Raw(Resources.Resources.Delete)</a></li>
+											<li><a href="#" onclick="window.location.href='@Url.Action("DeleteCategory", "Mobile", new { categoryId = cat.ID })'; if(event.stopPropagation) event.stopPropagation(); else event.cancelBubble=true;">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Delete"))</a></li>
 										</ul>
 									}
 								</div>

@@ -1,7 +1,7 @@
 ﻿@using SocialApps.Controllers
 
 @{
-	ViewBag.Title = Resources.Resources.Encryption;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Encryption");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -41,24 +41,24 @@
 						<tr>
 							<td colspan="2">
 								<div class="editor-label" style="padding: 8px;">
-									@Html.Label(Resources.Resources.DiscardPassword)
+									@Html.Label(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("DiscardPassword"))
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td colspan="2">
 								<div style="float: right; padding: 8px;">
-									<input class="btn btn-default" type="button" value="@Html.Raw(Resources.Resources.DiscardPassword)" onclick="dropPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
+									<input class="btn btn-default" type="button" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("DiscardPassword"))" onclick="dropPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
 								</div>
 								<div style="padding: 8px;" class="hintText">
-									@Html.Raw(Resources.Resources.EncryptionNewData)
+									@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionNewData"))
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<div class="editor-label" style="padding: 8px;">
-									@Html.Label(Resources.Resources.Decrypting)
+									@Html.Label(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Decrypting"))
 								</div>
 							</td>
 							<td>
@@ -70,14 +70,14 @@
 						<tr>
 							<td colspan="2">
 								<div style="float: right; padding: 8px;">
-									<input class="btn btn-default" type="button" value="@Html.Raw(Resources.Resources.EncryptionSetAndDecrypt)" onclick="setPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
+									<input class="btn btn-default" type="button" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionSetAndDecrypt"))" onclick="setPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
 								</div>
 								<div style="padding: 8px;" class="hintText">
 									<p>
-										@Html.Raw(Resources.Resources.EncryptionSetUpPassword)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionSetUpPassword"))
 									</p>
 									<p>
-										@Html.Raw(Resources.Resources.EncryptionOnlyData)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionOnlyData"))
 									</p>
 								</div>
 							</td>
@@ -85,7 +85,7 @@
 						<tr>
 							<td>
 								<div class="editor-label" style="padding: 8px;">
-									@Html.Label(Resources.Resources.Encrypting)
+									@Html.Label(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Encrypting"))
 								</div>
 							</td>
 							<td>
@@ -97,23 +97,23 @@
 						<tr>
 							<td colspan="2">
 								<div style="float: right; padding: 8px;">
-									<input class="btn btn-default" type="button" value="@Html.Raw(Resources.Resources.EncryptionSetNewPassword)" onclick="checkAndSetPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
+									<input class="btn btn-default" type="button" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionSetNewPassword"))" onclick="checkAndSetPassword('@Url.Action("Index", "Mobile")');" style="min-width: 150px;" />
 								</div>
 								<div style="padding: 8px;" class="hintText">
 									<p>
-										@Html.Raw(Resources.Resources.EncryptionRepeatInput)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionRepeatInput"))
 									</p>
 									<p>
-										@Html.Raw(Resources.Resources.EncryptionResponsibility)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionResponsibility"))
 									</p>
 									<p>
-										@Html.Raw(Resources.Resources.EncryptionWeDontStore)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionWeDontStore"))
 									</p>
 									<p>
-										@Html.Raw(Resources.Resources.EncryptionProtect)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionProtect"))
 									</p>
 									<p>
-										@Html.Raw(Resources.Resources.EncryptionIfYouChange)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptionIfYouChange"))
 									</p>
 								</div>
 							</td>

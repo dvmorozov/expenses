@@ -95,8 +95,8 @@
 															<tbody>
 																<tr>
 																	<th>#</th>
-																	<th style="width: 100%;">@Html.Raw(Resources.Resources.Category)</th>
-																	<th>@Html.Raw(Resources.Resources.Spent)</th>
+																	<th style="width: 100%;">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Category"))</th>
+																	<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Spent"))</th>
 																</tr>
 
 																@for (var index = 0; index < list.Count(); index++)
@@ -180,7 +180,7 @@
 						else
 						{
 							<div style="margin: 16px;">
-								<span class="label label-info">@Html.Raw(Resources.Resources.NoExpenseFound + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
+								<span class="label label-info">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("NoExpenseFound") + " " + (int)Session["Top10Year"] + "-" + string.Format("{0:D2}", (int)Session["Top10Month"]))</span>
 							</div>
 							@* https://github.com/dvmorozov/expenses/issues/138 *@
 							TempData["MonthCalendarIndex"] = null;

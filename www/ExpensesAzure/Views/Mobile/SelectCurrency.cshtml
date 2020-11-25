@@ -3,7 +3,7 @@
 @using System.Web.Security.AntiXss
 
 @{
-	ViewBag.Title = Resources.Resources.SelectCurrency;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectCurrency");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -37,8 +37,8 @@
 		<div class="page-content">
 			<ul class="nav nav-tabs">
 				@*<li class="active"><a href="#last" data-toggle="tab">Last</a></li>*@
-				<li class="active"><a href="#chars" data-toggle="tab">@Html.Raw(Resources.Resources.SelectCurrencyChars)</a></li>
-				<li><a href="#codes" data-toggle="tab">@Html.Raw(Resources.Resources.SelectCurrencyCodes)</a></li>
+				<li class="active"><a href="#chars" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectCurrencyChars"))</a></li>
+				<li><a href="#codes" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectCurrencyCodes"))</a></li>
 			</ul>
 
 			<div class="tab-content">
@@ -71,7 +71,7 @@
 	@Html.Partial("Advertising")
 	<div class="panel-footer">
 		@Html.Partial("BottomHomeButton")
-		<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
+		<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Add"))" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 	</div>

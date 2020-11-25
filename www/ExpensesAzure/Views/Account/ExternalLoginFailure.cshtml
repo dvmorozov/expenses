@@ -1,5 +1,5 @@
 ﻿@{
-	ViewBag.Title = Resources.Resources.LoginFailure;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("LoginFailure");
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -22,7 +22,7 @@
     <div class="panel-body">
         <hgroup>
             <h2>@ViewBag.Title.</h2>
-            <h3 class="text-danger">@Html.Raw(Resources.Resources.AccountCantLogin)</h3>
+            <h3 class="text-danger">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountCantLogin"))</h3>
         </hgroup>
     </div>
     <div class="panel-footer">

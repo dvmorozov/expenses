@@ -6,7 +6,7 @@
 <tr>
 	<td>
 		<div class="editor-label" style="padding: 8px;">
-			@Html.LabelFor(model => model.Importance, Resources.Resources.Importance)
+			@Html.LabelFor(model => model.Importance, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Importance"))
 		</div>
 	</td>
 	<td>
@@ -15,16 +15,16 @@
 				var items = new []
 					{
 						//	Values must be strings otherwise exception.
-						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Liability, Text = Resources.Resources.Liability, Value = ((short)ExpenseImportance.Liability).ToString()},
-						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Asset, Text = Resources.Resources.Asset, Value = ((short)ExpenseImportance.Asset).ToString()},
-						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Necessary, Text = Resources.Resources.Necessary, Value = ((short)ExpenseImportance.Necessary).ToString()},
-						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Pleasure, Text = Resources.Resources.Pleasure, Value = ((short)ExpenseImportance.Pleasure).ToString()},
-						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Unnecessary, Text = Resources.Resources.Unnecessary, Value = ((short)ExpenseImportance.Unnecessary).ToString()}
+						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Liability, Text = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Liability"), Value = ((short)ExpenseImportance.Liability).ToString()},
+						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Asset, Text = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Asset"), Value = ((short)ExpenseImportance.Asset).ToString()},
+						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Necessary, Text = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Necessary"), Value = ((short)ExpenseImportance.Necessary).ToString()},
+						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Pleasure, Text = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Pleasure"), Value = ((short)ExpenseImportance.Pleasure).ToString()},
+						new SelectListItem { Selected = Model.Importance == (short)ExpenseImportance.Unnecessary, Text = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Unnecessary"), Value = ((short)ExpenseImportance.Unnecessary).ToString()}
 					};
 				var selected = items.FirstOrDefault(t => t.Selected);
 				var l = new SelectList(items, "Value", "Text", selected != null ? selected.Value : null);
 					
-				@Html.DropDownList("Importance", l, Resources.Resources.None, new { style = "height: 26px; width: 150px;" });
+				@Html.DropDownList("Importance", l, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("None"), new { style = "height: 26px; width: 150px;" });
 			}
 		</div>
 	</td>

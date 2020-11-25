@@ -1,6 +1,6 @@
 ﻿@model SocialApps.Models.SendCodeViewModel
 @{
-	ViewBag.Title = Resources.Resources.AccountSendCodeTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountSendCodeTitle");
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -29,9 +29,9 @@
             <hr />
             <div class="row">
                 <div class="col-md-8">
-                    @Html.Raw(Resources.Resources.AccountSelectProvider)
+                    @Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountSelectProvider"))
                     @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers)
-					<input type="submit" value="@Html.Raw(Resources.Resources.Send)" class="btn btn-default" />
+					<input type="submit" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Send"))" class="btn btn-default" />
                 </div>
             </div>
         }

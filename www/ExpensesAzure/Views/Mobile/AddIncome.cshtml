@@ -7,7 +7,7 @@
 @model SocialApps.Models.NewExpense
 
 @{
-	ViewBag.Title = Resources.Resources.AddIncomeTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AddIncomeTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -63,9 +63,9 @@
 				
 				<div class="col-md-6"  style="margin-bottom: 8px;">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#expense" data-toggle="tab">@Html.Raw(Resources.Resources.Expense)</a></li>
-						<li><a href="#note" data-toggle="tab">@Html.Raw(Resources.Resources.Note)</a></li>
-						<li><a href="#project" data-toggle="tab">@Html.Raw(Resources.Resources.URL)</a></li>
+						<li class="active"><a href="#expense" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Expense"))</a></li>
+						<li><a href="#note" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Note"))</a></li>
+						<li><a href="#project" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("URL"))</a></li>
 					</ul>
 
 					<div class="tab-content">
@@ -82,7 +82,7 @@
 
 								<div style="display: inline-block; margin-top: 8px; vertical-align: top;">
 									<div class="panel panel-default" style="white-space: normal;">
-										<div class="panel-heading">@Html.Raw(Resources.Resources.Date)<span class="label label-warning" style="visibility: hidden; margin-left: 8px;" id="warning"></span></div>
+										<div class="panel-heading">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Date"))<span class="label label-warning" style="visibility: hidden; margin-left: 8px;" id="warning"></span></div>
 										<div class="panel-body">
 											<div class="single"></div>
 										</div>
@@ -107,7 +107,7 @@
 					<hr />
 					<div>
 						<button type="button" class="btn btn-default" aria-label="Add" onclick="document.forms['NewExpense'].submit(); return true;">
-							<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>&nbsp;@Html.Raw(Resources.Resources.Add)
+							<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>&nbsp;@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Add"))
 						</button>
 					</div>
 				</div>

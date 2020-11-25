@@ -3,7 +3,7 @@
 <tr>
 	<td>
 		<div class="editor-label" style="padding: 8px;">
-			@Html.LabelFor(model => model.Currency, Resources.Resources.Currency)
+			@Html.LabelFor(model => model.Currency, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Currency"))
 		</div>
 	</td>
 	<td>
@@ -13,8 +13,8 @@
 				@*Html.ValidationMessageFor(model => model.Currency)*@
 			</div>
 			<div style="display: inline-block;">
-				<button type="button" class="btn btn-default tooltipButton" aria-label="@Html.Raw(Resources.Resources.SelectCurrency)"
-						onclick="onSelectCurrencyClick();" data-toggle="tooltip" data-placement="top" title="@Html.Raw(Resources.Resources.SelectCurrency)">
+				<button type="button" class="btn btn-default tooltipButton" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectCurrency"))"
+						onclick="onSelectCurrencyClick();" data-toggle="tooltip" data-placement="top" title="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectCurrency"))">
 					<span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
 				</button>
 			</div>

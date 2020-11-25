@@ -1,7 +1,7 @@
 ﻿@*https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7*@
 @using SocialApps.Models
 @{
-	ViewBag.Title = Resources.Resources.BalanceTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("BalanceTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 <script type="text/javascript">
@@ -31,7 +31,7 @@
 					</td>
 					<td style="width: 1%;">
 						@{
-							<span class="badge pull-right" style="margin: 8px 0;">@Html.Raw(string.Format(Resources.Resources.LastYears, (int)Session["LastMonthNumber"] / 12))</span>
+							<span class="badge pull-right" style="margin: 8px 0;">@Html.Raw(string.Format(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("LastYears"), (int)Session["LastMonthNumber"] / 12))</span>
 						}
 					</td>
 				</tr>
@@ -41,10 +41,10 @@
 	<div class="panel-body">
 		<div>
 			<div class="btn-group">
-				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 12 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year1)" onclick="window.location.href='@Url.Action("Balance", "Mobile", new { lastMonthNumber = 12 })';">@Html.Raw(Resources.Resources.Year1Short)</button>
-				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 24 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year2)" onclick="window.location.href='@Url.Action("Balance", "Mobile", new { lastMonthNumber = 24 })';">@Html.Raw(Resources.Resources.Year2Short)</button>
-				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 60 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year5)" onclick="window.location.href='@Url.Action("Balance", "Mobile", new { lastMonthNumber = 60 })';">@Html.Raw(Resources.Resources.Year5Short)</button>
-				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 120 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(Resources.Resources.Year10)" onclick="window.location.href='@Url.Action("Balance", "Mobile", new { lastMonthNumber = 120 })';">@Html.Raw(Resources.Resources.Year10Short)</button>
+				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 12 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Year")1)" onclick="window.location.href='@Url.Action("Balance", "Mobile", new { lastMonthNumber = 12 })';">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Year")1Short)</button>
+				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 24 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Year")2)" onclick="window.location.href='@Url.Action("Balance", "Mobile", new { lastMonthNumber = 24 })';">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Year")2Short)</button>
+				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 60 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Year")5)" onclick="window.location.href='@Url.Action("Balance", "Mobile", new { lastMonthNumber = 60 })';">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Year")5Short)</button>
+				<button type="button" class="@Html.Raw((int)Session["LastMonthNumber"] == 120 ? "btn btn-default" : "btn btn-default")" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Year")10)" onclick="window.location.href='@Url.Action("Balance", "Mobile", new { lastMonthNumber = 120 })';">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Year")10Short)</button>
 			</div>
 		</div>
 		<div style="text-align: center; margin-top: 16px;">
@@ -63,7 +63,7 @@
 
 				@* Add tab content. *@
 				<div class="tab-content">
-					<div class="panel-heading">@Html.Raw(string.Format(Resources.Resources.BalanceByMonth, (int)Session["LastMonthNumber"] / 12))</div>
+					<div class="panel-heading">@Html.Raw(string.Format(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("BalanceByMonth"), (int)Session["LastMonthNumber"] / 12))</div>
 					@{
 						if (currencyGroups.Count() != 0)
 						{
