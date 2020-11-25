@@ -1,5 +1,5 @@
 ﻿@{
-	ViewBag.Title = Resources.Resources.AboutTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AboutTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -28,20 +28,20 @@
 		</table>
 	</div>
 	<div class="panel-body">
-		@Html.Raw(Resources.Resources.AboutThanks)
+		@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AboutThanks"))
 		<br/>
 		<br />
 		@* https://www.evernote.com/shard/s132/nl/14501366/457e353a-8a54-4d6f-937a-ee6713f030b3 *@
-		@Html.Raw(Resources.Resources.AboutForMoreInfo)
+		@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AboutForMoreInfo"))
 		<br />
 		<br />
-		@Html.Raw(Resources.Resources.AboutYouCanUseTheApp)
+		@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AboutYouCanUseTheApp"))
 		<ul>
 			<li>
-				@Html.Raw(Resources.Resources.AboutFromMobileDevice)&nbsp;<strong><a href="https://xpnss.azurewebsites.net" target="_blank">xpnss.azurewebsites.net</a></strong>
+				@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AboutFromMobileDevice"))&nbsp;<strong><a href="https://xpnss.azurewebsites.net" target="_blank">xpnss.azurewebsites.net</a></strong>
 			</li>
 			<li>
-				@Html.Raw(Resources.Resources.AboutFromFacebook)&nbsp;<strong><a href="https://apps.facebook.com/xpenses/" title="Expenses at Facebook" target="_blank">apps.facebook.com/xpenses</a></strong>
+				@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AboutFromFacebook"))&nbsp;<strong><a href="https://apps.facebook.com/xpenses/" title="Expenses at Facebook" target="_blank">apps.facebook.com/xpenses</a></strong>
 			</li>
 		</ul>
 		<div class="well">

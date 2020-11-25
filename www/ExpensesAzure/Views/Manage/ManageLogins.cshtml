@@ -1,7 +1,7 @@
 ﻿@model SocialApps.Models.ManageLoginsViewModel
 @using Microsoft.Owin.Security
 @{
-	ViewBag.Title = Resources.Resources.ManageExternalLogins;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManageExternalLogins");
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -48,7 +48,7 @@
             {
                 if (Model.CurrentLogins.Count > 0)
                 {
-                    <h4>@Resources.Resources.ManageRegisteredLogins</h4>
+                    <h4>@SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManageRegisteredLogins")</h4>
                     <table class="table">
                         <tbody>
                             @foreach (var account in Model.CurrentLogins)
@@ -64,7 +64,7 @@
                                                 <div>
                                                     @Html.Hidden("loginProvider", account.LoginProvider)
                                                     @Html.Hidden("providerKey", account.ProviderKey)
-													<input type="submit" class="btn btn-default" value="@Resources.Resources.Delete" title="@Html.Raw(string.Format(Resources.Resources.ManageDeleteLogin, account.LoginProvider))" />
+													<input type="submit" class="btn btn-default" value="@SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Delete")" title="@Html.Raw(string.Format(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManageDeleteLogin"), account.LoginProvider))" />
                                                 </div>
                                             }
                                         }
@@ -87,7 +87,7 @@
                             <p>
                                 @foreach (AuthenticationDescription p in Model.OtherLogins)
                                 {
-                                    <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@Html.Raw(string.Format(Resources.Resources.ManageLoginWith, p.Caption))">@p.AuthenticationType</button>
+                                    <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@Html.Raw(string.Format(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManageLoginWith"), p.Caption))">@p.AuthenticationType</button>
                                 }
                             </p>
                         </div>

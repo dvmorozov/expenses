@@ -2,7 +2,7 @@
 
 <div style="text-align: left; margin-bottom: 16px;">
 	<div class="editor-label" style="padding: 8px;">
-		@Html.LabelFor(model => model.Note, Resources.Resources.Note)
+		@Html.LabelFor(model => model.Note, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Note"))
 	</div>
 	<div>
 		@Html.TextAreaFor(model => model.Note, new { style = "width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;", maxlength = 200, rows = 6 })

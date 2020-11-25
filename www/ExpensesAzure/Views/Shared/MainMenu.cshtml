@@ -36,7 +36,7 @@
 							<div id="ellipsisOwner">
 								<div class="ellipsisInner" id="ellipsisInner">
 									<span class="ellipsis">
-										@Html.Raw(Resources.Resources.MainMenuTitle)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("MainMenuTitle"))
 									</span>
 								</div>
 							</div>
@@ -58,22 +58,22 @@
 </div>
 <div class="panel-body">
 	<ul class="nav nav-pills nav-stacked">
-		<li role="presentation">@Html.ActionLink(Resources.Resources.MainMenuNewExpense, "SelectCategory", "Mobile")</li>
-		<li role="presentation">@Html.ActionLink(Resources.Resources.MainMenuDayExpenses, "ShowDayExpenses", "Mobile")</li>
-		<li role="presentation">@Html.ActionLink(Resources.Resources.Budget, "MonthBudget", "Mobile")</li>
-		<li role="presentation">@Html.ActionLink(Resources.Resources.Income, "MonthIncome", "Mobile")</li>
-		<li role="presentation">@Html.ActionLink(Resources.Resources.MainMenuReports, "Reports", "Mobile")</li>
-		<li role="presentation">@Html.ActionLink(Resources.Resources.Encryption, "Encryption", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("MainMenuNewExpense"), "SelectCategory", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("MainMenuDayExpenses"), "ShowDayExpenses", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Budget"), "MonthBudget", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Income"), "MonthIncome", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("MainMenuReports"), "Reports", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Encryption"), "Encryption", "Mobile")</li>
 		<li role="presentation">@Html.Partial("_LogOnPartial")</li>
 		@if (Request.IsAuthenticated)
 		{
-			<li role="presentation">@Html.ActionLink(Resources.Resources.Account, "Index", "Manage")</li>
+			<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Account"), "Index", "Manage")</li>
 		}
 		else
 		{
-			<li role="presentation" style="font-size: large;">@Html.ActionLink(Resources.Resources.SignUp, "Register", "Account")</li>
+			<li role="presentation" style="font-size: large;">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SignUp"), "Register", "Account")</li>
 		}
-		<li role="presentation">@Html.ActionLink(Resources.Resources.Contribute, "Contribute", "Mobile")</li>
-		<li role="presentation">@Html.ActionLink(Resources.Resources.AboutTitle, "About", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Contribute"), "Contribute", "Mobile")</li>
+		<li role="presentation">@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AboutTitle"), "About", "Mobile")</li>
 	</ul>
 </div>

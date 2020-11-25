@@ -2,7 +2,7 @@
 @model SocialApps.Models.NewExpense
 
 @{
-	ViewBag.Title = Resources.Resources.EditIncomeTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EditIncomeTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -59,10 +59,10 @@
 
 				<div class="col-md-6" style="margin-bottom: 8px;">
 					<ul class="nav nav-tabs">
-						<li class="active"><a href="#expense" data-toggle="tab">@Html.Raw(Resources.Resources.Expense)</a></li>
-						<li><a href="#note" data-toggle="tab">@Html.Raw(Resources.Resources.Note)</a></li>
-						<li><a href="#repeat" data-toggle="tab">@Html.Raw(Resources.Resources.Repeat)</a></li>
-						<li><a href="#project" data-toggle="tab">@Html.Raw(Resources.Resources.URL)</a></li>
+						<li class="active"><a href="#expense" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Expense"))</a></li>
+						<li><a href="#note" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Note"))</a></li>
+						<li><a href="#repeat" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Repeat"))</a></li>
+						<li><a href="#project" data-toggle="tab">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("URL"))</a></li>
 					</ul>
 
 					<div class="tab-content">
@@ -81,7 +81,7 @@
 								<div style="display: inline-block; margin-top: 8px; vertical-align: top;">
 									<div style="display: inline-block;">
 										<div class="panel panel-default" style="white-space: normal;">
-											<div class="panel-heading">@Html.Raw(Resources.Resources.Date)<span class="label label-warning" style="visibility: hidden; margin-left: 8px;" id="warning"></span></div>
+											<div class="panel-heading">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Date"))<span class="label label-warning" style="visibility: hidden; margin-left: 8px;" id="warning"></span></div>
 											<div class="panel-body">
 												<div class="single"></div>
 											</div>
@@ -101,14 +101,14 @@
 							<div style="text-align: left;">
 								<div style="display: inline-block; margin-top: 8px;">
 									<div class="editor-label">
-										@Html.LabelFor(model => model.Monthly, Resources.Resources.Monthly)
+										@Html.LabelFor(model => model.Monthly, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Monthly"))
 									</div>
 									<div class="editor-field">
 										@Html.CheckBoxFor(model => model.Monthly)
 									</div>
 
 									<div class="panel panel-default" style="margin-top: 16px;">
-										<div class="panel-heading">@Html.Raw(Resources.Resources.FirstMonth)<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="start_month"></span></div>
+										<div class="panel-heading">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("FirstMonth"))<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="start_month"></span></div>
 										<div class="panel-body">
 											<div class="start_month_calendar"></div>
 										</div>
@@ -116,14 +116,14 @@
 								</div>
 								<div style="display: inline-block; margin-top: 8px;">
 									<div class="editor-label">
-										@Html.LabelFor(model => model.Forever, Resources.Resources.Forever)
+										@Html.LabelFor(model => model.Forever, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Forever"))
 									</div>
 									<div class="editor-field">
 										@Html.CheckBoxFor(model => model.Forever)
 									</div>
 
 									<div class="panel panel-default" style="margin-top: 16px;">
-										<div class="panel-heading">@Html.Raw(Resources.Resources.LastMonth)<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="end_month"></span></div>
+										<div class="panel-heading">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("LastMonth"))<span class="label label-info" style="visibility: hidden; margin-left: 8px;" id="end_month"></span></div>
 										<div class="panel-body">
 											<div class="end_month_calendar"></div>
 										</div>
@@ -141,7 +141,7 @@
 
 					<hr />
 					<div>
-						<input class="btn btn-default" type="button" onclick="encryptData('Name', 'EncryptedName'); document.forms['EditExpense'].submit(); return true;" value="@Html.Raw(Resources.Resources.Update)" />
+						<input class="btn btn-default" type="button" onclick="encryptData('Name', 'EncryptedName'); document.forms['EditExpense'].submit(); return true;" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Update"))" />
 					</div>
 				</div>
 			}

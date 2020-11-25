@@ -1,7 +1,7 @@
 ﻿@model SocialApps.Models.BudgetModel
 
 @{
-	ViewBag.Title = Resources.Resources.MonthBudgetTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("MonthBudgetTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -57,7 +57,7 @@
 							{
 								<tr>
 									<td>
-										@Html.Raw(Resources.Resources.Rest)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Rest"))
 									</td>
 									<td>
 										@Html.Raw(Math.Floor((decimal)ViewBag.Rest).ToString())
@@ -71,7 +71,7 @@
 							{
 								<tr>
 									<td>
-										@Html.Raw(Resources.Resources.Overdraft)
+										@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Overdraft"))
 									</td>
 									<td>
 										@Html.Raw(Math.Floor((decimal)ViewBag.Overdraft).ToString())
@@ -85,7 +85,7 @@
 					</table>
 
 					<div class="editor-label">
-						@Html.LabelFor(m => m.Budget, Resources.Resources.Budget)
+						@Html.LabelFor(m => m.Budget, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Budget"))
 					</div>
 					<div class="editor-field">
 						@Html.TextBoxFor(m => m.Budget)
@@ -93,7 +93,7 @@
 					</div>
 					<br/>
 					<div class="editor-label">
-						@Html.LabelFor(model => model.Currency, Resources.Resources.Currency)
+						@Html.LabelFor(model => model.Currency, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Currency"))
 					</div>
 					<div style="white-space: nowrap;">
 						<div class="editor-field btnEditorField" style="display: inline-block;">
@@ -101,21 +101,21 @@
 							@*Html.ValidationMessageFor(model => model.Currency)*@
 						</div>
 						<div style="display: inline-block;">
-							<button type="button" class="btn btn-default tooltipButton" aria-label="@Html.Raw(Resources.Resources.SelectCurrency)" onclick="onSelectCurrencyClick();" data-toggle="tooltip" data-placement="top" title="@Html.Raw(Resources.Resources.SelectCurrency)">
+							<button type="button" class="btn btn-default tooltipButton" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectCurrency"))" onclick="onSelectCurrencyClick();" data-toggle="tooltip" data-placement="top" title="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectCurrency"))">
 								<span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
 							</button>
 						</div>
 					</div>
 
 					<div style="margin-top: 16px; margin-bottom: 16px;">
-						<button type="submit" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Setup)">@Html.Raw(Resources.Resources.Setup)</button>
+						<button type="submit" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Setup"))">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Setup"))</button>
 					</div>
 				</div>
 				<div class="col-md-3">
 					<div>
 						<div style="display: inline-block;">
 							<div class="panel panel-default">
-								<div class="panel-heading">@Html.Raw(Resources.Resources.AnotherMonth)</div>
+								<div class="panel-heading">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AnotherMonth"))</div>
 								<div class="panel-body">
 									<div class="month_calendar" id="month_calendar_0"></div>
 								</div>

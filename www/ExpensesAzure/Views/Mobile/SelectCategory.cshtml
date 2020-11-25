@@ -21,10 +21,10 @@
 									<span class="sr-only"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateCategories", "Mobile")?categoryList=' + s); });">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
+									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateCategories", "Mobile")?categoryList=' + s); });">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptAll"))</a></li>
 								</ul>
 							</div>
-							<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.NewCategoryTitle)" onclick="window.location.href='@Url.Action("NewCategory", "Mobile")';">
+							<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("NewCategoryTitle"))" onclick="window.location.href='@Url.Action("NewCategory", "Mobile")';">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
 						</div>
@@ -33,7 +33,7 @@
 						<div id="ellipsisOwner">
 							<div class="ellipsisInner" id="ellipsisInner">
 								<span class="ellipsis">
-									@Html.Raw(Resources.Resources.SelectCategoryTitle)
+									@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectCategoryTitle"))
 								</span>
 							</div>
 						</div>
@@ -58,7 +58,7 @@
 	@Html.Partial("Advertising")
 	<div class="panel-footer">
 		@Html.Partial("BottomHomeButton")
-		<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.NewCategoryTitle)" onclick="window.location.href='@Url.Action("NewCategory", "Mobile")';">
+		<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("NewCategoryTitle"))" onclick="window.location.href='@Url.Action("NewCategory", "Mobile")';">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 		@Html.Partial("BottomAddInfo")

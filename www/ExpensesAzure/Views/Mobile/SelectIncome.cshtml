@@ -3,7 +3,7 @@
 @using System.Web.Security.AntiXss
 
 @{
-	ViewBag.Title = Resources.Resources.SelectIncomeTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectIncomeTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -24,10 +24,10 @@
 									<span class="sr-only"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateExpenses", "Mobile")?expenseList=' + s); });">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
+									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateExpenses", "Mobile")?expenseList=' + s); });">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptAll"))</a></li>
 								</ul>
 							</div>
-							<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.NewIncome)" onclick="window.location.href='@Url.Action("NewIncome", "Mobile")';">
+							<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("NewIncome"))" onclick="window.location.href='@Url.Action("NewIncome", "Mobile")';">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
 						</div>
@@ -55,7 +55,7 @@
 				<tbody>
 					<tr>
 						<th></th>
-						<th>@Html.Raw(Resources.Resources.Income)</th>
+						<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Income"))</th>
 					</tr>
 
 					@for (var i = 0; i < ((ExpenseNameWithCategory[])ViewBag.ExpenseIds).Count(); i++)
@@ -94,7 +94,7 @@
 	@Html.Partial("Advertising")
 	<div class="panel-footer">
 		@Html.Partial("BottomHomeButton")
-		<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.NewIncome)" onclick="window.location.href='@Url.Action("NewIncome", "Mobile")';">
+		<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("NewIncome"))" onclick="window.location.href='@Url.Action("NewIncome", "Mobile")';">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 		@Html.Partial("BottomAddInfo")

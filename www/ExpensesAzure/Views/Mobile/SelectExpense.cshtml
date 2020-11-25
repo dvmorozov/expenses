@@ -3,7 +3,7 @@
 @using System.Web.Security.AntiXss
 
 @{
-	ViewBag.Title = Resources.Resources.SelectExpenseTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectExpenseTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -24,10 +24,10 @@
 									<span class="sr-only"></span>
 								</button>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateExpenses", "Mobile")?expenseList=' + s); });">@Html.Raw(Resources.Resources.EncryptAll)</a></li>
+									<li><a href="#" onclick="encryptList('.unencrypted', function (s) { $.post('@Url.Action("UpdateExpenses", "Mobile")?expenseList=' + s); });">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EncryptAll"))</a></li>
 								</ul>
 							</div>
-							<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.NewExpenseTitle)" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
+							<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("NewExpenseTitle"))" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
 								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 							</button>
 						</div>
@@ -55,7 +55,7 @@
 				<tbody>
 					<tr>
 						<th></th>
-						<th>@Html.Raw(Resources.Resources.Expense)</th>
+						<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Expense"))</th>
 					</tr>
 
 					@for (var i = 0; i < ((ExpenseNameWithCategory[])ViewBag.ExpenseIds).Count(); i++)
@@ -72,8 +72,8 @@
 									</button>
 
 									<ul class="dropdown-menu">
-										<li><a href="@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})">@Html.Raw(Resources.Resources.Edit)</a></li>
-										<li><a href="@Url.Action("ExpensesByName", "Mobile", new {expenseId = exp.Id})">@Html.Raw(Resources.Resources.History)</a></li>
+										<li><a href="@Url.Action("EditExpense", "Mobile", new {expenseId = exp.Id})">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Edit"))</a></li>
+										<li><a href="@Url.Action("ExpensesByName", "Mobile", new {expenseId = exp.Id})">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("History"))</a></li>
 									</ul>
 								</div>
 							</td>
@@ -101,7 +101,7 @@
 	@Html.Partial("Advertising")
 	<div class="panel-footer">
 		@Html.Partial("BottomHomeButton")
-		<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.NewExpenseTitle)" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
+		<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("NewExpenseTitle"))" onclick="window.location.href='@Url.Action("NewExpense", "Mobile")';">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 		@Html.Partial("BottomAddInfo")

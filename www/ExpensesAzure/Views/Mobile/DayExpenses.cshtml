@@ -2,7 +2,7 @@
 @using SocialApps.Controllers
 @using SocialApps.Models
 @{
-	ViewBag.Title = Resources.Resources.DayExpensesTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("DayExpensesTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 @using (Html.BeginForm("DayExpenses", "Mobile"))
@@ -87,7 +87,7 @@
 					<div>
 						<div style="display: inline-block;">
 							<div class="panel panel-default">
-								<div class="panel-heading">@Html.Raw(Resources.Resources.Date)</div>
+								<div class="panel-heading">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Date"))</div>
 								<div class="panel-body">
 									<div class="single"></div>
 								</div>
@@ -98,7 +98,7 @@
 								<tbody>
 									<tr>
 										<td>
-											<button type="submit" class="btn btn-default tooltipButton" aria-label="@Html.Raw(Resources.Resources.Refresh)" data-toggle="tooltip" data-placement="top" title="@Html.Raw(Resources.Resources.Refresh)">
+											<button type="submit" class="btn btn-default tooltipButton" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Refresh"))" data-toggle="tooltip" data-placement="top" title="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Refresh"))">
 												<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 											</button>
 											<button type="button" class="btn btn-default tooltipButton" aria-label="@Html.Raw(ViewBag.DayExpensesFullListTitle)" onclick="window.location.href='@Url.Action("SwitchDayExpensesMode", "Mobile")';" data-toggle="tooltip" data-placement="top" title="@Html.Raw(ViewBag.DayExpensesFullListTitle)">
@@ -119,7 +119,7 @@
 		@Html.Partial("Advertising")
 		<div class="panel-footer">
 			@Html.Partial("BottomHomeButton")
-			<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
+			<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Add"))" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			</button>
 		</div>

@@ -22,10 +22,10 @@
 			<div class="btn-group">
 				@* Timestamp parameter is added to overcome image caching. *@
 				<button type="button" class="btn btn-default" onclick="updateDiagramURL(false, '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = ViewBag.CurrencyGroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
-					@Html.Raw(Resources.Resources.Bar)
+					@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Bar"))
 				</button>
 				<button type="button" class="btn btn-default" onclick="updateDiagramURL(true, '@Url.Action(ViewBag.ChartActionName, "Mobile", new { currencyGroupId = ViewBag.CurrencyGroupId, timestamp = DateTime.Now.Ticks })', '@Html.Raw(diagramId)', '@Html.Raw(diagramContainerId)');">
-					@Html.Raw(Resources.Resources.Pie)
+					@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Pie"))
 				</button>
 			</div>
 		</div>
