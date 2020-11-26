@@ -1,6 +1,6 @@
 ﻿@model SocialApps.Models.CategoryModel
 @{
-	ViewBag.Title = Resources.Resources.EditCategoryTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("EditCategoryTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 @* ReSharper disable UnknownCssClass *@
@@ -38,7 +38,7 @@
 			@Html.Hidden("EncryptedName", Model.EncryptedName)
 
 			<div class="editor-label">
-				@Html.LabelFor(m => m.Name, Resources.Resources.Name)
+				@Html.LabelFor(m => m.Name, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Name"))
 			</div>
 			<div class="editor-field">
 				@Html.TextBoxFor(m => m.Name)
@@ -52,7 +52,7 @@
 			</div>
 
 			<div class="editor-label">
-				@Html.LabelFor(m => m.Limit, Resources.Resources.Budget)
+				@Html.LabelFor(m => m.Limit, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Budget"))
 			</div>
 			<div class="editor-field">
 				@Html.TextBoxFor(m => m.Limit)
@@ -60,8 +60,8 @@
 			</div>
 
 			<br />
-			<input class="btn btn-default" type="submit" value="@Html.Raw(Resources.Resources.Save)" onclick="encryptData('Name', 'EncryptedName'); document.forms['NewCategory'].submit(); return true;" />
-			<input class="btn" type="submit" value="@Html.Raw(Resources.Resources.Reset)" onclick="encryptData('Name', 'EncryptedName'); $('#Limit').val('0'); document.forms['NewCategory'].submit(); return true;" />
+			<input class="btn btn-default" type="submit" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Save"))" onclick="encryptData('Name', 'EncryptedName'); document.forms['NewCategory'].submit(); return true;" />
+			<input class="btn" type="submit" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Reset"))" onclick="encryptData('Name', 'EncryptedName'); $('#Limit').val('0'); document.forms['NewCategory'].submit(); return true;" />
 		}
 	</div>
 </div>

@@ -4,7 +4,7 @@
 @using System.Web.Security.AntiXss
 
 @{
-	ViewBag.Title = Resources.Resources.ExpensesByCategoryTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ExpensesByCategoryTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -49,11 +49,11 @@
 				<table class="encrypted table">
 					<tbody>
 						<tr>
-							<th>@Html.Raw(Resources.Resources.Date)</th>
-							<th>@Html.Raw(Resources.Resources.Expense)</th>
-							<th>@Html.Raw(Resources.Resources.Spent)</th>
-							<th>@Html.Raw(Resources.Resources.Importance)</th>
-							<th>@Html.Raw(Resources.Resources.Rating)</th>
+							<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Date"))</th>
+							<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Expense"))</th>
+							<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Spent"))</th>
+							<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Importance"))</th>
+							<th>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Rating"))</th>
 						</tr>
 						@for (var index = 0; index < list.Count(); index++)
 						{

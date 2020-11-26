@@ -5,6 +5,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Diagnostics;
 using SocialApps.Models;
+using SocialApps.Repositories;
 
 namespace SocialApps.Controllers
 {
@@ -81,6 +82,13 @@ namespace SocialApps.Controllers
             return chart;
         }
 
+        private string GetReportTitle()
+        {
+            var dt = new DateTime((int)Session["Top10Year"], (int)Session["Top10Month"], 1);
+            var title = MobileRepository.GetLocalizedResourceString("ReportTop10Of");
+            return title + " " + dt.ToString("MMM yyyy");
+        }
+
         //  https://www.evernote.com/shard/s132/nl/14501366/8334c8f9-2fe0-4178-9d7d-8ae6785318a7
         public ActionResult Top10(int? year, int? month)
         {
@@ -107,6 +115,9 @@ namespace SocialApps.Controllers
                     ViewBag.MonthTotal = totals.MonthTotal;
 
                 TempData["MonthCalendarIndex"] = 0;
+
+                ViewBag.Title = GetReportTitle();
+
                 return View("Top10");
             }
             catch (Exception e)

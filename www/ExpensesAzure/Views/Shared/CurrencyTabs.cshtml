@@ -7,7 +7,7 @@
 		for (var i = 0; i < currencyGroups.Count(); i++)
 		{
 			var tabId = ViewBag.TabPrefix + currencyGroups[i].GroupId.ToString();
-			var currency = currencyGroups[i].Currency.Trim() == "" ? Resources.Resources.Undefined : currencyGroups[i].Currency.Trim();
+			var currency = currencyGroups[i].Currency.Trim() == "" ? SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Undefined") : currencyGroups[i].Currency.Trim();
 
 			if (i == 0)
 			{

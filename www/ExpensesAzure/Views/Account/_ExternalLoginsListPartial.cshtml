@@ -4,7 +4,7 @@
 @*https://www.evernote.com/shard/s132/nl/14501366/c9e1c66a-3731-43ef-80a1-0990ba45642b*@
 
 @*
-		<h4>@Html.Raw(Resources.Resources.AccountLoginWith)</h4>
+		<h4>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountLoginWith"))</h4>
 		@{
 			var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
 			using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
@@ -14,7 +14,7 @@
 					<p>
 							@foreach (AuthenticationDescription p in loginProviders)
 							{
-								<button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@Html.Raw(Resources.Resources.AccountLoginWith + " " + p.Caption)">
+								<button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountLoginWith") + " " + p.Caption)">
 									@switch (@p.AuthenticationType.ToLower())
 									{
 										case ("google"): @Html.Raw("<img src=\"/Content/google.png\"/>") break;

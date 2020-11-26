@@ -1,5 +1,5 @@
 ﻿@{
-	ViewBag.Title = Resources.Resources.AccountEmailConfirmation;
+    ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountEmailConfirmation");
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -10,7 +10,7 @@
             <tbody>
                 <tr>
                     <td>
-						@Html.Partial("TopHomeButton")
+                        @Html.Partial("TopHomeButton")
                     </td>
                     <td style="width: 100%; text-align: center;">
                         @Html.Raw(ViewBag.Title)
@@ -22,13 +22,13 @@
     <div class="panel-body">
         <div>
             <p>
-                @Html.Raw(Resources.Resources.AccountThankYouForEmail)&nbsp;@Html.ActionLink(Resources.Resources.AccountClickToLogin, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                @Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountThankYouForEmail"))&nbsp;@Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AccountClickToLogin"), "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
             </p>
         </div>
     </div>
     <div class="panel-footer">
         <div class="btn-group" role="group">
-			@Html.Partial("BottomHomeButton")
+            @Html.Partial("BottomHomeButton")
         </div>
     </div>
 </div>
