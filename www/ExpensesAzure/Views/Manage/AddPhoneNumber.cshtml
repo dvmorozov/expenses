@@ -1,6 +1,6 @@
 ﻿@model SocialApps.Models.AddPhoneNumberViewModel
 @{
-	ViewBag.Title = Resources.Resources.ManagePhoneNumber;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManagePhoneNumber");
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -32,18 +32,18 @@
         @using (Html.BeginForm("AddPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
-            <h4>@Html.Raw(Resources.Resources.ManageAddPhoneNumber)</h4>
+            <h4>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManageAddPhoneNumber"))</h4>
             <hr />
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(m => m.Number, Resources.Resources.Number, new { @class = "col-md-2 control-label" })
+                @Html.LabelFor(m => m.Number, SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Number"), new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.Number, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-					<input type="submit" class="btn btn-default" value="@Html.Raw(Resources.Resources.Add)" />
+					<input type="submit" class="btn btn-default" value="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Add"))" />
                 </div>
             </div>
         }

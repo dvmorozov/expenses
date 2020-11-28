@@ -1,6 +1,6 @@
 ﻿@model HandleErrorInfo
 @{
-	ViewBag.Title = Resources.Resources.Error;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Error");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 @* ReSharper disable UnknownCssClass *@
@@ -10,7 +10,7 @@
 		@Html.Raw(ViewBag.Title)
 	</div>
 	<div class="panel-body">
-		@Resources.Resources.ErrorSorry
+		@SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ErrorSorry")
 		@* https://www.evernote.com/shard/s132/nl/14501366/2ae0f902-4ecc-4792-ae8d-56f19d41bc91 *@
 		@if (Session["ErrMessageStrings"] != null)
 		{

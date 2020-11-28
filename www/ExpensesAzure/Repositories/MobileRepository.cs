@@ -49,11 +49,11 @@ namespace SocialApps.Repositories
             return _db.EstimatedTop10CategoriesForMonthByUser3(now.Year, now.Month, now.Day, userId).ToList();
         }
 
-        private string GetLocalizedResourceString(string resourceName)
+        public static string GetLocalizedResourceString(string resourceName)
         {
-            var rm = Resources.Resources.ResourceManager;
+            var resourceManager = Resources.Resources.ResourceManager;
             var userCulture = new CultureInfo(CultureInfo.CurrentUICulture.TextInfo.CultureName);
-            return rm.GetString(resourceName, userCulture);
+            return resourceManager.GetString(resourceName, userCulture);
         }
 
         //  Adds to each currency group special row containing residue not covered by any group (supplementing to total).
@@ -88,7 +88,7 @@ namespace SocialApps.Repositories
                         new EstimatedTop10CategoriesForMonthByUser3_Result
                         {
                             Currency = g.Currency,
-                            NAME = GetLocalizedResourceString(Resources.Resources.Residue),
+                            NAME = GetLocalizedResourceString("Residue"),
                             TOTAL = g.Residue,
                             GROUPID1 = g.GROUPID1,
                             GROUPID2 = g.GROUPID2,

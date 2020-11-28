@@ -1,2 +1,3 @@
 ﻿
-@(Request.IsAuthenticated ? Html.ActionLink(Resources.Resources.Logout, "LogOff", "Account") : Html.ActionLink(Resources.Resources.Login, "Login", "Account"))
+@(Request.IsAuthenticated ? Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Logout"), "LogOff", "Account") :
+	Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Login"), "Login", "Account"))

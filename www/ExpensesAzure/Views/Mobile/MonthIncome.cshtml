@@ -3,7 +3,7 @@
 @model SocialApps.Models.IncomeModel
 
 @{
-	ViewBag.Title = Resources.Resources.MonthIncomeTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("MonthIncomeTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -56,10 +56,10 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<td>@Html.Raw(Resources.Resources.Currency)</td>
-								<td>@Html.Raw(Resources.Resources.Income)</td>
-								<td>@Html.Raw(Resources.Resources.Spent)</td>
-								<td>@Html.Raw(Resources.Resources.BalanceTitle)</td>
+								<td>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Currency"))</td>
+								<td>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Income"))</td>
+								<td>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Spent"))</td>
+								<td>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("BalanceTitle"))</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -97,7 +97,7 @@
 				<div class="col-md-3">
 					<div style="display: inline-block;">
 						<div class="panel panel-default">
-							<div class="panel-heading">@Html.Raw(Resources.Resources.AnotherMonth)</div>
+							<div class="panel-heading">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AnotherMonth"))</div>
 							<div class="panel-body">
 								<div class="month_calendar" id="month_calendar_0"></div>
 							</div>
@@ -109,7 +109,7 @@
 								<tr>
 									<td>
 										@* https://www.evernote.com/shard/s132/nl/14501366/e9be060a-5343-47e7-9441-65cbb5c80f60 *@
-										<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Refresh)" onclick="window.location.href='@Url.Action("MonthIncome", "Mobile")' + getYearMonthAsParams();">
+										<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Refresh"))" onclick="window.location.href='@Url.Action("MonthIncome", "Mobile")' + getYearMonthAsParams();">
 											<span class="glyphicon glyphicon-refresh" aria-hidden="true">
 											</span>
 										</button>

@@ -38,7 +38,7 @@ namespace SocialApps.Controllers
             //  Chart header was hidden.
             var chart = new Chart(width, height, theme: ChartTheme.Vanilla);
             //  Proper ordering is already done in the controller.
-            var xValue = items.Select(t => ImportanceToString(t.Importance)).ToList();
+            var xValue = items.Select(t => GetImportanceString(t.Importance)).ToList();
             var yValues = items.Select(t => t.Sum).ToList();
 
             if ((pie ?? false) && Session["MonthTotal"] != null)

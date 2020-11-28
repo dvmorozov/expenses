@@ -11,7 +11,7 @@
 		<tbody>
 			<tr>
 				<th>
-					@Html.Raw(Resources.Resources.UploadedDocuments)
+					@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("UploadedDocuments"))
 				</th>
 			</tr>
 			@if (ViewBag.Links != null)
@@ -27,13 +27,13 @@
 	</table>
 	<hr />
 	<div>
-		<input type="file" class="filestyle" data-text="@Resources.Resources.SelectFile" data-input="false" data-iconName="glyphicon-open-file" data-btnClass="btn-default" style="display: inline-block;" />
+		<input type="file" class="filestyle" data-text="@SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SelectFile")" data-input="false" data-iconName="glyphicon-open-file" data-btnClass="btn-default" style="display: inline-block;" />
 
-		<button type="submit" class="btn btn-default" aria-label="@Resources.Resources.Upload" style="float: right; position: relative; ">
+		<button type="submit" class="btn btn-default" aria-label="@SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Upload")" style="float: right; position: relative; ">
 			<span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
 		</button>
 	</div>
 	<div style="margin-top: 20px;">
-		<em>@Html.Raw(string.Format(Resources.Resources.MaxFileSize, (ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection).MaxRequestLength / 1024))</em>
+		<em>@Html.Raw(string.Format(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("MaxFileSize"), (ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection).MaxRequestLength / 1024))</em>
 	</div>
 }

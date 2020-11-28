@@ -1,6 +1,6 @@
 ﻿@model SocialApps.Models.IndexViewModel
 @{
-    ViewBag.Title = Resources.Resources.Setup;
+    ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Setup");
     Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -31,26 +31,26 @@
     <div class="panel-body">
         <p class="text-success">@ViewBag.StatusMessage</p>
         <div>
-            <h4>@Html.Raw(Resources.Resources.Account)</h4>
+            <h4>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Account"))</h4>
             <hr />
             <dl class="dl-horizontal">
-                <dt>@Html.Raw(Resources.Resources.Password)</dt>
+                <dt>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Password"))</dt>
                 <dd>
                     [
                     @if (Model.HasPassword)
                     {
-                        @Html.ActionLink(Resources.Resources.ManageChangePassword, "ChangePassword")
+                        @Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManageChangePassword"), "ChangePassword")
                     }
                     else
                     {
-                        @Html.ActionLink(Resources.Resources.SetPassword, "SetPassword")
+                        @Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("SetPassword"), "SetPassword")
                     }
                     ]
                 </dd>
-                <dt>@Html.Raw(Resources.Resources.ManageExternalLogins)</dt>
+                <dt>@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManageExternalLogins"))</dt>
                 <dd>
                     @Model.Logins.Count [
-                    @Html.ActionLink(Resources.Resources.Setup, "ManageLogins") ]
+                    @Html.ActionLink(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Setup"), "ManageLogins") ]
                 </dd>
                 @*
                     Номера телефонов можно использовать в качестве второго проверочного фактора для системы двухфакторной проверки подлинности.
@@ -78,7 +78,7 @@
                     </dd>
                 *@
                 <dt>
-					@*Html.Raw(Resources.Resources.ManageTwoFactorAuth)*@
+					@*Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ManageTwoFactorAuth"))*@
 				</dt>
                 <dd>
                     @*

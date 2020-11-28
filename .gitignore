@@ -19,4 +19,8 @@ Web.config
 /www/Database/obj/Release
 /www/UnitTests/bin/Release
 /www/UnitTests/obj/Release
+<<<<<<< HEAD
 /www/UpgradeLog.htm
+=======
+/www/Database/Database.jfm
+>>>>>>> master

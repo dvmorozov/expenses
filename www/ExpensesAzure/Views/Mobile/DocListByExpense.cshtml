@@ -7,7 +7,7 @@
 @model SocialApps.Models.NewExpense
 
 @{
-	ViewBag.Title = Resources.Resources.DocListTitle;
+	ViewBag.Title = SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("DocListTitle");
 	Layout = "~/Views/Shared/_LayoutMobile.cshtml";
 }
 
@@ -51,7 +51,7 @@
 				<tr>
 					<th></th>
 					<th>
-						@Html.Raw(Resources.Resources.UploadedDocuments)
+						@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("UploadedDocuments"))
 					</th>
 					<th></th>
 				</tr>

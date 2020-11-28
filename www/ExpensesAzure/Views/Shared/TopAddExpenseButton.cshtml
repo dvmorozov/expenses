@@ -1,5 +1,5 @@
 ﻿<div class="btn-group">
-	<button type="button" class="btn btn-default" aria-label="@Html.Raw(Resources.Resources.Add)" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
+	<button type="button" class="btn btn-default" aria-label="@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("Add"))" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile")';">
 		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 	</button>
 	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -7,8 +7,8 @@
 		<span class="sr-only"></span>
 	</button>
 	<ul class="dropdown-menu" role="menu">
-		<li><a href="#" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile", new { addReceipt = true })';">@Html.Raw(Resources.Resources.AddReceipt)</a></li>
-		<li><a href="#" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile", new { addRestOfReceipt = true })';">@Html.Raw(Resources.Resources.AddRestOfReceipt)</a></li>
-		<li><a href="#" onclick="window.location.href='@Url.Action("ResetReceipt", "Mobile")';">@Html.Raw(Resources.Resources.ResetReceipt)</a></li>
+		<li><a href="#" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile", new { addReceipt = true })';">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AddReceipt"))</a></li>
+		<li><a href="#" onclick="window.location.href='@Url.Action("SelectCategory", "Mobile", new { addRestOfReceipt = true })';">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("AddRestOfReceipt"))</a></li>
+		<li><a href="#" onclick="window.location.href='@Url.Action("ResetReceipt", "Mobile")';">@Html.Raw(SocialApps.Repositories.MobileRepository.GetLocalizedResourceString("ResetReceipt"))</a></li>
 	</ul>
 </div>
