@@ -588,8 +588,6 @@
   <PropertyGroup>
     <PreBuildEvent>cd $(TargetDir)
 del /Q *
-cd $(ProjectDir)
-_update_version.bat
 exit /B 0
 </PreBuildEvent>
   </PropertyGroup>
